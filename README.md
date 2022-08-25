@@ -3,7 +3,7 @@
 # <application_license_badge>
 <!--- [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./LICENSE) --->
 
-# <application_name>
+# Case Flow
 <!--- Description of the application. ---> 
 
 ## Technical Details
