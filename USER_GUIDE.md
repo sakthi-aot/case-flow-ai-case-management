@@ -1,12 +1,13 @@
 #Introduction
 Case Flow is an open-source generic Case Managment application built on top of formsflow.ai
 
-The application is explicitly designed to be hightly generic and configurable. There are 2 fundamental design tenets which describe our philosophy :
+The application is explicitly designed to be hightly generic and configurable. There are 4 fundamental design tenets which describe our philosophy :
 - No assumptions are made about the line-of-business ("LOB") for which the application provides case managment functionality. Typical case management applications assume a particular vertical and are internally tailored out-the-box for this vertical, for example insurance claims or police investigations or complaint management. Case Flow allows the user to bring their own data model, whether legacy or custom, into the application. In other words, providing a Case Management layer around an existing data model. 
-- Case data is built up incrementally through the case process on an "as-needs" basis through the presentation of forms associated with user tasks. In other words, users with appropriate privileges are presented with tasks which have associated forms which allow input of data which add to the case record. Complex searches and/or maintenance of related data such as user, financial or historic data is typically the province of the LOB custom or legacy application, not Case Flow.
+- Case data is built up incrementally through the case process on an "as-needs" basis through the presentation of forms associated with user tasks. In other words, users with appropriate privileges are assigned tasks which have associated forms which allow input of data which add to the case record. Complex searches and/or maintenance of related data such as user, financial or historic data is typically the province of the LOB custom or legacy application, not Case Flow.
 - Writing to LOB databases is the responsibility of workflow tasks. Reading from LOB databases is through form components (eg. drop-down selections) or Case Flow UI listeners which can be configured to update on display of defined areas.
-- 
-- 
+- Case data can be stored in the LOB or the Case Flow case database, or both depending on requirements. This provides a clear migration capability if needed. Form and workflow data is normally stored in cache fashion until a permanent home is found in LOB or case data stores.
+
+
 The application also caters for greenfield Case Management applications including the provision of local Document Managment functionality and a sample LOB.
 
 Specifically , Case Flow provides :
@@ -40,14 +41,13 @@ The diagram below illustrates the clear differentiation between what Case Flow p
 
 ## Step 1 - Define data flow
 An important part of any solution is to understand where data originates, where it flows and where it ultimately ends up. Broadly speaking, data "belongs" to one of the followng entities :
-- formsflow.ai - Form and WOokflow cache only
+- formsflow.ai - Form and Workflow cache only
 - Case Flow - Case data
 - LOB - LOB data
 - DMS - Documents (which may be stored in Case FLow internal DMS or the LOB accessible DMS)
 
 Please refer to the following diagram for an overview of the data flows relevant to Case Flow :
-
-![data flows](docs/case%20management%20data%20flow%20(4).png)
+    ![data flows](docs/case%20management%20data%20flow%20(4).png)
 
 
 #### Public/initiator data 
@@ -121,15 +121,109 @@ Note that connection authentication is currently limited to OIDC. It is assumed 
 
 The structure of the Graphql query is simply :
 ```
-query CaseData ( $caseId : String ) {
-        field1,
-        field2,
-        ...
+type Query {
+      getLobCaseData ( caseId : String! ) : LobCaseData,
+      getLobSearchCaseData ( queryFields : QueryFields !) : LobSearchResults,
+}
+
+type Mutation {
+    addCase ( caseId : String! ) : LobCaseData,
+    updateCase ( caseId : String!  ) : LobCaseData,
+    deleteCase ( caseId : String! ) 
+}
+
+type LobCaseData {
+    caseId : String!
+    lobCustomFields : LobCustomFields
+
+}
+
+type LobSearchResults [ 
+    caseData : LobCaseData
+]
+
+type LobCustomFields {
+    field1 : <type>
+    field2 : <type>
+    ...
+}
+
+
+where field1, field2 etc. are taken from the mapping config files 
+
+
+```
+The following diagram shoiws the LOB GraphQL data strategy : 
+![lob graphql](docs/lob-graphql-interface.png)
+
+Example. 
+A typical custom data scenario might require getting a case description, a region, a customer ID and a caseworker ID from a legacy database through a direct database connection, and then, based on these user ID's, fetch the user details from a REST API which, given an ID, returns the user name and email address. To cater to this, we define our custom data structure in <filename> as follows  :
+```
+
+
+type UserDetails {
+        name : String,
+        email : String
+}
+
+type LobCustomFields {
+    caseDescription : String,
+    region : String,
+    customer { 
+        id : ID!,
+        details : UserDetails
+    }
+    caseWorkers [ 
+        id : ID!,
+        details : UserDetails
+    ]
 
 }
 ```
-where field1, field2 etc. are taken from the mapping config files for each of the UI areas. 
+Once this definition (in the diagram above, the red box) is automatically included in the LobCaseData structure , we have a type as follows 
+```
 
+LobCaseData {
+    caseId : String!
+    caseDescription : String,
+    region : String,
+    customer { 
+        id : ID!,
+        details : UserDetails
+    }
+    caseWorkers [ 
+        id : ID!,
+        details : UserDetails
+    ]
+}}
+```
+
+And are able to make a query of the form 
+
+```
+query {
+    getLobCaseData ($caseId = '1234') {
+        caseId
+        caseDescription
+        region
+        customer (id )
+        caseworkers
+    }
+}
+```
+Note that this query can, in fact, be automatically generated based on the fields configured as the custom LOB fields for either dashboard or search results. Alternatively can be used in custom workflow steps. 
+
+Now, what does the GraphQL server look like which resolves this query ? Firstly, this is implementation-specific, however there is plenty of help available to aid in the task
+```
+
+type Query {
+  userById(id: ID!): UserDetails
+  @rest(
+    endpoint: "https://my.rest.api/users/$id"
+  )
+}
+```
+ does the 
 ## Step 3 - Configure the UI
 
 
@@ -137,7 +231,83 @@ where field1, field2 etc. are taken from the mapping config files for each of th
 ## Step 3 - Build the forms and workflows
 ## Step 6 - Set up listeners and data mappers
 ## Step 7 - Configure the DMS
-## Step 8 - Create third-party integratons
+
+The DMS API is a GraphQL API which looks like this : 
+
+![dms graphql](docs/dms-graphql-interface.png)
+
+CaseFlow provides CMIS, S3 and File System  resolvers which implement some or all of the features in the DMS GraphQL API as specified in the API description below :
+
+```
+type Metadata {
+        field1: <type>
+        field2: <type>
+        ...
+}
+
+type Document {
+    id: ID!
+    name: String!
+    creationDate: Date!
+    creationUser: String!
+    modificationDate: Date!
+    modificationUser: String!
+    contentType: String!
+    contentSize:Int!
+    description: String
+    content: String
+    downloadURL: URL
+    latestVersion: Int
+    versions: [URL]
+    metaData: Metadata
+  }
+
+  type CustomQuery {
+      field1 { name: String
+               value: String 
+               operator: ENUM }
+      field 2 ....
+  }
+
+  type SearchQuery {
+      name: String
+      startCreationDate : Date
+      endCreationDate: Date
+      startmodificationDate: Date
+      endModificationDate: Date
+      modificationUser:String
+      contentType: String
+      startContentSize: Int
+      endContentSize: Int
+      freeText: String
+      customQuery: CustomQuery
+  }
+
+  type Query {
+      getDocuments ($query:SearchQuery ) : [Document]
+      getDocument (id : ID!) : Document
+  }
+
+  type Mutation {
+      createDocument ( $name: String!, $description: String, $metaData: Metadata, $content: String, $uploadUrl : String) : Doument!
+      updateDocument (id: ID!, $name: String!, $description: String, $metaData: Metadata, $content: String, $uploadUrl : String) )
+      deleteDocument (id :ID!)
+  }
+
+
+
+```
+
+The authentication layer determines who the user is and whether they are allowed access to the DMS API at all, the authorization layer examines the token and decides what documents and data are accessible and deliver the results based on the authentication filtering. The authorization layer is extremely specific to the DMS implementation. Typical schemes are :
+
+* Internal access control. The access to documents is restricted based on application logic within the authentication layer - this invariably implies the use of an internal table to store document id's and their associated access criteria - in other words, no searching is possible - the document ID must be known and accessible to the application.
+
+ * Token-based - A JWT is passed into the DMS , the DMS is OIDC compliant and will use the roles as defined in the token to restrict access to documents/folders/metadata
+
+* User-based - A mapping between existing token roles and DMS users is defined. The DMS is accessed using a DMS-specific user who has access to certain roles
+
+
+## Step 8 - Create third-party integrations
 ## Step 9 - Integrate LOB applications
 
 Build SSO and context awareness into 
