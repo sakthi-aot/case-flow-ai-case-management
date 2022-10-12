@@ -1,0 +1,5 @@
+# ignore ALL .log files
+caseflow_api/temp/
+caseflow_api/__pycache__
+*.pyc
+*.pyc

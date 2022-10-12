@@ -1,0 +1,4 @@
+configurationset:
+  - configuration:
+      name: postgresql_config
+      uri: postgresql://0.tcp.in.ngrok.io:15976/caseflow?user=postgres&password=admin
