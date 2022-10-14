@@ -83,6 +83,7 @@ class CMISConnectorUploadResource(Resource):
                      print(documentContent)
                 else:
                     print("Something went wrong!")
+                # return response
             except UpdateConflictException:
                 return {
                     "message": "The uploaded file already existing in the repository"
@@ -94,7 +95,7 @@ class CMISConnectorUploadResource(Resource):
  
         
 
-@cors_preflight("GET,POST,OPTIONS")
+@cors_preflight("GET,POST,OPTIONS,PUT")
 @API.route("/update", methods=["PUT", "OPTIONS"])
 class CMISConnectorUploadResource(Resource):
     """Resource for uploading cms repo."""
