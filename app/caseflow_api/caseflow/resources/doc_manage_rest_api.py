@@ -70,7 +70,8 @@ class CMISConnectorUploadResource(Resource):
                      print(documentContent)
                 else:
                     print("Something went wrong!")
-            except Exception as e:
+
+            except UpdateConflictException:
                 return {
                     "message": "Unable to  upload files in the request", "error" : e.message
                 }, HTTPStatus.INTERNAL_SERVER_ERROR
@@ -81,7 +82,7 @@ class CMISConnectorUploadResource(Resource):
  
         
 
-@cors_preflight("GET,POST,OPTIONS")
+@cors_preflight("GET,POST,OPTIONS,PUT")
 @API.route("/update", methods=["PUT", "OPTIONS"])
 class CMISConnectorUploadResource(Resource):
     """Resource for uploading cms repo."""
