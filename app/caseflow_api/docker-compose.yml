@@ -1,0 +1,55 @@
+version: '3.7'
+
+services:
+  caseflow-db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: ${CASEFLOW_API_DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${CASEFLOW_API_DB_PASSWORD:-changeme}
+      POSTGRES_DB: ${CASEFLOW_API_DB_NAME:-caseflow}
+    ports:
+      - '5433:5432'
+    restart: unless-stopped
+    volumes:
+      - ./postgres/webapi:/var/lib/postgresql/data
+    networks:
+      - forms-flow-webapi-network
+
+  caseflow:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - caseflow-db
+    entrypoint: "/wait-for-service.sh caseflow-db:5432 -s -- ./entrypoint.sh"
+    ports:
+      - '5000:5000'
+    volumes:
+      - ./:/app:rw
+    environment:
+
+      DATABASE_URL: ${CASEFLOW_API_DB_URL:-postgresql://postgres:changeme@caseflow-db:5432/caseflow}
+      CASEFLOW_API_CORS_ORIGINS: ${CASEFLOW_API_CORS_ORIGINS:-*}
+      JWT_OIDC_WELL_KNOWN_CONFIG: ${KEYCLOAK_URL}/auth/realms/${KEYCLOAK_URL_REALM:-caseflow}/.well-known/openid-configuration
+      JWT_OIDC_JWKS_URI: ${KEYCLOAK_URL}/auth/realms/${KEYCLOAK_URL_REALM:-caseflow}/protocol/openid-connect/certs
+      JWT_OIDC_ISSUER: ${KEYCLOAK_URL}/auth/realms/${KEYCLOAK_URL_REALM:-caseflow}
+      JWT_OIDC_AUDIENCE: ${KEYCLOAK_WEB_CLIENT_ID:-case-flow-web}
+      JWT_OIDC_CACHING_ENABLED: 'True'
+      KEYCLOAK_URL: ${KEYCLOAK_URL}
+      KEYCLOAK_URL_REALM: ${KEYCLOAK_URL_REALM:-caseflow}
+      WEB_API_BASE_URL: ${CASEFLOW_API_URL}
+      WEB_BASE_URL: ${WEB_BASE_URL:-null}
+   
+
+    stdin_open: true # -i
+    tty: true # -t
+    networks:
+      - forms-flow-webapi-network
+
+networks:
+  forms-flow-webapi-network:
+    driver: 'bridge'
+
+volumes:
+  mdb-data:
