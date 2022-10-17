@@ -28,8 +28,6 @@ services:
     volumes:
       - ./:/app:rw
     environment:
-
-      DATABASE_URL: ${CASEFLOW_API_DB_URL:-postgresql://postgres:changeme@caseflow-db:5432/caseflow}
       CASEFLOW_API_CORS_ORIGINS: ${CASEFLOW_API_CORS_ORIGINS:-*}
       JWT_OIDC_WELL_KNOWN_CONFIG: ${KEYCLOAK_URL}/auth/realms/${KEYCLOAK_URL_REALM:-caseflow}/.well-known/openid-configuration
       JWT_OIDC_JWKS_URI: ${KEYCLOAK_URL}/auth/realms/${KEYCLOAK_URL_REALM:-caseflow}/protocol/openid-connect/certs
@@ -40,7 +38,7 @@ services:
       KEYCLOAK_URL_REALM: ${KEYCLOAK_URL_REALM:-caseflow}
       WEB_API_BASE_URL: ${CASEFLOW_API_URL}
       WEB_BASE_URL: ${WEB_BASE_URL:-null}
-   
+      KEYCLOAK_ENABLE_CLIENT_AUTH: ${KEYCLOAK_ENABLE_CLIENT_AUTH:-false}
 
     stdin_open: true # -i
     tty: true # -t
