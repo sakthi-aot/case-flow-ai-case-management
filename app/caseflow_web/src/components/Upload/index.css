@@ -1,5 +1,23 @@
 body {
   background: rgba(0, 0, 0, 0.9);
+  color: white;
+}
+
+.dropdown-selection{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+ 
+}
+.actions-select{
+  width: 23%;
+  padding: .8rem;
+}
+.action-option{
+  background-color: grey;
+  color: white;
+  width: 23%;  
 }
 
 .form {
@@ -32,14 +50,15 @@ body {
   opacity: 0;
 }
 
-.form .text {
+.form .file-input {
   width: 500px;
   margin: 0;
   border: none;
   height: 35px;
+  margin-bottom: 1rem;
 }
 
-.form button {
+.form .upload-btn {
   margin: 0;
   color: #fff;
   background: #16a085;
@@ -62,3 +81,5 @@ body {
 .form button:active {
   border: 0;
 }
+
+

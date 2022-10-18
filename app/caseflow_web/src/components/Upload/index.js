@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import {
   uploadCMISfile,
 } from "../../apiManager/services/cmisService";
@@ -9,8 +9,12 @@ import "./index.css";
 //if textbox is not altered the defult filename will be used.
 
 const Upload = () => {
-  const [file, setFile] = React.useState("");
-  const [fileName, setFileName] = React.useState("");
+  const [file, setFile] = useState("");
+  const [fileName, setFileName] = useState("");
+  const [actionSelected,setActionSelected] = useState("upload")
+
+
+  const documentIDRef = useRef(""); 
 
   function handleUpload(event) {
     setFile(event.target.files[0]); //set file into state
@@ -20,8 +24,31 @@ const Upload = () => {
     setFileName(event.target.value); //set the filename from text box if name is alterded
   }
 
+  const onActionSelectChange = (event ) =>{    
+    setActionSelected(event.target.value)
+  }
+  const onSubmitHandler = ( ) =>{
+    if(actionSelected ==="upload"){
+      uploadCMISfile(file,fileName)
+    }
+    
+    if(actionSelected==="edit"){
+      updateCMISdocument(documentIDRef.current.value,file,fileName)
+    }
+  }
+
   return (
-    <div id="upload-box">
+      <>
+
+      <div className="dropdown-selection">
+        <h2>CHOOSE YOUR ACTION</h2>
+          <select className="actions-select" onChange={onActionSelectChange} >            
+            <option value="upload" className="action-option">Upload</option>
+            <option value="edit" className="action-option">Edit/Update</option>
+          </select>
+      </div>
+      
+     <div id="upload-box">
       <div className="form">
         <input className="input" type="file" onChange={handleUpload} /> /
         {file.name ? (
@@ -29,22 +56,34 @@ const Upload = () => {
         ) : (
           <p>Drag your files here or click in this area.</p>
         )}
-        {file.name ? (
+        {file.name && (
           <input
             value={fileName}
             placeholder="Change the name..."
             type="text"
-            className="text"
+            className="file-input"
             onChange={fileNameChange}
           />
-        ) : (
-          <div></div>
-        )}
-        <button onClick={uploadCMISfile(file, fileName)}>Upload</button>
+        ) }
+        <br/>
+        { actionSelected ==="edit" && <input
+            
+            placeholder="Enter the ID"
+            type="text"
+            className="file-input"
+            ref={documentIDRef}
+          />}
+        <button className="upload-btn" onClick={onSubmitHandler}>Upload</button>
       </div>
 
       <div></div>
     </div>
+
+
+      </>
+
+
+
   );
 };
 
