@@ -120,36 +120,39 @@ class CMISConnectorUploadResource(Resource):
         headers["Content-Type"] = ""
         if filename != "":
             try:
-                url = cms_repo_url + "1/nodes/" + request_data["id"] + '/content'
-                document = requests.put(
-                    url,files=files,params=params,headers = headers,auth=HTTPBasicAuth(cms_repo_username, cms_repo_password)
-                )
-                response = json.loads(document.text)
-                if document.ok:
-                    uploadeddata = DocManageService.doc_update_mutation(request,response)
-                    print("Upload completed successfully!")
+                docData = DocManageService.fetchDocId(request_data["id"])
+                if docData['status']=="success":
+                    docId=docData['message']
+                    url = cms_repo_url + "1/nodes/" + docId + '/content'
+                    document = requests.put(
+                        url,files=files,params=params,headers = headers,auth=HTTPBasicAuth(cms_repo_username, cms_repo_password)
+                    )
+                    response = json.loads(document.text)
+                    if document.ok:
+                        uploadeddata = DocManageService.doc_update_mutation(request_data["id"],response)
+                        print("Upload completed successfully!")
+                        return (
+                            (
+                                {  
+                                    "objectId": response['entry']['id'],
+                                    "name": response['entry']['name'],
+                                    
+                                }
+                            ),
+                            HTTPStatus.OK,
+                        )
+                    else:
+                        print("Something went wrong!")
+                    print(document)
                     return (
-                        (
-                            {  
-                                "objectId": response['entry']['id'],
-                                "name": response['entry']['name'],
-                                
-                            }
+                        (document
                         ),
                         HTTPStatus.OK,
                     )
-                else:
-                    print("Something went wrong!")
-                print(document)
-                return (
-                    (document
-                    ),
-                    HTTPStatus.OK,
-                )
             except Exception as e:
-                return {
-                    "message": "Unable to  upload files in the request", "error" : e.message
-                }, HTTPStatus.INTERNAL_SERVER_ERROR
+                    return {
+                        "message": "Unable to  upload files in the request", "error" : e.message
+                    }, HTTPStatus.INTERNAL_SERVER_ERROR
         else:
             return {"message": "No upload files in the request"}, HTTPStatus.BAD_REQUEST
        
@@ -180,7 +183,7 @@ class CMISConnectorDownloadResource(Resource):
             if docData['status']=="success":
                 docId=docData['message']
                 primaryUrl =cms_repo_url + "1/downloads"
-                payload = {"nodeIds":[documentId]}
+                payload = {"nodeIds":[docId]}
                 headers = {"Content-type" : "application/json"}
                 response = requests.post(
                         primaryUrl,json = payload,headers = headers,auth=HTTPBasicAuth(cms_repo_username, cms_repo_password)
