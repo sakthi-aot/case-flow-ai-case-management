@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  fetchCMISfile,
   uploadCMISfile,
 } from "../../apiManager/services/cmisService";
 import "./index.css";

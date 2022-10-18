@@ -1,7 +1,6 @@
 import React, { useEffect, lazy } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { BASE_ROUTE } from "../constants/constants";
 import UserService from "../services/UserService";
 import { setUserAuth } from "../actions/bpmActions";
 // const Download = lazy(() => import("./Download"));
@@ -15,15 +14,16 @@ const PrivateRoute = React.memo((props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // if (props.store) {
-    //   console.log(props.store)
+    if (props.store) {
+      console.log(props.store)
+    }
     UserService.setKeycloakJson(null, (clientId) => {
       UserService.initKeycloak(props.store, clientId, (err, res) => {
         dispatch(setUserAuth(res.authenticated));
       });
     });
-    // }
-  }, []);
+   
+  });
 
   // useMemo prevents unneccessary rerendering caused by the route update.
 

@@ -29,6 +29,7 @@ services:
       - ./:/app:rw
     environment:
       CASEFLOW_API_CORS_ORIGINS: ${CASEFLOW_API_CORS_ORIGINS:-*}
+      KEYCLOAK_FRONTEND_URL: ${KEYCLOAK_URL}/auth
       JWT_OIDC_WELL_KNOWN_CONFIG: ${KEYCLOAK_URL}/auth/realms/${KEYCLOAK_URL_REALM:-caseflow}/.well-known/openid-configuration
       JWT_OIDC_JWKS_URI: ${KEYCLOAK_URL}/auth/realms/${KEYCLOAK_URL_REALM:-caseflow}/protocol/openid-connect/certs
       JWT_OIDC_ISSUER: ${KEYCLOAK_URL}/auth/realms/${KEYCLOAK_URL_REALM:-caseflow}
@@ -39,6 +40,12 @@ services:
       WEB_API_BASE_URL: ${CASEFLOW_API_URL}
       WEB_BASE_URL: ${WEB_BASE_URL:-null}
       KEYCLOAK_ENABLE_CLIENT_AUTH: ${KEYCLOAK_ENABLE_CLIENT_AUTH:-false}
+      STEPZEN_ENDPOINT_URL: ${STEPZEN_ENDPOINT_URL}
+      STEPZEN_API_KEY: ${STEPZEN_API_KEY}
+      CMS_REPO_URL: ${CMS_REPO_URL}
+      CMS_REPO_USERNAME: ${CMS_REPO_USERNAME:-admin}
+      CMS_REPO_PASSWORD: ${CMS_REPO_PASSWORD:-admin}
+      
 
     stdin_open: true # -i
     tty: true # -t

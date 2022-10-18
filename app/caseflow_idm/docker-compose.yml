@@ -32,8 +32,8 @@ services:
       - ./imports:/opt/jboss/keycloak/imports
       - ./themes/caseflow:/opt/jboss/keycloak/themes/caseflow
       
-    # command: 
-      # - "-b 0.0.0.0 -Dkeycloak.import=/opt/jboss/keycloak/imports/formsflow-ai-realm.json -Dkeycloak.migration.strategy=OVERWRITE_EXISTING"
+    command: 
+      - "-b 0.0.0.0 -Dkeycloak.import=/opt/jboss/keycloak/imports/caseflow-realm.json -Dkeycloak.migration.strategy=OVERWRITE_EXISTING"
     environment:
       - DB_VENDOR=POSTGRES
       - DB_ADDR=keycloak-db
