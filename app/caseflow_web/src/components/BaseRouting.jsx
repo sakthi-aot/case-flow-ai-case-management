@@ -1,10 +1,9 @@
 import React from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Route, Routes } from "react-router-dom";
+
 
 // import PublicRoute from "./PublicRoute";
-import PrivateRoute from "./PrivateRoute";
-import { BASE_ROUTE } from "../constants/constants";
+
 
 /*import SideBar from "../containers/SideBar";*/
 // import NavBar from "../containers/NavBar";
@@ -13,7 +12,7 @@ import { BASE_ROUTE } from "../constants/constants";
 // import "react-toastify/dist/ReactToastify.css";
 import Home from "./Home";
 import NotFound from "./NotFound";
-import Upload from "./Upload";
+
 
 const BaseRouting = React.memo(({ store }) => {
   // const isAuth = useSelector((state) => state.user.isAuthenticated);

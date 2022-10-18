@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import BaseRouting from "./BaseRouting";
 import PrivateRoute from "./PrivateRoute";
 import { BrowserRouter,Route ,Routes} from 'react-router-dom';
-import { createReduxHistoryContext } from "redux-first-history";
+
 
 const App = React.memo((props) =>{
     const { store, history } = props;

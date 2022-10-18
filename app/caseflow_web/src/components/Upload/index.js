@@ -1,7 +1,5 @@
 import React, { useRef, useState } from "react";
 import {
-  fetchCMISfile,
-  updateCMISdocument,
   uploadCMISfile,
 } from "../../apiManager/services/cmisService";
 import "./index.css";

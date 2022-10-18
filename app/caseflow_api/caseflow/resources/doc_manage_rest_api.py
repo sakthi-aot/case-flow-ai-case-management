@@ -52,11 +52,12 @@ class CMISConnectorUploadResource(Resource):
                     url,data = request.form,files= files,auth=HTTPBasicAuth(cms_repo_username, cms_repo_password)
                 )
 
-                response = json.loads(document.text)
-                print(response['entry']['properties'])
-                print(response['entry']['properties']['cm:description'])
+                
              
                 if document.ok:
+                    response = json.loads(document.text)
+                    print(response['entry']['properties'])
+                    print(response['entry']['properties']['cm:description'])
                     uploadeddata = DocManageService.doc_upload_mutation(request,response)
                     print("Upload completed successfully!")
                     if uploadeddata['status']=="success":

@@ -1,11 +1,14 @@
 import Keycloak from "keycloak-js";
-let KeycloakData, doLogin, doLogout;
+import {
+  KEYCLOAK_AUTH_URL,
+} from "../apiManager/endpoints/config";
 
+let KeycloakData, doLogin, doLogout, refreshInterval=null;
 const setKeycloakJson = (tenantKey = null, ...rest) => {
   let kcJson;
   const done = rest.length ? rest[0] : () => {};
   kcJson = {
-    url: "http://localhost:8085/auth",
+    url: KEYCLOAK_AUTH_URL,
     realm: "caseflow",
     clientId: "case-flow-web",
   };
@@ -22,8 +25,7 @@ const setKeycloakJson = (tenantKey = null, ...rest) => {
  */
 
 const initKeycloak = (store, ...rest) => {
-  const clientId = rest.length && rest[0];
-  const done = rest.length ? rest[1] : () => {};
+
   KeycloakData.init({
     onLoad: "check-sso",
     promiseType: "native",
@@ -46,36 +48,36 @@ const initKeycloak = (store, ...rest) => {
     });
 };
 
-const getTokenExpireTime = (keycloak) => {
-  const { exp, iat } = keycloak.tokenParsed;
-  if (exp && iat) {
-    const toeknExpiretime =
-      new Date(exp).getMilliseconds() - new Date(iat).getMilliseconds();
-    return toeknExpiretime * 1000;
-  } else {
-    return 60000;
-  }
-};
+// const getTokenExpireTime = (keycloak) => {
+//   const { exp, iat } = keycloak.tokenParsed;
+//   if (exp && iat) {
+//     const toeknExpiretime =
+//       new Date(exp).getMilliseconds() - new Date(iat).getMilliseconds();
+//     return toeknExpiretime * 1000;
+//   } else {
+//     return 60000;
+//   }
+// };
 
-let refreshInterval;
-const refreshToken = (store) => {
-  const refreshTime = getTokenExpireTime(KeycloakData);
-  refreshInterval = setInterval(() => {
-    KeycloakData &&
-      KeycloakData.updateToken(5)
-        .then((refreshed) => {
-          if (refreshed) {
-            clearInterval(refreshInterval);
-            // store.dispatch(setUserToken(KeycloakData.token));
-            refreshToken(store);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          userLogout();
-        });
-  }, refreshTime);
-};
+
+// const refreshToken = (store) => {
+//   const refreshTime = getTokenExpireTime(KeycloakData);
+//   refreshInterval = setInterval(() => {
+//     KeycloakData &&
+//       KeycloakData.updateToken(5)
+//         .then((refreshed) => {
+//           if (refreshed) {
+//             clearInterval(refreshInterval);
+//             // store.dispatch(setUserToken(KeycloakData.token));
+//             refreshToken(store);
+//           }
+//         })
+//         .catch((error) => {
+//           console.log(error);
+//           userLogout();
+//         });
+//   }, refreshTime);
+// };
 
 /**
  * Logout function
