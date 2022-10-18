@@ -93,25 +93,24 @@ class DocManageService:
 
 
     @staticmethod
-    def doc_update_mutation(request,document):
+    def doc_update_mutation(doc_id,document):
         """ Do Update document """
         stepzen_endpoint_url =current_app.config.get("STEPZEN_ENDPOINT_URL")  
         stepzen_api_key =current_app.config.get("STEPZEN_API_KEY") 
-        doc_id = document['entry']['id']
 
         query = """
-        query getDocumentId($documentid: String!){
-            getDocumentId(documentid: $documentid){
-                id
+        query getDocument($id: Int!){
+            getDocument(id: $id){
+                documentid
                 
             }
         }
             """
-        variables = {"documentid": doc_id}
+        variables = {"id": doc_id}
         headers = {"Content-Type": "application/json", "Authorization": "Apikey "+stepzen_api_key}
         r = requests.post(stepzen_endpoint_url, json={'query': query, 'variables': variables}, headers=headers)
         data = r.json()
-        documentId=data['data']['getDocumentId']['id']
+        documentId=data['data']['getDocument']['documentid']
 
         doc_name = document['entry']['name']
         doc_type = document['entry']['content']['mimeType']
@@ -144,7 +143,7 @@ class DocManageService:
         }
         }
 
-        #     """ % (doc_id,doc_name,doc_size,doc_type,doc_name,description,doc_name,version,doc_modified,doc_name)
+        #     """ % (documentId,doc_name,doc_size,doc_type,doc_name,description,doc_name,version,doc_modified,doc_name)
 
 
         variables = {}
@@ -166,7 +165,7 @@ class DocManageService:
                 }
                 }
                 
-            #     """ % (documentId,version,doc_id,doc_modified,doc_modified)
+            #     """ % (doc_id,version,documentId,doc_modified,doc_modified)
 
                 #variables = {"docid": documentInsertedID,"versions": version,"modificationdate": doc_modified,"creationdate": doc_created}
             headers = {"Content-Type": "application/json", "Authorization": "Apikey "+stepzen_api_key}
