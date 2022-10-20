@@ -49,6 +49,10 @@ services:
                 -XX:MinRAMPercentage=50
                 -XX:MaxRAMPercentage=80
                 "
+        volumes:
+        - ./data/acs:/usr/local/tomcat/alf_data/
+        - ./acs/alfresco-global.properties:/usr/local/tomcat/shared/classes/alfresco-global.properties
+        - ./acs/log4j.properties:/usr/local/tomcat/webapps/alfresco/WEB-INF/classes/log4j.properties
 
     transform-router:
         mem_limit: 512m
