@@ -3,24 +3,26 @@ version: '3.7'
 services:
   caseflow-db:
     image: postgres:13
+    container_name: database
     environment:
       POSTGRES_USER: ${CASEFLOW_API_DB_USER:-postgres}
       POSTGRES_PASSWORD: ${CASEFLOW_API_DB_PASSWORD:-changeme}
       POSTGRES_DB: ${CASEFLOW_API_DB_NAME:-caseflow}
     ports:
-      - '5433:5432'
+      - 6432:5432
     restart: unless-stopped
     volumes:
-      - ./postgres/webapi:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - forms-flow-webapi-network
+      - case-flow-webapi-network
 
-  caseflow:
+  caseflow: 
+    container_name: server
     build:
       context: ./
       dockerfile: Dockerfile
     restart: unless-stopped
-    depends_on:
+    links:
       - caseflow-db
     entrypoint: "/wait-for-service.sh caseflow-db:5432 -s -- ./entrypoint.sh"
     ports:
@@ -50,11 +52,11 @@ services:
     stdin_open: true # -i
     tty: true # -t
     networks:
-      - forms-flow-webapi-network
+      - case-flow-webapi-network
 
 networks:
-  forms-flow-webapi-network:
+  case-flow-webapi-network:
     driver: 'bridge'
 
 volumes:
-  mdb-data:
+  postgres_data :

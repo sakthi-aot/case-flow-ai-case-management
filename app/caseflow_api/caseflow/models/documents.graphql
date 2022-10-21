@@ -25,7 +25,7 @@ type Query {
     @dbquery(
       type: "postgresql"
       schema: "public"
-      table: "Document"
+      table: "document"
       configuration: "postgresql_config"
     )
   """
@@ -43,7 +43,7 @@ type Query {
     @dbquery(
       type: "postgresql"
       schema: "public"
-      table: "Document"
+      table: "document"
       configuration: "postgresql_config"
     )
   getDocumentUsingVersions(id: Int!): [Document]
@@ -80,7 +80,7 @@ type Mutation {
     @dbquery(
       type: "postgresql"
       schema: "public"
-      table: "Document"
+      table: "document"
       dml: INSERT
       configuration: "postgresql_config"
     )
@@ -91,7 +91,7 @@ type Mutation {
     @dbquery(
       type: "postgresql"
       schema: "public"
-      table: "Document"
+      table: "document"
       dml: DELETE
       configuration: "postgresql_config"
     )
