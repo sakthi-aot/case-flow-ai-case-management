@@ -9,8 +9,7 @@ from flask import current_app, request,make_response,Response
 from flask_restx import Namespace, Resource
 from requests.auth import HTTPBasicAuth
 from caseflow.services import DocManageService
-
-
+from caseflow.services import DMSConnector
 
 from caseflow.utils import auth, cors_preflight
 
@@ -56,10 +55,12 @@ class CMISConnectorUploadResource(Resource):
              
                 if document.ok:
                     response = json.loads(document.text)
-                    print(response['entry']['properties'])
-                    print(response['entry']['properties']['cm:description'])
-                    uploadeddata = DocManageService.doc_upload_mutation(request,response)
-                    print("Upload completed successfully!")
+                    # print(response['entry']['properties'])
+                    # print(response['entry']['properties']['cm:description'])
+                    formatted_document = DMSConnector.doc_upload_connector(response,'DMS01')
+                    uploadeddata = DocManageService.doc_upload_mutation(request,formatted_document)
+                    print(uploadeddata)
+                    # print("Upload completed successfully!")
                     if uploadeddata['status']=="success":
                         return (
                             (uploadeddata),HTTPStatus.OK,
@@ -129,7 +130,8 @@ class CMISConnectorUploadResource(Resource):
                     )
                     response = json.loads(document.text)
                     if document.ok:
-                        uploadeddata = DocManageService.doc_update_mutation(request_data["id"],response)
+                        formatted_document = DMSConnector.doc_update_connector(response,'DMS01')
+                        uploadeddata = DocManageService.doc_update_mutation(request_data["id"],formatted_document)
                         print("Upload completed successfully!")
                         return (
                             (
