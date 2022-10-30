@@ -145,6 +145,11 @@ In the following document, we’ll describe about the different project dependen
 
 NOTE: Use --build command with the start command to reflect any future .env / code changes eg :` docker-compose up --build -d`
 
+Enter the following command in terminal for deploy the db connection changes(stepzen update the config.yaml)
+
+stepzen deploy
+stepzen start (To check the Query and mutations)
+
 #### To stop the caseflow-api server
 - Run `docker-compose stop` to stop. 
 
