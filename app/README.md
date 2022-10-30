@@ -148,6 +148,7 @@ NOTE: Use --build command with the start command to reflect any future .env / co
 Enter the following command in terminal for deploy the db connection changes(stepzen update the config.yaml)
 
 stepzen deploy
+
 stepzen start (To check the Query and mutations)
 
 #### To stop the caseflow-api server
