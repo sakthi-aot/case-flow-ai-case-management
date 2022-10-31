@@ -179,6 +179,7 @@ The application should be up and available for use at port defaulted to 3000 in 
 
 Go to http://localhost:3000/private/upload for file upload
 
+![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/staging/development/.images/web-login-page.png)
 ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/staging/development/.images/upload%20success.png)
 
 ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/staging/development/.images/update.png)
