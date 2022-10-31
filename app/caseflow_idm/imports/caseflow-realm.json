@@ -42,7 +42,7 @@
   "waitIncrementSeconds": 60,
   "quickLoginCheckMilliSeconds": 1000,
   "maxDeltaTimeSeconds": 43200,
-  "failureFactor": 30,
+  "failureFactor": 30,  
   "roles": {
     "realm": [
       {
@@ -1314,6 +1314,7 @@
     "strictTransportSecurity": "max-age=31536000; includeSubDomains"
   },
   "smtpServer": {},
+  "loginTheme":"caseflow",
   "eventsEnabled": false,
   "eventsListeners": [
     "jboss-logging"
