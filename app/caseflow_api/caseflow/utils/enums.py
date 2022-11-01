@@ -3,18 +3,16 @@ from enum import Enum, unique
 
 
 @unique
-class FormioRoles(Enum):
-    """Roles and corresponding machine names."""
+class DMSCode(Enum):
+    """DMS names and there corresponding codes"""
 
-    CLIENT = "formsflowClient"
-    REVIEWER = "formsflowReviewer"
-    DESIGNER = "administrator"
-    ANONYMOUS = "anonymous"
-    RESOURCE_ID = "RESOURCE_ID"
+    DMS01 = 'alfresco'
+    DMS02 = 'S3'
+    DMS03 = 'Sharepoint'
 
-    @classmethod
-    def contains(cls, item: str) -> bool:
-        """Checks if the parameter exists in the enum."""
-        return item in [entry.value for entry in cls]
+
+   
+
+
 
 
