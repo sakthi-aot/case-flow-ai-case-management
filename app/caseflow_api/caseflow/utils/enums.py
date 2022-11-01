@@ -10,6 +10,16 @@ class DMSCode(Enum):
     DMS02 = 'S3'
     DMS03 = 'Sharepoint'
 
+@unique
+class CaseflowRoles(Enum):
+    """caseflow Roles"""
+    
+    CASEFLOW_ADMINISTRATOR = 'administrator'
+    CASEFLOW_CLIENT = 'caseflowClient'
+
+
+
+
 
    
 
