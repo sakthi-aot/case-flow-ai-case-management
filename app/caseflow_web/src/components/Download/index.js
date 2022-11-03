@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { fetchCMISfile } from "../../apiManager/services/cmisService";
 import "./download.css";
+import MiniDrawer from "../NavigationDrawer"
 
 const Download = () => {
   const [value, setValue] = useState("");
 
   return (
+    
     <div className="download">
+      <MiniDrawer></MiniDrawer>
       {" "}
       <input
         value={value}
