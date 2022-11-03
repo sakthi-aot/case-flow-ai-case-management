@@ -13,20 +13,15 @@ class DocManageService:
 
         stepzen_endpoint_url =current_app.config.get("STEPZEN_ENDPOINT_URL")  
         stepzen_api_key =current_app.config.get("STEPZEN_API_KEY") 
-        doc_id = document['entry']['id']
-        doc_name = document['entry']['name']
-        doc_type = document['entry']['content']['mimeType']
-        doc_size = document['entry']['content']['sizeInBytes']
-        doc_description=document['entry']['properties']['cm:description']
-        doc_versionType=document['entry']['properties']['cm:versionType']
-        version=document['entry']['properties']['cm:versionLabel']
-        doc_version='[{ name: "version", field:"'+ version+'" }]'
-        doc_modified_date=document['entry']['modifiedAt']
-        doc_created_date=document['entry']['createdAt']
-        doc_modifiedObj = datetime.strptime(doc_modified_date, '%Y-%m-%dT%H:%M:%S.%f+0000')
-        doc_createdObj = datetime.strptime(doc_created_date, '%Y-%m-%dT%H:%M:%S.%f+0000')
-        doc_modified = doc_modifiedObj.strftime("%Y-%m-%dT%H:%M:%S")
-        doc_created = doc_createdObj.strftime("%Y-%m-%dT%H:%M:%S")
+
+        doc_id = document['doc_id']
+        doc_name = document['doc_name']
+        doc_type = document['doc_type']
+        doc_size = document['doc_size']
+        doc_description=document['doc_description']
+        version=document['version']
+        doc_modified = document['doc_modified']
+        doc_created = document['doc_created']
     
         query = """mutation insertDocument {
         insertDocument(
@@ -51,7 +46,7 @@ class DocManageService:
 
         #     """ % (doc_id,doc_size,doc_type,doc_created,doc_name,doc_description,doc_name,version,doc_name,doc_name,doc_modified)
 
-        print(query)
+        # print(query)
         variables = {}
         try:
             headers = {"Content-Type": "application/json", "Authorization": "Apikey "+stepzen_api_key}
@@ -112,17 +107,12 @@ class DocManageService:
         data = r.json()
         documentId=data['data']['getDocument']['documentid']
 
-        doc_name = document['entry']['name']
-        doc_type = document['entry']['content']['mimeType']
-        doc_size = document['entry']['content']['sizeInBytes']
-        description=document['entry']['properties']['cm:description']
-        version=document['entry']['properties']['cm:versionLabel']
-        doc_version='{ name: "version", field:"'+ version+'" }'
-       #doc_version={ 'name': 'version', 'field':'version' }
-        doc_modified_date=document['entry']['modifiedAt']
-        doc_modifiedObj = datetime.strptime(doc_modified_date, '%Y-%m-%dT%H:%M:%S.%f+0000')
-        doc_modified = doc_modifiedObj.strftime("%Y-%m-%dT%H:%M:%S")
-        
+        doc_name = document['doc_name']
+        doc_type = document['doc_type']
+        doc_size = document['doc_size']
+        description=document['doc_description']
+        version=document['version']
+        doc_modified = document['doc_modified']
 
         query = """mutation updateDocument {
         updateDocument(
