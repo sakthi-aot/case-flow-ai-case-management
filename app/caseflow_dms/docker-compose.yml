@@ -1,184 +1,145 @@
-# This docker-compose.yml file is used to spin up an Alfresco Content Services (ACS) trial cluster on a local host or on a server and it requires a minimum of 16GB Memory to distribute among containers.
 
-# To use this file to create a local installation of Alfresco Content Services, you need to have Docker Compose installed [https://docs.docker.com/compose/install/].
-# Navigate to the folder where this file is located, and issue the following commands:
-#
-#     docker login quay.io -u="alfresco+acs_v6_trial" -p="MDF9RNGUJPKZ83KK8UVGUVWO9AYKUZ0VN6WG5VOOCUT6BX19JJLU5ZL0HKU7N20C"
-#     docker-compose up
-#
 
-# For additional information about using this docker-compose file, please see:
-# https://github.com/Alfresco/acs-deployment/blob/master/docs/docker-compose-deployment.md
-
-# You may wish to limit container memory and assign a certain percentage to JVM. There are couple of ways to allocate JVM Memory for ACS Containers
-# For example: 'JAVA_OPTS: "$JAVA_OPTS -XX:+PrintFlagsFinal -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"'
-# If container memory is not explicitly set, then the above flags will default max heap to 1/4th of container's memory.
+# Using version 2 as 3 does not support resource constraint options (cpu_*, mem_* limits) for non swarm mode in Compose
 version: "2"
 
 services:
-    alfresco:
-        image: quay.io/alfresco/alfresco-content-repository:7.2.0
-        mem_limit: 1900m
-        environment:
-            JAVA_TOOL_OPTIONS: " -Dencryption.keystore.type=JCEKS -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding -Dencryption.keyAlgorithm=DESede -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore -Dmetadata-keystore.password=mp6yc0UD9e -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.password=oKIWzVdEdA -Dmetadata-keystore.metadata.algorithm=DESede "
-            JAVA_OPTS: "
-                -Ddb.driver=org.postgresql.Driver
-                -Ddb.username=alfresco
-                -Ddb.password=alfresco
-                -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
-                -Dsolr.host=solr6
-                -Dsolr.port=8983
-                -Dsolr.secureComms=secret
-                -Dsolr.sharedSecret=secret
-                -Dsolr.base.url=/solr
-                -Dindex.subsystem.name=solr6
-                -Dshare.host=127.0.0.1
-                -Dshare.port=8080
-                -Dalfresco.host=localhost
-                -Dalfresco.port=8080
-                -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
-                -Dmessaging.broker.url=\"failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true\"
-                -Ddeployment.method=DOCKER_COMPOSE
-                -Dtransform.service.enabled=true
-                -Dtransform.service.url=http://transform-router:8095
-                -Dsfs.url=http://shared-file-store:8099/
-                -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
-                -Dcsrf.filter.enabled=false
-                -Ddsync.service.uris=http://localhost:9090/alfresco
-                -DtrialUid=id19257772
-                -XX:MinRAMPercentage=50
-                -XX:MaxRAMPercentage=80
-                "
-        volumes:
+  content:
+      image: alfresco/alfresco-content-repository:6.0.0
+      mem_limit: 1500m
+      environment:
+          CATALINA_OPTS: "
+      		-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
+      		"
+          JAVA_OPTS: "
+              -Ddb.driver=org.postgresql.Driver
+              -Ddb.username=alfresco
+              -Ddb.password=alfresco
+              -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
+              -Dsolr.host=solr6
+              -Dsolr.port=8983
+              -Dsolr.secureComms=none
+              -Dsolr.base.url=/solr
+              -Dindex.subsystem.name=solr6
+              -Ddeployment.method=DOCKER_COMPOSE
+              -Xms1g -Xmx1g
+              "
+      volumes:
         - ./data/acs:/usr/local/tomcat/alf_data/
         - ./acs/alfresco-global.properties:/usr/local/tomcat/shared/classes/alfresco-global.properties
         - ./acs/log4j.properties:/usr/local/tomcat/webapps/alfresco/WEB-INF/classes/log4j.properties
+      ports:
+        - 8082:8080 # Browser port
+        - 5005:5005 # Remote Debug
+      links:
+        - solr6
+        - postgres:postgres
+      depends_on:
+        - solr6
+        - postgres
 
-    transform-router:
-        mem_limit: 512m
-        image: quay.io/alfresco/alfresco-transform-router:1.5.2
-        environment:
-            JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
-            ACTIVEMQ_URL: "nio://activemq:61616"
-            CORE_AIO_URL: "http://transform-core-aio:8090"
-            FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
-        ports:
-            - "8095:8095"
-        links:
-            - activemq
+  share:
+      image: alfresco/alfresco-share:6.0
+      mem_limit: 1g
+      environment:
+        - REPO_HOST=content
+        - REPO_PORT=8080
+        - "CATALINA_OPTS= -Xms500m -Xmx500m"
+      ports:
+        - 8081:8080
+      links:
+        - content:content
+      depends_on:
+        - content
 
-    transform-core-aio:
-        image: alfresco/alfresco-transform-core-aio:2.5.7
-        mem_limit: 1536m
-        environment:
-            JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
-            ACTIVEMQ_URL: "nio://activemq:61616"
-            FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
-        ports:
-            - "8090:8090"
-        links:
-            - activemq
+  solr6:
+      image: alfresco/alfresco-search-services:1.1.1
+      mem_limit: 2500m
+      environment:
+        #Solr needs to know how to register itself with Alfresco
+        - SOLR_ALFRESCO_HOST=content
+        - SOLR_ALFRESCO_PORT=8080
+        #Alfresco needs to know how to call solr
+        - SOLR_SOLR_HOST=solr6
+        - SOLR_SOLR_PORT=8983
+        #Create the default alfresco and archive cores
+        - SOLR_CREATE_ALFRESCO_DEFAULTS=alfresco,archive
+        - "SOLR_JAVA_MEM=-Xms2g -Xmx2g"
+      volumes:
+        - ./data/solr/contentstore:/opt/alfresco-search-services/contentstore/
+        - ./data/solr/data:/opt/alfresco-search-services/data/
+      ports:
+        - 8083:8983 #Browser port
 
-    shared-file-store:
-        image: quay.io/alfresco/alfresco-shared-file-store:0.16.1
-        mem_limit: 512m
-        environment:
-            JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
-            scheduler.content.age.millis: 86400000
-            scheduler.cleanup.interval: 86400000
-        ports:
-            - "8099:8099"
-        volumes:
-            - shared-file-store-volume:/tmp/Alfresco/sfs
+  # process:
+  #   image: alfresco/process-services:1.9.0.1
+  #   environment:
+  #     ACTIVITI_DATASOURCE_USERNAME: alfresco
+  #     ACTIVITI_DATASOURCE_PASSWORD: alfresco
+  #     ACTIVITI_DATASOURCE_DRIVER: org.postgresql.Driver
+  #     ACTIVITI_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+  #     ACTIVITI_DATASOURCE_URL: 'jdbc:postgresql://postgres:5432/activiti?characterEncoding=UTF-8'
+  #     ACTIVITI_CSRF_DISABLED: 'true'
+  #     ACTIVITI_CORS_ENABLED: 'true'
+  #     ACTIVITI_ES_SERVER_TYPE: client
+  #     ACTIVITI_ES_DISCOVERY_HOSTS: elasticsearch:9300
+  #     ACTIVITI_ES_CLUSTER_NAME: elasticsearch
+  #   volumes:
+  #     - ./aps/enterprise-license:/root/.activiti/enterprise-license/:ro
+  #     - ./aps/transform.lic:/usr/share/tomcat/lib/transform.lic
+  #     - ./aps/activiti-app.properties:/usr/local/tomcat/lib/activiti-app.properties
+  #     - ./aps/activiti-ldap.properties:/usr/local/tomcat/lib/activiti-ldap.properties
+  #     - ./aps/activiti-identity-service.properties:/usr/local/tomcat/lib/activiti-identity-service.properties
+  #     #- ./aps/log4j.properties:/usr/local/tomcat/webapps/activiti-app/WEB-INF/classes/log4j.properties
+  #     - ./data/aps:/usr/local/data/
+  #   ports:
+  #     - 9080:8080
+  #   links:
+  #     - elasticsearch:elasticsearch
+  #     - postgres:postgres
+  #   depends_on:
+  #     - elasticsearch
+  #     - postgres
 
-    share:
-        image: quay.io/alfresco/alfresco-share:7.2.0
-        mem_limit: 1g
-        environment:
-            REPO_HOST: "alfresco"
-            REPO_PORT: "8080"
-            JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 -Dalfresco.host=localhost -Dalfresco.port=8080 -Dalfresco.context=alfresco -Dalfresco.protocol=http "
+  elasticsearch:
+    image: elasticsearch:1.7.3
 
-    postgres:
-        image: postgres:13.3
-        mem_limit: 512m
-        environment:
-            - POSTGRES_PASSWORD=alfresco
-            - POSTGRES_USER=alfresco
-            - POSTGRES_DB=alfresco
-        command: postgres -c max_connections=300 -c log_min_messages=LOG
-        ports:
-            - "5432:5432"
+  postgres:
+    image: postgres:10.1
+    mem_limit: 1500m
+    environment:
+      - POSTGRES_PASSWORD=alfresco
+      - POSTGRES_USER=alfresco
+      - POSTGRES_DB=alfresco
+    command: postgres -c max_connections=300 -c log_min_messages=LOG
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+      - ./docker-postgresql-multiple-databases:/docker-entrypoint-initdb.d
 
-    solr6:
-        image: alfresco/alfresco-search-services:2.0.3
-        mem_limit: 2g
-        environment:
-      # Solr needs to know how to register itself with Alfresco
-            SOLR_ALFRESCO_HOST: "alfresco"
-            SOLR_ALFRESCO_PORT: "8080"
-      # Alfresco needs to know how to call solr
-            SOLR_SOLR_HOST: "solr6"
-            SOLR_SOLR_PORT: "8983"
-      # Create the default alfresco and archive cores
-            SOLR_CREATE_ALFRESCO_DEFAULTS: "alfresco,archive"
-      # HTTPS or SECRET
-            ALFRESCO_SECURE_COMMS: "secret"
-      # SHARED SECRET VALUE
-            JAVA_TOOL_OPTIONS: " -Dalfresco.secureComms.secret=secret "
-        ports:
-            - "8083:8983" # Browser port
+  identity-service:
+    image: jboss/keycloak:3.4.3.Final
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      POSTGRES_PORT_5432_TCP_ADDR: postgres
+      POSTGRES_PORT_5432_TCP_PORT: 5432
+      POSTGRES_DATABASE: keycloak
+      POSTGRES_USER: alfresco
+      POSTGRES_PASSWORD: alfresco
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
 
-    activemq:
-        image: alfresco/alfresco-activemq:5.16.4-jre11-centos7
-        mem_limit: 1g
-        ports:
-            - "8161:8161" # Web Console
-            - "5672:5672" # AMQP
-            - "61616:61616" # OpenWire
-            - "61613:61613" # STOMP
-
-    digital-workspace:
-        image: quay.io/alfresco/alfresco-digital-workspace:2.7.0
-        mem_limit: 128m
-        environment:
-            APP_CONFIG_AUTH_TYPE: "BASIC"
-            BASE_PATH: ./
-            APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
-
-    control-center:
-        image: quay.io/alfresco/alfresco-admin-app:7.2.0
-        mem_limit: 128m
-        environment:
-            APP_CONFIG_PROVIDER: "ECM"
-            APP_CONFIG_AUTH_TYPE: "BASIC"
-            BASE_PATH: ./
-
-    proxy:
-        image: alfresco/alfresco-acs-nginx:3.3.0
-        mem_limit: 128m
-        depends_on:
-            - alfresco
-            - digital-workspace
-            - control-center
-        ports:
-            - "8080:8080"
-        links:
-            - digital-workspace
-            - alfresco
-            - share
-            - control-center
-
-    sync-service:
-        image: quay.io/alfresco/service-sync:3.6.0
-        mem_limit: 1g
-        environment:
-            JAVA_OPTS: " -Dsql.db.driver=org.postgresql.Driver -Dsql.db.url=jdbc:postgresql://postgres:5432/alfresco -Dsql.db.username=alfresco -Dsql.db.password=alfresco -Dmessaging.broker.host=activemq -Drepo.hostname=alfresco -Drepo.port=8080 -Ddw.server.applicationConnectors[0].type=http -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 "
-        ports:
-            - "9090:9090"
-
-volumes:
-    shared-file-store-volume:
-        driver_opts:
-            type: tmpfs
-            device: tmpfs
+#  ldap:
+#    image: greggigon/apacheds
+#    environment:
+#      - BOOTSTRAP_FILE=/bootstrap/demo.ldif
+#    restart: always
+#    ports:
+#      - 10389:10389
+#    volumes:
+#      - ./data/ldap/data:/data
+#      - ./ldap/bootstrap:/bootstrap
