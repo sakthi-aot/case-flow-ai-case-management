@@ -15,10 +15,10 @@ const Download = () => {
         value={value}
         placeholder="Enter document Id"
         onChange={(evt) => setValue(evt.target.value)}
-        className="text"
+        className="text-area"
         type="text"
       ></input>
-      <button onClick={fetchCMISfile(value)}>Download</button>
+      <button className = "button"onClick={fetchCMISfile(value)}>Download</button>
     </div>
   );
 };

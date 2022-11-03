@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import BaseRouting from "./BaseRouting";
 import PrivateRoute from "./PrivateRoute";
 import { BrowserRouter,Route ,Routes} from 'react-router-dom';
+import "./app.css"; 
 
 
 const App = React.memo((props) =>{
