@@ -64,6 +64,11 @@ class _Config:  # pylint: disable=too-few-public-methods
     JWT_OIDC_JWKS_CACHE_TIMEOUT = 300
     
 
+    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+    AWS_REGION_NAME = os.getenv("AWS_REGION_NAME")
+    S3_BUCKET_NAME = os.getenv("S3_BUCKET_NAME")
+    S3_DEFAULT_PERMISSION = os.getenv("S3_DEFAULT_PERMISSION")
 
 class DevConfig(_Config):  # pylint: disable=too-few-public-methods
     """Development environment configuration."""

@@ -17,7 +17,7 @@ from caseflow.utils import auth, cors_preflight
 
 # keeping the base path same for cmis operations (upload / download) as cmis/
 
-API = Namespace("CMIS", description="CMIS Connector")
+API = Namespace("CMIS_ALFRESCO", description="CMIS ALFRESCO Connector")
 
 
 @cors_preflight("GET,POST,OPTIONS")

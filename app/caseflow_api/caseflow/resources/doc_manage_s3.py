@@ -9,7 +9,7 @@ from flask import current_app, request,make_response,Response
 from flask_restx import Namespace, Resource
 from requests.auth import HTTPBasicAuth
 from caseflow.services import DocManageService
-from s3_helper import get_object,upload_object,delete_object
+from caseflow.resources.s3_helper import get_object,upload_object,delete_object
 
 
 from caseflow.utils import auth, cors_preflight
@@ -17,7 +17,7 @@ from caseflow.utils import auth, cors_preflight
 
 # keeping the base path same for cmis operations (upload / download) as cmis/
 
-API = Namespace("CMIS", description="CMIS Connector")
+API = Namespace("CMIS_S3", description="CMIS S3 Connector")
 
 
 @cors_preflight("GET,POST,OPTIONS")
@@ -39,11 +39,9 @@ class CMISConnectorUploadResource(Resource):
         access_level = current_app.config.get("S3_DEFAULT_PERMISSION") 
         if file_name != "":
             try:
-               
                 document = upload_object(bucket_name,access_level,data,file_name)
-                if document.ok:
-                    response = {}
-                    uploaded_data = DocManageService.doc_upload_mutation(request,response)
+                if document.get('HTTPStatusCode') == 200:
+                    uploaded_data = DocManageService.doc_upload_mutation(request,document)
                     print("Upload completed successfully!")
                     if uploaded_data['status']=="success":
                         return (
@@ -88,7 +86,6 @@ class CMISConnectorUploadResource(Resource):
         request_data = request.form.to_dict(flat=True)
         if filename != "":
             try:
-               
                 document = upload_object(bucket_name,access_level,data,filename)
                 if document.ok:
                     response = {}
@@ -129,7 +126,6 @@ class CMISConnectorDownloadResource(Resource):
         args = request.args
         documentId = args.get("id")
         bucket_name = current_app.config.get("S3_BUCKET_NAME") 
-        access_level = current_app.config.get("S3_DEFAULT_PERMISSION") 
         try:
             doc_data = DocManageService.fetchDocId(documentId)
             if doc_data['status']=="success":
