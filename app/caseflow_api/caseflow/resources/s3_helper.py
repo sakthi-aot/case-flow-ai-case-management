@@ -38,9 +38,9 @@ def upload_object(bucket_name, privacy_policy, data, file_name):
                 res = result.get('ResponseMetadata')
 
                 if res.get('HTTPStatusCode') == 200:
-                    return res
+                    return {"response" : res,"object" : object }
                 else:
-                    return res
+                    return {"response" : res,"object" : object }
           else:
             return {"HTTPStatusCode" : "201", "message" : "Object already exist"}
      else:
