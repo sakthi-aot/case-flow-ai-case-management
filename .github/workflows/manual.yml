@@ -47,6 +47,6 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: ./app/caseflow_web
-        file: Dockerfile
+        file: ./Dockerfile
         push: true
         tags: ${{ github.event.inputs.ecr }}/${{ github.event.inputs.reponame }}:${{ github.event.inputs.version }}
