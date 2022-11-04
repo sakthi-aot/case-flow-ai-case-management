@@ -21,11 +21,12 @@ jobs:
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
-        path: /app/caseflow_web/
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm install --force
+      working-directory: /app/caseflow_web
     - run: npm run build
+      working-directory: /app/caseflow_web
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
