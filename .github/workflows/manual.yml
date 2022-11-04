@@ -46,7 +46,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
-        context: ./
+        context: ./app/caseflow_web
         file: ./app/caseflow_web/Dockerfile
         push: true
         tags: ${{ github.event.inputs.ecr }}/${{ github.event.inputs.reponame }}:${{ github.event.inputs.version }}
