@@ -1,6 +1,13 @@
 name: Caseflow Web
 on:
   workflow_dispatch:
+    inputs:
+      ecr:
+        required: true
+      version:
+        required: true
+      reponame:
+        required: true
 jobs:
   build:
     name: Build Image
