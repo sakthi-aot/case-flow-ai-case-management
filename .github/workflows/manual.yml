@@ -26,6 +26,7 @@ jobs:
         cache: 'npm'
     - run: npm install --force
     - run: npm run build
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -36,15 +37,11 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
-      
-    - name: Build, tag, and push image to Amazon ECR
+    
+    - name: Build and push
+      uses: docker/build-push-action@v2
       with:
         context: ./
-        file: /app/caseflow_web/Dockerfile
-      env:
-        ECR_REGISTRY: ${{ github.event.inputs.ecr }}
-        ECR_REPOSITORY: ${{ github.event.inputs.reponame }}
-        IMAGE_TAG: ${{ github.event.inputs.version }}
-      run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        file: ./app/caseflow_web/Dockerfile
+        push: true
+        tags: ${{ github.event.inputs.ecr }}/${{ github.event.inputs.reponame }}:${{ github.event.inputs.version }}
