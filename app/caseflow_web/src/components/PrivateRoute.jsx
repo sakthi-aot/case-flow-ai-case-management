@@ -7,6 +7,8 @@ import Loading from "../containers/Loading";
 import Upload from "./Upload";
 import Download from "./Download";
 import Dashboard from "./Dashboard";
+import FileHandler from "./FileHandler";
+
 const NotFound = lazy(() => import("./NotFound"));
 
 const PrivateRoute = React.memo((props) => {
