@@ -1,20 +1,70 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./home.css";
+import "./home.scss";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 const Home = () => {
   return (
-    <div className="welcome">
-      <h1>WELCOME TO CASEFLOW</h1>
-      <h2>
-        <Link className="link" to="private/upload">
-          UPLOAD FILE
-        </Link>
-      </h2>
-      <h2>
-        <Link className="link" to="private/download">
-          DOWNLOAD FILE
-        </Link>
-      </h2>
+    <div className="home">
+      <div className="content-section">
+        <div className="grid-container">
+          <div className="grid-left">
+            <Box
+              component="img"
+              sx={{}}
+              alt="Logo"
+              src={require("../../assets/logo.png")}
+            />
+            <div className="inner_text">
+              <h1 className="title">
+                An open-source generic Case Managment application built on top
+                of formsflow.ai
+              </h1>
+              <p className="text">
+                caseflow.ai is a completely free and open source framework
+                explicitly designed to be hightly generic and configurable that
+                assesses, plans, implements, coordinates, monitors, and
+                evaluates to improve outcomes, experiences, and value.
+              </p>
+              <div className="buttons">
+                <Button
+                  component={Link}
+                  to="/private/dashboard"
+                  style={{
+                    backgroundColor: "#1B34FB",
+                  }}
+                  variant="contained"
+                >
+                  Get Started
+                </Button>
+
+                <Button
+                  component={Link}
+                  to="/private/dashboard"
+                  style={{
+                    color: "#1B34FB",
+                  }}
+                  variant="outlined"
+                >
+                  Explore More
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid-right">
+            <img
+              className="landingImage"
+              src="./components/Home/landingImage.jpeg"
+            ></img>
+          </div>
+        </div>
+      </div>
+      <img
+        className="bottom-blog"
+        src="./components/Home/bottom.svg"
+        alt="My Happy SVG"
+      />
     </div>
   );
 };

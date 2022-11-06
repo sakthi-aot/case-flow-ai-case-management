@@ -6,16 +6,17 @@ const Download = () => {
   const [value, setValue] = useState("");
 
   return (
+    
     <div className="download">
       {" "}
       <input
         value={value}
         placeholder="Enter document Id"
         onChange={(evt) => setValue(evt.target.value)}
-        className="text"
+        className="text-area"
         type="text"
       ></input>
-      <button onClick={fetchCMISfile(value)}>Download</button>
+      <button className = "button"onClick={fetchCMISfile(value)}>Download</button>
     </div>
   );
 };

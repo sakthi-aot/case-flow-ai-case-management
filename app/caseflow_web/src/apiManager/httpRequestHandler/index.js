@@ -21,7 +21,7 @@ export const httpGETRequest = (
             : token,
         }
       : headers,
-      config : config,
+    config: config,
   });
 };
 
@@ -96,24 +96,6 @@ export const httpGETBolbRequest = (
             : token,
         }
       : headers,
-      responseType: 'blob',
+    responseType: "blob",
   });
 };
-
-/*export const httpPUTRequest = (url, data, token, isBearer=true) => {
-  return axios.put(url, data, 
-    { headers: { Authorization: isBearer ?`Bearer ${ token || UserService.getToken()}`: token } });
-};*/
-
-/*export const httpPOSTRequestWithoutToken = (url, data) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-  };
-  return axios.post(url, qs.stringify(data), config);
-};
-
-export const httpGETRequestWithoutToken = (url, token) => {
-  return axios.get(url);
-};*/

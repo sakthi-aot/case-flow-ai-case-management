@@ -4,7 +4,6 @@ import {
   updateCMISdocument
 } from "../../apiManager/services/cmisService";
 import "./index.css";
-
 //this component is used  to upload files into cmis
 //contains a drag and drop input box and a name textfield to rename the file if necessary
 //if textbox is not altered the defult filename will be used.
@@ -40,7 +39,6 @@ const Upload = () => {
 
   return (
       <>
-
       <div className="dropdown-selection">
         <h2>CHOOSE YOUR ACTION</h2>
           <select className="actions-select" onChange={onActionSelectChange} >            

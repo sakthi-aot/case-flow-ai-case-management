@@ -1,22 +1,10 @@
-import Keycloak from "keycloak-js";
-import {
-  KEYCLOAK_AUTH_URL,
-} from "../apiManager/endpoints/config";
+/* istanbul ignore file */
 
-let KeycloakData, doLogin, doLogout, refreshInterval=null;
-const setKeycloakJson = (tenantKey = null, ...rest) => {
-  let kcJson;
-  const done = rest.length ? rest[0] : () => {};
-  kcJson = {
-    url: KEYCLOAK_AUTH_URL,
-    realm: "caseflow",
-    clientId: "case-flow-web",
-  };
-  KeycloakData = new Keycloak(kcJson);
-  doLogin = KeycloakData?.login;
-  doLogout = KeycloakData?.logout;
-  done(kcJson.clientId);
-};
+import { setAuthToken } from "../reducers/authReducer";
+
+import { _kc } from "../constants/tenantConstant";
+
+//   const jwt = require("jsonwebtoken");
 
 /**
  * Initializes Keycloak instance and calls the provided callback function if successfully authenticated.
@@ -25,7 +13,7 @@ const setKeycloakJson = (tenantKey = null, ...rest) => {
  */
 
 const initKeycloak = (store, ...rest) => {
-
+  const done = rest.length ? rest[0] : () => {};
   KeycloakData.init({
     onLoad: "check-sso",
     promiseType: "native",
@@ -33,51 +21,64 @@ const initKeycloak = (store, ...rest) => {
       window.location.origin + "/silent-check-sso.html",
     pkceMethod: "S256",
     checkLoginIframe: false,
-  })
-    .then((authenticated) => {
-      if (authenticated) {
-        console.log(KeycloakData);
+  }).then((authenticated) => {
+    if (authenticated) {
+      console.log(KeycloakData);
+      if (
+        KeycloakData &&
+        KeycloakData.resourceAccess &&
+        KeycloakData.resourceAccess.account
+      ) {
+        const UserRoles = KeycloakData.resourceAccess.account.roles;
+        // store.dispatch(setRoles(UserRoles));
+        // store.dispatch(setAuthToken(KeycloakData.token));
+        //Set Cammunda/Formio Base URL
+        // setApiBaseUrlToLocalStorage();
+
+        // let roles = [];
+        // for (let i = 0; i < UserRoles.length; i++) {
+        //   const roleData = ROLES.find((x) => x.title === UserRoles[i]);
+        //   if (roleData) {
+        //     roles = roles.concat(roleData.id);
+        //   }
+        // }
+        const userInfo = KeycloakData.loadUserInfo();
+        const email = KeycloakData.tokenParsed.email || "external";
+        // authenticateFormio(email, roles);
+        // onAuthenticatedCallback();
+        done(null, {
+          roles: UserRoles,
+          token: KeycloakData.token,
+          userInfo,
+          userInfo,
+          email: email,
+        });
+        refreshToken(store);
       } else {
-        doLogin();
+        doLogout();
       }
-    })
-    .catch((error) => {
-      console.error("Keyclok init failed.", error);
-
-      alert("Login Error.", error);
-    });
+    } else {
+      console.warn("not authenticated!");
+      doLogin();
+    }
+  });
 };
-
-// const getTokenExpireTime = (keycloak) => {
-//   const { exp, iat } = keycloak.tokenParsed;
-//   if (exp && iat) {
-//     const toeknExpiretime =
-//       new Date(exp).getMilliseconds() - new Date(iat).getMilliseconds();
-//     return toeknExpiretime * 1000;
-//   } else {
-//     return 60000;
-//   }
-// };
-
-
-// const refreshToken = (store) => {
-//   const refreshTime = getTokenExpireTime(KeycloakData);
-//   refreshInterval = setInterval(() => {
-//     KeycloakData &&
-//       KeycloakData.updateToken(5)
-//         .then((refreshed) => {
-//           if (refreshed) {
-//             clearInterval(refreshInterval);
-//             // store.dispatch(setUserToken(KeycloakData.token));
-//             refreshToken(store);
-//           }
-//         })
-//         .catch((error) => {
-//           console.log(error);
-//           userLogout();
-//         });
-//   }, refreshTime);
-// };
+let refreshInterval;
+const refreshToken = (store) => {
+  refreshInterval = setInterval(() => {
+    KeycloakData &&
+      KeycloakData.updateToken(5)
+        .then((refreshed) => {
+          if (refreshed) {
+            store.dispatch(setAuthToken(KeycloakData.token));
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          userLogout();
+        });
+  }, 6000);
+};
 
 /**
  * Logout function
@@ -89,14 +90,60 @@ const userLogout = () => {
   doLogout();
 };
 
+//   const setApiBaseUrlToLocalStorage = ()=> {
+//     localStorage.setItem("bpmApiUrl", BPM_BASE_URL);
+//     localStorage.setItem("formioApiUrl", AppConfig.projectUrl);
+//     localStorage.setItem("formsflow.ai.url",window.location.origin)
+//     localStorage.setItem("formsflow.ai.api.url", WEB_BASE_URL);
+//     localStorage.setItem("customApiUrl", WEB_BASE_CUSTOM_URL);
+//   }
 
-const getToken = () => KeycloakData?.token;
+const getFormioToken = () => localStorage.getItem("formioToken");
+
+//const getUserEmail = () => KeycloakData.tokenParsed.email;
+
+/*const updateToken = (successCallback) => {
+    return KeycloakData.updateToken(5).then(successCallback).catch(doLogin);
+  };*/
+
+//   const authenticateAnonymousUser = (store) => {
+//     const user = ANONYMOUS_USER;
+//     const roles = [ANONYMOUS_ID];
+//     store.dispatch(setUserRole([user]));
+//     authenticateFormio(user, roles);
+//   };
+
+//   const authenticateFormio = (user, roles) => {
+
+//     const FORMIO_TOKEN = jwt.sign(
+//       {
+//         external: true,
+//         form: {
+//           _id: USER_RESOURCE_FORM_ID, // form.io form Id of user resource
+//         },
+//         user: {
+//           _id: user, // keep it like that
+//           roles: roles,
+//         },
+//       },
+//       FORMIO_JWT_SECRET
+//     ); // TODO Move JWT secret key to COME From ENV
+//     //TODO remove this token from local Storage on logout and try to move to redux store as well
+//     localStorage.setItem("formioToken", FORMIO_TOKEN);
+//   };
+
+const KeycloakData = _kc;
+
+const doLogin = KeycloakData.login;
+const doLogout = KeycloakData.logout;
+const getToken = () => KeycloakData.token;
 
 const UserService = {
   initKeycloak,
   userLogout,
   getToken,
-  setKeycloakJson,
+  getFormioToken,
+  // authenticateAnonymousUser
 };
 
 export default UserService;
