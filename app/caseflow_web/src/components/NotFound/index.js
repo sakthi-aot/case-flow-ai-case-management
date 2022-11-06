@@ -1,26 +1,53 @@
 import React from "react";
-// import "./pagenotfound.scss";
-
-const NotFound = React.memo(({ errorMessage, errorCode }) => {
+import { Link } from "react-router-dom";
+import "./notfound.scss";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+const NotFound = () => {
   return (
-    <section>
-      <div className="circles">
-        <p>
-          {errorCode}
-          <br />
-          <small>{errorMessage}</small>
-        </p>
-        <span className="circle big" />
-        <span className="circle med" />
-        <span className="circle small" />
+    <div className="notfound">
+      <div className="content-section">
+        <div className="grid-container">
+          <div className="grid-left">
+            <img
+              className="landingImage"
+              src={require("../../assets/404.png")}
+            ></img>
+          </div>
+          <div className="grid-right">
+            <Box
+              component="img"
+              sx={{}}
+              alt="Logo"
+              src={require("../../assets/logo.png")}
+            />
+            <div className="inner_text">
+              <h1 className="title">404</h1>
+              <h2 className="sub-title">Page Not Found</h2>
+              <p className="text">The page you requested could not be found</p>
+              <div className="buttons">
+                <Button
+                  component={Link}
+                  to="/"
+                  style={{
+                    color: "#1f5489",
+                  }}
+                  variant="outlined"
+                >
+                  Go Home
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
+      <img
+        className="bottom-blog"
+        src="./components/Home/bottom.svg"
+        alt="My Happy SVG"
+      />
+    </div>
   );
-});
-
-NotFound.defaultProps = {
-  errorMessage: "Page Not Found",
-  errorCode: "404",
 };
 
 export default NotFound;

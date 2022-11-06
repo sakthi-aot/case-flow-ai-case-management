@@ -1,11 +1,9 @@
 import React, { useEffect, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import UserService from "../services/UserService";
-import { setUserAuth } from "../actions/bpmActions";
-// const Download = lazy(() => import("./Download"));
-// const Upload = lazy(() => import("./Upload"));
-// const NotFound = lazy(() => import("./NotFound"));
+import { setAuthToken, setAuthenticated } from "../reducers/authReducer";
+import Loading from "../containers/Loading";
 import Upload from "./Upload";
 import Download from "./Download";
 import Dashboard from "./Dashboard";
@@ -13,30 +11,38 @@ const NotFound = lazy(() => import("./NotFound"));
 
 const PrivateRoute = React.memo((props) => {
   const dispatch = useDispatch();
-
+  const isAuth = useSelector((state) => state.auth.isAuthenticated);
   useEffect(() => {
     if (props.store) {
-      console.log(props.store)
+      console.log(props.store);
     }
-    UserService.setKeycloakJson(null, (clientId) => {
-      UserService.initKeycloak(props.store, clientId, (err, res) => {
-        dispatch(setUserAuth(res.authenticated));
-      });
+    // UserService.setKeycloakJson(null, (clientId) => {
+    UserService.initKeycloak(props.store, (err, res) => {
+      const { roles, token, userInfo, email } = res;
+      dispatch(setAuthToken(token));
+      dispatch(setAuthenticated(true));
+      // });
     });
-   
-  });
-
-  // useMemo prevents unneccessary rerendering caused by the route update.
+  }, [props.store, dispatch]);
 
   return (
-    <div>
-      <Routes>
-        <Route index path="/download" element={<Download />} />
-        <Route path="/upload" element={<Upload />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="*" exact={true} component={NotFound} />
-      </Routes>
-    </div>
+    <>
+      {isAuth ? (
+        <Routes>
+          <Route path="/dashboard" element={<Dashboard />}>
+            <Route path="download" element={<Download />} />
+            <Route path="upload" element={<Upload />} />
+            <Route path="tasks" element={<Upload />} />
+            <Route path="cases" element={<Upload />} />
+            <Route path="documents" element={<Upload />} />
+            <Route path="llb" element={<Upload />} />
+          </Route>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      ) : (
+        <Loading />
+      )}
+    </>
   );
 });
 

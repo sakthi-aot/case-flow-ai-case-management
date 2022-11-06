@@ -1,37 +1,24 @@
 import * as React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useLocation,
-} from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import CasesOutlinedIcon from "@mui/icons-material/CasesOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
-import { fontSize } from "@mui/system";
 
 const drawerWidth = 240;
 
@@ -100,7 +87,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function MiniDrawer() {
+export default function MiniDrawer({ children }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const routes = [
@@ -109,10 +96,10 @@ export default function MiniDrawer() {
       text: "Home",
       path: "/private/dashboard",
     },
-    { key: 2, text: "Tasks", path: "/tasks" },
-    { key: 3, text: "Cases", path: "/cases" },
-    { key: 4, text: "Documents", path: "/documents" },
-    { key: 5, text: "LOB", path: "/lob" },
+    { key: 2, text: "Tasks", path: "/private/tasks" },
+    { key: 3, text: "Cases", path: "/private/cases" },
+    { key: 4, text: "Documents", path: "/private/documents" },
+    { key: 5, text: "LOB", path: "/private/lob" },
   ];
   const { pathname } = useLocation();
   console.log(pathname);
@@ -142,76 +129,51 @@ export default function MiniDrawer() {
   };
 
   return (
-    <Box >
+    <Box>
       <CssBaseline />
-      {/* <AppBar  open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerToggle}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
-          </Typography>
-        </Toolbar>
-      </AppBar> */}
 
       <Drawer variant="permanent" open={open}>
-        <DrawerHeader style={{display: "flaex"}}>
-        <AccountCircleIcon sx={{ fontSize: 30 ,left : "20px",right:"10px"}} /><label style={{fontSize: open ? "18px" : "0px", left:0}}>Don C Varghese 
+        <DrawerHeader style={{ display: "flaex" }}>
+          <AccountCircleIcon
+            sx={{ fontSize: 30, left: "20px", right: "10px" }}
+          />
+          <label style={{ fontSize: open ? "18px" : "0px", left: 0 }}>
+            Firstname Lastname
           </label>
-        {open ? <ChevronLeftIcon  style={{
-            
-            top: "31px",
-            // left: !open ? "50px" : "260px",
-            marginLeft: "auto",
-            fontSize: "30px"
-           
+          {open ? (
+            <ChevronLeftIcon
+              style={{
+                top: "31px",
+                // left: !open ? "50px" : "260px",
+                marginLeft: "auto",
+                fontSize: "30px",
+              }}
+              onClick={handleDrawerToggle}
+            />
+          ) : (
+            <ChevronRightIcon
+              style={{
+                top: "31px",
+                // left: !open ? "50px" : "260px",
 
-          }} onClick={handleDrawerToggle} /> : <ChevronRightIcon style={{
-            
-            top: "31px",
-            // left: !open ? "50px" : "260px",
-    
-            marginLeft : "auto",
+                marginLeft: "auto",
 
-            fontSize: "30px"
-
-          }}   onClick={handleDrawerToggle}/>}
-        {/* <IconButton 
-            style={{
-            
-              // top: "31px",
-              left: !open ? "50px" : "260px",
-              fontSize: "100px",
-              position:"fixed"
-             
-
-            }}
-            // className={classes.toggleButton}
-            onClick={handleDrawerToggle}
-          >
-            {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-           */}
-          
-          
-          
+                fontSize: "30px",
+              }}
+              onClick={handleDrawerToggle}
+            />
+          )}
         </DrawerHeader>
         <Divider />
         <List>
           {routes.map((route, index) => (
-            <Link to={route.path} style={{
-              color:"black",textDecoration: 'none'
-            }}>
+            <Link
+              to={route.path}
+              style={{
+                color: "black",
+                textDecoration: "none",
+              }}
+            >
               <ListItem
                 key={index}
                 selected={route.path === pathname}
@@ -244,38 +206,9 @@ export default function MiniDrawer() {
           ))}
         </List>
       </Drawer>
-      {/* <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-          ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-          quisque non tellus. Convallis convallis tellus id interdum velit
-          laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-          adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-          integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-          eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-          quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-          vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-          lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-          faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-      </Box> */}
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        {children}
+      </Box>
     </Box>
   );
 }
