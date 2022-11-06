@@ -9,6 +9,8 @@ import { setUserAuth } from "../actions/bpmActions";
 import Upload from "./Upload";
 import Download from "./Download";
 import Dashboard from "./Dashboard";
+import FileHandler from "./FileHandler";
+
 const NotFound = lazy(() => import("./NotFound"));
 
 const PrivateRoute = React.memo((props) => {
@@ -31,8 +33,9 @@ const PrivateRoute = React.memo((props) => {
   return (
     <div>
       <Routes>
-        <Route index path="/download" element={<Download />} />
-        <Route path="/upload" element={<Upload />} />
+      <Route path="/files" element={<FileHandler />} />
+        {/* <Route index path="/download" element={<Download />} />
+        <Route path="/upload" element={<Upload />} /> */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="*" exact={true} component={NotFound} />
       </Routes>

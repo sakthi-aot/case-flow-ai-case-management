@@ -19,20 +19,20 @@ const Home = () => {
               </p>
               <div class="buttons">
                 <Button
-                component={Link} to="/private/upload"
+                component={Link} to="/private/files"
                   style={{
                     backgroundColor: "#1B34FB",
                   }}
                   variant="contained"
                 >
-                  Upload File
+                  Manage files
                 </Button>
 
                 <Button 
-                 component={Link} to="/private/download"style={{
+                 component={Link} to=""style={{
                     color: "#1B34FB",
                   }}
-                  variant="outlined">Download File</Button>
+                  variant="outlined">learn more</Button>
               </div>
             </div>
           </div>

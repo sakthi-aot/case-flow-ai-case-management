@@ -1,0 +1,20 @@
+.background {
+  background-color: #f3f8ff;
+  height: 100vh;
+  width: 100vw;
+  overflow-y: auto;
+  align-items: center;
+  .DMS-selector{
+    padding-top: 10rem;
+    width :70%;
+    margin: auto;
+  }
+  .accordion {
+    width: 70%;
+    margin: auto;
+    padding: 5rem 0% 5rem 0%;
+    .acordions {
+      height: 20vh;
+    }
+  }
+}
