@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import UserService from "../services/UserService";
 import { setAuthToken, setAuthenticated } from "../reducers/authReducer";
 import Loading from "../containers/Loading";
-import Upload from "./Upload";
-import Download from "./Download";
+// import Upload from "./Upload";
+// import Download from "./Download";
 import Dashboard from "./Dashboard";
 import FileHandler from "./FileHandler";
 
@@ -32,12 +32,12 @@ const PrivateRoute = React.memo((props) => {
       {isAuth ? (
         <Routes>
           <Route path="/dashboard" element={<Dashboard />}>
-            <Route path="download" element={<Download />} />
-            <Route path="upload" element={<Upload />} />
-            <Route path="tasks" element={<Upload />} />
-            <Route path="cases" element={<Upload />} />
-            <Route path="documents" element={<Upload />} />
-            <Route path="llb" element={<Upload />} />
+            {/* <Route path="download" element={<Download />} />
+            <Route path="upload" element={<Upload />} /> */}
+            {/* <Route path="tasks" element={<Upload />} />
+            <Route path="cases" element={<Upload />} /> */}
+            <Route path="documents" element={<FileHandler />} />
+            {/* <Route path="llb" element={<Upload />} /> */}
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -20,7 +20,7 @@ const FileHandler = () => {
     <div className="background">
       <div className="file-card">
       <div className="DMS-selector">
-        <Box sx={{ minWidth: 120 ,"background-color": "white"}}>
+        <Box sx={{ minWidth: 120 ,backgroundColor: "white"}}>
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">DMS</InputLabel>
             <Select
@@ -28,7 +28,7 @@ const FileHandler = () => {
               id="demo-simple-select"
               value={DMS}
               label="DMS"
-              onChange={(event) => setDMS(event.target.value)}
+              // onChange={(event) => setDMS(event.target.value)}
             >
               <MenuItem value={"DMS01"}>Alfresco</MenuItem>
               <MenuItem value={"DMS02"}>S3</MenuItem>

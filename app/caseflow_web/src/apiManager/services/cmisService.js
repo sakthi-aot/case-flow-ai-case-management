@@ -63,37 +63,8 @@ export const uploadCMISfile = (file,fileName,description,DMS) => {
         } else {
         }
       });
+    }
 
-export const updateCMISdocument = (id, file, fileName) => {
-  const downloadURL = API.DMS_API + "/update";
-  let formData = {
-    upload: file,
-    id: id,
-    name: fileName ? fileName : file.name,
-    nodeType: "cm:content",
-    "cm:title": "My text",
-    "cm:description": "My text document description",
-    relativePath: "Uploads",
-    majorVersion: true,
-    comment: "test",
-  };
-  let bodyFormData = new FormData();
-  for (let key in formData) {
-    //converts the javascript object into FormData type
-    bodyFormData.append(key, formData[key]);
-  }
-  return httpPUTRequest(downloadURL, bodyFormData)
-    .then((res) => {
-      if (res.data) {
-      } else {
-      }
-    })
-    .catch((error) => {
-      if (error?.response?.data) {
-      } else {
-      }
-    });
-};
 
 export const updateCMISdocument = (id,file,fileName,description,DMS) =>{      
     const downloadURL = API.DMS_API + "/update";

@@ -75,7 +75,7 @@ const Upload = (props) => {
             variant="contained"
           >
             <label
-              for="actual-btn"
+              htmlFor="actual-btn"
               style={{
                 width: "100%",
                 backgroundColor: "#1B34FB",
@@ -98,14 +98,14 @@ const Upload = (props) => {
         </div>
         <div
           style={{
-            "padding-top": "1rem",
+            paddingTop: "1rem",
             width: "100%",
           }}
         >
           {file !== "" && (
             <div
               style={{
-                "padding-top": "1rem",
+                paddingTop: "1rem",
                 width: "100%",
               }}
             >
@@ -153,7 +153,7 @@ const Upload = (props) => {
         {actionSelected === "update" && (
           <div
             style={{
-              "padding-top": "1rem",
+              paddingTop: "1rem",
               width: "100%",
             }}
           >
