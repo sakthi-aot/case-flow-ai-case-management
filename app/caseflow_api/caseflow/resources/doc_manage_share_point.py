@@ -10,7 +10,9 @@ from flask_restx import Namespace, Resource
 from requests.auth import HTTPBasicAuth
 from caseflow.services import DocManageService
 from caseflow.utils import auth, cors_preflight
-from share_point_helper import SharePoint
+from caseflow.resources.share_point_helper import SharePoint
+from caseflow.services import DMSConnector
+from caseflow.utils.enums import DMSCode
 
 
 # keeping the base path same for cmis operations (upload / download) as cmis/
@@ -28,7 +30,7 @@ class CMISConnectorUploadResource(Resource):
         
         if "upload" not in request.files:
             return {"message": "No upload files in the request"}, HTTPStatus.BAD_REQUEST
-
+        print(request)
         content_file = request.files["upload"]
         file_name = content_file.filename
         data =content_file.read()   
@@ -36,21 +38,22 @@ class CMISConnectorUploadResource(Resource):
         if file_name != "":
             try:
                
-                document = SharePoint.upload_file(file_name,SHARE_POINT_FOLDER_NAME,data)
-                if document.ok:
-                    response = {}
-                    file_url = f"/sites/team/Shared Documents/{SHARE_POINT_FOLDER_NAME} {file_name}"
-                    uploaded_data = DocManageService.doc_upload_mutation(request,response)
+                document = SharePoint().upload_file(file_name,SHARE_POINT_FOLDER_NAME,data)
+                
+                if document.exists:
+                    response = document.properties
+                    file_url = document.serverRelativeUrl
+                    formatted_document = DMSConnector.doc_upload_connector(response,DMSCode.DMS03.value)
+                    uploaded_data = DocManageService.doc_upload_mutation(request,formatted_document)
                     print("Upload completed successfully!")
                     if uploaded_data['status']=="success":
                         return (
                             (uploaded_data),HTTPStatus.OK,
                         )
-                    else:
-            
-                     document = SharePoint.delete_file(file_url)
-                     document_content = document.json()
-                     print(document_content)
+                    else:            
+                     document = SharePoint().delete_file(file_url)
+                     document_content = document
+                     print("document deleted")
                 else:
                     print("Something went wrong!")
 
@@ -74,18 +77,17 @@ class CMISConnectorUploadResource(Resource):
         if "upload" not in request.files:
             return {"message": "No upload files in the request"}, HTTPStatus.BAD_REQUEST
 
-        content_file = request.files["upload"]
-        args = request.args
+        content_file = request.files["upload"]       
         filename = content_file.filename
         data =content_file.read()    
-        documentId = args.get("id")
+        request_data = request.form.to_dict(flat=True)
         if filename != "":
-            try:
-               
-                document = SharePoint.update_file(filename,data)
-                if document.ok:
-                    response = {}
-                    uploaded_data = DocManageService.doc_update_mutation(documentId,response)
+            try:               
+                document = SharePoint().update_file(filename,data)
+                if document.exists:
+                    response = document.properties
+                    formatted_document = DMSConnector.doc_update_connector(response,DMSCode.DMS03.value)
+                    uploaded_data = DocManageService.doc_update_mutation(request_data["id"],formatted_document)
                     print("Upload completed successfully!")
                     if uploaded_data['status']=="success":
                         return (
@@ -93,7 +95,7 @@ class CMISConnectorUploadResource(Resource):
                         )
                     else:
             
-                     document = SharePoint.delete_file(document.serverRelativeUrl)
+                     document = SharePoint().delete_file(document.serverRelativeUrl)
                      document_content = document.json()
                      print(document_content)
                 else:
@@ -121,10 +123,9 @@ class CMISConnectorDownloadResource(Resource):
         documentId = args.get("id")        
         try:
             doc_data = DocManageService.fetchDocId(documentId)
-            if doc_data['status']=="success":
-                doc_name=doc_data['message']
-                
-                final_document = SharePoint.download_file()
+            if doc_data['status']=="success":                
+                doc_download_url=doc_data['doc_download_url']                
+                final_document = SharePoint().download_file(doc_download_url)
                 return Response(final_document.content,mimetype='application/octet-stream')
                 # return send_file(document,attachment_filename='capsule.zip', as_attachment=True),HTTPStatus.OK,
             else:

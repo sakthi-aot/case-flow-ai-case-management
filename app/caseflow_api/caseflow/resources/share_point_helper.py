@@ -8,21 +8,26 @@ from flask import current_app, request
 import os
 import tempfile
 
+ #SHARE_POINT
+USERNAME = os.getenv("SHARE_POINT_EMAIL")
+PASSWORD = os.getenv("SHARE_POINT_PASSWORD")
+SHARE_POINT_FOLDER_NAME = os.getenv("SHARE_POINT_FOLDER_NAME")
+SHAREPOINT_SITE = os.getenv("SHAREPOINT_SITE")
+SHAREPOINT_SITE_NAME = os.getenv("SHAREPOINT_SITE_NAME")
+SHAREPOINT_DOC = os.getenv("SHAREPOINT_DOC")  
 
-USERNAME = current_app.config.get('SHARE_POINT_EMAIL')
-PASSWORD = current_app.config.get('SHARE_POINT_PASSWORD')
-SHAREPOINT_SITE = current_app.config.get('SHAREPOINT_SITE') 
-SHAREPOINT_SITE_NAME = current_app.config.get('SHAREPOINT_SITE_NAME') 
-SHAREPOINT_DOC = current_app.config.get('SHAREPOINT_DOC')
 
 class SharePoint:
     def _auth(self):
-        conn = ClientContext(SHAREPOINT_SITE).with_credentials(
-            UserCredential(
-                USERNAME,
-                PASSWORD
+        try:
+            conn = ClientContext(SHAREPOINT_SITE).with_credentials(
+                UserCredential(
+                    USERNAME,
+                    PASSWORD
+                )
             )
-        )
+        except Exception as e:
+            print(e)
         return conn
 
     def _get_files_list(self, folder_name):
@@ -32,17 +37,10 @@ class SharePoint:
         root_folder.expand(["Files", "Folders"]).get().execute_query()
         return root_folder.files
 
-    def download_file(self, file_name):
-        conn = self._auth()
-        # file_url = f'/sites/{SHAREPOINT_SITE_NAME}/{SHAREPOINT_DOC}/{folder_name}/{file_name}'
-        # file = File.open_binary(conn, file_url)
-        # return file.content
-        file_url = f"/sites/team/Shared Documents/{file_name}"
-        download_path = os.path.join(tempfile.mkdtemp(), os.path.basename(file_url))
-        with open(download_path, "wb") as local_file:
-            file = conn.web.get_file_by_server_relative_path(file_url).download(local_file).execute_query()       
-        print("[Ok] file has been downloaded into: {0}".format(download_path))
-        return file
+    def download_file(self, file_url):
+        conn = self._auth()          
+        file = File.open_binary(conn, file_url)
+        return file    
     
 
     def download_latest_file(self, folder_name):
@@ -59,25 +57,26 @@ class SharePoint:
         return latest_file_name, content
         
 
-    def upload_file(self, file_name, folder_name, content):
-        conn = self._auth()
+    def upload_file(self, file_name, folder_name, content):       
+        conn =self._auth()    
         target_folder_url = f'/sites/{SHAREPOINT_SITE_NAME}/{SHAREPOINT_DOC}/{folder_name}'
         target_folder = conn.web.get_folder_by_server_relative_path(target_folder_url)
         response = target_folder.upload_file(file_name, content).execute_query()
         return response
 
-    def delete_file(self,file_url):
+    def delete_file(self,file_url):       
         conn = self._auth()
         file = conn.web.get_file_by_server_relative_url(file_url) 
         response = file.delete_object().execute_query()  
         return response
 
 
-    def update_file(self,name,file_content):
-        conn = self._auth()
-        target_folder = conn.web.get_folder_by_server_relative_path("/sites/team/Shared Documents")        
-        target_file = target_folder.upload_file(name, file_content).execute_query()
-        return target_file    
+    def update_file(self,name,file_content):        
+        conn = self._auth()                   
+        target_folder_url = f'/sites/{SHAREPOINT_SITE_NAME}/{SHAREPOINT_DOC}/{SHARE_POINT_FOLDER_NAME}'                   
+        target_folder = conn.web.get_folder_by_server_relative_path(target_folder_url)         
+        response = target_folder.upload_file(name, file_content).execute_query() 
+        return response    
 
     
     def upload_file_in_chunks(self, file_path, folder_name, chunk_size, chunk_uploaded=None, **kwargs):
