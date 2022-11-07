@@ -11,6 +11,7 @@ const NotFound = () => {
           <div className="grid-left">
             <img
               className="landingImage"
+              alt="landingImage"
               src={require("../../assets/404.png")}
             ></img>
           </div>
