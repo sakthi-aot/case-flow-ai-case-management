@@ -49,8 +49,7 @@ const initKeycloak = (store, ...rest) => {
         done(null, {
           roles: UserRoles,
           token: KeycloakData.token,
-          userInfo,
-          userInfo,
+          userInfo:userInfo,
           email: email,
         });
         refreshToken(store);
