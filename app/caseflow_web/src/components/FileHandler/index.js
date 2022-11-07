@@ -28,8 +28,7 @@ const FileHandler = () => {
               id="demo-simple-select"
               value={DMS}
               label="DMS"
-              // onChange={(event) => setDMS(event.target.value)}
-            >
+              onChange={(event) => setDMS(event.target.value)}>
               <MenuItem value={"DMS01"}>Alfresco</MenuItem>
               <MenuItem value={"DMS02"}>S3</MenuItem>
               <MenuItem value={"DMS03"}>Share Point</MenuItem>
