@@ -9,9 +9,9 @@ import os
 import tempfile
 
  #SHARE_POINT
-USERNAME = os.getenv("SHARE_POINT_EMAIL")
-PASSWORD = os.getenv("SHARE_POINT_PASSWORD")
-SHARE_POINT_FOLDER_NAME = os.getenv("SHARE_POINT_FOLDER_NAME")
+USERNAME = os.getenv("SHAREPOINT_USERNAME")
+PASSWORD = os.getenv("SHAREPOINT_PASSWORD")
+SHAREPOINT_FOLDER_NAME = os.getenv("SHAREPOINT_FOLDER_NAME")
 SHAREPOINT_SITE = os.getenv("SHAREPOINT_SITE")
 SHAREPOINT_SITE_NAME = os.getenv("SHAREPOINT_SITE_NAME")
 SHAREPOINT_DOC = os.getenv("SHAREPOINT_DOC")  
@@ -73,7 +73,7 @@ class SharePoint:
 
     def update_file(self,name,file_content):        
         conn = self._auth()                   
-        target_folder_url = f'/sites/{SHAREPOINT_SITE_NAME}/{SHAREPOINT_DOC}/{SHARE_POINT_FOLDER_NAME}'                   
+        target_folder_url = f'/sites/{SHAREPOINT_SITE_NAME}/{SHAREPOINT_DOC}/{SHAREPOINT_FOLDER_NAME}'                   
         target_folder = conn.web.get_folder_by_server_relative_path(target_folder_url)         
         response = target_folder.upload_file(name, file_content).execute_query() 
         return response    

@@ -17,7 +17,7 @@ from caseflow.utils.enums import DMSCode
 
 # keeping the base path same for cmis operations (upload / download) as cmis/
 
-API = Namespace("CMIS", description="CMIS Connector")
+API = Namespace("CMIS_SHAREPOINT", description="CMIS SharePoint Connector")
 
 @cors_preflight("GET,POST,OPTIONS")
 @API.route("/upload", methods=["POST", "OPTIONS"])
@@ -34,11 +34,11 @@ class CMISConnectorUploadResource(Resource):
         content_file = request.files["upload"]
         file_name = content_file.filename
         data =content_file.read()   
-        SHARE_POINT_FOLDER_NAME  = current_app.config.get("SHARE_POINT_FOLDER_NAME")   
+        SHAREPOINT_FOLDER_NAME  = current_app.config.get("SHAREPOINT_FOLDER_NAME")   
         if file_name != "":
             try:
                
-                document = SharePoint().upload_file(file_name,SHARE_POINT_FOLDER_NAME,data)
+                document = SharePoint().upload_file(file_name,SHAREPOINT_FOLDER_NAME,data)
                 
                 if document.exists:
                     response = document.properties
@@ -126,7 +126,7 @@ class CMISConnectorDownloadResource(Resource):
             if doc_data['status']=="success":                
                 doc_download_url=doc_data['doc_download_url']                
                 final_document = SharePoint().download_file(doc_download_url)
-                return Response(final_document.content,mimetype='application/octet-stream')
+                return Response(final_document.content,mimetype='application/octet-stream',headers= {"file_name" :doc_data['name']   })
                 # return send_file(document,attachment_filename='capsule.zip', as_attachment=True),HTTPStatus.OK,
             else:
                  return {"message": "No file data found in DB"}, HTTPStatus.INTERNAL_SERVER_ERROR   

@@ -184,6 +184,7 @@ class DocManageService:
             getDocument(id: $id){
                 documentid
                 downloadurl
+                name
                 
             }
         }
@@ -196,9 +197,11 @@ class DocManageService:
             data = r.json()
             documentId=data['data']['getDocument']['documentid']
             doc_download_url = data['data']['getDocument']['downloadurl']
+            doc_name = data['data']['getDocument']['name']
             response = {
                     "documentId": documentId,
                     "doc_download_url":doc_download_url,
+                    "name": doc_name,
                     "status": "success",
             } 
         except TypeError as update_error:
