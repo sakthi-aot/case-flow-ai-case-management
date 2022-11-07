@@ -4,9 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import UserService from "../services/UserService";
 import { setAuthToken, setAuthenticated } from "../reducers/authReducer";
 import Loading from "../containers/Loading";
-import Upload from "./Upload";
-import Download from "./Download";
+// import Upload from "./Upload";
+// import Download from "./Download";
 import Dashboard from "./Dashboard";
+import FileHandler from "./FileHandler";
+import Lob from './Lob'
+import Tasks from './Tasks'
+import Cases from './Cases'
+
 const NotFound = lazy(() => import("./NotFound"));
 
 const PrivateRoute = React.memo((props) => {
@@ -30,12 +35,10 @@ const PrivateRoute = React.memo((props) => {
       {isAuth ? (
         <Routes>
           <Route path="/dashboard" element={<Dashboard />}>
-            <Route path="download" element={<Download />} />
-            <Route path="upload" element={<Upload />} />
-            <Route path="tasks" element={<Upload />} />
-            <Route path="cases" element={<Upload />} />
-            <Route path="documents" element={<Upload />} />
-            <Route path="llb" element={<Upload />} />
+            <Route path="tasks" element={<Tasks />} />
+            <Route path="cases" element={<Cases />} />
+            <Route path="documents" element={<FileHandler />} />
+            <Route path="lob" element={<Lob />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
