@@ -62,6 +62,16 @@ class _Config:  # pylint: disable=too-few-public-methods
     JWT_OIDC_AUDIENCE = os.getenv("JWT_OIDC_AUDIENCE")
     JWT_OIDC_CACHING_ENABLED = os.getenv("JWT_OIDC_CACHING_ENABLED")
     JWT_OIDC_JWKS_CACHE_TIMEOUT = 300
+
+
+    #SHARE_POINT
+    SHARE_POINT_EMAIL = os.getenv("SHARE_POINT_EMAIL")
+    SHARE_POINT_PASSWORD = os.getenv("SHARE_POINT_PASSWORD")
+    SHARE_POINT_FOLDER_NAME = os.getenv("SHARE_POINT_FOLDER_NAME")
+    SHAREPOINT_SITE = os.getenv("SHAREPOINT_SITE")
+    SHAREPOINT_SITE_NAME = os.getenv("SHAREPOINT_SITE_NAME")
+    SHAREPOINT_DOC = os.getenv("SHAREPOINT_DOC")  
+
     
 
 
