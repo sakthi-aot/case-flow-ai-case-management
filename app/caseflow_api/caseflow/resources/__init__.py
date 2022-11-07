@@ -15,5 +15,5 @@ API = Api(
 )
 
 
-API.add_namespace(DOC_ALFRESCO_API, path="/doc/alfresco")
-API.add_namespace(DOC_S3_API, path="/doc/s3")
+API.add_namespace(DOC_ALFRESCO_API, path="/doc/dms01")
+API.add_namespace(DOC_S3_API, path="/doc/dms02")

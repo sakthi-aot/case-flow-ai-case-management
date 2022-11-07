@@ -1,7 +1,7 @@
 import boto3
 from botocore.exceptions import ClientError
 from flask import current_app
-
+import uuid;
 
 def create_bucket(bucket_name):
     try :
@@ -22,18 +22,20 @@ def create_bucket(bucket_name):
 def upload_object(bucket_name, privacy_policy, data, file_name):
 
     try :
+     s3_file_name = str(uuid.uuid4()) + "_"+ file_name
      is_exists = check_bucket(bucket_name)
      if is_exists is False :
         bucket = create_bucket(bucket_name)
      session = create_aws_session()
      s3 = session.resource('s3')
      try:
-         s3.Object(bucket_name, file_name).load()
+         s3.Object(bucket_name, s3_file_name).load()
      except ClientError as e:
           if e.response['Error']['Code'] == "404":
-                object = s3.Object(bucket_name, file_name)
+                object = s3.Object(bucket_name, s3_file_name)
+                # object.set_metadata('name',file_name)
                 # Privacy policy 'private'|'public-read'|'public-read-write'|'authenticated-read'|'aws-exec-read'|'bucket-owner-read'|'bucket-owner-full-control'
-                result = object.put(Body=data)
+                result = object.put(Body=data,Metadata ={'name':file_name})
 
                 res = result.get('ResponseMetadata')
 
@@ -50,9 +52,6 @@ def upload_object(bucket_name, privacy_policy, data, file_name):
 def update_object(bucket_name, privacy_policy, data, file_name):
 
     try :
-     is_exists = check_bucket(bucket_name)
-     if is_exists is False :
-        bucket = create_bucket(bucket_name)
      session = create_aws_session()
      s3 = session.resource('s3')
      object = s3.Object(bucket_name, file_name)
@@ -62,9 +61,9 @@ def update_object(bucket_name, privacy_policy, data, file_name):
      res = result.get('ResponseMetadata')
 
      if res.get('HTTPStatusCode') == 200:
-        return res
+        return {"response" : res,"object" : object }
      else:
-       return res
+       return {"response" : res,"object" : object }
 
     except Exception as e:
         return e

@@ -196,7 +196,7 @@ class DocManageService:
             data = r.json()
             documentId=data['data']['getDocument']['documentid']
             response = {
-                    "message": documentId,
+                    "documentId": documentId,
                     "status": "success",
             } 
         except TypeError as update_error:
