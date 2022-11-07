@@ -1,5 +1,5 @@
 from flask_restx import Api
-from caseflow.resources.doc_manage_rest_api import API as DOC_API
+from caseflow.resources.doc_manage_share_point import API as DOC_API
 
 
 AUTHORIZATIONS = {"apikey": {"type": "apiKey", "in": "header", "name": "Authorization"}}
