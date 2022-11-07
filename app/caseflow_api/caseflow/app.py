@@ -29,6 +29,7 @@ def create_app(run_mode=os.getenv("FLASK_ENV", "development")):
     def cors_origin(response):  # pylint: disable=unused-variable
         if CASEFLOW_API_CORS_ORIGINS == ALLOW_ALL_ORIGINS:
             response.headers["Access-Control-Allow-Origin"] = "*"
+            response.headers["Access-Control-Expose-Headers"] = "*,*"
         else:
             for url in CORS_ORIGINS:
                 assert request.headers["Host"]

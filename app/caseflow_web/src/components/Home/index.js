@@ -53,7 +53,7 @@ const Home = () => {
           </div>
 
           <div className="grid-right">
-            <img
+            <img alt="landing page"
               className="landingImage"
               src="./components/Home/landingImage.jpeg"
             ></img>

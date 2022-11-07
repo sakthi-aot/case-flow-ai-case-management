@@ -23,7 +23,7 @@ const PrivateRoute = React.memo((props) => {
     }
     // UserService.setKeycloakJson(null, (clientId) => {
     UserService.initKeycloak(props.store, (err, res) => {
-      const { roles, token, userInfo, email } = res;
+      const {token } = res;
       dispatch(setAuthToken(token));
       dispatch(setAuthenticated(true));
       // });
