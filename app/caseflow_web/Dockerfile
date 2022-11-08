@@ -1,4 +1,4 @@
 FROM nginx:latest
-RUN rm -rf /etc/ngnix/conf.d/default.conf
-COPY ./nginx_conf/default.conf /etc/ngnix/conf.d/
+RUN rm -rf /etc/ngnix/nginx.conf
+COPY ./nginx_conf/nginx.conf /etc/ngnix/nginx.conf
 COPY ./build/ /usr/share/nginx/html
