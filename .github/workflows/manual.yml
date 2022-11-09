@@ -10,11 +10,13 @@ on:
         required: true
       NODE_ENV:
         required: true
-      REACT_APP_KEYCLOAK_CLIENT:
+      REACT_APP_KEYCLOAK_WEB_CLIENTID:
         required: true
       REACT_APP_KEYCLOAK_URL_REALM:
         required: true
       REACT_APP_KEYCLOAK_URL:
+        required: true
+      REACT_APP_CASEFLOW_API_URL:
         required: true
 jobs:
   build:
