@@ -8,6 +8,14 @@ on:
         required: true
       reponame:
         required: true
+      NODE_ENV:
+        required: true
+      REACT_APP_KEYCLOAK_CLIENT:
+        required: true
+      REACT_APP_KEYCLOAK_URL_REALM:
+        required: true
+      REACT_APP_KEYCLOAK_URL:
+        required: true
 jobs:
   build:
     name: Build Image
