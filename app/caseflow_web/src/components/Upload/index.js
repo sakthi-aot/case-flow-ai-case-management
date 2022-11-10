@@ -12,6 +12,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Typography from "@mui/material/Typography";
+import FileViewer from 'react-file-viewer';
 
 
 const Upload = (props) => {
@@ -19,14 +20,21 @@ const Upload = (props) => {
   const [file, setFile] = useState("");
   const [fileName, setFileName] = useState("");
   const [fileDescription, setFileDescription] = useState("");
-
   const [actionSelected, setActionSelected] = useState("upload");
-
   const [documentID, setDocumentID] = useState(1);
+  const[previewURL,setPreviewURL] = useState()
+  const [filetypeUploaded,setfileTypeUploaded] = useState(null)
 
-  function handleUpload(event) {
-    setFile(event.target.files[0]); //set file into state
-    setFileName(event.target.files[0].name); //set the filename after importing new file
+  function handleUpload(event) {   
+    const uploadedDoc = event.target.files[0];
+    //setting URL for FileViewer   
+    setfileTypeUploaded(uploadedDoc.type.split("/")[1] )   
+    const objectURl = URL.createObjectURL(uploadedDoc)
+
+    setPreviewURL(objectURl)   
+    setFile(uploadedDoc); //set file into state
+    setFileName(uploadedDoc.name); //set the filename after importing new file
+    
   }
   function fileNameChange(event) {
     setFileName(event.target.value); //set the filename from text box if name is alterded
@@ -39,8 +47,7 @@ const Upload = (props) => {
     if (actionSelected === "upload") {
       const response = uploadCMISfile(file, fileName, fileDescription,props.selectedDMS);
       if (response)
-      setResponse(response)
-      console.log()
+      setResponse(response)      
       console.log(response);
     }
 
@@ -59,8 +66,12 @@ const Upload = (props) => {
       ? setDocumentID(1)
       : setDocumentID(parseInt(event.target.value));
   };
+  const onPreviewErrorhandler = (e) =>{
+    console.log(e);
+  }
 
   return (
+    <>
     <div className="upload-grid">
       <div className="upload-left">
         <div className="upload-row">
@@ -169,6 +180,16 @@ const Upload = (props) => {
             />
           </div>
         )}
+         {(previewURL &&filetypeUploaded!=="plain" ) && <div className="pgViewContainer" >
+          <p className="preview-heading">Preview</p>
+         <FileViewer 
+          key={Math.random()}      
+          fileType={filetypeUploaded}
+          filePath={previewURL}
+          onError={onPreviewErrorhandler}
+        >
+        </FileViewer>
+         </div>}  
 
         <div className="upload-button">
           <Button
@@ -203,7 +224,8 @@ const Upload = (props) => {
 
         </div>
       </div>
-    </div>
+    </div> 
+    </>
   );
 };
 
