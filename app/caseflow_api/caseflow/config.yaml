@@ -1,0 +1,4 @@
+configurationset:
+  - configuration:
+      name: postgresql_config
+      uri: postgresql://{your-ngrok-ip-address}/{your-db}?user={your-db-username}&password={your-db-password}

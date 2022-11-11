@@ -1,0 +1,131 @@
+type Document {
+  content: String
+  contentsize: Int
+  contenttype: String
+  creationuser: String
+  description: String
+  documentid: String
+  downloadurl: String
+  id: Int!
+  latestversion: String
+  metadata: String
+  modificationuser: String
+  name: String
+  creationdate: DateTime
+  modificationdate: DateTime
+  documentList: [Document] @materializer(query: "getDocumentUsingVersions")
+  versionsList: [Versions] @materializer(query: "getVersionsUsingDocid")
+}
+
+"""
+These are some examples of queries generated from the schema. Feel free to modify them or add your own.
+"""
+type Query {
+  getDocumentList: [Document]
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Document"
+      configuration: "postgresql_config"
+    )
+  """
+  update document Mutation
+  """
+  getDocumentId(documentid: String!): Document
+    @dbquery(
+      type: "postgresql"
+      query: """
+      Select id FROM  "Document"  WHERE "documentid" = $1
+      """
+      configuration: "postgresql_config"
+    )
+  getDocument(id: Int!): Document
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Document"
+      configuration: "postgresql_config"
+    )
+  getDocumentUsingVersions(id: Int!): [Document]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      SELECT T."content", T."contentsize", T."contenttype", T."creationdate", T."creationuser", T."description", T."documentid", T."downloadurl", T."id", T."latestversion", T."metadata", T."modificationdate", T."modificationuser", T."name", T."versions"
+        FROM "public"."Document" T
+        WHERE T."versions" = $1
+      """
+      configuration: "postgresql_config"
+    )
+}
+
+"""
+insert document Mutation
+"""
+type Mutation {
+  insertDocument(
+    modificationdate: DateTime!
+    downloadurl: String!
+    creationuser: String!
+    description: String!
+    name: String!
+    documentid: String!
+    content: String!
+    modificationuser: String!
+    contentsize: Int!
+    creationdate: DateTime!
+    latestversion: String!
+    metadata: String!
+    contenttype: String!
+  ): Document
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Document"
+      dml: INSERT
+      configuration: "postgresql_config"
+    )
+  """
+  delete document Mutation
+  """
+  deleteDocument(documentid: String!): Document
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Document"
+      dml: DELETE
+      configuration: "postgresql_config"
+    )
+  """
+  update document Mutation
+  """
+  updateDocument(
+    documentid: String!
+    modificationdate: DateTime
+    downloadurl: String
+    creationuser: String
+    description: String
+    name: String
+    content: String
+    modificationuser: String
+    contentsize: Int
+    latestversion: String
+    contenttype: String
+  ): Document
+    @dbquery(
+      type: "postgresql"
+      query: """
+      UPDATE "Document" SET
+      "modificationdate"= $2,
+      "downloadurl"= $3,
+      "creationuser"= $4,
+      "description"= $5,
+      "name"=$6,
+      "content"= $7,
+      "modificationuser"= $8,
+      "contentsize"= $9,
+      "latestversion"= $10,
+      "contenttype"= $11  WHERE "documentid" = $1
+      """
+      configuration: "postgresql_config"
+    )
+}
