@@ -6,14 +6,15 @@ import json
 import requests
 from cmislib.exceptions import UpdateConflictException
 from flask import current_app, request,make_response,Response
-from flask_restx import Namespace, Resource
+from flask_restx import Namespace, Resource,reqparse
 from requests.auth import HTTPBasicAuth
 from caseflow.services import DocManageService
 from caseflow.services import DMSConnector
 from caseflow.utils.enums import DMSCode
-
 from caseflow.utils import auth, cors_preflight
 from caseflow.utils.enums import CaseflowRoles
+from werkzeug.datastructures import FileStorage
+
 
 
 # keeping the base path same for cmis operations (upload / download) as cmis/
@@ -25,11 +26,14 @@ API = Namespace("CMIS_ALFRESCO", description="CMIS ALFRESCO Connector")
 @API.route("/upload", methods=["POST", "OPTIONS"])
 class CMISConnectorUploadResource(Resource):
     """Resource for uploading cms repo."""
+    upload_parser = reqparse.RequestParser()
+    upload_parser.add_argument('upload', location='files',
+                               type=FileStorage, required=True)
 
-    @staticmethod
+    @API.expect(upload_parser)
     @auth.require
     @auth.has_role([CaseflowRoles.CASEFLOW_ADMINISTRATOR.value])
-    def post():
+    def post(self):
         """New entry in cms repo with the new resource."""
         cms_repo_url = current_app.config.get("CMS_REPO_URL") 
         cms_repo_username =current_app.config.get("CMS_REPO_USERNAME")  
@@ -91,11 +95,15 @@ class CMISConnectorUploadResource(Resource):
 @API.route("/update", methods=["PUT", "OPTIONS"])
 class CMISConnectorUploadResource(Resource):
     """Resource for uploading cms repo."""
+    upload_parser = reqparse.RequestParser()
+    upload_parser.add_argument('upload', location='files',
+                               type=FileStorage, required=True)
+    upload_parser.add_argument('id', type=int, location='form', required=True)
 
-    @staticmethod
+    @API.expect(upload_parser)
     @auth.require
     @auth.has_role([CaseflowRoles.CASEFLOW_ADMINISTRATOR.value])
-    def put():
+    def put(self):
         """New entry in cms repo with the new resource."""
         cms_repo_url = current_app.config.get("CMS_REPO_URL") 
         cms_repo_username =current_app.config.get("CMS_REPO_USERNAME")  
@@ -167,11 +175,12 @@ class CMISConnectorUploadResource(Resource):
 @API.route("/download", methods=["GET", "OPTIONS"])
 class CMISConnectorDownloadResource(Resource):
     """Resource for downloading files from cms repo."""
+    @API.doc(params={'id': {'description': 'Enter the  Document ID here :',
+                            'type': 'int', 'default': 1}})
 
-    @staticmethod
     @auth.require
     @auth.has_role([CaseflowRoles.CASEFLOW_ADMINISTRATOR.value])
-    def get():
+    def get(self):
         """Getting resource from cms repo."""
         cms_repo_url = current_app.config.get("CMS_REPO_URL")
         cms_repo_username = current_app.config.get("CMS_REPO_USERNAME")

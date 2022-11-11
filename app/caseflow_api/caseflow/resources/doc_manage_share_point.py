@@ -5,14 +5,15 @@ from http import HTTPStatus
 import json
 import requests
 from cmislib.exceptions import UpdateConflictException
-from flask import current_app, request,make_response,Response
-from flask_restx import Namespace, Resource
+from flask import current_app, request, make_response, Response
+from flask_restx import Namespace, Resource, reqparse
 from requests.auth import HTTPBasicAuth
 from caseflow.services import DocManageService
 from caseflow.utils import auth, cors_preflight
 from caseflow.resources.share_point_helper import SharePoint
 from caseflow.services import DMSConnector
 from caseflow.utils.enums import DMSCode
+from werkzeug.datastructures import FileStorage
 
 
 # keeping the base path same for cmis operations (upload / download) as cmis/
@@ -23,11 +24,14 @@ API = Namespace("CMIS_SHAREPOINT", description="CMIS SharePoint Connector")
 @API.route("/upload", methods=["POST", "OPTIONS"])
 class CMISConnectorUploadResource(Resource):
     """Resource for uploading cms repo."""
+    upload_parser = reqparse.RequestParser()
+    upload_parser.add_argument('upload', location='files',
+                               type=FileStorage, required=True)
 
-    @staticmethod
+    @API.expect(upload_parser)
     @auth.require
-    def post():
-        
+    def post(self):
+
         if "upload" not in request.files:
             return {"message": "No upload files in the request"}, HTTPStatus.BAD_REQUEST
         print(request)
@@ -37,9 +41,9 @@ class CMISConnectorUploadResource(Resource):
         SHAREPOINT_FOLDER_NAME  = current_app.config.get("SHAREPOINT_FOLDER_NAME")   
         if file_name != "":
             try:
-               
+
                 document = SharePoint().upload_file(file_name,SHAREPOINT_FOLDER_NAME,data)
-                
+
                 if document.exists:
                     response = document.properties
                     file_url = document.serverRelativeUrl
@@ -50,10 +54,10 @@ class CMISConnectorUploadResource(Resource):
                         return (
                             (uploaded_data),HTTPStatus.OK,
                         )
-                    else:            
-                     document = SharePoint().delete_file(file_url)
-                     document_content = document
-                     print("document deleted")
+                    else:
+                        document = SharePoint().delete_file(file_url)
+                        document_content = document
+                        print("document deleted")
                 else:
                     print("Something went wrong!")
 
@@ -69,20 +73,25 @@ class CMISConnectorUploadResource(Resource):
 @API.route("/update", methods=["PUT", "OPTIONS"])
 class CMISConnectorUploadResource(Resource):
     """Resource for uploading cms repo."""
+    upload_parser = reqparse.RequestParser()
+    upload_parser.add_argument('upload', location='files',
+                               type=FileStorage, required=True)
+    upload_parser.add_argument('id', type=int, location='form', required=True)
 
-    @staticmethod
+    @API.expect(upload_parser)
     @auth.require
+    def put(self):
+        args = self.upload_parser.parse_args()
 
-    def put():       
-        if "upload" not in request.files:
+        if "upload" not in args:
             return {"message": "No upload files in the request"}, HTTPStatus.BAD_REQUEST
 
-        content_file = request.files["upload"]       
+        content_file = request.files["upload"]
         filename = content_file.filename
         data =content_file.read()    
         request_data = request.form.to_dict(flat=True)
         if filename != "":
-            try:               
+            try:
                 document = SharePoint().update_file(filename,data)
                 if document.exists:
                     response = document.properties
@@ -94,10 +103,10 @@ class CMISConnectorUploadResource(Resource):
                             (uploaded_data),HTTPStatus.OK,
                         )
                     else:
-            
-                     document = SharePoint().delete_file(document.serverRelativeUrl)
-                     document_content = document.json()
-                     print(document_content)
+
+                        document = SharePoint().delete_file(document.serverRelativeUrl)
+                        document_content = document.json()
+                        print(document_content)
                 else:
                     print("Something went wrong!")
 
@@ -106,21 +115,21 @@ class CMISConnectorUploadResource(Resource):
                     "message": "Unable to  upload files in the request", "error" : e.message
                 }, HTTPStatus.INTERNAL_SERVER_ERROR
         else:
-            return {"message": "Unable to  upload files in the request"}, HTTPStatus.BAD_REQUEST    
+            return {"message": "Unable to  upload files in the request"}, HTTPStatus.BAD_REQUEST
 
 
 @cors_preflight("GET,POST,OPTIONS")
 @API.route("/download", methods=["GET", "OPTIONS"])
 class CMISConnectorDownloadResource(Resource):
     """Resource for downloading files from cms repo."""
-
-    @staticmethod
     @auth.require
-    def get():
+    @API.doc(params={'id': {'description': 'Enter the  Document ID here :',
+                            'type': 'int', 'default': 1}})
+    def get(self):
         """Getting resource from cms repo."""
-        
+
         args = request.args
-        documentId = args.get("id")        
+        documentId = args.get("id")
         try:
             doc_data = DocManageService.fetchDocId(documentId)
             if doc_data['status']=="success":                
@@ -129,8 +138,8 @@ class CMISConnectorDownloadResource(Resource):
                 return Response(final_document.content,mimetype='application/octet-stream',headers= {"file_name" :doc_data['name']   })
                 # return send_file(document,attachment_filename='capsule.zip', as_attachment=True),HTTPStatus.OK,
             else:
-                 return {"message": "No file data found in DB"}, HTTPStatus.INTERNAL_SERVER_ERROR   
+                return {"message": "No file data found in DB"}, HTTPStatus.INTERNAL_SERVER_ERROR
         except Exception as e:
-                return {
-                    "message": "Unable to  upload files in the request", "error" : e.message
-                }, HTTPStatus.INTERNAL_SERVER_ERROR
+            return {
+                "message": "Unable to  upload files in the request", "error" : e.message
+            }, HTTPStatus.INTERNAL_SERVER_ERROR
