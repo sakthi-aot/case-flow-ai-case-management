@@ -29,16 +29,23 @@ class CMISConnectorUploadResource(Resource):
     upload_parser = reqparse.RequestParser()
     upload_parser.add_argument('upload', location='files',
                                type=FileStorage, required=True)
+    upload_parser.add_argument('name', type=str, location='form', required=True)
+    upload_parser.add_argument('cm:description', type=str, location='form', required=True)
+    upload_parser.add_argument('relativePath', type=str, location='form', default = "uploads")
+
+
+    
 
     @API.expect(upload_parser)
-    @auth.require
-    @auth.has_role([CaseflowRoles.CASEFLOW_ADMINISTRATOR.value])
+    # @auth.require
+    # @auth.has_role([CaseflowRoles.CASEFLOW_ADMINISTRATOR.value])
     def post(self):
         """New entry in cms repo with the new resource."""
+        #cms configuration
         cms_repo_url = current_app.config.get("CMS_REPO_URL") 
         cms_repo_username =current_app.config.get("CMS_REPO_USERNAME")  
         cms_repo_password =current_app.config.get("CMS_REPO_PASSWORD") 
-        # print(cms_repo_password)
+
         if cms_repo_url is None:
             return {
                 "message": "CMS Repo Url is not configured"
@@ -47,10 +54,14 @@ class CMISConnectorUploadResource(Resource):
        
         if "upload" not in request.files:
             return {"message": "No upload files in the request"}, HTTPStatus.BAD_REQUEST
-
+        
         contentfile = request.files["upload"]
         filename = contentfile.filename
         files = {'filedata': contentfile.read()}
+
+
+
+
         if filename != "":
             try:
                 url = cms_repo_url + "1/nodes/-root-/children"
@@ -62,8 +73,6 @@ class CMISConnectorUploadResource(Resource):
              
                 if document.ok:
                     response = json.loads(document.text)
-                    print(response['entry']['properties'])
-                    print(response['entry']['properties']['cm:description'])
                     formatted_document = DMSConnector.doc_upload_connector(response,DMSCode.DMS01.value)
                     uploadeddata = DocManageService.doc_upload_mutation(request,formatted_document)
                     print(uploadeddata)
@@ -99,6 +108,10 @@ class CMISConnectorUploadResource(Resource):
     upload_parser.add_argument('upload', location='files',
                                type=FileStorage, required=True)
     upload_parser.add_argument('id', type=int, location='form', required=True)
+    upload_parser.add_argument('name', type=str, location='form', required=True)
+    upload_parser.add_argument('cm:description', type=str, location='form', required=True)
+    
+
 
     @API.expect(upload_parser)
     @auth.require
@@ -124,9 +137,11 @@ class CMISConnectorUploadResource(Resource):
         files = {'file': (filename, file_content)}
         request_data = request.form.to_dict(flat=True)
         params = {
-            "majorVersion" : request_data["majorVersion"],
-            "comment" :request_data["comment"],
-            "name" :request_data["name"]
+            # "majorVersion" : request_data["majorVersion"],
+            # "comment" :request_data["comment"],
+            "name" :request_data["name"],
+            "cm:description" : request_data["cm:description"]
+            
         }
         headers = {}
         headers["Content-Type"] = ""
@@ -134,7 +149,7 @@ class CMISConnectorUploadResource(Resource):
             try:
                 docData = DocManageService.fetchDocId(request_data["id"])
                 if docData['status']=="success":
-                    docId=docData['message']
+                    docId=docData['documentId']
                     url = cms_repo_url + "1/nodes/" + docId + '/content'
                     document = requests.put(
                         url,files=files,params=params,headers = headers,auth=HTTPBasicAuth(cms_repo_username, cms_repo_password)
@@ -178,8 +193,8 @@ class CMISConnectorDownloadResource(Resource):
     @API.doc(params={'id': {'description': 'Enter the  Document ID here :',
                             'type': 'int', 'default': 1}})
 
-    @auth.require
-    @auth.has_role([CaseflowRoles.CASEFLOW_ADMINISTRATOR.value])
+    # @auth.require
+    # @auth.has_role([CaseflowRoles.CASEFLOW_ADMINISTRATOR.value])
     def get(self):
         """Getting resource from cms repo."""
         cms_repo_url = current_app.config.get("CMS_REPO_URL")
@@ -196,7 +211,7 @@ class CMISConnectorDownloadResource(Resource):
         try:
             docData = DocManageService.fetchDocId(documentId)
             if docData['status']=="success":
-                docId=docData['message']
+                docId=docData['documentId']
                 primaryUrl =cms_repo_url + "1/downloads"
                 payload = {"nodeIds":[docId]}
                 headers = {"Content-type" : "application/json"}

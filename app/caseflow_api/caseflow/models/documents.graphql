@@ -114,7 +114,7 @@ type Mutation {
     @dbquery(
       type: "postgresql"
       query: """
-      UPDATE "Document" SET
+      UPDATE "document" SET
       "modificationdate"= $2,
       "downloadurl"= $3,
       "creationuser"= $4,
