@@ -64,7 +64,7 @@ jobs:
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        context: ./app/caseflow_web
+        working_directory: ./app/caseflow_web
         task-definition: caseflow_web.json
         container-name: caseflow_web
         image: ${{ github.event.inputs.ecr }}/${{ github.event.inputs.reponame }}:${{ github.event.inputs.version }}
