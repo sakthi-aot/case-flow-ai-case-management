@@ -8,7 +8,42 @@ on:
         required: true
       reponame:
         required: true
-      
+      CMS_REPO_URL:
+        required: true
+      CMS_REPO_USERNAME:
+        required: true
+      CMS_REPO_PASSWORD:
+        required: true
+      STEPZEN_ENDPOINT_URL:
+        required: true
+      STEPZEN_API_KEY:
+        required: true
+      WEB_BASE_URL:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      SHAREPOINT_SITE:
+        required: true
+      SHAREPOINT_USERNAME:
+        required: true
+      SHAREPOINT_SITE_NAME:
+        required: true
+      S3_DEFAULT_PERMISSION:
+        required: true
+      SHARE_POINT_FOLDER_NAME:
+        required: true
+      JWT_OIDC_AUDIENCE:
+        required: true
+      KEYCLOAK_URL_REALM:
+        required: true
+      SHAREPOINT_DOC:
+        required: true
+      S3_BUCKET_NAME:
+        required: true
+      SHAREPOINT_PASSWORD:
+        required: true
+      JWT_OIDC_JWKS_URI:
+        required: true
 jobs:
   build:
     name: Build Image
