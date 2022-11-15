@@ -88,5 +88,5 @@ jobs:
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
         service: caseflow_api
-        cluster: caseflow
+        cluster: caseflow-api
         wait-for-service-stability: true
