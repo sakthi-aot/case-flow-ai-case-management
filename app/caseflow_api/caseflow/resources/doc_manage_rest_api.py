@@ -58,10 +58,6 @@ class CMISConnectorUploadResource(Resource):
         contentfile = request.files["upload"]
         filename = contentfile.filename
         files = {'filedata': contentfile.read()}
-
-
-
-
         if filename != "":
             try:
                 url = cms_repo_url + "1/nodes/-root-/children"
@@ -212,26 +208,26 @@ class CMISConnectorDownloadResource(Resource):
             docData = DocManageService.fetchDocId(documentId)
             if docData['status']=="success":
                 docId=docData['documentId']
+                doc_name = str(docData['name'])
                 primaryUrl =cms_repo_url + "1/downloads"
                 payload = {"nodeIds":[docId]}
                 headers = {"Content-type" : "application/json"}
-                response = requests.post(
-                        primaryUrl,json = payload,headers = headers,auth=HTTPBasicAuth(cms_repo_username, cms_repo_password)
-                    )
-                document = response.json()
-                downloadPendingData = document["entry"]
-                url = cms_repo_url + "1/downloads/"+downloadPendingData['id']
-                prepared_document = requests.get(
-                        url, auth=HTTPBasicAuth(cms_repo_username, cms_repo_password)
-                    )
-                prepare_url = cms_repo_url + "1/nodes/"+downloadPendingData['id']+"/content"
+                # response = requests.post(
+                #         primaryUrl,json = payload,headers = headers,auth=HTTPBasicAuth(cms_repo_username, cms_repo_password)
+                #     )
+                # document = response.json()
+                # downloadPendingData = document["entry"]
+                # url = cms_repo_url + "1/downloads/"+downloadPendingData['id']
+                # prepared_document = requests.get(
+                #         url, auth=HTTPBasicAuth(cms_repo_username, cms_repo_password)
+                #     )
+                prepare_url = cms_repo_url + "1/nodes/"+docId+"/content?attachment=true"
                 final_document = requests.get(
                         prepare_url, auth=HTTPBasicAuth(cms_repo_username, cms_repo_password)
                     )
-                print(final_document)
                 
-                return Response(final_document.content,mimetype='application/octet-stream')
-                # return send_file(document,attachment_filename='capsule.zip', as_attachment=True),HTTPStatus.OK,
+                return Response(final_document.content,mimetype=((final_document.headers['content-type']).split(";"))[0],headers= {"file_name" :doc_name,"Content-Disposition": "attachment" })
+                # return send_file(final_document.content,mimetype=((final_document.headers['content-type']).split(";"))[0],attachment_filename=doc_name, as_attachment=True)
             else:
                  return {"message": "No file data found in DB"}, HTTPStatus.INTERNAL_SERVER_ERROR   
         except Exception as e:
