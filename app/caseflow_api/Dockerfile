@@ -18,7 +18,15 @@ RUN : \
 ADD . /caseflow/app
 RUN pip install -e .
 
+RUN apt install -y curl
+
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+
+RUN apt -y install nodejs
+
 EXPOSE 5000
 COPY wait-for-service.sh /wait-for-service.sh
+
 RUN chmod u+x ./entrypoint.sh
+
 ENTRYPOINT ["/bin/sh", "entrypoint.sh"]
