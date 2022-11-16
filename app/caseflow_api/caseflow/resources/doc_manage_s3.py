@@ -61,7 +61,7 @@ class CMISConnectorUploadResource(Resource):
 
             except Exception as e:
                 return {
-                    "message": "Unable to  upload files in the request", "error" : e.message
+                    "message": "Unable to  upload files in the request", "error" : e
                 }, HTTPStatus.INTERNAL_SERVER_ERROR
         else:
             return {"message": "Unable to  upload files in the request"}, HTTPStatus.BAD_REQUEST
@@ -119,7 +119,7 @@ class CMISConnectorUploadResource(Resource):
 
             except Exception as e:
                 return {
-                    "message": "Unable to  upload files in the request", "error" : e.message
+                    "message": "Unable to  upload files in the request", "error" : e
                 }, HTTPStatus.INTERNAL_SERVER_ERROR
         else:
             return {"message": "Unable to  upload files in the request"}, HTTPStatus.BAD_REQUEST

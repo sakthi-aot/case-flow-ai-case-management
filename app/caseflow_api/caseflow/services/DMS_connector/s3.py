@@ -15,7 +15,8 @@ class S3:
                     "doc_description" : "",
                     "version" : document.version_id,
                     "doc_modified" :  document.last_modified.strftime("%Y-%m-%dT%H:%M:%S"),
-                    "doc_created" : date.today().strftime("%Y-%m-%dT%H:%M:%S")
+                    "doc_created" : date.today().strftime("%Y-%m-%dT%H:%M:%S"),
+                    "doc_download_url" : ""
             }
             return formatted_document
 
@@ -34,7 +35,8 @@ class S3:
                     "doc_description" : "",
                     "version" : document.version_id,
                     "doc_modified" :  document.last_modified.strftime("%Y-%m-%dT%H:%M:%S"),
-                    "doc_created" : date.today().strftime("%Y-%m-%dT%H:%M:%S")
+                    "doc_created" : date.today().strftime("%Y-%m-%dT%H:%M:%S"),
+                    "doc_download_url" : ""
             }
             return formatted_document
 
