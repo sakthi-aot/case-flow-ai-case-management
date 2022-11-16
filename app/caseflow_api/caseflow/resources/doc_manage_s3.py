@@ -29,6 +29,8 @@ class CMISConnectorUploadResource(Resource):
     upload_parser = reqparse.RequestParser()
     upload_parser.add_argument('upload', location='files',
                                type=FileStorage, required=True)
+    upload_parser.add_argument('name', type=str, location='form', required=True)
+    upload_parser.add_argument('cm:description', type=str, location='form', required=True)    
     @API.expect(upload_parser)
     @auth.require
     def post(self):
