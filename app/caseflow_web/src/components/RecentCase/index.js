@@ -1,31 +1,100 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
-
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import Divider from "@mui/material/Divider";
 import RecentCasecard from "../RecentCaseCard";
+import { SortCasesByField } from "../../helper/SortCases";
+import "./recentCaseStyle.scss"
 
-const RecentCase = () => {
-  const allRecentCases = [
-    {
-      caseID: "165876876",
-      caseDescription: "  My Bonnie lies over the ocean.My Bonnie lies over the ocean.",
-      status: "open",
-    },
-    {
-      caseID: "7658587678",
-      caseDescription: " My Bonnie lies over the scvea.My Bonnie lies over the sea.",
-      status: "Pending Approval",
-    },
-  ];
+const allRecentCases = [
+  {
+    caseID: "1",
+    caseDescription: "A CaseSentive",
+    status: "open",    
+  },
+  {
+    caseID: "3",
+    caseDescription: "lorems",
+    status: "Pending Approval",    
+  },
+  {
+    caseID: "2",
+    caseDescription: "Bust New",
+    status: "Pending Approval",    
+  },
+  {
+    caseID: "9",
+    caseDescription: "new And fresh",
+    status: "Pending Approval",    
+  },
+  {
+    caseID: "5",
+    caseDescription: "Finished",
+    status: "Pending Approval",    
+  },
+];
+
+let  sortingkeysOfAllRecentCases =[]
+for( let field in allRecentCases[0]){
+  sortingkeysOfAllRecentCases = [...sortingkeysOfAllRecentCases,{value:field,sortOrder:true}]
+}
+
+
+const RecentCase =React.memo( () => {
+
+  const [sortValue,setSortValue] = useState({value:"",sortOrder:null})
+  const [recentCases,setRecentCases] = useState([...allRecentCases])
+  const [sortSelectValue,setSortSelectValues] = useState(sortingkeysOfAllRecentCases)
+
+  useEffect(()=>{ 
+   const updatedSortedDate = SortCasesByField(sortValue,recentCases)
+   setRecentCases(updatedSortedDate)
+  },[sortValue])
+
+  const onSortingValueChangeHandler = (e) =>{
+    let tempSelectedValue = e.target.value;
+
+    const updatedSortValueState =sortSelectValue.map(sortValue =>{
+      if(sortValue.value === tempSelectedValue){
+        let sortedDummyvalue = {value:tempSelectedValue,sortOrder:!sortValue.sortOrder}
+        tempSelectedValue = sortedDummyvalue
+         return sortedDummyvalue
+        }else return sortValue
+      
+    }) 
+    setSortSelectValues(updatedSortValueState) 
+    setSortValue(tempSelectedValue)    
+  }
+  
   return (
     <div style={{ padding: "2rem 3rem 0rem 10rem" }}>
+      <span className="recent-case-header">
       <Typography
         sx={{ padding: "1rem 1rem 1rem 1rem" }}
         variant="h6"
       >
         Recent Cases
-      </Typography>
+      </Typography>     
+      <FormControl sx={{ m: 1, minWidth: 120, }}>
+        <InputLabel id="demo-simple-select-label">Sorting</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="Sorting"
+            value={sortValue.value}
+            onChange={onSortingValueChangeHandler}
+          >
+            {sortSelectValue.map((sortField,index) =>{
+              return <MenuItem value={sortField.value} key={index} >{sortField.value} </MenuItem>
+            })}
+           
+         </Select>
+        </FormControl>  
+      </span>
       <Divider sx={{ borderBottomWidth: 3 }} />
 
       <List
@@ -36,17 +105,17 @@ const RecentCase = () => {
         component="nav"
         aria-label="mailbox folders"
       >
-        {allRecentCases.map((eachcases) => (
+        {recentCases.map((eachcases) => (
           <RecentCasecard
             caseID={eachcases.caseID}
             caseDescription={eachcases.caseDescription}
             status={eachcases.status}
-            key={eachcases.caseID}
+            key={eachcases.caseID}            
           />
         ))}
       </List>
     </div>
   );
-};
+});
 
 export default RecentCase;

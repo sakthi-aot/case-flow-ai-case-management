@@ -7,6 +7,8 @@ import { Card, Typography } from "@mui/material";
 import "./recentCaseCard.scss"
 
 const RecentCaseCard = ({ caseID, caseDescription, status }) => {
+  // const caseDate = date.toJSON().slice(0,10).replace(/-/g,'/')
+ 
   return (
     <div>
       <Typography />
@@ -17,7 +19,7 @@ const RecentCaseCard = ({ caseID, caseDescription, status }) => {
               primary={
                 <Typography 
                 variant="body2"
-                style={{ "font-weight": "700" }}>
+                style={{ "fontWeight": "700" }}>
                   Case ID
                 </Typography>
               }
@@ -30,13 +32,13 @@ const RecentCaseCard = ({ caseID, caseDescription, status }) => {
                 <Typography
                 variant="body2"
                 
-                style={{ "font-weight": "700" }}>
+                style={{ "fontWeight": "700" }}>
                   Case Description
                 </Typography>
               }
               secondary={caseDescription}
             />
-          </Grid>
+          </Grid>          
           <Grid item xs={3}>
             <div className="recent-case-card-status">
               <div className="recent-case-card-status-text">
