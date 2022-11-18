@@ -6,11 +6,12 @@ import { setAuthToken, setAuthenticated } from "../reducers/authReducer";
 import Loading from "../containers/Loading";
 // import Upload from "./Upload";
 // import Download from "./Download";
-import Dashboard from "./Dashboard";
+import Home from "./Home";
 import FileHandler from "./FileHandler";
 import Lob from './Lob'
 import Tasks from './Tasks'
 import Cases from './Cases'
+import Dashboard from './Dashboard'
 
 const NotFound = lazy(() => import("./NotFound"));
 
@@ -34,7 +35,8 @@ const PrivateRoute = React.memo((props) => {
     <>
       {isAuth ? (
         <Routes>
-          <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="/" element={<Home />}>
+            <Route index element={<Dashboard />} />
             <Route path="tasks" element={<Tasks />} />
             <Route path="cases" element={<Cases />} />
             <Route path="documents" element={<FileHandler />} />

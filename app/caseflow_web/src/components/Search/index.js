@@ -1,8 +1,10 @@
 import React from "react";
-
+import {FormControl,Input,InputAdornment,Box,Divider,Select,MenuItem} from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import SearchIcon from '@mui/icons-material/Search';
 const Search = () => {
   return (
-    <div style={{ "align-items": "center", width: "50%" }}>
+    <>
       <FormControl fullWidth sx={{ m: 1 }} variant="standard">
         <Input
           id="standard-adornment-amount"
@@ -46,7 +48,7 @@ const Search = () => {
           }
         />
       </FormControl>
-    </div>
+    </>
   );
 };
 

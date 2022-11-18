@@ -94,12 +94,12 @@ export default function MiniDrawer({ children }) {
     {
       key: 1,
       text: "Home",
-      path: "/private/dashboard",
+      path: "/private/",
     },
-    { key: 2, text: "Tasks", path: "/private/dashboard/tasks" },
-    { key: 3, text: "Cases", path: "/private/dashboard/cases" },
-    { key: 4, text: "Documents", path: "/private/dashboard/documents" },
-    { key: 5, text: "LOB", path: "/private/dashboard/lob" },
+    { key: 2, text: "Tasks", path: "/private/tasks" },
+    { key: 3, text: "Cases", path: "/private/cases" },
+    { key: 4, text: "Documents", path: "/private/documents" },
+    { key: 5, text: "LOB", path: "/private/lob" },
   ];
   const { pathname } = useLocation();
   console.log(pathname);

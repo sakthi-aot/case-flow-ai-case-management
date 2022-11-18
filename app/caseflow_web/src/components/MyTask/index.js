@@ -18,7 +18,7 @@ const MyTask = () => {
     },
   ];
   return (
-    <div style={{ padding: "2rem 3rem 0rem 10rem" }}>
+    <div style={{ padding: "2rem 3rem 0rem 8rem" }}>
       <Typography
         sx={{ padding: "1rem 1rem 1rem 1rem" }}
         variant="h6"

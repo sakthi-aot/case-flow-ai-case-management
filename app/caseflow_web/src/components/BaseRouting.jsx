@@ -1,14 +1,14 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
-import Home from "./Home";
+import LandingPage from "./LandingPage";
 
 const BaseRouting = React.memo(({ store }) => {
 
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<LandingPage />} />
       </Routes>
     </div>
   );

@@ -8,7 +8,7 @@ import Select from '@mui/material/Select';
 import Divider from "@mui/material/Divider";
 import RecentCasecard from "../RecentCaseCard";
 import { SortCasesByField } from "../../helper/SortCases";
-import "./recentCaseStyle.scss"
+import "./caselist.scss"
 
 const allRecentCases = [
   {
@@ -44,7 +44,7 @@ for( let field in allRecentCases[0]){
 }
 
 
-const RecentCase =React.memo( () => {
+const CaseList =React.memo( (props) => {
 
   const [sortValue,setSortValue] = useState({value:"",sortOrder:null})
   const [recentCases,setRecentCases] = useState([...allRecentCases])
@@ -71,15 +71,15 @@ const RecentCase =React.memo( () => {
   }
   
   return (
-    <div style={{ padding: "2rem 3rem 0rem 10rem" }}>
+    <div style={{ padding: "2rem 3rem 0rem 8rem" }}>
       <span className="recent-case-header">
       <Typography
         sx={{ padding: "1rem 1rem 1rem 1rem" }}
         variant="h6"
       >
-        Recent Cases
+        {props.config.title}
       </Typography>     
-      <FormControl sx={{ m: 1, minWidth: 120, }}>
+      { props.config.isShowSort ? <FormControl sx={{ m: 1, minWidth: 120, }}>
         <InputLabel id="demo-simple-select-label">Sorting</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -93,7 +93,7 @@ const RecentCase =React.memo( () => {
             })}
            
          </Select>
-        </FormControl>  
+        </FormControl> : "" }
       </span>
       <Divider sx={{ borderBottomWidth: 3 }} />
 
@@ -118,4 +118,4 @@ const RecentCase =React.memo( () => {
   );
 });
 
-export default RecentCase;
+export default CaseList;
