@@ -2,8 +2,8 @@ export const BASE_ROUTE = "/";
 
 //keycloak
 export const KEYCLOAK_CLIENT =
-  (window._env_ && window._env_.KEYCLOAK_WEB_CLIENTID) ||
-  process.env.KEYCLOAK_WEB_CLIENTID ||
+  (window._env_ && window._env_.REACT_APP_KEYCLOAK_WEB_CLIENTID) ||
+  process.env.REACT_APP_KEYCLOAK_WEB_CLIENTID ||
   "case-flow-web";
 
 export const KEYCLOAK_REALM =

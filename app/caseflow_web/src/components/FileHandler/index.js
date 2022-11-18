@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 
 import "./fileHandler.scss";
 import Upload from "../Upload";
@@ -28,8 +28,7 @@ const FileHandler = () => {
               id="demo-simple-select"
               value={DMS}
               label="DMS"
-              // onChange={(event) => setDMS(event.target.value)}
-            >
+              onChange={(event) => setDMS(event.target.value)}>
               <MenuItem value={"DMS01"}>Alfresco</MenuItem>
               <MenuItem value={"DMS02"}>S3</MenuItem>
               <MenuItem value={"DMS03"}>Share Point</MenuItem>

@@ -62,8 +62,23 @@ class _Config:  # pylint: disable=too-few-public-methods
     JWT_OIDC_AUDIENCE = os.getenv("JWT_OIDC_AUDIENCE")
     JWT_OIDC_CACHING_ENABLED = os.getenv("JWT_OIDC_CACHING_ENABLED")
     JWT_OIDC_JWKS_CACHE_TIMEOUT = 300
+
+
+    #SHARE_POINT
+    SHAREPOINT_USERNAME = os.getenv("SHAREPOINT_USERNAME")
+    SHAREPOINT_PASSWORD = os.getenv("SHAREPOINT_PASSWORD")
+    SHAREPOINT_FOLDER_NAME = os.getenv("SHAREPOINT_FOLDER_NAME")
+    SHAREPOINT_SITE = os.getenv("SHAREPOINT_SITE")
+    SHAREPOINT_SITE_NAME = os.getenv("SHAREPOINT_SITE_NAME")
+    SHAREPOINT_DOC = os.getenv("SHAREPOINT_DOC")  
+
     
 
+    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+    AWS_REGION_NAME = os.getenv("AWS_REGION_NAME")
+    S3_BUCKET_NAME = os.getenv("S3_BUCKET_NAME")
+    S3_DEFAULT_PERMISSION = os.getenv("S3_DEFAULT_PERMISSION")
 
 class DevConfig(_Config):  # pylint: disable=too-few-public-methods
     """Development environment configuration."""

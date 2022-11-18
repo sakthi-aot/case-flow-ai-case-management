@@ -22,6 +22,7 @@ class DocManageService:
         version=document['version']
         doc_modified = document['doc_modified']
         doc_created = document['doc_created']
+        doc_download_url = document["doc_download_url"]
     
         query = """mutation insertDocument {
         insertDocument(
@@ -44,9 +45,8 @@ class DocManageService:
         }
         }
 
-        #     """ % (doc_id,doc_size,doc_type,doc_created,doc_name,doc_description,doc_name,version,doc_name,doc_name,doc_modified)
-
-        # print(query)
+        #     """ % (doc_id,doc_size,doc_type,doc_created,doc_name,doc_description,doc_download_url,version,doc_name,doc_name,doc_modified)
+       
         variables = {}
         try:
             headers = {"Content-Type": "application/json", "Authorization": "Apikey "+stepzen_api_key}
@@ -96,7 +96,7 @@ class DocManageService:
         query = """
         query getDocument($id: Int!){
             getDocument(id: $id){
-                documentid
+                documentid                
                 
             }
         }
@@ -156,8 +156,7 @@ class DocManageService:
                 }
                 
             #     """ % (doc_id,version,documentId,doc_modified,doc_modified)
-
-                #variables = {"docid": documentInsertedID,"versions": version,"modificationdate": doc_modified,"creationdate": doc_created}
+            
             headers = {"Content-Type": "application/json", "Authorization": "Apikey "+stepzen_api_key}
             res = requests.post(stepzen_endpoint_url, json={'query': queryVersion}, headers=headers)
             dataversion = res.json()
@@ -184,6 +183,8 @@ class DocManageService:
         query getDocument($id: Int!){
             getDocument(id: $id){
                 documentid
+                downloadurl
+                name
                 
             }
         }
@@ -195,8 +196,12 @@ class DocManageService:
             r = requests.post(stepzen_endpoint_url, json={'query': query, 'variables': variables}, headers=headers)
             data = r.json()
             documentId=data['data']['getDocument']['documentid']
+            doc_download_url = data['data']['getDocument']['downloadurl']
+            doc_name = data['data']['getDocument']['name']
             response = {
-                    "message": documentId,
+                    "documentId": documentId,
+                    "doc_download_url":doc_download_url,
+                    "name": doc_name,
                     "status": "success",
             } 
         except TypeError as update_error:

@@ -51,8 +51,26 @@ class Auth:
 
     @classmethod
     def has_role(cls, role):
-        """Method to validate the role."""
-        return jwt.validate_roles(role)
+        """Check the given role is valid or not
+            Args:
+            roles [str,]: Comma separated list of valid roles
+        """
+
+        def decorated(f):
+            @Auth.require
+            @wraps(f)
+            def wrapper(*args, **kwargs):
+                if jwt.validate_roles(role):
+                    return f(*args, **kwargs)
+                else :
+                    return {
+                        "error": "Unauthorized",
+                        "description": "You don't have access to this resource"
+                            }, HTTPStatus.UNAUTHORIZED
+
+            return wrapper
+
+        return decorated
 
 
 auth = (

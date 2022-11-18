@@ -38,10 +38,10 @@ const Upload = (props) => {
   const onSubmitHandler = () => {
     if (actionSelected === "upload") {
       const response = uploadCMISfile(file, fileName, fileDescription,props.selectedDMS);
-      // if (response)
-      // setResponse(response)
-      // console.log()
-      // console.log(response);
+      if (response)
+      setResponse(response)
+      console.log()
+      console.log(response);
     }
 
     if (actionSelected === "update") {
@@ -199,7 +199,7 @@ const Upload = (props) => {
                       height: "100%"
 
 
-                    }}>{response ? response : ""} </div>
+                    }}><pre>{JSON.stringify(response, null, 2) }</pre> </div>
 
         </div>
       </div>

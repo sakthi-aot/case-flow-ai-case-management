@@ -13,11 +13,12 @@ from caseflow.services import DMSConnector
 from caseflow.utils.enums import DMSCode
 
 from caseflow.utils import auth, cors_preflight
+from caseflow.utils.enums import CaseflowRoles
 
 
 # keeping the base path same for cmis operations (upload / download) as cmis/
 
-API = Namespace("CMIS", description="CMIS Connector")
+API = Namespace("CMIS_ALFRESCO", description="CMIS ALFRESCO Connector")
 
 
 @cors_preflight("GET,POST,OPTIONS")
@@ -27,6 +28,7 @@ class CMISConnectorUploadResource(Resource):
 
     @staticmethod
     @auth.require
+    @auth.has_role([CaseflowRoles.CASEFLOW_ADMINISTRATOR.value])
     def post():
         """New entry in cms repo with the new resource."""
         cms_repo_url = current_app.config.get("CMS_REPO_URL") 
@@ -56,8 +58,8 @@ class CMISConnectorUploadResource(Resource):
              
                 if document.ok:
                     response = json.loads(document.text)
-                    # print(response['entry']['properties'])
-                    # print(response['entry']['properties']['cm:description'])
+                    print(response['entry']['properties'])
+                    print(response['entry']['properties']['cm:description'])
                     formatted_document = DMSConnector.doc_upload_connector(response,DMSCode.DMS01.value)
                     uploadeddata = DocManageService.doc_upload_mutation(request,formatted_document)
                     print(uploadeddata)
@@ -92,7 +94,7 @@ class CMISConnectorUploadResource(Resource):
 
     @staticmethod
     @auth.require
-
+    @auth.has_role([CaseflowRoles.CASEFLOW_ADMINISTRATOR.value])
     def put():
         """New entry in cms repo with the new resource."""
         cms_repo_url = current_app.config.get("CMS_REPO_URL") 
@@ -168,6 +170,7 @@ class CMISConnectorDownloadResource(Resource):
 
     @staticmethod
     @auth.require
+    @auth.has_role([CaseflowRoles.CASEFLOW_ADMINISTRATOR.value])
     def get():
         """Getting resource from cms repo."""
         cms_repo_url = current_app.config.get("CMS_REPO_URL")
