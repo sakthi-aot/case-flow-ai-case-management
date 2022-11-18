@@ -8,8 +8,13 @@ import os
 from http import HTTPStatus
 from flask import Flask, current_app, g, request
 from werkzeug.middleware.proxy_fix import ProxyFix
+from flask_graphql import GraphQLView
+from caseflow.schemas import schema
 from caseflow.resources import API
-from caseflow import config
+from caseflow import config,models
+from caseflow.models import db, ma
+from flask_migrate import Migrate
+
 from caseflow.utils import (
     jwt,
     CASEFLOW_API_CORS_ORIGINS,
@@ -22,8 +27,15 @@ def create_app(run_mode=os.getenv("FLASK_ENV", "development")):
     app = Flask(__name__)
     app.wsgi_app = ProxyFix(app.wsgi_app)
     app.config.from_object(config.CONFIGURATION[run_mode])
+    db.init_app(app)
+    ma.init_app(app)
+
+    MIGRATE = Migrate(app, db)
     API.init_app(app)
     setup_jwt_manager(app, jwt)
+    app.add_url_rule(
+    "/graphql", view_func=GraphQLView.as_view("graphql", schema=schema, graphiql=True)
+)
 
     @app.after_request
     def cors_origin(response):  # pylint: disable=unused-variable
@@ -68,6 +80,7 @@ def create_app(run_mode=os.getenv("FLASK_ENV", "development")):
         except Exception as err:  # pylint: disable=broad-except
             current_app.logger.critical(err)
             return response
+    register_shellcontext(app)        
     return app
 
 def setup_jwt_manager(app, jwt_manager):
@@ -85,7 +98,7 @@ def register_shellcontext(app):
 
     def shell_context():
         """Shell context objects."""
-        return {"app": app, "jwt": jwt}  # pragma: no cover
+        return {"app": app, "jwt": jwt, "db": db, "models": models}  # pragma: no cover
 
     app.shell_context_processor(shell_context)
 

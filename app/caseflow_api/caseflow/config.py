@@ -62,7 +62,13 @@ class _Config:  # pylint: disable=too-few-public-methods
     JWT_OIDC_AUDIENCE = os.getenv("JWT_OIDC_AUDIENCE")
     JWT_OIDC_CACHING_ENABLED = os.getenv("JWT_OIDC_CACHING_ENABLED")
     JWT_OIDC_JWKS_CACHE_TIMEOUT = 300
-    
+
+      # POSTGRESQL
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_ECHO = True
+
+    ALEMBIC_INI = "migrations/alembic.ini"
 
 
 class DevConfig(_Config):  # pylint: disable=too-few-public-methods
