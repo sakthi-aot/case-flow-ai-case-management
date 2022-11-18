@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import CaseHistory from '../CaseHistory/caseHistory';
+import CaseDetails from '../CaseDetails/CaseDetails';
 
 export default function Cases() {
   const Item = styled(Paper)(({ theme }) => ({
@@ -17,7 +18,7 @@ export default function Cases() {
     <Box sx={{ flexGrow: 1,height:80 }}>
     <Grid container spacing={2}>
       <Grid item xs={8}>
-        <Item>Hello</Item>
+        <Item><CaseDetails/></Item>
       </Grid>
       <Grid item xs={4}>
         <Item>

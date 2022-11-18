@@ -6,9 +6,11 @@
     border-bottom: 1px solid rgb(153, 147, 147);
     margin-bottom: 1rem;
 
-    div{
-        
+    .case-history-header-name{        
         font-size: 24px;
     }
 
+}
+.case-history-container{
+    min-height: 100vh;
 }
