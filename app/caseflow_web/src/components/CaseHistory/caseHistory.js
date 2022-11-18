@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select'
 import "./caseHistory.scss"
+import FilterMuiComponent from '../FilterMuiComponent/FilterMuiComponent';
 
 
 const CaseHistory = () => {
@@ -37,24 +38,16 @@ const CaseHistory = () => {
         },
     ]
 
+    const optionsForFilter = ["name","date","owner"]
+    const onFilterChangehandler = (e) =>{
+      console.log("chnaged")
+    }
+
   return (
-    <div>
+    <div className='case-history-container'>
       <header className='case-history-header'>
-        <div>Case History</div>
-        <Box sx={{ minWidth: 120 }}>
-            <FormControl sx={{ m: 1, minWidth: 90, }} size="small">
-                <InputLabel id="demo-simple-select-label">Filter</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"          
-                  label="Age"          
-                >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-            </FormControl>
-        </Box>
+        <div className='case-history-header-name'>Case History</div>       
+        <FilterMuiComponent label="Filter" options={optionsForFilter} onChnagehandler={onFilterChangehandler} />
       </header>
       {caseHistoryData.map(singleCase =>{
        return <SingleCaseDetail

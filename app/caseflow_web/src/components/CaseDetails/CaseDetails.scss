@@ -1,0 +1,27 @@
+.case-detail-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    
+    border-bottom: 1px solid grey;
+    box-sizing: border-box;
+    .case-id-status{
+        display: flex;
+        // background-color: aqua;
+        gap: 5rem;
+        justify-content: space-between;
+        align-items: center;
+        .case-status{
+            background-color: #404040;
+            color: #FFFFFF;
+            padding: .5rem .8rem;
+            border-radius: 18px;
+        }
+        .case-id{
+            font-size: 24px;
+        }
+    }
+}
+.case-detail-container{
+    min-height: 100vh;
+    padding: 1rem;
+}
