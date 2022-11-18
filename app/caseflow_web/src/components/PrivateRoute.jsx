@@ -12,6 +12,7 @@ import Lob from './Lob'
 import Tasks from './Tasks'
 import Cases from './Cases'
 import Dashboard from './Dashboard'
+import CaseDetails from './CaseDetails/CaseDetails'
 
 const NotFound = lazy(() => import("./NotFound"));
 
@@ -38,7 +39,12 @@ const PrivateRoute = React.memo((props) => {
           <Route path="/" element={<Home />}>
             <Route index element={<Dashboard />} />
             <Route path="tasks" element={<Tasks />} />
-            <Route path="cases" element={<Cases />} />
+            <Route path="cases" >
+            <Route index element={<Cases />} />
+            <Route path=":id/details" element={<CaseDetails />} />
+          </Route>
+           
+             
             <Route path="documents" element={<FileHandler />} />
             <Route path="lob" element={<Lob />} />
           </Route>

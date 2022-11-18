@@ -21,7 +21,7 @@ const SingleCaseDetail = ({id,description,notes,tasks,documents,date}) => {
   return (
     <div className='case-grid-container'>
         <div className='case-grid-date'>{date}</div>
-        <div className='case-grid-line'><div className="case-grid-line-ball"></div></div>
+        <span className='case-grid-line'><span className="case-grid-line-ball"></span></span>
         <div className='case-gird-details'>
             <h3 onClick={expandDetailhandler} className="case-gird-details-header"><span>Description</span>
            {expand ? <KeyboardArrowUpRoundedIcon/>:<KeyboardArrowDownRoundedIcon/>}

@@ -9,6 +9,7 @@ import Divider from "@mui/material/Divider";
 import RecentCasecard from "../RecentCaseCard";
 import { SortCasesByField } from "../../helper/SortCases";
 import "./caselist.scss"
+import { Link, } from "react-router-dom";
 
 const allRecentCases = [
   {
@@ -105,13 +106,16 @@ const CaseList =React.memo( (props) => {
         component="nav"
         aria-label="mailbox folders"
       >
+         
         {recentCases.map((eachcases) => (
+          <Link to={'/private/cases/' + eachcases.caseID+'/details'} style={{ textDecoration: 'none' ,color:'#404040'}}>
           <RecentCasecard
             caseID={eachcases.caseID}
             caseDescription={eachcases.caseDescription}
             status={eachcases.status}
             key={eachcases.caseID}            
           />
+          </Link>
         ))}
       </List>
     </div>
