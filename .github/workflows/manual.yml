@@ -39,7 +39,7 @@ jobs:
         cache-dependency-path: "./app/caseflow_web/package-lock.json"
     - run: npm install --force
       working-directory: ./app/caseflow_web
-    - run: npm run build
+    - run: CI=false npm run build
       working-directory: ./app/caseflow_web
 
     - name: Configure AWS credentials
