@@ -289,8 +289,21 @@ type Document {
   }
 
   type Mutation {
-      createDocument ( $name: String!, $description: String, $metaData: Metadata, $content: String, $uploadUrl : String) : Doument!
-      updateDocument (id: ID!, $name: String!, $description: String, $metaData: Metadata, $content: String, $uploadUrl : String) )
+      createDocument ( $name: String!,
+                       $description: String, 
+                       $metaData: Metadata,
+                       $encryption: ENUM, 
+                       $content: String, 
+                       $uploadUrl : String, 
+                       $fileName: String) : Document!
+      updateDocument (  id: ID!, 
+                        $name:String!,
+                        $description: String,
+                        $encryption: ENUM, 
+                        $metaData: Metadata,
+                        $content: String,
+                        $uploadUrl: String,
+                        $fileName: String): Document!
       deleteDocument (id :ID!)
   }
 
