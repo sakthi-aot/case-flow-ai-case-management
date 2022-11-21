@@ -29,7 +29,7 @@ const LandingPage = () => {
               <div className="buttons">
                 <Button
                   component={Link}
-                  to="/private/dashboard"
+                  to="/private/"
                   style={{
                     backgroundColor: "#1B34FB",
                   }}
@@ -40,7 +40,7 @@ const LandingPage = () => {
 
                 <Button
                   component={Link}
-                  to="/private/dashboard"
+                  to="/private/"
                   style={{
                     color: "#1B34FB",
                   }}

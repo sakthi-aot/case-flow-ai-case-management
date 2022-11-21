@@ -18,7 +18,7 @@ from caseflow.utils.enums import CaseflowRoles
 
 # keeping the base path same for cmis operations (upload / download) as cmis/
 
-API = Namespace("CASE MANAGEMENT", description="CRED Operations of a case")
+API = Namespace("CASE", description="CRED Operations of a case")
 
 
 @cors_preflight("GET,POST,PUT,DELETE,OPTIONS")
@@ -32,9 +32,10 @@ class CMISConnectorUploadResource(Resource):
     def post():
         try:
             s =''
+            
         except Exception as e:
             return {
-                "message": "Unable to  upload files in the request", "error" : e.message
+                "message": "Unable to upload files in the request", "error" : e
             }, HTTPStatus.INTERNAL_SERVER_ERROR
 
 
@@ -43,7 +44,7 @@ class CMISConnectorUploadResource(Resource):
             s =''
         except Exception as e:
             return {
-                "message": "Unable to  upload files in the request", "error" : e.message
+                "message": "Unable to  update the details", "error" : e
             }, HTTPStatus.INTERNAL_SERVER_ERROR
 
 
@@ -53,7 +54,7 @@ class CMISConnectorUploadResource(Resource):
             s =''
         except Exception as e:
             return {
-                "message": "Unable to  upload files in the request", "error" : e.message
+                "message": "Unable to  delete the case ", "error" : e
             }, HTTPStatus.INTERNAL_SERVER_ERROR
 
 

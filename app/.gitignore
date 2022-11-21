@@ -4,3 +4,4 @@ caseflow_api/__pycache__
 caseflow_dms/data
 *.pyc
 *.pyc
+caseflow_api/venv

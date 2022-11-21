@@ -3,31 +3,14 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-
+import { Controller, useForm } from "react-hook-form";
 import Divider from "@mui/material/Divider";
 
 const NewCase = () => {
-  const [file, setFile] = useState("");
-  const [caseName, setCaseName] = useState("");
-  const [caseDescription, setCaseDescription] = useState("");
+  const { handleSubmit, reset, control,register } = useForm();
+  const onSubmit = (data) => console.log(data);
 
-  function caseNameChange(event) {
-    setCaseName(event.target.value); //set the filename from text box if name is alterded
-  }
-  const onDescriptionchange = (event) => {
-    event.target.value == null
-      ? setCaseDescription("My text document description...")
-      : setCaseDescription(event.target.value);
-  };
-  function handleUpload(event) {
-    setFile(event.target.files[0]); //set file into state
-  }
 
-  const onSubmitHandler = () => {
-    //call the assosiated services to handle the upload here
-  
-    console.log(file,caseName,caseDescription)
-  };
   return (
     <div style={{ padding: "2rem 15rem 0rem 15rem" }}>
       <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6">
@@ -41,6 +24,10 @@ const NewCase = () => {
           </Typography>
         </Grid>
         <Grid item xs={7}>
+        <Controller
+        name={"name"}
+        control={control}
+        render={({ field: { onChange, value } }) => (
           <TextField
             id="standard-basic"
             label="Case Name"
@@ -48,10 +35,13 @@ const NewCase = () => {
             style={{
               width: "100%",
             }}
-            value={caseName}
-            onChange={caseNameChange}
+            value={value} 
+            onChange={onChange}
             placeholder="File Name..."
           />
+        )}
+      />
+          
         </Grid>
       </Grid>
       <Grid container spacing={1} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
@@ -61,6 +51,11 @@ const NewCase = () => {
           </Typography>
         </Grid>
         <Grid item xs={7}>
+
+        <Controller
+        name={"description"}
+        control={control}
+        render={({ field: { onChange, value } }) => (
           <TextField
             id="outlined-multiline-static"
             label="Description"
@@ -71,9 +66,12 @@ const NewCase = () => {
               width: "100%",
             }}
             placeholder="Enter the details of the Case"
-            value={caseDescription}
-            onChange={onDescriptionchange}
+            value={value} 
+            onChange={onChange}
           />
+        )}
+      />
+          
         </Grid>
       </Grid>
       <Grid container spacing={1} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
@@ -83,7 +81,7 @@ const NewCase = () => {
           </Typography>
         </Grid>
         <Grid item xs={7}>
-          <input type="file" id="actual-btn" onChange={handleUpload} hidden />
+          <input type="file" id="actual-btn" {...register("file")} hidden />
 
           <Button
             style={{
@@ -98,7 +96,7 @@ const NewCase = () => {
                 width: "100%",
               }}
             >
-              {file === "" ? "Choose File" : "replace file"}
+              Choose File
             </label>
           </Button>
         </Grid>
@@ -112,9 +110,21 @@ const NewCase = () => {
               width: "30%",
             }}
             variant="contained"
-            onClick={onSubmitHandler}
+            onClick={handleSubmit(onSubmit)}
           >
-            Upload file
+            Submit
+          </Button>
+          <Button
+            style={{
+              alignItems :"center",
+              margin: "auto",
+              height: "3.4375rem",
+              width: "30%",
+            }}
+            variant="contained"
+            onClick={() => reset()} 
+          >
+           Reset
           </Button>
         </div>
     </div>

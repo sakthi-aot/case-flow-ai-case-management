@@ -1,14 +1,30 @@
-import React from "react";
+import React ,{useEffect} from "react";
 import Search from "../Search";
 import "./dashboard.scss"
 import CaseList from "../CaseList";
 import MyTask from "../MyTask";
+import {getRecentCases} from "../../apiManager/services/caseService"
 const caseListProps = {
   title : "Recent Cases",
   count : 5,
   isShowSort :false
 }
+
+
+
+
+
+
 const Dashboard = ({ children }) => {
+
+  useEffect(() => {
+    getRecentCases({}, (err, res) => {
+      // const {token } = res;
+      // dispatch(setAuthToken(token));
+      // dispatch(setAuthenticated(true));
+      // });
+    });
+  })
   return (
     <div className="dashboard">
       <div className="title"><h1>CaseFlow</h1> </div>

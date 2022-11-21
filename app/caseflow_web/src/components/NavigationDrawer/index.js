@@ -133,7 +133,7 @@ export default function MiniDrawer({ children }) {
         <DrawerHeader style={{ display: "flaex" }}>
           <div className="naviagtion-header">
             <AccountCircleIcon
-              sx={{ fontSize: 30, left: "20px", right: "10px" }}
+              sx={{ fontSize: open ? "30px" : "40px", left: "20px", right: "10px" }}
             />
             <span>
             <h3 style={{ fontSize: open ? "18px" : "0px", left: 0 }}>
@@ -149,7 +149,7 @@ export default function MiniDrawer({ children }) {
           backgroundColor:"#404040",
           borderRadius:"8px",
           transition:"all 1s ease"
-        }}>Start New Cases</Button>}
+        }} component={Link} to="/private/cases/create">Start New Cases</Button>}
         <List>
           {routes.map((route, index) => (
             <Link
@@ -199,14 +199,14 @@ export default function MiniDrawer({ children }) {
               <ChevronLeftIcon
                 style={{                  
                   // left: !open ? "50px" : "260px",
-                  marginLeft: "auto",
+                  // marginLeft: "auto",
                   fontSize: "30px",
-                  position:"absolute",
+                  position:"relative",
                   borderRadius:"50%",
                   border:"1px solid grey",
                   zIndex:"1000",  
-                 top:"5%",
-                 left:"17.5%",
+                  marginTop:"3vh",
+                 left:"93.5%",
                   backgroundColor:"#ffff"   ,
                   cursor:"pointer",
                 }}
@@ -216,14 +216,14 @@ export default function MiniDrawer({ children }) {
                 <ChevronRightIcon
                 style={{                  
                   // left: !open ? "50px" : "260px",
-                  marginLeft: "auto",
+                  // marginLeft: "auto",
                   fontSize: "30px",
-                  position:"absolute",
+                  position:"relative",
                   borderRadius:"50%",
                   border:"1px solid grey",
                   zIndex:"1000",  
-                 top:"4%",
-                 left:"3.5%",
+                 marginTop:"3vh",
+                 left:"75.5%",
                   backgroundColor:"#ffff"   ,
                   cursor:"pointer",
                 }}
