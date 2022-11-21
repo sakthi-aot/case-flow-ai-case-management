@@ -79,6 +79,13 @@ class _Config:  # pylint: disable=too-few-public-methods
     AWS_REGION_NAME = os.getenv("AWS_REGION_NAME")
     S3_BUCKET_NAME = os.getenv("S3_BUCKET_NAME")
     S3_DEFAULT_PERMISSION = os.getenv("S3_DEFAULT_PERMISSION")
+      # POSTGRESQL
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_ECHO = True
+
+    ALEMBIC_INI = "migrations/alembic.ini"
+
 
 class DevConfig(_Config):  # pylint: disable=too-few-public-methods
     """Development environment configuration."""
