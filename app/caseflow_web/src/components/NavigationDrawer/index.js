@@ -19,6 +19,9 @@ import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import CasesOutlinedIcon from "@mui/icons-material/CasesOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
+import "./navigation.scss"
+import { borderRadius } from "@mui/system";
+import { Button } from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -88,7 +91,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function MiniDrawer({ children }) {
-  // const theme = useTheme();
+ 
   const [open, setOpen] = React.useState(false);
   const routes = [
     {
@@ -123,43 +126,30 @@ export default function MiniDrawer({ children }) {
     }
   };
 
-  return (
-    <Box>
+  return (     
+    <Box >
       <CssBaseline />
-
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open} className="navaigation-drawer-container">
         <DrawerHeader style={{ display: "flaex" }}>
-          <AccountCircleIcon
-            sx={{ fontSize: 30, left: "20px", right: "10px" }}
-          />
-          <label style={{ fontSize: open ? "18px" : "0px", left: 0 }}>
-            Firstname Lastname
-          </label>
-          {open ? (
-            <ChevronLeftIcon
-              style={{
-                top: "31px",
-                // left: !open ? "50px" : "260px",
-                marginLeft: "auto",
-                fontSize: "30px",
-              }}
-              onClick={handleDrawerToggle}
+          <div className="naviagtion-header">
+            <AccountCircleIcon
+              sx={{ fontSize: 30, left: "20px", right: "10px" }}
             />
-          ) : (
-            <ChevronRightIcon
-              style={{
-                top: "31px",
-                // left: !open ? "50px" : "260px",
-
-                marginLeft: "auto",
-
-                fontSize: "30px",
-              }}
-              onClick={handleDrawerToggle}
-            />
-          )}
-        </DrawerHeader>
-        <Divider />
+            <span>
+            <h3 style={{ fontSize: open ? "18px" : "0px", left: 0 }}>
+            Chris Robinson
+            </h3>
+            <label style={{ fontSize: open ? "18px" : "0px", left: 0 }}>Administrator </label>
+            </span> 
+          </div>   
+        </DrawerHeader>        
+       {open && <Button variant="contained" style={{
+          width:"206px",
+          margin:"1rem auto 0",
+          backgroundColor:"#404040",
+          borderRadius:"8px",
+          transition:"all 1s ease"
+        }}>Start New Cases</Button>}
         <List>
           {routes.map((route, index) => (
             <Link
@@ -167,6 +157,7 @@ export default function MiniDrawer({ children }) {
               style={{
                 color: "black",
                 textDecoration: "none",
+                
               }}
             >
               <ListItem
@@ -180,6 +171,8 @@ export default function MiniDrawer({ children }) {
                     minHeight: 55,
                     justifyContent: open ? "initial" : "center",
                     px: 2.5,
+                    borderRadius:"10%",
+                margin:"0 1rem"
                   }}
                 >
                   <ListItemIcon
@@ -201,9 +194,47 @@ export default function MiniDrawer({ children }) {
           ))}
         </List>
       </Drawer>
+      <div className="Chevron-parent-container">
+          {open ? (
+              <ChevronLeftIcon
+                style={{                  
+                  // left: !open ? "50px" : "260px",
+                  marginLeft: "auto",
+                  fontSize: "30px",
+                  position:"absolute",
+                  borderRadius:"50%",
+                  border:"1px solid grey",
+                  zIndex:"1000",  
+                 top:"5%",
+                 left:"17.5%",
+                  backgroundColor:"#ffff"   ,
+                  cursor:"pointer",
+                }}
+                onClick={handleDrawerToggle}
+              />
+              ) : (
+                <ChevronRightIcon
+                style={{                  
+                  // left: !open ? "50px" : "260px",
+                  marginLeft: "auto",
+                  fontSize: "30px",
+                  position:"absolute",
+                  borderRadius:"50%",
+                  border:"1px solid grey",
+                  zIndex:"1000",  
+                 top:"4%",
+                 left:"3.5%",
+                  backgroundColor:"#ffff"   ,
+                  cursor:"pointer",
+                }}
+                onClick={handleDrawerToggle}
+                />
+                )}
+    </div>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         {children}
       </Box>
-    </Box>
+    </Box>   
+    
   );
 }
