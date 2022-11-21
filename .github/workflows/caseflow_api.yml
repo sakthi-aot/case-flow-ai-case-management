@@ -1,4 +1,4 @@
-name: Caseflow Web
+name: Caseflow API
 on:
   workflow_dispatch:
     inputs:
@@ -38,3 +38,19 @@ jobs:
         context: ./app/caseflow_api
         push: true
         tags: ${{ github.event.inputs.ecr }}/${{ github.event.inputs.reponame }}:${{ github.event.inputs.version }}
+    
+    - name: Fill in the new image ID in the Amazon ECS task definition
+      id: task-def
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: caseflow_api.json
+        container-name: caseflow_api
+        image: ${{ github.event.inputs.ecr }}/${{ github.event.inputs.reponame }}:${{ github.event.inputs.version }}
+    
+    - name: Deploy Amazon ECS task definition
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        service: caseflow_api
+        cluster: caseflow-api
+        wait-for-service-stability: true
