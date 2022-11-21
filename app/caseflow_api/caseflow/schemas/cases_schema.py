@@ -1,4 +1,4 @@
-from caseflow.models import Case as CasesModel
+from caseflow.models import Cases as CasesModel
 from caseflow.models import BaseModel 
 from caseflow.models.db import db
 
@@ -15,7 +15,7 @@ class Case(SQLAlchemyObjectType):
         model = CasesModel
         interfaces = (relay.Node,)
 
-    """Add Documents."""
+    """Add Cases."""
 class AddCase(graphene.Mutation,BaseModel):
     class Arguments:
 
@@ -48,7 +48,7 @@ class AddCase(graphene.Mutation,BaseModel):
         db.session.commit()
         return AddCase(case=case)
 
-    """Update Documents."""
+    """Update Cases."""
 class UpdateCase(graphene.Mutation,BaseModel):
 
     
@@ -84,12 +84,10 @@ class UpdateCase(graphene.Mutation,BaseModel):
         update_case.name=name
         update_case.desc=desc
         update_case.statusid=statusid
-
         update_case.typeid=typeid
         update_case.linkedcases=linkedcases
         update_case.creationdate=creationdate
         update_case.completiondate=completiondate
-
         update_case.lastmodificationdate=lastmodificationdate
         update_case.penduntildate=penduntildate
         update_case.archivedate=archivedate
@@ -103,7 +101,7 @@ class UpdateCase(graphene.Mutation,BaseModel):
         return UpdateCase(update_case=update_case, ok=ok)        
 
 
-    """delete Documents."""
+    """delete Cases."""
 class DeleteCase(graphene.Mutation,BaseModel):
     class Arguments:
         id = graphene.Int()
