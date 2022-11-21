@@ -14,7 +14,7 @@ class Query(graphene.ObjectType):
     node = relay.Node.Field()
     documents = SQLAlchemyConnectionField(documents_schema.Documents.connection, sort=documents_schema.Documents.sort_argument())
     events = SQLAlchemyConnectionField(events_schema.Events.connection, sort=None)
-    cases = SQLAlchemyConnectionField(cases_schema.CasesModel.connection, sort=None)
+    cases = SQLAlchemyConnectionField(cases_schema.Case.connection, sort=None)
 
     
 
