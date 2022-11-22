@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import Dict
 from dateutil import parser
+from caseflow.utils.enums import DMSCode
 
 
 class Sharepoint:
@@ -23,7 +24,7 @@ class Sharepoint:
                 "doc_modified" :doc_modified_date_utc.strftime("%Y-%m-%dT%H:%M:%S"),
                 "doc_created" :doc_created_date_utc.strftime("%Y-%m-%dT%H:%M:%S"),
                 "doc_download_url":document["ServerRelativeUrl"],
-                "dms_provider" : "Sharepoint"
+                "dms_provider" : DMSCode.DMS03.value
             }
 
 
