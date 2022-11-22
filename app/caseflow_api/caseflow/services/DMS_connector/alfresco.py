@@ -22,7 +22,9 @@ class Alfresco:
                     "version" : document['entry']['properties']['cm:versionLabel'],
                     "doc_modified" : doc_modifiedObj.strftime("%Y-%m-%dT%H:%M:%S"),
                     "doc_created" : doc_createdObj.strftime("%Y-%m-%dT%H:%M:%S"),
-                    "doc_download_url" : "nil"
+                    "doc_download_url" : "nil",
+                    "dms_provider" : "alfresco"
+                    
             }
             return formatted_document
         except Exception as error:

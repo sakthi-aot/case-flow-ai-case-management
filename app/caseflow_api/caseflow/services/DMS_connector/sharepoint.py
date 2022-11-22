@@ -22,7 +22,8 @@ class Sharepoint:
                 "version" :document["UIVersionLabel"],
                 "doc_modified" :doc_modified_date_utc.strftime("%Y-%m-%dT%H:%M:%S"),
                 "doc_created" :doc_created_date_utc.strftime("%Y-%m-%dT%H:%M:%S"),
-                "doc_download_url":document["ServerRelativeUrl"]
+                "doc_download_url":document["ServerRelativeUrl"],
+                "dms_provider" : "Sharepoint"
             }
 
 
