@@ -10,28 +10,42 @@ import Grid from "@mui/material/Grid";
 
 
 const CaseDocuments = () => {
+
+  const [filteredDocumentDetails, setFilteredDocumentDetails] = useState([]);
+  const [documentDetails, setDocumentDetails] = useState([]);
+  const [searchField, setSearchField] = useState("");
+
   async function fetchDocumentDetails() {
     let output = await getAllDocuments();
-    console.log(output);
-    return setDocumentDetails(output);
+    setDocumentDetails(output);
+    setFilteredDocumentDetails(output)
   }
-
-  const [documentDetails, setDocumentDetails] = useState([]);
+  const filterDocumentDetails = () =>{
+    setFilteredDocumentDetails(documentDetails.filter((eachValue) => {
+       return eachValue.name.includes(searchField)
+    }))
+    
+  }
 
   useEffect(() => {
     fetchDocumentDetails();
   }, []);
+
+  useEffect(() => {
+    filterDocumentDetails();
+  }, [searchField]);
+  
 
   return (
     <div>
       <Grid container spacing={1}>
           <Grid item xs={6}>
           <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6">
-        Case Documents
+        Case Documents 
       </Typography>
           </Grid>
           <Grid item xs={6}>
-      <Search documentDetails = {documentDetails}></Search>
+      <Search setSearchField = {setSearchField}></Search>
 
           </Grid>
           </Grid>
@@ -47,8 +61,8 @@ const CaseDocuments = () => {
         component="nav"
         aria-label="mailbox folders"
       >
-        {documentDetails &&
-          documentDetails.map((documentDetail) => (
+        {filteredDocumentDetails &&
+          filteredDocumentDetails.map((documentDetail) => (
             <CaseDocumentCard
               name={documentDetail.name}
               size={documentDetail.contentsize}

@@ -2,13 +2,16 @@ import React from "react";
 import {FormControl,Input,InputAdornment,Box,Divider,Select,MenuItem} from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
-const Search = ({documentDetails}) => {
+const Search = ({setSearchField}) => {
   return (
     <>
       <FormControl fullWidth sx={{ m: 1 }} variant="standard">
         <Input
           id="standard-adornment-amount"
           placeholder="Search"
+          onChange={(e) => {
+            setSearchField(e.target.value)
+          }}
           startAdornment={
             <InputAdornment position="start">
               <SearchIcon />

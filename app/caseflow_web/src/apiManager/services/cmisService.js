@@ -6,40 +6,10 @@ import {
 import API from "../endpoints/index";
 // import fs from 'fs';
 
-// export const fetchCMISfile = (documentId,DMS) => {
-//   console.log("kbj")
-//   return (dispatch) => {
-//     const downloadURL = API.DMS_API + "/"+ DMS.toLowerCase() + "/download";
-//     httpGETBolbRequest(downloadURL, { id: documentId ,"DMS" :DMS})
-//       .then((response) => {
-//         const downloadUrl = window.URL.createObjectURL(
-//           new Blob([response.data])
-//         );
-
-//         const link = document.createElement("a");
-
-//         link.href = downloadUrl;
-//         const file_name = response.headers["file_name"];
-//         link.setAttribute("download", file_name)//any other extension
-
-//         document.body.appendChild(link);
-
-//         link.click();
-
-//         link.remove();
-//       })
-//       .catch((error) => {
-//         if (error?.response?.data) {
-//         } else {
-//         }
-//       });
-//   };
-// };
 export const fetchCMISfile = (documentId,DMS) => {
   return (dispatch) => {
-  console.log("kbj")
+    const downloadURL = API.DMS_API + "/dms" + DMS + "/download";
 
-    const downloadURL = API.DMS_API + "/"+ DMS.toLowerCase() + "/download";
     httpGETBolbRequest(downloadURL, { id: documentId ,"DMS" :DMS})
       .then((response) => {
         const downloadUrl = window.URL.createObjectURL(
@@ -65,6 +35,7 @@ export const fetchCMISfile = (documentId,DMS) => {
       });
   };
 };
+
 //uploadCMISfile is used to send and save  files into the cmis server
 export const uploadCMISfile = (file,fileName,description,DMS) => { 
     const downloadURL = API.DMS_API + "/"+ DMS.toLowerCase() + "/upload";

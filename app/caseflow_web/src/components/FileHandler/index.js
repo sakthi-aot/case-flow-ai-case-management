@@ -15,7 +15,7 @@ import Upload from "../Upload";
 import CaseDocuments from "../CaseDocuments";
 
 const FileHandler = () => {
-  const [DMS, setDMS] = useState("DMS01");
+  const [DMS, setDMS] = useState("DMS1");
   return (
     <div className="background">
       <div className="file-card">
@@ -29,9 +29,9 @@ const FileHandler = () => {
               value={DMS}
               label="DMS"
               onChange={(event) => setDMS(event.target.value)}>
-              <MenuItem value={"DMS01"}>Alfresco</MenuItem>
-              <MenuItem value={"DMS02"}>S3</MenuItem>
-              <MenuItem value={"DMS03"}>Share Point</MenuItem>
+              <MenuItem value={"DMS1"}>Alfresco</MenuItem>
+              <MenuItem value={"DMS2"}>S3</MenuItem>
+              <MenuItem value={"DMS3"}>Share Point</MenuItem>
             </Select>
           </FormControl>
         </Box>

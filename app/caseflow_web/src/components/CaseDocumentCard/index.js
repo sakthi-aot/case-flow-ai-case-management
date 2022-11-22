@@ -95,7 +95,7 @@ const CaseDocumentCard = ({
               secondary={version}
             />
           </Grid>
-          <div onClick={() => fetchCMISfile(id, dms_provider)}>
+          <div onClick={fetchCMISfile(id, dms_provider)}>
             <Grid item xs={1}>
               <ListItemText
                 primary={
