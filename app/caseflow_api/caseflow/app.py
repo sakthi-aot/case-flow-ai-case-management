@@ -8,8 +8,6 @@ import os
 from http import HTTPStatus
 from flask import Flask, current_app, g, request
 from werkzeug.middleware.proxy_fix import ProxyFix
-from flask_graphql import GraphQLView
-from caseflow.schemas import schema
 from caseflow.resources import API
 from caseflow import config,models
 from caseflow.models import db, ma
@@ -27,15 +25,9 @@ def create_app(run_mode=os.getenv("FLASK_ENV", "development")):
     app = Flask(__name__)
     app.wsgi_app = ProxyFix(app.wsgi_app)
     app.config.from_object(config.CONFIGURATION[run_mode])
-    db.init_app(app)
-    ma.init_app(app)
-
-    MIGRATE = Migrate(app, db)
     API.init_app(app)
     setup_jwt_manager(app, jwt)
-    app.add_url_rule(
-    "/graphql", view_func=GraphQLView.as_view("graphql", schema=schema, graphiql=True)
-)
+
 
     @app.after_request
     def cors_origin(response):  # pylint: disable=unused-variable

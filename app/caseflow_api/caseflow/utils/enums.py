@@ -6,9 +6,9 @@ from enum import Enum, unique
 class DMSCode(Enum):
     """DMS names and there corresponding codes"""
 
-    DMS01 = 'alfresco'
-    DMS02 = 'S3'
-    DMS03 = 'Sharepoint'
+    DMS01 = 1 #alfresco
+    DMS02 = 2 #S3
+    DMS03 = 3 #Sharepoint
 
 @unique
 class CaseflowRoles(Enum):

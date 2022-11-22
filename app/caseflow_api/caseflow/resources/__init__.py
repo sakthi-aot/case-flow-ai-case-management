@@ -18,8 +18,8 @@ API = Api(
 )
 
 
-API.add_namespace(DOC_ALFRESCO_API, path="/doc/dms01")
-API.add_namespace(DOC_S3_API, path="/doc/dms02")
-API.add_namespace(DOC_SHAREPOINT_API, path="/doc/dms03")
-API.add_namespace(CASE_API, path="/case")
-API.add_namespace(DOC_API, path="/doc")
+API.add_namespace(DOC_ALFRESCO_API, path="/doc/dms1") # For Alfresco
+API.add_namespace(DOC_S3_API, path="/doc/dms2") # For S3
+API.add_namespace(DOC_SHAREPOINT_API, path="/doc/dms3") #For SharePoint
+API.add_namespace(CASE_API, path="/case") #For Cases
+API.add_namespace(DOC_API, path="/doc") #For Document management

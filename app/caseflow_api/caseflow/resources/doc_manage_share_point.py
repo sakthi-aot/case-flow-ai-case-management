@@ -1,13 +1,8 @@
-"""API endpoints for managing cms repo."""
-from email import header
-import mimetypes
+"""API endpoints for managing share point."""
 from http import HTTPStatus
 import json
-import requests
-from cmislib.exceptions import UpdateConflictException
 from flask import current_app, request, make_response, Response
 from flask_restx import Namespace, Resource, reqparse
-from requests.auth import HTTPBasicAuth
 from caseflow.services import DocManageService
 from caseflow.utils import auth, cors_preflight
 from caseflow.resources.share_point_helper import SharePoint
@@ -16,7 +11,7 @@ from caseflow.utils.enums import DMSCode
 from werkzeug.datastructures import FileStorage
 
 
-# keeping the base path same for cmis operations (upload / download) as cmis/
+# keeping the base path same for share point
 
 API = Namespace("CMIS_SHAREPOINT", description="CMIS SharePoint Connector")
 
@@ -24,10 +19,9 @@ API = Namespace("CMIS_SHAREPOINT", description="CMIS SharePoint Connector")
 @API.route("/upload", methods=["POST", "OPTIONS"])
 class CMISConnectorUploadResource(Resource):
     """Resource for uploading cms repo."""
-    upload_parser = reqparse.RequestParser()
-    upload_parser.add_argument('upload', location='files',
-                               type=FileStorage, required=True)
 
+    upload_parser = reqparse.RequestParser()
+    upload_parser.add_argument('upload', location='files',type=FileStorage, required=True)
     @API.expect(upload_parser)
     @auth.require
     def post(self):
@@ -43,7 +37,6 @@ class CMISConnectorUploadResource(Resource):
             try:
 
                 document = SharePoint().upload_file(file_name,SHAREPOINT_FOLDER_NAME,data)
-
                 if document.exists:
                     response = document.properties
                     file_url = document.serverRelativeUrl
@@ -72,10 +65,10 @@ class CMISConnectorUploadResource(Resource):
 @cors_preflight("GET,POST,OPTIONS,PUT")
 @API.route("/update", methods=["PUT", "OPTIONS"])
 class CMISConnectorUploadResource(Resource):
-    """Resource for uploading cms repo."""
+    """Resource for uploading  share point"""
+
     upload_parser = reqparse.RequestParser()
-    upload_parser.add_argument('upload', location='files',
-                               type=FileStorage, required=True)
+    upload_parser.add_argument('upload', location='files',type=FileStorage, required=True)
     upload_parser.add_argument('id', type=int, location='form', required=True)
 
     @API.expect(upload_parser)
@@ -103,7 +96,6 @@ class CMISConnectorUploadResource(Resource):
                             (uploaded_data),HTTPStatus.OK,
                         )
                     else:
-
                         document = SharePoint().delete_file(document.serverRelativeUrl)
                         document_content = document.json()
                         print(document_content)
@@ -121,12 +113,13 @@ class CMISConnectorUploadResource(Resource):
 @cors_preflight("GET,POST,OPTIONS")
 @API.route("/download", methods=["GET", "OPTIONS"])
 class CMISConnectorDownloadResource(Resource):
-    """Resource for downloading files from cms repo."""
+    """Resource for downloading files from share point"""
+
     @auth.require
     @API.doc(params={'id': {'description': 'Enter the  Document ID here :',
                             'type': 'int', 'default': 1}})
     def get(self):
-        """Getting resource from cms repo."""
+        """Getting resource from share point"""
 
         args = request.args
         documentId = args.get("id")

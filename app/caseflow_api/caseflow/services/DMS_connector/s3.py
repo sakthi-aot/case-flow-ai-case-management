@@ -1,6 +1,7 @@
 
 from typing import Dict
 from datetime import date
+from caseflow.utils.enums import DMSCode
 
 class S3:
     """This class manages the connecton of S3 system with the API"""
@@ -17,7 +18,7 @@ class S3:
                     "doc_modified" :  document.last_modified.strftime("%Y-%m-%dT%H:%M:%S"),
                     "doc_created" : date.today().strftime("%Y-%m-%dT%H:%M:%S"),
                     "doc_download_url" : "",
-                    "dms_provider" : "S3"
+                    "dms_provider" : DMSCode.DMS02.value
 
             }
             return formatted_document

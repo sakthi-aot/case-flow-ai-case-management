@@ -1,6 +1,4 @@
 """API endpoints for managing cms repo."""
-from email import header
-import mimetypes
 from http import HTTPStatus
 import json
 import requests
@@ -27,8 +25,7 @@ API = Namespace("CMIS_ALFRESCO", description="CMIS ALFRESCO Connector")
 class CMISConnectorUploadResource(Resource):
     """Resource for uploading cms repo."""
     upload_parser = reqparse.RequestParser()
-    upload_parser.add_argument('upload', location='files',
-                               type=FileStorage, required=True)
+    upload_parser.add_argument('upload', location='files',type=FileStorage, required=True)
     upload_parser.add_argument('name', type=str, location='form', required=True)
     upload_parser.add_argument('cm:description', type=str, location='form', required=True)
     upload_parser.add_argument('relativePath', type=str, location='form', default = "uploads")
@@ -37,7 +34,7 @@ class CMISConnectorUploadResource(Resource):
     
 
     @API.expect(upload_parser)
-    # @auth.require
+    @auth.require
     # @auth.has_role([CaseflowRoles.CASEFLOW_ADMINISTRATOR.value])
     def post(self):
         """New entry in cms repo with the new resource."""
@@ -65,8 +62,6 @@ class CMISConnectorUploadResource(Resource):
                     url,data = request.form,files= files,auth=HTTPBasicAuth(cms_repo_username, cms_repo_password)
                 )
 
-                
-             
                 if document.ok:
                     response = json.loads(document.text)
                     formatted_document = DMSConnector.doc_upload_connector(response,DMSCode.DMS01.value)
@@ -100,9 +95,9 @@ class CMISConnectorUploadResource(Resource):
 @API.route("/update", methods=["PUT", "OPTIONS"])
 class CMISConnectorUploadResource(Resource):
     """Resource for uploading cms repo."""
+
     upload_parser = reqparse.RequestParser()
-    upload_parser.add_argument('upload', location='files',
-                               type=FileStorage, required=True)
+    upload_parser.add_argument('upload', location='files',type=FileStorage, required=True)
     upload_parser.add_argument('id', type=int, location='form', required=True)
     upload_parser.add_argument('name', type=str, location='form', required=True)
     upload_parser.add_argument('cm:description', type=str, location='form', required=True)
@@ -186,10 +181,11 @@ class CMISConnectorUploadResource(Resource):
 @API.route("/download", methods=["GET", "OPTIONS"])
 class CMISConnectorDownloadResource(Resource):
     """Resource for downloading files from cms repo."""
+
     @API.doc(params={'id': {'description': 'Enter the  Document ID here :',
                             'type': 'int', 'default': 1}})
 
-    # @auth.require
+    @auth.require
     # @auth.has_role([CaseflowRoles.CASEFLOW_ADMINISTRATOR.value])
     def get(self):
         """Getting resource from cms repo."""
@@ -209,18 +205,6 @@ class CMISConnectorDownloadResource(Resource):
             if docData['status']=="success":
                 docId=docData['documentId']
                 doc_name = str(docData['name'])
-                primaryUrl =cms_repo_url + "1/downloads"
-                payload = {"nodeIds":[docId]}
-                headers = {"Content-type" : "application/json"}
-                # response = requests.post(
-                #         primaryUrl,json = payload,headers = headers,auth=HTTPBasicAuth(cms_repo_username, cms_repo_password)
-                #     )
-                # document = response.json()
-                # downloadPendingData = document["entry"]
-                # url = cms_repo_url + "1/downloads/"+downloadPendingData['id']
-                # prepared_document = requests.get(
-                #         url, auth=HTTPBasicAuth(cms_repo_username, cms_repo_password)
-                #     )
                 prepare_url = cms_repo_url + "1/nodes/"+docId+"/content?attachment=true"
                 final_document = requests.get(
                         prepare_url, auth=HTTPBasicAuth(cms_repo_username, cms_repo_password)
