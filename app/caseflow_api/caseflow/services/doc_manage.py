@@ -211,3 +211,42 @@ class DocManageService:
             }    
         return response    
      
+
+     
+    @staticmethod
+    def doc_fetch_alldata():
+        """ Do Fetch  document List """
+        stepzen_endpoint_url =current_app.config.get("STEPZEN_ENDPOINT_URL")  
+        stepzen_api_key =current_app.config.get("STEPZEN_API_KEY") 
+        try:
+            query = """
+           query MyQuery {
+            getDocumentList {
+                name
+                id
+                downloadurl
+                documentid
+                description
+                creationdate
+                modificationdate
+                versionsList {
+                versions
+                }
+            }
+            }
+
+                """
+            variables = {}
+            headers = {"Content-Type": "application/json", "Authorization": "Apikey "+stepzen_api_key}
+            r = requests.post(stepzen_endpoint_url, json={'query': query, 'variables': variables}, headers=headers)
+            data = r.json()
+            response = {
+                    "message": data,
+                    "status": "success",
+            } 
+        except TypeError as update_error:
+            response = {
+                "message": "Fetch Error",
+                "error": update_error,
+            }    
+        return response
