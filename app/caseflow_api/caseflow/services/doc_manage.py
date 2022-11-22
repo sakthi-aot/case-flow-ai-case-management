@@ -23,6 +23,7 @@ class DocManageService:
         doc_modified = document['doc_modified']
         doc_created = document['doc_created']
         doc_download_url = document["doc_download_url"]
+        dms_provider=document["dms_provider"]
     
         query = """mutation insertDocument {
         insertDocument(
@@ -39,13 +40,15 @@ class DocManageService:
             modificationuser: "%s"
             name: "%s"
             modificationdate: "%s"
+            dms_provider: "%s"
         ) {
             id,
-            documentid
+            documentid,
+            dms_provider
         }
         }
 
-        #     """ % (doc_id,doc_size,doc_type,doc_created,doc_name,doc_description,doc_download_url,version,doc_name,doc_name,doc_modified)
+        #     """ % (doc_id,doc_size,doc_type,doc_created,doc_name,doc_description,doc_download_url,version,doc_name,doc_name,doc_modified,dms_provider)
        
         variables = {}
         try:
@@ -229,6 +232,7 @@ class DocManageService:
                 description
                 creationdate
                 modificationdate
+                contentsize
                 versionsList {
                 versions
                 }
