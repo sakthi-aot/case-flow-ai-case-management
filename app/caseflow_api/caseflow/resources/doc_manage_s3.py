@@ -1,23 +1,17 @@
-"""API endpoints for managing cms repo."""
-from email import header
-import mimetypes
+"""API endpoints for managing s3 bucket."""
+
 from http import HTTPStatus
 import json
-import requests
-from cmislib.exceptions import UpdateConflictException
 from flask import current_app, request,make_response,Response
 from flask_restx import Namespace, Resource,reqparse
-from requests.auth import HTTPBasicAuth
 from caseflow.services import DocManageService
 from caseflow.resources.s3_helper import get_object,upload_object,delete_object,update_object
-
-
 from caseflow.utils import auth, cors_preflight
 from caseflow.services import DMSConnector
 from caseflow.utils.enums import DMSCode
 from werkzeug.datastructures import FileStorage
 
-# keeping the base path same for cmis operations (upload / download) as cmis/
+# keeping the base path same for S3 operations 
 
 API = Namespace("CMIS_S3", description="CMIS S3 Connector")
 
@@ -25,10 +19,10 @@ API = Namespace("CMIS_S3", description="CMIS S3 Connector")
 @cors_preflight("GET,POST,OPTIONS")
 @API.route("/upload", methods=["POST", "OPTIONS"])
 class CMISConnectorUploadResource(Resource):
-    """Resource for uploading cms repo."""
+    """Resource for uploading S3 bucket"""
+
     upload_parser = reqparse.RequestParser()
-    upload_parser.add_argument('upload', location='files',
-                               type=FileStorage, required=True)
+    upload_parser.add_argument('upload', location='files',type=FileStorage, required=True)
     upload_parser.add_argument('name', type=str, location='form', required=True)
     upload_parser.add_argument('cm:description', type=str, location='form', required=True)    
     @API.expect(upload_parser)
@@ -76,10 +70,10 @@ class CMISConnectorUploadResource(Resource):
 @cors_preflight("GET,POST,OPTIONS,PUT")
 @API.route("/update", methods=["PUT", "OPTIONS"])
 class CMISConnectorUploadResource(Resource):
-    """Resource for uploading cms repo."""
+    """Resource for uploading S3 bucket"""
+
     upload_parser = reqparse.RequestParser()
-    upload_parser.add_argument('upload', location='files',
-                               type=FileStorage, required=True)
+    upload_parser.add_argument('upload', location='files',type=FileStorage, required=True)
     upload_parser.add_argument('id', type=int, location='form',required=True)
 
     @API.expect(upload_parser)
@@ -136,13 +130,13 @@ class CMISConnectorUploadResource(Resource):
 @cors_preflight("GET,POST,OPTIONS")
 @API.route("/download", methods=["GET", "OPTIONS"])
 class CMISConnectorDownloadResource(Resource):
-    """Resource for downloading files from cms repo."""
+    """Resource for downloading files from S3 bucket"""
 
     @auth.require
     @API.doc(params={'id': {'description': 'Enter the  Document ID here :',
                             'type': 'int', 'default': 1}})
     def get(self):
-        """Getting resource from cms repo."""
+        """Getting resource from s3 bucket"""
 
         args = request.args
         documentId = args.get("id")

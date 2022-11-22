@@ -1,4 +1,4 @@
-import { GraphQLClient, gql } from "graphql-request";
+import { GraphQLClient } from "graphql-request";
 import { RequestInit } from "node-fetch";
 import UserService from "../../services/UserService";
 

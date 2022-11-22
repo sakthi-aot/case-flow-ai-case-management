@@ -40,7 +40,7 @@ class DocManageService:
             modificationuser: "%s"
             name: "%s"
             modificationdate: "%s"
-            dms_provider: "%s"
+            dms_provider: %s
         ) {
             id,
             documentid,

@@ -3,7 +3,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import { Card, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import "./recentCaseCard.scss"
 
 const RecentCaseCard = ({ caseID, caseDescription, status }) => {

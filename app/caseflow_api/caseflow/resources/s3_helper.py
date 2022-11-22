@@ -4,6 +4,7 @@ from flask import current_app
 import uuid;
 
 def create_bucket(bucket_name):
+    """create s3 bucket."""
     try :
      session = boto3.Session(
          aws_access_key_id=current_app.config.get("AWS_ACCESS_KEY_ID")  ,
@@ -20,7 +21,7 @@ def create_bucket(bucket_name):
 
 
 def upload_object(bucket_name, privacy_policy, data, file_name):
-
+    """ Upload object to s3 bucket ."""
     try :
      s3_file_name = str(uuid.uuid4()) + "_"+ file_name
      is_exists = check_bucket(bucket_name)
@@ -49,8 +50,10 @@ def upload_object(bucket_name, privacy_policy, data, file_name):
            return {"HTTPStatusCode" : "201", "message" : "Object already exist"}
     except Exception as e:
         return e
-def update_object(bucket_name, privacy_policy, data, file_name):
 
+
+def update_object(bucket_name, privacy_policy, data, file_name):
+    """ Update Object n s3"""
     try :
      session = create_aws_session()
      s3 = session.resource('s3')
@@ -70,7 +73,7 @@ def update_object(bucket_name, privacy_policy, data, file_name):
 
 
 def delete_object(bucket_name, file_name):
-
+    """Delete Object in S3."""
     try :
      session = create_aws_session()
      s3 = session.resource('s3')
@@ -88,7 +91,7 @@ def delete_object(bucket_name, file_name):
 
 
 def get_object(bucket_name, file_name):
-
+    """Fetch object in S3 ."""
     try :
      session = create_aws_session()
      s3 = session.resource('s3')
@@ -100,7 +103,7 @@ def get_object(bucket_name, file_name):
 
 
 def check_bucket(bucket_name):
-
+    """ Check the bucket status in S3 ."""
     try :
         session = create_aws_session()
         s3 = session.resource('s3')

@@ -1,4 +1,4 @@
-#Introduction
+# Introduction
 Case Flow is an open-source generic Case Managment application built on top of formsflow.ai
 
 The application is explicitly designed to be hightly generic and configurable. There are 4 fundamental design tenets which describe our philosophy :
@@ -35,7 +35,7 @@ The diagram below illustrates the clear differentiation between what Case Flow p
 ![separation of concerns](docs/caseflow-separation-of-concerns.png)
 
 
-#The UI
+# The UI
 
 
 
@@ -47,7 +47,7 @@ An important part of any solution is to understand where data originates, where 
 - DMS - Documents (which may be stored in Case FLow internal DMS or the LOB accessible DMS)
 
 Please refer to the following diagram for an overview of the data flows relevant to Case Flow :
-    ![data flows](docs/case%20management%20data%20flow%20(4).png)
+    ![data flows](docs/case%20management%20data%20flow.png)
 
 
 #### Public/initiator data 
@@ -66,11 +66,16 @@ It is important that workflow designers understand what data they have available
 
 Cache variables can be made available to the Case FLow UI - these need to be defined in the "cache-case-mapper" as follows : blah
 
-####Case Data
+#### Case Data
 
 Case data is displayed and updated in the Case Flow UI, primarily. However, the case API is also available to workflows and custom LOB clients if required. Typical examples of where this might happen is where a workfow might be the final step of a case , and if successful changes the case status to "Complete".
 
 It is possible to define custom case data - that is, data which is not part of the default case data model, and which is not part of the LOB.  (as follows)
+
+The following diagram shows the case manager data model :
+
+![data model](docs/caseflow%20ERD.png)
+
 
 #### LOB read-only data
 

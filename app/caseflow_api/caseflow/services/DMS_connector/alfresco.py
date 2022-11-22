@@ -1,6 +1,7 @@
 
 from datetime import datetime
 from typing import Dict
+from caseflow.utils.enums import DMSCode
 
 
 class Alfresco:
@@ -23,7 +24,7 @@ class Alfresco:
                     "doc_modified" : doc_modifiedObj.strftime("%Y-%m-%dT%H:%M:%S"),
                     "doc_created" : doc_createdObj.strftime("%Y-%m-%dT%H:%M:%S"),
                     "doc_download_url" : "nil",
-                    "dms_provider" : "alfresco"
+                    "dms_provider" : DMSCode.DMS01.value
                     
             }
             return formatted_document

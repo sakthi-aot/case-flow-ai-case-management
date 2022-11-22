@@ -8,7 +8,8 @@ import API from "../endpoints/index";
 
 export const fetchCMISfile = (documentId,DMS) => {
   return (dispatch) => {
-    const downloadURL = API.DMS_API + "/"+ DMS.toLowerCase() + "/download";
+    const downloadURL = API.DMS_API + "/dms" + DMS + "/download";
+
     httpGETBolbRequest(downloadURL, { id: documentId ,"DMS" :DMS})
       .then((response) => {
         const downloadUrl = window.URL.createObjectURL(
@@ -34,6 +35,7 @@ export const fetchCMISfile = (documentId,DMS) => {
       });
   };
 };
+
 //uploadCMISfile is used to send and save  files into the cmis server
 export const uploadCMISfile = (file,fileName,description,DMS) => { 
     const downloadURL = API.DMS_API + "/"+ DMS.toLowerCase() + "/upload";

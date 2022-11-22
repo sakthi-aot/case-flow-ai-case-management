@@ -1,22 +1,14 @@
 """API endpoints for managing cms repo."""
-from email import header
-import mimetypes
+
 from http import HTTPStatus
-import json
-import requests
-from cmislib.exceptions import UpdateConflictException
-from flask import current_app, request,make_response,Response
 from flask_restx import Namespace, Resource
-from requests.auth import HTTPBasicAuth
-from caseflow.services import DocManageService
-from caseflow.services import DMSConnector
-from caseflow.utils.enums import DMSCode
+
 
 from caseflow.utils import auth, cors_preflight
 from caseflow.utils.enums import CaseflowRoles
 
 
-# keeping the base path same for cmis operations (upload / download) as cmis/
+# keeping the base path same for case management operations
 
 API = Namespace("CASE", description="CRED Operations of a case")
 

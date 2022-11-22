@@ -1,12 +1,10 @@
-from urllib import response
-from xml.dom.minidom import Document
+
 from office365.sharepoint.client_context import ClientContext
 from office365.runtime.auth.user_credential import UserCredential
 from office365.sharepoint.files.file import File
 import datetime
-from flask import current_app, request
 import os
-import tempfile
+
 
  #SHARE_POINT
 USERNAME = os.getenv("SHAREPOINT_USERNAME")
@@ -31,6 +29,7 @@ class SharePoint:
         return conn
 
     def _get_files_list(self, folder_name):
+
         conn = self._auth()
         target_folder_url = f'{SHAREPOINT_DOC}/{folder_name}'
         root_folder = conn.web.get_folder_by_server_relative_url(target_folder_url)

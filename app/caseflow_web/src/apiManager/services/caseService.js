@@ -1,4 +1,4 @@
-import {get,mutation} from "../graphqlRequestHandler"
+import {get} from "../graphqlRequestHandler"
 import { gql } from 'graphql-request'
 
 export const getRecentCases = () =>{
