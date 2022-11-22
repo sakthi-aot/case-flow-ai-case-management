@@ -180,7 +180,7 @@ const Upload = (props) => {
             />
           </div>
         )}
-         {(previewURL &&filetypeUploaded!=="plain" ) && <div className="pgViewContainer" >
+         {/* {(previewURL &&filetypeUploaded!=="plain" ) && <div className="pgViewContainer" >
           <p className="preview-heading">Preview</p>
          <FileViewer 
           key={Math.random()}      
@@ -189,7 +189,7 @@ const Upload = (props) => {
           onError={onPreviewErrorhandler}
         >
         </FileViewer>
-         </div>}  
+         </div>}   */}
 
         <div className="upload-button">
           <Button
@@ -208,22 +208,32 @@ const Upload = (props) => {
       </div>
 
       <div className="upload-right">
-        <div className="display-upload-result">
-          <Typography style = {{
+        {/* <div className="display-upload-result"> */}
+          {/* <Typography style = {{
             padding :"1rem 0rem 1rem 1rem"
 
-          }}variant="h5" >Result : </Typography>
+          }}variant="h5" >Result : </Typography> */}
 
-          <div style = {{
+          {/* <div style = {{
                       padding :"1rem 0rem 1rem 1rem",
                       width:"100%",
                       height: "100%"
 
 
-                    }}><pre>{JSON.stringify(response, null, 2) }</pre> </div>
+                    }}><pre>{JSON.stringify(response, null, 2) }</pre> </div> */}
+                     {(previewURL &&filetypeUploaded!=="plain" ) && <div className="display-upload-result" >
+          {/* <p className="preview-heading">Preview</p> */}
+         <FileViewer 
+          key={Math.random()}      
+          fileType={filetypeUploaded}
+          filePath={previewURL}
+          onError={onPreviewErrorhandler}
+        >
+        </FileViewer>
+         </div>} 
 
         </div>
-      </div>
+      {/* </div> */}
     </div> 
     </>
   );

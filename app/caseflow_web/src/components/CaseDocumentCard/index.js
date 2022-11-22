@@ -7,7 +7,10 @@ import { Typography } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import "./CaseDocumentCard.scss";
 import { fetchCMISfile } from "../../apiManager/services/cmisService";
-
+import jpeg from "../../assets/jpeg.png"
+import png from "../../assets/png.png"
+import pdf from "../../assets/pdf.png"
+import txt from "../../assets/txt.png"
 const CaseDocumentCard = ({
   id,
   name,
@@ -18,7 +21,23 @@ const CaseDocumentCard = ({
   dms_provider,
 }) => {
   // const caseDate = date.toJSON().slice(0,10).replace(/-/g,'/')
-
+  const getFileIcon= (fileName) =>{
+    let ext = fileName.split('.').pop();
+    ext = ext.toLowerCase()
+    switch(ext){
+      case "jpeg":
+        return jpeg;
+      case "pdf":
+        return pdf;
+      case "png":
+        return png ;
+      case "txt":
+        return txt;
+    
+    }
+    
+    
+    }
   return (
     <div>
       <Typography />
@@ -47,7 +66,7 @@ const CaseDocumentCard = ({
                 <div className="name-field">
                   <img
                     className="pdf-file-img"
-                    src="./components/CaseDocumentCard/pdfFile.svg"
+                    src={`${getFileIcon(name)}`}
                     alt="pdf"
                   />
                   <div className="case-document-name">{name}</div>
