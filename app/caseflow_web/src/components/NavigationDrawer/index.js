@@ -197,9 +197,7 @@ export default function MiniDrawer({ children }) {
       <div className="Chevron-parent-container">
           {open ? (
               <ChevronLeftIcon
-                style={{                  
-                  // left: !open ? "50px" : "260px",
-                  // marginLeft: "auto",
+                style={{  
                   fontSize: "30px",
                   position:"relative",
                   borderRadius:"50%",
@@ -214,9 +212,7 @@ export default function MiniDrawer({ children }) {
               />
               ) : (
                 <ChevronRightIcon
-                style={{                  
-                  // left: !open ? "50px" : "260px",
-                  // marginLeft: "auto",
+                style={{   
                   fontSize: "30px",
                   position:"relative",
                   borderRadius:"50%",

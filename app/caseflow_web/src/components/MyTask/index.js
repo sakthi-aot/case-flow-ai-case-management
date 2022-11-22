@@ -39,7 +39,7 @@ const MyTask = () => {
           <MyTaskCard
           taskID={eachTask.taskID}
           taskDescription={eachTask.taskDescription}
-            key={eachTask.taskID}
+          key={eachTask.taskID}
           />
         ))}
       </List>

@@ -7,27 +7,24 @@ import ListItemText from "@mui/material/ListItemText";
 
 const MyTaskCard = ({taskID,taskDescription}) => {
     return (
-        <div>
+        <>
         <Typography />
-        <ListItem button>
-          <Grid container spacing={1}>
-            <Grid item xs={3}>
-              <ListItemText
-               
-                secondary={taskID}
-              />
+          <ListItem button>
+            <Grid container spacing={1}>
+              <Grid item xs={3}>
+                <ListItemText                 
+                  secondary={taskID}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <ListItemText
+                  secondary={taskDescription}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <ListItemText
-              
-                secondary={taskDescription}
-              />
-            </Grid>
-           
-          </Grid>
-        </ListItem>
+          </ListItem>
         <Divider />
-      </div>
+      </>
     );
 };
 

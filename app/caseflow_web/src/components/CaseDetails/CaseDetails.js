@@ -21,38 +21,39 @@ const CaseDetails = () => {
   const optionsForAction = ["Start Workflow","Wake","Complete","Merge"]
   const onActionChangehandler = (e) =>{
     console.log("Chnaged")
-  }
-  <div className="header">
-      <div className="title"><h1>CaseFlow</h1> </div>
-      <div className="search">
-      <Search></Search>
-      </div>
-    </div>
-
+  }  
   return (
     <div className='details-container'>
-      <div className="title"><h1>CaseFlow</h1> </div>
+      <h1 className="title">CaseFlow</h1>
       <div className="search">
-      <Search></Search>
+        <Search></Search>
       </div>
-    
-    <div className='case-detail-container'>
 
-    <div className='case-detail-header'>
-        <div className='case-id-status'>
-            <p className='case-id'>Case ID :{caseDetail.id}</p>
-            <p className='case-status'>{caseDetail.status}</p>
-        </div>
-        <FilterMuiComponent label="Action" options={optionsForAction} onChnagehandler={onActionChangehandler} />
-
-    </div>
-    <CaseDetailData name={caseDetail.name} date={caseDetail.date} owner={caseDetail.status} caseDescription={caseDetail.caseDescription} tasks={caseDetail.tasks} />
-    <CaseDetailReference docketNum={caseDetail.docketNum} courtRef={caseDetail.courtRef} />
-    </div>
-    <div className='case-history-container'>
-      <CaseHistory></CaseHistory>
-      </div>
-    </div>
+      <section className='case-detail-container'>
+        <span className='case-detail-header'>
+            <div className='case-id-status'>
+                <p className='case-id'>Case ID :{caseDetail.id}</p>
+                <p className='case-status'>{caseDetail.status}</p>
+            </div>
+            <FilterMuiComponent 
+              label="Action" 
+              options={optionsForAction}
+              onChnagehandler={onActionChangehandler} />
+        </span>
+          <CaseDetailData 
+            name={caseDetail.name} 
+            date={caseDetail.date} 
+            owner={caseDetail.status} 
+            caseDescription={caseDetail.caseDescription} 
+            tasks={caseDetail.tasks} />
+          <CaseDetailReference 
+            docketNum={caseDetail.docketNum} 
+            courtRef={caseDetail.courtRef} />
+      </section>
+      <section className='case-history-container'>
+        <CaseHistory></CaseHistory>
+     </section>
+  </div>
   )
 }
 

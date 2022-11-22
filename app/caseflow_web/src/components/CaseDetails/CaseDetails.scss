@@ -24,9 +24,7 @@
     padding-left: 8vw;
     padding-top: 2vh;
     padding-right: 3vw;
-    border-right: 1px solid gray;
-    // min-height: 100vh;
-    // padding: 1rem;
+    border-right: 1px solid gray;   
     .case-detail-header{
 
         display: flex;
@@ -35,8 +33,7 @@
         border-bottom: 1px solid grey;
         box-sizing: border-box;
         .case-id-status{
-            display: flex;
-            // background-color: aqua;
+            display: flex;            
             gap: 5rem;
             justify-content: space-between;
             align-items: center;

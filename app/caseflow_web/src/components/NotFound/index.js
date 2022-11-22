@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 const NotFound = () => {
   return (
     <div className="notfound">
-      <div className="content-section">
+      <section className="content-section">
         <div className="grid-container">
           <div className="grid-left">
             <img
@@ -41,7 +41,7 @@ const NotFound = () => {
             </div>
           </div>
         </div>
-      </div>
+      </section>
       <img
         className="bottom-blog"
         src="./components/Home/bottom.svg"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
@@ -40,8 +40,7 @@ const NewCase = () => {
             placeholder="File Name..."
           />
         )}
-      />
-          
+      />          
         </Grid>
       </Grid>
       <Grid container spacing={1} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
@@ -51,7 +50,6 @@ const NewCase = () => {
           </Typography>
         </Grid>
         <Grid item xs={7}>
-
         <Controller
         name={"description"}
         control={control}
@@ -70,8 +68,7 @@ const NewCase = () => {
             onChange={onChange}
           />
         )}
-      />
-          
+      />          
         </Grid>
       </Grid>
       <Grid container spacing={1} sx={{ padding: "2rem 1rem 2rem 1rem" }}>

@@ -76,7 +76,6 @@ const Upload = (props) => {
       <div className="upload-left">
         <div className="upload-row">
           <input type="file" id="actual-btn" onChange={handleUpload} hidden />
-
           <Button
             style={{
               width: "100%",
@@ -221,7 +220,6 @@ const Upload = (props) => {
 
 
                     }}><pre>{JSON.stringify(response, null, 2) }</pre> </div>
-
         </div>
       </div>
     </div> 

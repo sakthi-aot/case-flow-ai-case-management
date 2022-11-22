@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 const LandingPage = () => {
   return (
     <div className="home">
-      <div className="content-section">
+      <section className="content-section">
         <div className="grid-container">
           <div className="grid-left">
             <Box
@@ -59,7 +59,7 @@ const LandingPage = () => {
             ></img>
           </div>
         </div>
-      </div>
+      </section>
       <img
         className="bottom-blog"
         src="./components/Home/bottom.svg"
