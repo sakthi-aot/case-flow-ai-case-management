@@ -16,7 +16,9 @@ class S3:
                     "version" : document.version_id,
                     "doc_modified" :  document.last_modified.strftime("%Y-%m-%dT%H:%M:%S"),
                     "doc_created" : date.today().strftime("%Y-%m-%dT%H:%M:%S"),
-                    "doc_download_url" : ""
+                    "doc_download_url" : "",
+                    "dms_provider" : "S3"
+
             }
             return formatted_document
 

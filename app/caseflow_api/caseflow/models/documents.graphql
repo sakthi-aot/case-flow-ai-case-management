@@ -13,6 +13,7 @@ type Document {
   name: String
   creationdate: DateTime
   modificationdate: DateTime
+  dms_provider:String
   documentList: [Document] @materializer(query: "getDocumentUsingVersions")
   versionsList: [Versions] @materializer(query: "getVersionsUsingDocid")
 }
@@ -50,7 +51,7 @@ type Query {
     @dbquery(
       type: "postgresql"
       query: """
-      SELECT T."content", T."contentsize", T."contenttype", T."creationdate", T."creationuser", T."description", T."documentid", T."downloadurl", T."id", T."latestversion", T."metadata", T."modificationdate", T."modificationuser", T."name", T."versions"
+      SELECT T."content", T."contentsize", T."contenttype", T."creationdate", T."creationuser", T."description", T."documentid", T."downloadurl", T."dms_provider", T."id", T."latestversion", T."metadata", T."modificationdate", T."modificationuser", T."name", T."versions"
         FROM "public"."Document" T
         WHERE T."versions" = $1
       """
@@ -76,6 +77,7 @@ type Mutation {
     latestversion: String!
     metadata: String!
     contenttype: String!
+    dms_provider: String!
   ): Document
     @dbquery(
       type: "postgresql"
