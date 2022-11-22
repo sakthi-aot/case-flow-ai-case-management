@@ -1,0 +1,11 @@
+.name-field {
+  display: flex;
+  .case-document-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .pdf-file-img {
+    width: 1rem;
+  }
+}

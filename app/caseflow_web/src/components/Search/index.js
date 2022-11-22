@@ -2,7 +2,7 @@ import React from "react";
 import {FormControl,Input,InputAdornment,Box,Divider,Select,MenuItem} from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
-const Search = () => {
+const Search = ({documentDetails}) => {
   return (
     <>
       <FormControl fullWidth sx={{ m: 1 }} variant="standard">
@@ -38,9 +38,8 @@ const Search = () => {
                     defaultValue={10}
                     IconComponent={KeyboardArrowDownIcon}
                   >
-                    <MenuItem value={10}>All</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
+                    <MenuItem value={10}>Name</MenuItem>
+                  
                   </Select>
                 </FormControl>
               </Box>

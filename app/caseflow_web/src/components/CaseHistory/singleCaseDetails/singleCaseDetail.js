@@ -4,14 +4,14 @@ import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownR
 import "./SingleCaseDetail.scss"
 
 const SingleCaseDetail = ({id,description,notes,tasks,documents,date}) => {
-    const docDate =  {
-        id:1,
-        description:"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
-        notes:"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy.",
-        date:"2022-11-01 14:37",
-        tasks:["Task 01","Task 02"],
-        documents:"Document.pdf"
-    }     
+    // const docDate =  {
+    //     id:1,
+    //     description:"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
+    //     notes:"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy.",
+    //     date:"2022-11-01 14:37",
+    //     tasks:["Task 01","Task 02"],
+    //     documents:"Document.pdf"
+    // }     
     const[expand,setExpand] = useState(false)
     const expandDetailhandler = ( )=>{
         setExpand((prevState) =>{

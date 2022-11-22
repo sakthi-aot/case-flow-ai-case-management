@@ -12,7 +12,7 @@ import Select from "@mui/material/Select";
 
 import "./fileHandler.scss";
 import Upload from "../Upload";
-import Download from "../Download";
+import CaseDocuments from "../CaseDocuments";
 
 const FileHandler = () => {
   const [DMS, setDMS] = useState("DMS01");
@@ -53,7 +53,7 @@ const FileHandler = () => {
             </Typography>
           </AccordionDetails>
         </Accordion>
-        <Accordion>
+        {/* <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
@@ -67,8 +67,13 @@ const FileHandler = () => {
               <Download  selectedDMS = {DMS} />
             </Typography>
           </AccordionDetails>
-        </Accordion>
+        </Accordion> */}
       </div>
+      <div className="case-document-list">
+      <CaseDocuments/>
+
+      </div>
+
       </div>
       
     </div>
