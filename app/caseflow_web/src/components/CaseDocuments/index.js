@@ -61,7 +61,7 @@ const CaseDocuments = () => {
       case "Name":
         return setFilteredDocumentDetails(
           documentDetails.filter((eachValue) => {
-            return eachValue.name
+            return eachValue.docname
               .toLowerCase()
               .includes(searchField.toLowerCase());
           })
@@ -96,7 +96,7 @@ const CaseDocuments = () => {
       default:
         return setFilteredDocumentDetails(
           documentDetails.filter((eachValue) => {
-            return eachValue.name
+            return eachValue.docname
               .toLowerCase()
               .includes(searchField.toLowerCase());
           })
@@ -117,7 +117,7 @@ const CaseDocuments = () => {
       <Grid container spacing={1}>
         <Grid item xs={6}>
           <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6">
-            Case Documents {searchColumn}
+            Case Documents 
           </Typography>
         </Grid>
         <Grid item xs={6}>
@@ -168,7 +168,7 @@ const CaseDocuments = () => {
                         alt="pdf"
                       />
                       <div className="case-document-name">
-                        {documentDetail.name}
+                        {documentDetail.docname}
                       </div>
                     </div>
                   </TableCell>
