@@ -17,6 +17,7 @@ class Alfresco:
             formatted_document = {
                     "doc_id" : document['entry']['id'],
                     "doc_name" : document['entry']['name'],
+                    "doc_dmsname" : document['entry']['name'],
                     "doc_type" : document['entry']['content']['mimeType'],
                     "doc_size" : document['entry']['content']['sizeInBytes'],
                     "doc_description" : document['entry']['properties']['cm:description'],
