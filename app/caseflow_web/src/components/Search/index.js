@@ -1,8 +1,16 @@
 import React from "react";
-import {FormControl,Input,InputAdornment,Box,Divider,Select,MenuItem} from '@mui/material';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import SearchIcon from '@mui/icons-material/Search';
-const Search = ({setSearchField}) => {
+import {
+  FormControl,
+  Input,
+  InputAdornment,
+  Box,
+  Divider,
+  Select,
+  MenuItem,
+} from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import SearchIcon from "@mui/icons-material/Search";
+const Search = ({ setSearchField, dropDownArray, setSearchColumn }) => {
   return (
     <>
       <FormControl fullWidth sx={{ m: 1 }} variant="standard">
@@ -10,7 +18,7 @@ const Search = ({setSearchField}) => {
           id="standard-adornment-amount"
           placeholder="Search"
           onChange={(e) => {
-            setSearchField(e.target.value)
+            setSearchField(e.target.value);
           }}
           startAdornment={
             <InputAdornment position="start">
@@ -38,11 +46,21 @@ const Search = ({setSearchField}) => {
                     id="demo-simple-select-standard"
                     label="Age"
                     disableUnderline
-                    defaultValue={10}
+                    defaultValue={dropDownArray ? dropDownArray[0] : "All"}
                     IconComponent={KeyboardArrowDownIcon}
+                    onChange={(e) => {
+                      setSearchColumn(e.target.value);
+                    }}
                   >
-                    <MenuItem value={10}>Name</MenuItem>
-                  
+                    {dropDownArray ? (
+                      dropDownArray.map((dropDownValue) => (
+                        <MenuItem key={dropDownValue} value={dropDownValue}>
+                          {dropDownValue}
+                        </MenuItem>
+                      ))
+                    ) : (
+                      <MenuItem value="All">All</MenuItem>
+                    )}
                   </Select>
                 </FormControl>
               </Box>
