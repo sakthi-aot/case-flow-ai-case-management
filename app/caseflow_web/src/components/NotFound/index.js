@@ -31,7 +31,8 @@ const NotFound = () => {
                   component={Link}
                   to="/"
                   style={{
-                    color: "#1f5489",
+                    color: "#404040",
+                    border:"1px solid #404040"
                   }}
                   variant="outlined"
                 >
