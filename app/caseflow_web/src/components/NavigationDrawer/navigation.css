@@ -1,7 +1,0 @@
-.toggleButton : {
-    position: "absolute",
-    top: "30px",
-    left: "50px", // when open 240px
-    backgroundColor: "gray",
-    zIndex: "99999",
-}
