@@ -236,6 +236,7 @@ class DocManageService:
                 modificationdate
                 contentsize
                 dms_provider
+                docname
                 versionsList {
                 versions
                 }
