@@ -12,56 +12,57 @@ const NewCase = () => {
 
 
   return (
-    <div style={{ padding: "2rem 15rem 0rem 15rem" }}>
+    <div style={{ padding: "2rem 3rem 0rem 8rem" }}>
       <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6">
         New Case
       </Typography>
       <Divider sx={{ borderBottomWidth: 3 }} />
       <Grid container spacing={3} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
-        <Grid item xs={5}>
-          <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="body2">
+        <Grid item xs={4}>
+          <Typography sx={{ padding: "1rem 1rem 0rem 0rem" }} variant="body2">
             Case Name :
           </Typography>
-        </Grid>
-        <Grid item xs={7}>
-        <Controller
-        name={"name"}
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <TextField
-            id="standard-basic"
-            label="Case Name"
-            variant="outlined"
-            style={{
-              width: "100%",
-            }}
-            value={value} 
-            onChange={onChange}
-            placeholder="File Name..."
-          />
-        )}
-      />
-          
-        </Grid>
+          </Grid>
+          <Grid item xs={8}>
+            <Controller
+            name={"name"}
+            control={control}
+            render={({ field: { onChange, value } }) => (
+            <TextField
+              id="standard-basic"
+              label="Case Name"
+              variant="standard"
+              style={{
+                width: "100%",
+                border:"none"
+                
+              }}
+              value={value} 
+              onChange={onChange}
+              placeholder="File Name..."
+            />
+          )}
+        />          
+      </Grid>
       </Grid>
       <Grid container spacing={1} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
-        <Grid item xs={5}>
-          <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="body2">
+        <Grid item xs={4}>
+          <Typography sx={{ padding: "1rem 1rem 0rem 0rem" }} variant="body2">
             Case Description :
           </Typography>
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={8}>
 
         <Controller
         name={"description"}
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextField
-            id="outlined-multiline-static"
+            id="standard-basic"
             label="Description"
             multiline
-            rows={4}
-            variant="outlined"
+            rows={1}
+            variant="standard"
             style={{
               width: "100%",
             }}
@@ -75,18 +76,19 @@ const NewCase = () => {
         </Grid>
       </Grid>
       <Grid container spacing={1} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
-        <Grid item xs={5}>
-          <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="body2">
+        <Grid item xs={4}>
+          <Typography sx={{ padding: "1rem 1rem 0rem 0rem" }} variant="body2">
             Attach Documents :
           </Typography>
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={8}>
           <input type="file" id="actual-btn" {...register("file")} hidden />
 
           <Button
             style={{
               width: "100%",
               height: "3.4375rem",
+              border:"1px solid #404040"
             }}
             variant="outlined"
           >
@@ -94,6 +96,7 @@ const NewCase = () => {
               htmlFor="actual-btn"
               style={{
                 width: "100%",
+                color:"#404040"
               }}
             >
               Choose File
@@ -108,6 +111,7 @@ const NewCase = () => {
               margin: "auto",
               height: "3.4375rem",
               width: "30%",
+              backgroundColor:"#404040"
             }}
             variant="contained"
             onClick={handleSubmit(onSubmit)}
@@ -120,6 +124,7 @@ const NewCase = () => {
               margin: "auto",
               height: "3.4375rem",
               width: "30%",
+              backgroundColor:"#404040"
             }}
             variant="contained"
             onClick={() => reset()} 
