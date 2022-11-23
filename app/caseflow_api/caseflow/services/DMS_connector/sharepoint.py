@@ -17,6 +17,7 @@ class Sharepoint:
             formatted_document = {
                 "doc_id" : document["UniqueId"],
                 "doc_name" :document["Name"],
+                "doc_dmsname" : document["Name"],
                 "doc_type" :"",
                 "doc_size" :document["Length"],
                 "doc_description" :"",
