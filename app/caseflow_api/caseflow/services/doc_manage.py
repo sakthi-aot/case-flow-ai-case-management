@@ -16,6 +16,7 @@ class DocManageService:
 
         doc_id = document['doc_id']
         doc_name = document['doc_name']
+        doc_dmsname = document['doc_dmsname']
         doc_type = document['doc_type']
         doc_size = document['doc_size']
         doc_description=document['doc_description']
@@ -39,6 +40,7 @@ class DocManageService:
             metadata: "nil"
             modificationuser: "%s"
             name: "%s"
+            docname: "%s"
             modificationdate: "%s"
             dms_provider: %s
         ) {
@@ -48,7 +50,7 @@ class DocManageService:
         }
         }
 
-        #     """ % (doc_id,doc_size,doc_type,doc_created,doc_name,doc_description,doc_download_url,version,doc_name,doc_name,doc_modified,dms_provider)
+        #     """ % (doc_id,doc_size,doc_type,doc_created,doc_name,doc_description,doc_download_url,version,doc_name,doc_name,doc_dmsname,doc_modified,dms_provider)
        
         variables = {}
         try:
@@ -234,6 +236,7 @@ class DocManageService:
                 modificationdate
                 contentsize
                 dms_provider
+                docname
                 versionsList {
                 versions
                 }
