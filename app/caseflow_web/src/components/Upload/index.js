@@ -50,6 +50,7 @@ const Upload = (props) => {
     if (actionSelected === "upload") {
       const response = uploadCMISfile(file, fileName, fileDescription,props.selectedDMS);
       if (response)
+      response.ok?toast.success("uploaded"):toast.error("error")
       setResponse(response)      
       console.log(response);
     }
