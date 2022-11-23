@@ -15,11 +15,11 @@ class DocManageService:
         stepzen_api_key =current_app.config.get("STEPZEN_API_KEY") 
 
         doc_id = document['doc_id']
-        doc_name = document['doc_name']
+        doc_name =  request.form["name"]
         doc_dmsname = document['doc_dmsname']
         doc_type = document['doc_type']
         doc_size = document['doc_size']
-        doc_description=document['doc_description']
+        doc_description=request.form["cm:description"]
         version=document['version']
         doc_modified = document['doc_modified']
         doc_created = document['doc_created']

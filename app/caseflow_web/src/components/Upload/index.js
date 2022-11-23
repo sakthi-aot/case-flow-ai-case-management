@@ -46,11 +46,14 @@ const Upload = (props) => {
   const onActionSelectChange = (event) => {
     setActionSelected(event.target.value);
   };
-  const onSubmitHandler = () => {
+  const onSubmitHandler = async () => {
     if (actionSelected === "upload") {
-      const response = uploadCMISfile(file, fileName, fileDescription,props.selectedDMS);
-      if (response)
-      response.ok?toast.success("uploaded"):toast.error("error")
+      const response = await  uploadCMISfile(file, fileName, fileDescription,props.selectedDMS);
+      console.log(response.data)
+      if (response && response.data && response.data.status == "success")
+        toast.success("Success")
+        else
+        toast.error("Error")
       setResponse(response)      
       console.log(response);
     }

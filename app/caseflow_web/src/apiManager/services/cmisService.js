@@ -37,7 +37,7 @@ export const fetchCMISfile = (documentId,DMS) => {
 };
 
 //uploadCMISfile is used to send and save  files into the cmis server
-export const uploadCMISfile = (file,fileName,description,DMS) => { 
+export const uploadCMISfile = async (file,fileName,description,DMS) => { 
     const uploadURL = API.DMS_API + "/"+ DMS.toLowerCase() + "/upload";
     let formData = {
       "upload": file,
@@ -53,18 +53,26 @@ export const uploadCMISfile = (file,fileName,description,DMS) => {
       bodyFormData.append(key, formData[key]);
     }
     console.log(bodyFormData)
-   return httpPOSTRequest(uploadURL,bodyFormData,)
-      .then((res) => {
-        if (res.data) {
-        } else {
-        }
-      })
-      .catch((error) => {
-        if (error?.response?.data) {
-          console.log(error);
-        } else {
-        }
-      });
+
+    try{
+      let response = await httpPOSTRequest(uploadURL,bodyFormData);
+      return response;
+    }
+    catch(err){
+      return err;
+    }
+  //  return httpPOSTRequest(uploadURL,bodyFormData,)
+  //     .then((res) => {
+  //       if (res.data) {
+  //       } else {
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       if (error?.response?.data) {
+  //         console.log(error);
+  //       } else {
+  //       }
+  //     });
     }
 
 

@@ -61,7 +61,7 @@ const CaseDocuments = () => {
       case "Name":
         return setFilteredDocumentDetails(
           documentDetails.filter((eachValue) => {
-            return eachValue.docname
+            return eachValue.name
               .toLowerCase()
               .includes(searchField.toLowerCase());
           })
@@ -96,7 +96,7 @@ const CaseDocuments = () => {
       default:
         return setFilteredDocumentDetails(
           documentDetails.filter((eachValue) => {
-            return eachValue.docname
+            return eachValue.name
               .toLowerCase()
               .includes(searchField.toLowerCase());
           })
@@ -168,7 +168,7 @@ const CaseDocuments = () => {
                         alt="pdf"
                       />
                       <div className="case-document-name">
-                        {documentDetail.docname}
+                        {documentDetail.name}
                       </div>
                     </div>
                   </TableCell>

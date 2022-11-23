@@ -75,7 +75,7 @@ class CMISConnectorUploadResource(Resource):
                     else:
                      url = cms_repo_url + "1/nodes/"+response['entry']['id']
                      document = requests.delete(url,auth=HTTPBasicAuth(cms_repo_username, cms_repo_password))
-                     documentContent = document.json()
+                     documentContent = document
                      print(documentContent)
                 else:
                     print("Something went wrong!")

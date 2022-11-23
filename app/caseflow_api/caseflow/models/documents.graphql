@@ -14,7 +14,7 @@ type Document {
   docname: String
   creationdate: DateTime
   modificationdate: DateTime
-  dms_provider:String
+  dms_provider:Int
   documentList: [Document] @materializer(query: "getDocumentUsingVersions")
   versionsList: [Versions] @materializer(query: "getVersionsUsingDocid")
 }
@@ -79,7 +79,7 @@ type Mutation {
     latestversion: String!
     metadata: String!
     contenttype: String!
-    dms_provider: String!
+    dms_provider: Int!
   ): Document
     @dbquery(
       type: "postgresql"
