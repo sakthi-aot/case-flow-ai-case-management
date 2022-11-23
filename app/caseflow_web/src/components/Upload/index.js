@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./upload.scss";
 import {
   uploadCMISfile,
@@ -13,6 +13,8 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Typography from "@mui/material/Typography";
 import FileViewer from 'react-file-viewer';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Upload = (props) => {
@@ -23,8 +25,8 @@ const Upload = (props) => {
   const [actionSelected, setActionSelected] = useState("upload");
   const [documentID, setDocumentID] = useState(1);
   const[previewURL,setPreviewURL] = useState()
-  const [filetypeUploaded,setfileTypeUploaded] = useState(null)
-  console.log("here")
+  const [filetypeUploaded,setfileTypeUploaded] = useState(null) 
+
 
   function handleUpload(event) {   
     const uploadedDoc = event.target.files[0];
@@ -48,6 +50,7 @@ const Upload = (props) => {
     if (actionSelected === "upload") {
       const response = uploadCMISfile(file, fileName, fileDescription,props.selectedDMS);
       if (response)
+      response.ok?toast.success("uploaded"):toast.error("error")
       setResponse(response)      
       console.log(response);
     }
@@ -246,6 +249,7 @@ const Upload = (props) => {
         </div>
       {/* </div> */}
     </div> 
+    <ToastContainer/>
     </>
   );
 };
