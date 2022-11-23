@@ -32,9 +32,12 @@ const NewCase = () => {
             id="standard-basic"
             label="Case Name"
             variant="outlined"
-            style={{
-              width: "100%",
-            }}
+            sx={{
+              "& .MuiInputLabel-root": { color: "#404040" },
+              borderBottom: "1px solid #404040",  
+              width: "100%",            
+            }}    
+            InputProps={{ disableUnderline: true }} 
             value={value} 
             onChange={onChange}
             placeholder="File Name..."
@@ -62,9 +65,12 @@ const NewCase = () => {
             multiline
             rows={4}
             variant="outlined"
-            style={{
-              width: "100%",
-            }}
+            sx={{
+              "& .MuiInputLabel-root": { color: "#404040" },
+              borderBottom: "1px solid #404040",  
+              width: "100%",            
+            }}    
+            InputProps={{ disableUnderline: true }} 
             placeholder="Enter the details of the Case"
             value={value} 
             onChange={onChange}

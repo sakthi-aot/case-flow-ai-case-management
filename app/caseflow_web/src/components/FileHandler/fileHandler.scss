@@ -1,3 +1,5 @@
+
+@import "../../styles.scss";
 .background {
   background-color: #ffffff;
   height: 100vh;
@@ -5,9 +7,12 @@
   overflow-y: auto;
   align-items: center;
   .DMS-selector{
-    padding-top: 10rem;
-    width :70%;
-    margin: auto;
+    padding: 1rem 0 1.3rem;
+    width :87%;
+    margin: auto;   
+    label{
+      color:$primary-theme-black-color
+    }
   }
   .accordion {
     width: 70%;
@@ -23,4 +28,12 @@
     padding: 5rem 0% 5rem 0%;
 
   }
+}
+.styled-select{
+  &:before {
+    border-color: #404040,
+}
+&:after {
+    border-color: #404040,
+}
 }
