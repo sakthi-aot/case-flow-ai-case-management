@@ -52,7 +52,6 @@ const NewCase = () => {
           </Typography>
         </Grid>
         <Grid item xs={8}>
-
         <Controller
         name={"description"}
         control={control}
@@ -71,8 +70,7 @@ const NewCase = () => {
             onChange={onChange}
           />
         )}
-      />
-          
+      />          
         </Grid>
       </Grid>
       <Grid container spacing={1} sx={{ padding: "2rem 1rem 2rem 1rem" }}>

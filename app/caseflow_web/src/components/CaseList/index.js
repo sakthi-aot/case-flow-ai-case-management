@@ -108,7 +108,7 @@ const CaseList =React.memo( (props) => {
       >
          
         {recentCases.map((eachcases) => (
-          <Link to={'/private/cases/' + eachcases.caseID+'/details'} style={{ textDecoration: 'none' ,color:'#404040'}}>
+          <Link key={eachcases.caseID} to={'/private/cases/' + eachcases.caseID+'/details'} style={{ textDecoration: 'none' ,color:'#404040'}}>
           <RecentCasecard
             caseID={eachcases.caseID}
             caseDescription={eachcases.caseDescription}

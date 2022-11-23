@@ -20,7 +20,7 @@ const SingleCaseDetail = ({id,description,notes,tasks,documents,date}) => {
     }
   return (
     <div className='case-grid-container'>
-        <div className='case-grid-date'>{date}</div>
+        <span className='case-grid-date'>{date}</span>
         <span className='case-grid-line'><span className="case-grid-line-ball"></span></span>
         <div className='case-gird-details'>
             <h3 onClick={expandDetailhandler} className="case-gird-details-header"><span>Description</span>
@@ -37,9 +37,7 @@ const SingleCaseDetail = ({id,description,notes,tasks,documents,date}) => {
             </div>
 
             }
-        </div>
-
-      
+        </div>      
     </div>
   )
 }

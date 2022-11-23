@@ -19,8 +19,8 @@ const CaseDetailData = ({name,date,owner,caseDescription,tasks}) => {
       </div>
     </div>
     <div className='case-detail-second-row'>
-    <h3>Case Description</h3>
-    <p>{caseDescription}</p>
+      <h3>Case Description</h3>
+      <p>{caseDescription}</p>
     </div>
     <div className='case-detail-third-row'>
       <h3>Current Task(s)</h3>

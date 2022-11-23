@@ -5,12 +5,12 @@ import "./home.scss"
 const Home = ({ children }) => {
   return (
     <div className="grid-container">
-      <div className="menu"> <MiniDrawer>
-      </MiniDrawer></div>
+      <div className="menu"> 
+        <MiniDrawer/>
+      </div>
       <div className="outlet">
       <Outlet />
-      </div>
-     
+      </div>     
     </div>
   );
 };

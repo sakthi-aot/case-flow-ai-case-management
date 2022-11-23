@@ -9,17 +9,14 @@ const caseListProps = {
 }
 const Dashboard = ({ children }) => {
   return (
-    <div className="dashboard">
-      <div className="title"><h1>CaseFlow</h1> </div>
+    <section className="dashboard">
+      <h1 className="title">CaseFlow</h1>
       <div className="search">
-      <Search></Search>
-      </div>
-     
+        <Search></Search>
+      </div>     
         <div className="recent-cases"><CaseList  config={caseListProps}></CaseList></div>
-        {/* <div className="my-task"><MyTask></MyTask></div> */}
-      
-     
-    </div>
+        {/* <div className="my-task"><MyTask></MyTask></div> */} 
+    </section>
   );
 };
 

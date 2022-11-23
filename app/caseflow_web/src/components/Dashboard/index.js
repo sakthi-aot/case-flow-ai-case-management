@@ -10,11 +10,6 @@ const caseListProps = {
   isShowSort :false
 }
 
-
-
-
-
-
 const Dashboard = ({ children }) => {
 
   useEffect(() => {
@@ -27,15 +22,12 @@ const Dashboard = ({ children }) => {
   })
   return (
     <div className="dashboard">
-      <div className="title"><h1>CaseFlow</h1> </div>
+      <h1 className="title">CaseFlow</h1> 
       <div className="search">
       <Search></Search>
-      </div>
-     
+      </div>     
         <div className="recent-cases"><CaseList config={caseListProps}></CaseList></div>
         <div className="my-task"><MyTask></MyTask></div>
-      
-     
     </div>
   );
 };
