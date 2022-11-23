@@ -1,6 +1,7 @@
 :root{
-    --main-theme: #5f79ff;
-    --light-blue: #0066cc29;
+    --main-theme: #404040;
+    --main-theme-hover:#171616;
+    --light-black: #cacbcc29;
     --required-message: #D8292F;
     --label: #313132;
     --add-on: #6A6E73;
@@ -44,7 +45,7 @@ input {
    font-size: 18px;
    border: 1px solid #B2B5B6;
    border-radius: 8px;
-   background-color: var(--light-blue);
+   background-color: var(--light-black);
    height: 20px;
    display: block;
    outline: none;
@@ -109,9 +110,10 @@ input {
     margin-bottom: 0px;
 }
 
-.pf-m-primary:hover {
-  
-   text-decoration: underline;
+.pf-m-primary:hover {  
+   
+   background-color: var(--main-theme-hover);
+   cursor: pointer;
 }
 
 .pf-c-button.pf-m-control {

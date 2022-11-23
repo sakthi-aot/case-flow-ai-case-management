@@ -62,9 +62,12 @@ const NewCase = () => {
             multiline
             rows={1}
             variant="standard"
-            style={{
-              width: "100%",
-            }}
+            sx={{
+              "& .MuiInputLabel-root": { color: "#404040" },
+              borderBottom: "1px solid #404040",  
+              width: "100%",            
+            }}    
+            InputProps={{ disableUnderline: true }} 
             placeholder="Enter the details of the Case"
             value={value} 
             onChange={onChange}

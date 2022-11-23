@@ -24,6 +24,7 @@ const Upload = (props) => {
   const [documentID, setDocumentID] = useState(1);
   const[previewURL,setPreviewURL] = useState()
   const [filetypeUploaded,setfileTypeUploaded] = useState(null)
+  console.log("here")
 
   function handleUpload(event) {   
     const uploadedDoc = event.target.files[0];
@@ -56,7 +57,7 @@ const Upload = (props) => {
     }
   };
 
-  const onDescriptionchange = (event) => {
+  const onDescriptionchange = (event) => {   
     event.target.value == null
       ? setFileDescription("My text document description...")
       : setFileDescription(event.target.value);
@@ -76,31 +77,27 @@ const Upload = (props) => {
       <div className="upload-left">
         <div className="upload-row">
           <input type="file" id="actual-btn" onChange={handleUpload} hidden />
-          <Button
-            style={{
-              width: "100%",
-              height: "3.4375rem",
-              backgroundColor: "#1B34FB",
-            }}
+          <Button            
+            className="choose-file-btn-upload"
             variant="contained"
           >
             <label
               htmlFor="actual-btn"
-              style={{
-                width: "100%",
-                backgroundColor: "#1B34FB",
-              }}
+              className="choose-file-btn-label-upload"              
             >
               {file === "" ? "Choose File" : "replace file"}
             </label>
           </Button>
           <TextField
-            id="outlined-basic"
-            label="File Name"
-            variant="outlined"
-            style={{
-              width: "100%",
+            id="disabled-basic"
+            sx={{
+              "& .MuiInputLabel-root": { color: "#404040" },
+              borderBottom: "1px solid #404040",              
             }}
+            InputProps={{ disableUnderline: true }}
+            label="File Name"
+            variant="standard"
+            className="file-name-text-field-upload"             
             value={fileName}
             onChange={fileNameChange}
             placeholder="File Name..."
@@ -124,10 +121,13 @@ const Upload = (props) => {
                 label="Description"
                 multiline
                 rows={4}
-                variant="outlined"
-                style={{
-                  width: "100%",
-                }}
+                variant="standard"
+                sx={{
+                  "& .MuiInputLabel-root": { color: "#404040" },
+                  borderBottom: "1px solid #404040",  
+                  width: "100%",            
+                }}    
+                InputProps={{ disableUnderline: true }}           
                 value={fileDescription}
                 onChange={onDescriptionchange}
                 placeholder="My text document description..."
@@ -149,19 +149,29 @@ const Upload = (props) => {
             >
               <FormControlLabel
                 value="upload"
-                control={<Radio />}
+                control={<Radio 
+                   sx={{
+                  '&, &.Mui-checked': {
+                    color: '#404040',
+                  },
+                }} />}
                 label="Upload"
               />
               <FormControlLabel
                 value="update"
-                control={<Radio />}
+                control={<Radio 
+                   sx={{
+                  '&, &.Mui-checked': {
+                    color: '#404040',
+                  },
+                }}/>}
                 label="update"
               />
             </RadioGroup>
           </FormControl>
         </div>
         {actionSelected === "update" && (
-          <div
+          <div          
             style={{
               paddingTop: "1rem",
               width: "100%",
@@ -169,11 +179,15 @@ const Upload = (props) => {
           >
             <TextField
               id="outlined-basic"
+              className="document-update-id-text-field"
               label="Document Id"
-              variant="outlined"
-              style={{
-                width: "100%",
-              }}
+              variant="standard"
+              sx={{
+                "& .MuiInputLabel-root": { color: "#404040" },
+                borderBottom: "1px solid #404040",  
+                width: "100%",            
+              }}    
+              InputProps={{ disableUnderline: true }}             
               onChange={onIDchange}
               placeholder="Document ID..."
             />
@@ -193,8 +207,7 @@ const Upload = (props) => {
         <div className="upload-button">
           <Button
             style={{
-              margin: "auto",
-              color: "#1B34FB",
+              margin: "auto",              
               height: "3.4375rem",
               width: "100%",
             }}

@@ -30,9 +30,7 @@ const LandingPage = () => {
                 <Button
                   component={Link}
                   to="/private/"
-                  style={{
-                    backgroundColor: "#1B34FB",
-                  }}
+                  className="landing-page-getStarted-btn"
                   variant="contained"
                 >
                   Get Started
@@ -41,9 +39,7 @@ const LandingPage = () => {
                 <Button
                   component={Link}
                   to="/private/"
-                  style={{
-                    color: "#1B34FB",
-                  }}
+                  className="landing-page-explore-more-btn"
                   variant="outlined"
                 >
                   Explore More
