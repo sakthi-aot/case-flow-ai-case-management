@@ -10,7 +10,8 @@ class S3:
         try :
             formatted_document = {
                     "doc_id" : document.key,
-                    "doc_name" : document.key,
+                    "doc_name" : document.metadata['name'],
+                    "doc_dmsname" : document.key,
                     "doc_type" : document.content_type,
                     "doc_size" : document.content_length,
                     "doc_description" : "",
