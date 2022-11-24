@@ -160,7 +160,10 @@ const CaseDocuments = () => {
                         alt="pdf"
                       />
                       <div className="case-document-name">
-                        {documentDetail.name}
+                        <a onClick={fetchCMISfile(
+                      documentDetail.id,
+                      documentDetail.dms_provider,true
+                    )}>{documentDetail.name}</a>
                       </div>
                     </div>
                   </TableCell>
@@ -178,7 +181,7 @@ const CaseDocuments = () => {
                     className="download-icon"
                     onClick={fetchCMISfile(
                       documentDetail.id,
-                      documentDetail.dms_provider
+                      documentDetail.dms_provider,false
                     )}
                   >
                     {<DownloadIcon />}
