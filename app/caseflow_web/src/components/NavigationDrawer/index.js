@@ -18,8 +18,10 @@ import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import CasesOutlinedIcon from "@mui/icons-material/CasesOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
-import "./navigation.scss"
 import { Button } from "@mui/material";
+import UserService from "../../services/UserService";
+import LogoutIcon from '@mui/icons-material/Logout';
+import "./navigation.scss"
 
 const drawerWidth = 240;
 
@@ -124,6 +126,10 @@ export default function MiniDrawer({ children }) {
     }
   };
 
+  const logoutCaseFlowHandler = ( ) =>{
+    UserService.userLogout()
+  }
+
   return (     
     <Box >
       <CssBaseline />
@@ -131,7 +137,7 @@ export default function MiniDrawer({ children }) {
         <DrawerHeader style={{ display: "flaex" }}>
           <div className="naviagtion-header">
             <AccountCircleIcon
-              sx={{ fontSize: open ? "30px" : "40px", left: "20px", right: "10px" }}
+              sx={{ fontSize: open ? "50px" : "40px", left: "20px", right: "10px" }}
             />
             <span>
             <h3 style={{ fontSize: open ? "18px" : "0px", left: 0 }}>
@@ -140,18 +146,27 @@ export default function MiniDrawer({ children }) {
             <label style={{ fontSize: open ? "18px" : "0px", left: 0 }}>Administrator </label>
             </span> 
           </div>   
-        </DrawerHeader>        
-       {open && <Button variant="contained" style={{
+        </DrawerHeader>            
+        {open && <button className="logout-btn-caseflow" onClick={logoutCaseFlowHandler}>Logout <LogoutIcon style={{fontSize:"13px"}}/></button>}
+       {open && <Button variant="contained"
+          className="btn-navigation-style"
+       style={{
           width:"206px",
-          margin:"1rem auto 0",
+          margin:".7rem auto 0",
           backgroundColor:"#404040",
           borderRadius:"8px",
-          transition:"all 1s ease"
+          transition:"all 1s ease",
+          "&:hover":{
+            backgroundColor:"black"
+          }
+          
         }} component={Link} to="/private/cases/create">Start New Cases</Button>}
+        
         <List>
           {routes.map((route, index) => (
             <Link
               to={route.path}
+              key={index}
               style={{
                 color: "black",
                 textDecoration: "none",

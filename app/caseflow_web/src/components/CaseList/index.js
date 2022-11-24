@@ -54,7 +54,7 @@ const CaseList =React.memo( (props) => {
   useEffect(()=>{ 
    const updatedSortedDate = SortCasesByField(sortValue,recentCases)
    setRecentCases(updatedSortedDate)
-  },[sortValue,recentCases])
+  },[sortValue])
 
   const onSortingValueChangeHandler = (e) =>{
     let tempSelectedValue = e.target.value;
