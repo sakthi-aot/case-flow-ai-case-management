@@ -15,8 +15,9 @@ import Typography from "@mui/material/Typography";
 import FileViewer from 'react-file-viewer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
+import {useSelector,useDispatch} from "react-redux";
+import { setDocumentList } from "../../reducers/documentsReducer";
+import { getAllDocuments } from "../../services/DocumentManagementService";
 const Upload = (props) => {
   const [response,setResponse] = useState("")
   const [file, setFile] = useState("");
@@ -26,7 +27,27 @@ const Upload = (props) => {
   const [documentID, setDocumentID] = useState(1);
   const[previewURL,setPreviewURL] = useState()
   const [filetypeUploaded,setfileTypeUploaded] = useState(null) 
+  // const documents = useSelector(state=>state.documents.getDocumentList);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    fetchDocumentDetails();
+    
+  }, []);
 
+  
+  async function fetchDocumentDetails() {
+    let output = await getAllDocuments();
+    output = output.map((element) => {
+      return {
+        ...element,
+        creationdate: element.creationdate.split("T")[0],
+        modificationdate: element.modificationdate.split("T")[0],
+      };
+    });
+    dispatch(setDocumentList(output))
+    // setDocumentDetails(output);
+    // setFilteredDocumentDetails(output);
+  }
 
   function handleUpload(event) {   
     const uploadedDoc = event.target.files[0];
@@ -51,7 +72,9 @@ const Upload = (props) => {
       const response = await  uploadCMISfile(file, fileName, fileDescription,props.selectedDMS);
       console.log(response.data)
       if (response && response.data && response.data.status == "success")
-        toast.success("Success")
+        {fetchDocumentDetails();
+          toast.success("Success")
+      }
         else
         toast.error("Error")
       setResponse(response)      

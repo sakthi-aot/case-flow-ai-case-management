@@ -21,14 +21,15 @@ import jpeg from "../../assets/jpeg.png";
 import png from "../../assets/png.png";
 import pdf from "../../assets/pdf.png";
 import txt from "../../assets/txt.png";
-
+import {useSelector} from "react-redux";
+import { setDocumentList } from "../../reducers/documentsReducer";
 const CaseDocuments = () => {
   const [filteredDocumentDetails, setFilteredDocumentDetails] = useState([]);
   const [documentDetails, setDocumentDetails] = useState([]);
   const [searchField, setSearchField] = useState("");
   const [searchColumn, setSearchColumn] = useState("Name");
   const dropDownArray = ["Name", "Id", "Creation Date", "modification Date"];
-
+   const documents =  useSelector(state=>state.documents.documentsList);
   const getFileIcon = (fileName) => {
     let ext = fileName.split(".").pop();
     ext = ext.toLowerCase();
@@ -44,18 +45,7 @@ const CaseDocuments = () => {
     }
   };
 
-  async function fetchDocumentDetails() {
-    let output = await getAllDocuments();
-    output = output.map((element) => {
-      return {
-        ...element,
-        creationdate: element.creationdate.split("T")[0],
-        modificationdate: element.modificationdate.split("T")[0],
-      };
-    });
-    setDocumentDetails(output);
-    setFilteredDocumentDetails(output);
-  }
+
   const filterDocumentDetails = () => {
     switch (searchColumn) {
       case "Name":
@@ -105,8 +95,10 @@ const CaseDocuments = () => {
   };
 
   useEffect(() => {
-    fetchDocumentDetails();
-  }, []);
+    // fetchDocumentDetails();
+    setDocumentDetails(documents);
+     setFilteredDocumentDetails(documents);
+  }, [documents]);
 
   useEffect(() => {
     filterDocumentDetails();

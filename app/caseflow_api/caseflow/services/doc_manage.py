@@ -15,11 +15,11 @@ class DocManageService:
         stepzen_api_key =current_app.config.get("STEPZEN_API_KEY") 
 
         doc_id = document['doc_id']
-        doc_name =  request.form["name"]
+        doc_name = document['doc_name']
         doc_dmsname = document['doc_dmsname']
         doc_type = document['doc_type']
         doc_size = document['doc_size']
-        doc_description=request.form["cm:description"]
+        doc_description=document['doc_description']
         version=document['version']
         doc_modified = document['doc_modified']
         doc_created = document['doc_created']
@@ -190,6 +190,7 @@ class DocManageService:
                 documentid
                 downloadurl
                 name
+                contenttype
                 
             }
         }
@@ -203,10 +204,12 @@ class DocManageService:
             documentId=data['data']['getDocument']['documentid']
             doc_download_url = data['data']['getDocument']['downloadurl']
             doc_name = data['data']['getDocument']['name']
+            doc_contenttype = data['data']['getDocument']['contenttype']
             response = {
                     "documentId": documentId,
                     "doc_download_url":doc_download_url,
                     "name": doc_name,
+                    "contenttype": doc_contenttype,
                     "status": "success",
             } 
         except TypeError as update_error:

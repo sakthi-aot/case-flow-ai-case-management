@@ -41,6 +41,8 @@ class CMISConnectorUploadResource(Resource):
                     response = document.properties
                     file_url = document.serverRelativeUrl
                     formatted_document = DMSConnector.doc_upload_connector(response,DMSCode.DMS03.value)
+                    formatted_document["doc_type"] =  content_file.content_type
+                    formatted_document["doc_description"] =  request.form.get('cm:description')
                     uploaded_data = DocManageService.doc_upload_mutation(request,formatted_document)
                     print("Upload completed successfully!")
                     if uploaded_data['status']=="success":
@@ -128,7 +130,7 @@ class CMISConnectorDownloadResource(Resource):
             if doc_data['status']=="success":                
                 doc_download_url=doc_data['doc_download_url']                
                 final_document = SharePoint().download_file(doc_download_url)
-                return Response(final_document.content,mimetype='application/octet-stream',headers= {"file_name" :doc_data['name']   })
+                return Response(final_document.content,mimetype='application/octet-stream',headers= {"file_name" :doc_data['name'],"content_type" : doc_data["contenttype"]    })
                 # return send_file(document,attachment_filename='capsule.zip', as_attachment=True),HTTPStatus.OK,
             else:
                 return {"message": "No file data found in DB"}, HTTPStatus.INTERNAL_SERVER_ERROR

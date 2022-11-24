@@ -210,7 +210,7 @@ class CMISConnectorDownloadResource(Resource):
                         prepare_url, auth=HTTPBasicAuth(cms_repo_username, cms_repo_password)
                     )
                 
-                return Response(final_document.content,mimetype=((final_document.headers['content-type']).split(";"))[0],headers= {"file_name" :doc_name,"Content-Disposition": "attachment" })
+                return Response(final_document.content,mimetype=((final_document.headers['content-type']).split(";"))[0],headers= {"file_name" :doc_name,"Content-Disposition": "attachment","content_type" : docData["contenttype"]})
                 # return send_file(final_document.content,mimetype=((final_document.headers['content-type']).split(";"))[0],attachment_filename=doc_name, as_attachment=True)
             else:
                  return {"message": "No file data found in DB"}, HTTPStatus.INTERNAL_SERVER_ERROR   

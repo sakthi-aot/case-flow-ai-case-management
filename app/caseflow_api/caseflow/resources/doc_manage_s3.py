@@ -45,6 +45,8 @@ class CMISConnectorUploadResource(Resource):
                 if response.get('HTTPStatusCode') == 200:
                     file_data = data.get('object')
                     formatted_document = DMSConnector.doc_upload_connector(file_data,DMSCode.DMS02.value)
+                    formatted_document["doc_type"] =  content_file.content_type
+                    formatted_document["doc_description"] =  args.get('cm:description')
                     uploaded_data = DocManageService.doc_upload_mutation(request,formatted_document)
                     print("Upload completed successfully!")
                     if uploaded_data['status']=="success":
@@ -147,7 +149,7 @@ class CMISConnectorDownloadResource(Resource):
                 doc_name=doc_data["documentId"]
 
                 final_document = get_object(bucket_name,doc_name)
-                return Response(final_document,mimetype='application/octet-stream',headers= {"file_name" :doc_name })
+                return Response(final_document,mimetype='application/octet-stream',headers= {"file_name" :doc_name,"content_type" : doc_data["contenttype"] })
                 # return send_file(document,attachment_filename='capsule.zip', as_attachment=True),HTTPStatus.OK,
             else:
                 return {"message": "No file data found in DB"}, HTTPStatus.INTERNAL_SERVER_ERROR

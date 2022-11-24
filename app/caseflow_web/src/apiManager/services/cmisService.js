@@ -6,27 +6,37 @@ import {
 import API from "../endpoints/index";
 // import fs from 'fs';
 
-export const fetchCMISfile = (documentId,DMS) => {
+export const fetchCMISfile = (documentId,DMS,newTab = true) => {
   return (dispatch) => {
     const downloadURL = API.DMS_API + "/dms" + DMS + "/download";
 
     httpGETBolbRequest(downloadURL, { id: documentId ,"DMS" :DMS})
       .then((response) => {
         const downloadUrl = window.URL.createObjectURL(
-          new Blob([response.data])
+          new Blob([response.data],)
         );
 
         const link = document.createElement("a");
-
-        link.href = downloadUrl;
-        const file_name = response.headers["file_name"];
-        link.setAttribute("download", file_name)//any other extension
-
-        document.body.appendChild(link);
-
-        link.click();
-
-        link.remove();
+        if(!newTab){
+          link.href = downloadUrl;
+          const file_name = response.headers["file_name"];
+          link.setAttribute("download", file_name)//any other extension
+  
+          document.body.appendChild(link);
+  
+          link.click();
+  
+          link.remove();
+        }
+        else{
+          let newWindow = window.open('/')
+          newWindow.onload = () => {
+            newWindow.location = window.URL.createObjectURL(
+              new Blob([response.data], {type: response.headers["content_type"]})
+            );
+        };
+        }
+        
       })
       .catch((error) => {
         if (error?.response?.data) {
