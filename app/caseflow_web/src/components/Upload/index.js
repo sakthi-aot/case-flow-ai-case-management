@@ -74,6 +74,10 @@ const Upload = (props) => {
       if (response && response.data && response.data.status == "success")
         {fetchDocumentDetails();
           toast.success("Success")
+          setFile("");
+          setFileName("")
+          setFileDescription("")
+          setPreviewURL("")
       }
         else
         toast.error("Error")
