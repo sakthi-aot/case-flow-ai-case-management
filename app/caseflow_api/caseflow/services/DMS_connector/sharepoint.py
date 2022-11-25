@@ -41,6 +41,7 @@ class Sharepoint:
             doc_modified_date_utc = parser.parse(doc_modified_date)            
             formatted_document = {                
                 "doc_name" :document["Name"],
+                "doc_dmsname" : document["Name"],
                 "doc_type" :"",
                 "doc_size" :document["Length"],
                 "doc_description" :"",

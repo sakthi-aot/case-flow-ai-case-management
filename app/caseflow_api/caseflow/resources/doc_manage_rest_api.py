@@ -58,9 +58,10 @@ class CMISConnectorUploadResource(Resource):
         if filename != "":
             try:
                 url = cms_repo_url + "1/nodes/-root-/children"
+                token=request.headers["Authorization"]
                 document = requests.post(
-                    url,data = request.form,files= files,auth=HTTPBasicAuth(cms_repo_username, cms_repo_password)
-                )
+                    url,data = request.form,files= files,
+                    headers = {"Authorization": token })
 
                 if document.ok:
                     response = json.loads(document.text)
@@ -74,7 +75,7 @@ class CMISConnectorUploadResource(Resource):
                         )
                     else:
                      url = cms_repo_url + "1/nodes/"+response['entry']['id']
-                     document = requests.delete(url,auth=HTTPBasicAuth(cms_repo_username, cms_repo_password))
+                     document = requests.delete(url,headers = {"Authorization": token })
                      documentContent = document
                      print(documentContent)
                 else:
@@ -106,7 +107,7 @@ class CMISConnectorUploadResource(Resource):
 
     @API.expect(upload_parser)
     @auth.require
-    @auth.has_role([CaseflowRoles.CASEFLOW_ADMINISTRATOR.value])
+    #@auth.has_role([CaseflowRoles.CASEFLOW_ADMINISTRATOR.value])
     def put(self):
         """New entry in cms repo with the new resource."""
         cms_repo_url = current_app.config.get("CMS_REPO_URL") 
@@ -142,9 +143,11 @@ class CMISConnectorUploadResource(Resource):
                 if docData['status']=="success":
                     docId=docData['documentId']
                     url = cms_repo_url + "1/nodes/" + docId + '/content'
+                    token=request.headers["Authorization"]
                     document = requests.put(
-                        url,files=files,params=params,headers = headers,auth=HTTPBasicAuth(cms_repo_username, cms_repo_password)
-                    )
+                        url,files=files,params=params, headers = 
+                        {"Authorization": token ,
+                        "Content-Type":""})
                     response = json.loads(document.text)
                     if document.ok:
                         formatted_document = DMSConnector.doc_update_connector(response,DMSCode.DMS01.value)
@@ -204,10 +207,11 @@ class CMISConnectorDownloadResource(Resource):
             docData = DocManageService.fetchDocId(documentId)
             if docData['status']=="success":
                 docId=docData['documentId']
+                token=request.headers["Authorization"]
                 doc_name = str(docData['name'])
                 prepare_url = cms_repo_url + "1/nodes/"+docId+"/content?attachment=true"
                 final_document = requests.get(
-                        prepare_url, auth=HTTPBasicAuth(cms_repo_username, cms_repo_password)
+                        prepare_url, headers = {"Authorization": token }
                     )
                 
                 return Response(final_document.content,mimetype=((final_document.headers['content-type']).split(";"))[0],headers= {"file_name" :doc_name,"Content-Disposition": "attachment","content_type" : docData["contenttype"]})
