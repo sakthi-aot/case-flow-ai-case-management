@@ -1,9 +1,8 @@
 import axios from "axios";
 
 import UserService from "../../services/UserService";
-
-// const qs = require("querystring");
-
+import {store} from "../../services/Store";
+import {setLoader} from "../../reducers/applicationReducer";
 export const httpGETRequest = (
   url,
   data,
@@ -99,3 +98,26 @@ export const httpGETBolbRequest = (
     responseType: "blob",
   });
 };
+
+axios.interceptors.request.use(function (config) {
+  // Do something before request is sent
+  store.dispatch(setLoader(true));
+  return config;
+}, function (error) {
+  // Do something with request error
+  store.dispatch(setLoader(false));
+  return Promise.reject(error);
+});
+
+// Add a response interceptor
+axios.interceptors.response.use(function (response) {
+  // Any status code that lie within the range of 2xx cause this function to trigger
+  // Do something with response data
+  store.dispatch(setLoader(false));
+  return response;
+}, function (error) {
+  // Any status codes that falls outside the range of 2xx cause this function to trigger
+  // Do something with response error
+  store.dispatch(setLoader(false));
+  return Promise.reject(error);
+});
