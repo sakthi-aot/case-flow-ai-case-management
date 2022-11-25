@@ -21,6 +21,7 @@ import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import { Button } from "@mui/material";
 import UserService from "../../services/UserService";
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useSelector } from "react-redux";
 import "./navigation.scss"
 
 const drawerWidth = 240;
@@ -92,7 +93,10 @@ const Drawer = styled(MuiDrawer, {
 
 export default function MiniDrawer({ children }) {
  
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false); 
+
+  const userInfo = useSelector(state=>state.auth.userDetails)
+
   const routes = [
     {
       key: 1,
@@ -140,8 +144,8 @@ export default function MiniDrawer({ children }) {
               sx={{ fontSize: open ? "50px" : "40px", left: "20px", right: "10px" }}
             />
             <span>
-            <h3 style={{ fontSize: open ? "18px" : "0px", left: 0 }}>
-            Chris Robinson
+            <h3 style={{ fontSize: open ? "18px" : "0px", left: 0,textTransform:"capitalize" }}>
+            {userInfo.userName}
             </h3>
             <label style={{ fontSize: open ? "18px" : "0px", left: 0 }}>Administrator </label>
             </span> 

@@ -4,7 +4,8 @@ const initialState = {
   roles: "",
   userDetails: {
     email: "",
-  },
+    userName:""
+  }, 
   isAuthenticated: false,
 };
 
@@ -24,8 +25,11 @@ const authSlice = createSlice({
     getRoles: (state, action) => {
       return state.roles;
     },
-    setUserDetails: (state, action) => {
-      state.userDetails = { ...action.payload };
+    setUserDetails: (state, action) => { 
+      state.userDetails={
+        ...state.userDetails,
+        userName:action.payload.preferred_username
+      }     
     },
     getUserDetails: (state, action) => {
       return state.userDetails;
