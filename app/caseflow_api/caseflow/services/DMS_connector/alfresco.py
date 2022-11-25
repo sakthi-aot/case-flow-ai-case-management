@@ -48,7 +48,8 @@ class Alfresco:
                     "doc_description" : document['entry']['properties']['cm:description'],
                     "version" : document['entry']['properties']['cm:versionLabel'],
                     "doc_modified_date" : document['entry']['modifiedAt'],
-                    "doc_modified" : doc_modifiedObj.strftime("%Y-%m-%dT%H:%M:%S")
+                    "doc_modified" : doc_modifiedObj.strftime("%Y-%m-%dT%H:%M:%S"),
+                    "doc_dmsname" : document['entry']['name'],
 
             }
             return formatted_document

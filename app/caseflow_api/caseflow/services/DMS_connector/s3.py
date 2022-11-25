@@ -33,7 +33,8 @@ class S3:
 
             formatted_document = {
                     "doc_id" : document.key,
-                    "doc_name" : document.key,
+                    "doc_name" : document.metadata['name'],
+                    "doc_dmsname" : document.key,
                     "doc_type" : document.content_type,
                     "doc_size" : document.content_length,
                     "doc_description" : "",
@@ -41,6 +42,7 @@ class S3:
                     "doc_modified" :  document.last_modified.strftime("%Y-%m-%dT%H:%M:%S"),
                     "doc_created" : date.today().strftime("%Y-%m-%dT%H:%M:%S"),
                     "doc_download_url" : ""
+                    
             }
             return formatted_document
 

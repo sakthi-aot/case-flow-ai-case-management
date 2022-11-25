@@ -3,14 +3,17 @@ import requests
 from typing import Dict
 from flask import current_app
 from datetime import datetime
+from caseflow.utils.user_context import UserContext, user_context
 
 
 class DocManageService:
     """This class manages doc service."""
     @staticmethod
-    def doc_upload_mutation(request,document)-> Dict:
+    @user_context
+    def doc_upload_mutation(request,document, **kwargs)-> Dict:
         """ Do upload document """
-
+        user: UserContext = kwargs["user"]
+        user_id: str = user.user_name
         stepzen_endpoint_url =current_app.config.get("STEPZEN_ENDPOINT_URL")  
         stepzen_api_key =current_app.config.get("STEPZEN_API_KEY") 
 
@@ -25,6 +28,7 @@ class DocManageService:
         doc_created = document['doc_created']
         doc_download_url = document["doc_download_url"]
         dms_provider=document["dms_provider"]
+        doc_createdby = user_id
     
         query = """mutation insertDocument {
         insertDocument(
@@ -50,8 +54,7 @@ class DocManageService:
         }
         }
 
-        #     """ % (doc_id,doc_size,doc_type,doc_created,doc_name,doc_description,doc_download_url,version,doc_name,doc_name,doc_dmsname,doc_modified,dms_provider)
-       
+        #     """ % (doc_id,doc_size,doc_type,doc_created,doc_createdby,doc_description,doc_download_url,version,doc_createdby,doc_name,doc_dmsname,doc_modified,dms_provider)
         variables = {}
         try:
             headers = {"Content-Type": "application/json", "Authorization": "Apikey "+stepzen_api_key}
@@ -93,10 +96,15 @@ class DocManageService:
 
 
     @staticmethod
-    def doc_update_mutation(doc_id,document):
+    @user_context
+    def doc_update_mutation(doc_id,document, **kwargs):
         """ Do Update document """
+        
         stepzen_endpoint_url =current_app.config.get("STEPZEN_ENDPOINT_URL")  
         stepzen_api_key =current_app.config.get("STEPZEN_API_KEY") 
+
+        user: UserContext = kwargs["user"]
+        user_id: str = user.user_name
 
         query = """
         query getDocument($id: Int!){
@@ -111,13 +119,16 @@ class DocManageService:
         r = requests.post(stepzen_endpoint_url, json={'query': query, 'variables': variables}, headers=headers)
         data = r.json()
         documentId=data['data']['getDocument']['documentid']
-
+        user: UserContext = kwargs["user"]
+        user_id: str = user.user_name
         doc_name = document['doc_name']
         doc_type = document['doc_type']
         doc_size = document['doc_size']
         description=document['doc_description']
         version=document['version']
         doc_modified = document['doc_modified']
+        doc_modificationuser=user_id
+        doc_dmsname = document['doc_dmsname']
 
         query = """mutation updateDocument {
         updateDocument(
@@ -125,12 +136,12 @@ class DocManageService:
             name: "%s"
             contentsize: %s
             contenttype: "%s"
-            creationuser: "%s"
             description: "%s"
             downloadurl: "%s"
             latestversion: "%s"
             modificationdate: "%s"
             modificationuser: "%s"
+            docname: "%s"
     
         ) {
             documentid,
@@ -138,9 +149,9 @@ class DocManageService:
         }
         }
 
-        #     """ % (documentId,doc_name,doc_size,doc_type,doc_name,description,doc_name,version,doc_modified,doc_name)
+        #     """ % (documentId,doc_name,doc_size,doc_type,description,doc_name,version,doc_modified,doc_modificationuser,doc_dmsname)
 
-
+        print(query)
         variables = {}
         try:
             headers = {"Content-Type": "application/json", "Authorization": "Apikey "+stepzen_api_key}
@@ -171,7 +182,6 @@ class DocManageService:
                     "status": "success",
             } 
 
-            print(data)
         except TypeError as update_error:
             response = {
                 "message": "Updation Error",
@@ -197,7 +207,6 @@ class DocManageService:
             """
         variables = {"id": documetId}
         try:
-            print(query)
             headers = {"Content-Type": "application/json", "Authorization": "Apikey "+stepzen_api_key}
             r = requests.post(stepzen_endpoint_url, json={'query': query, 'variables': variables}, headers=headers)
             data = r.json()
