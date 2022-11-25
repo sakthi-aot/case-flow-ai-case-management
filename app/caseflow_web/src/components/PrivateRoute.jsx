@@ -2,7 +2,7 @@ import React, { useEffect, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import UserService from "../services/UserService";
-import { setAuthToken, setAuthenticated } from "../reducers/authReducer";
+import { setAuthToken, setAuthenticated, setUserDetails } from "../reducers/authReducer";
 import Loading from "../containers/Loading";
 // import Upload from "./Upload";
 // import Download from "./Download";
@@ -25,8 +25,9 @@ const PrivateRoute = React.memo((props) => {
       console.log(props.store);
     }
     // UserService.setKeycloakJson(null, (clientId) => {
-    UserService.initKeycloak(props.store, (err, res) => {
-      const {token } = res;
+    UserService.initKeycloak(props.store, (err, res) => {     
+      const {token ,userInfo} = res;
+      userInfo.then(res=>dispatch(setUserDetails(res)))
       dispatch(setAuthToken(token));
       dispatch(setAuthenticated(true));
       // });

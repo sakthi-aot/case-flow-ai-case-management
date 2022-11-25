@@ -42,7 +42,9 @@ const initKeycloak = (store, ...rest) => {
         //     roles = roles.concat(roleData.id);
         //   }
         // }
-        const userInfo = KeycloakData.loadUserInfo();
+        const userInfo = KeycloakData.loadUserInfo(); 
+        // const userProfile = KeycloakData.loadUserProfile(); 
+
         const email = KeycloakData.tokenParsed.email || "external";
         // authenticateFormio(email, roles);
         // onAuthenticatedCallback();
@@ -51,7 +53,7 @@ const initKeycloak = (store, ...rest) => {
           token: KeycloakData.token,
           userInfo:userInfo,
           email: email,
-        });
+        });      
         refreshToken(store);
       } else {
         doLogout();
@@ -63,7 +65,7 @@ const initKeycloak = (store, ...rest) => {
   });
 };
 let refreshInterval;
-const refreshToken = (store) => {
+const refreshToken = (store) => {  
   refreshInterval = setInterval(() => {
     KeycloakData &&
       KeycloakData.updateToken(5)
