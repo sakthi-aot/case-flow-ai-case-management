@@ -5,17 +5,19 @@ import PrivateRoute from "./PrivateRoute";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./app.css";
 import NotFound from "./NotFound";
+import { AppProps } from "../interfaces/appInterface";
 
-const App = React.memo((props) => {
-  const { store, history } = props;
+
+
+const App = React.memo(({ store }:AppProps ) => {
   return (
     <div>
       <Provider store={store}>
-        <BrowserRouter history={history}>
+        <BrowserRouter >
           <React.Fragment>
             {/* <React.StrictMode> */}
             <Routes>
-              <Route index path="/" element={<BaseRouting store={store} />} />
+              <Route index path="/" element={<BaseRouting/>} />
               <Route
                 index
                 path="/private/*"

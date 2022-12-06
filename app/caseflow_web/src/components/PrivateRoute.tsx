@@ -14,25 +14,26 @@ import Cases from './Cases'
 import Dashboard from './Dashboard'
 import CaseDetails from './CaseDetails/CaseDetails'
 import NewCaseComponent from "./NewCase/NewCaseComponent";
+import { State, USerDetails } from "../interfaces/stateInterface";
 
 const NotFound = lazy(() => import("./NotFound"));
 
-const PrivateRoute = React.memo((props) => {
+const PrivateRoute = React.memo(({store}:any) => {
   const dispatch = useDispatch();
-  const isAuth = useSelector((state) => state.auth.isAuthenticated);
+  const isAuth = useSelector((state:State) => state.auth.isAuthenticated);
   useEffect(() => {
-    if (props.store) {
-      console.log(props.store);
+    if (store) {
+      console.log(store);
     }
     // UserService.setKeycloakJson(null, (clientId) => {
-    UserService.initKeycloak(props.store, (err, res) => {     
+    UserService.initKeycloak(store, (res:any) => {     
       const {token ,userInfo} = res;
-      userInfo.then(res=>dispatch(setUserDetails(res)))
+      userInfo.then((res:any)=> res && dispatch(setUserDetails(res)))
       dispatch(setAuthToken(token));
       dispatch(setAuthenticated(true));
       // });
     });
-  }, [props.store, dispatch]);
+  }, [store, dispatch]);
 
   return (
     <>

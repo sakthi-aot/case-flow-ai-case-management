@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 
 import LandingPage from "./LandingPage";
 
-const BaseRouting = React.memo(({ store }) => {
+const BaseRouting = React.memo(() => {
 
   return (
     <div>
