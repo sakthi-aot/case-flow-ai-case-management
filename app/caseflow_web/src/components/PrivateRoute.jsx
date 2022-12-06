@@ -8,6 +8,9 @@ import Loading from "../containers/Loading";
 // import Download from "./Download";
 import Home from "./Home";
 import FileHandler from "./FileHandler";
+import CaseDocuments from "./CaseDocuments";
+
+import EditDocuments from "./FileHandler/editDocuments";
 import Lob from './Lob'
 import Tasks from './Tasks'
 import Cases from './Cases'
@@ -48,7 +51,8 @@ const PrivateRoute = React.memo((props) => {
           </Route>
            
              
-            <Route path="documents" element={<FileHandler />} />
+            <Route path="documents" element={<CaseDocuments />} />
+            <Route path="documents/update/:id" element={<EditDocuments />} />
             <Route path="lob" element={<Lob />} />
           </Route>
           <Route path="*" element={<NotFound />} />

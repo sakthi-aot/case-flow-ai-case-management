@@ -7,7 +7,7 @@ from caseflow.utils.enums import DMSCode
 class Alfresco:
     """This class manages the connecton of  alfresco system with the API"""
     @staticmethod
-    def doc_upload(document) -> Dict:
+    def doc_upload(document,content_data) -> Dict:
         #converts the document into standard form
         try :
             doc_modified_date = document['entry']['modifiedAt']
@@ -25,7 +25,8 @@ class Alfresco:
                     "doc_modified" : doc_modifiedObj.strftime("%Y-%m-%dT%H:%M:%S"),
                     "doc_created" : doc_createdObj.strftime("%Y-%m-%dT%H:%M:%S"),
                     "doc_download_url" : "nil",
-                    "dms_provider" : DMSCode.DMS01.value
+                    "dms_provider" : DMSCode.DMS01.value,
+                    "dms_content":content_data
                     
             }
             return formatted_document
