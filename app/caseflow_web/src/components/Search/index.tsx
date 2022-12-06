@@ -10,14 +10,22 @@ import {
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import SearchIcon from "@mui/icons-material/Search";
-const Search = ({ setSearchField, dropDownArray, setSearchColumn }) => {
+
+interface searchProps{
+  dropDownArray : string[],
+  setSearchField :React.Dispatch<React.SetStateAction<string>>,
+  setSearchColumn : React.Dispatch<React.SetStateAction<string>>
+
+}
+
+const Search = ({ setSearchField, dropDownArray, setSearchColumn } :searchProps) => {
   return (
     <>
       <FormControl fullWidth sx={{ m: 1 }} variant="standard">
         <Input
           id="standard-adornment-amount"
           placeholder="Search"
-          onChange={(e) => {
+          onChange={(e:React.ChangeEvent<HTMLInputElement>) => {
             setSearchField(e.target.value);
           }}
           startAdornment={
