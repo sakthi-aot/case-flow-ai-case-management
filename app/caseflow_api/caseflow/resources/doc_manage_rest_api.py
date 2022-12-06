@@ -1,4 +1,5 @@
 """API endpoints for managing cms repo."""
+import base64
 from http import HTTPStatus
 import json
 import requests
@@ -54,6 +55,8 @@ class CMISConnectorUploadResource(Resource):
         
         contentfile = request.files["upload"]
         filename = contentfile.filename
+        content_data1=base64.b64encode(contentfile.read())
+        content_data = content_data1.decode('utf-8')
         files = {'filedata': contentfile.read()}
         if filename != "":
             try:
@@ -65,7 +68,7 @@ class CMISConnectorUploadResource(Resource):
 
                 if document.ok:
                     response = json.loads(document.text)
-                    formatted_document = DMSConnector.doc_upload_connector(response,DMSCode.DMS01.value)
+                    formatted_document = DMSConnector.doc_upload_connector(response,DMSCode.DMS01.value,content_data)
                     uploadeddata = DocManageService.doc_upload_mutation(request,formatted_document)
                     print(uploadeddata)
                     # print("Upload completed successfully!")
@@ -125,6 +128,7 @@ class CMISConnectorUploadResource(Resource):
 
         contentfile = request.files["upload"]
         filename = contentfile.filename
+        file_content = open(contentfile,'rb').read()
         file_content =  contentfile.read()
         files = {'file': (filename, file_content)}
         request_data = request.form.to_dict(flat=True)

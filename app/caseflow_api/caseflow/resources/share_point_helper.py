@@ -61,6 +61,9 @@ class SharePoint:
         target_folder_url = f'/sites/{SHAREPOINT_SITE_NAME}/{SHAREPOINT_DOC}/{folder_name}'
         target_folder = conn.web.get_folder_by_server_relative_path(target_folder_url)
         response = target_folder.upload_file(file_name, content).execute_query()
+        item = response.listItemAllFields 
+        item.set_property("Category","R Language")
+        item.update()
         return response
 
     def delete_file(self,file_url):       
