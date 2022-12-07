@@ -5,7 +5,13 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select'
 
-const FilterMuiComponent = ({label,options,onChnagehandler}) => {
+interface FilterMuiComponentProps{
+  label:any,
+  options:any[],
+  onChnagehandler:any}
+
+
+const FilterMuiComponent = ({label,options,onChnagehandler}:FilterMuiComponentProps) => {
   return (
     <Box sx={{ minWidth: 120 }}>
             <FormControl sx={{ m: 1, minWidth: 90, }} size="small">

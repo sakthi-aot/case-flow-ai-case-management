@@ -1,7 +1,11 @@
 import React from 'react'
 import "./CaseDetailReference.scss"
 
-const CaseDetailReference = ({docketNum,courtRef}) => {
+interface CaseDetailReferenceProps
+{docketNum:any,
+  courtRef:any}
+
+const CaseDetailReference = ({docketNum,courtRef}:CaseDetailReferenceProps) => {
   return (
     <>
     <div className='case-detail-reference-first-row'>
