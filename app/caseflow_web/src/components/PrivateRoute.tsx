@@ -17,7 +17,7 @@ import Cases from './Cases'
 import Dashboard from './Dashboard'
 import CaseDetails from './CaseDetails/CaseDetails'
 import NewCaseComponent from "./NewCase/NewCaseComponent";
-import { State, USerDetails } from "../interfaces/stateInterface";
+import { State } from "../interfaces/stateInterface";
 
 const NotFound = lazy(() => import("./NotFound"));
 

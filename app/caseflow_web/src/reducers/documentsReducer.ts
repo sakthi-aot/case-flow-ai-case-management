@@ -11,14 +11,9 @@ const documentSlice = createSlice({
     setDocumentList: (state, action) => {
       state.documentsList = action.payload;
     },
-    getDocumentList: (state, action) => {
-      return state.documentsList;
-    },
+
     setSelectedDocument: (state, action) => {
       state.seletedDocument = action.payload;
-    },
-    getSelectedDocument: (state, action) => {
-      return state.seletedDocument;
     },
   },
   extraReducers: {
@@ -30,8 +25,6 @@ const documentSlice = createSlice({
 
 export const {
   setDocumentList,
-  getDocumentList,
   setSelectedDocument,
-  getSelectedDocument
 } = documentSlice.actions;
 export default documentSlice.reducer;

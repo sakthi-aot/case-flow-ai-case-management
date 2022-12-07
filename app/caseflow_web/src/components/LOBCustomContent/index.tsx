@@ -3,9 +3,9 @@ import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import LOBCUstomContentCard from "../LOBCUstomContentCard";
-
+import { CustomContent } from "../../interfaces/componentInterface";
 const LOBCustomContent = () => {
-  const customContentList = [
+  const customContentList :CustomContent[] = [
     {
       caseCategory: "wildlife Offance",
       district: "shownan lake",
@@ -36,7 +36,7 @@ const LOBCustomContent = () => {
         component="nav"
         aria-label="mailbox folders"
       >
-        {customContentList.map((customContent) => (
+        {customContentList.map((customContent : CustomContent) => (
           <LOBCUstomContentCard
           caseCategory={customContent.caseCategory}
           district={customContent.district}

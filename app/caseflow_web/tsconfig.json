@@ -5,7 +5,7 @@
       "esModuleInterop": true,
       "isolatedModules": true,
       "jsx": "react",
-      "lib": ["esnext"],
+      "lib": ["esnext", "DOM"],
       "types": ["react", "jest",  "node"],
       "moduleResolution": "node",
       "module": "commonjs",

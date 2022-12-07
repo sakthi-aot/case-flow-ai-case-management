@@ -21,24 +21,16 @@ const caseSlice = createSlice({
     setCaseList: (state, action) => {
       state.caseList = action.payload;
     },
-    getCaseList: (state, action) => {
-      return state.caseList;
-    },
+
     setSelectedCase: (state, action) => {
         state.selectedCase = action.payload;
     },
-    getSelectedCase: (state, action) => {
-        return state.selectedCase;
-    },
+
   }
 });
 
 export const {
   setCaseList,
-  getCaseList,
   setSelectedCase,
-  getSelectedCase
-
-
 } = caseSlice.actions;
 export default caseSlice.reducer;

@@ -4,8 +4,9 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import { EachTask } from "../../interfaces/componentInterface";
 
-const MyTaskCard = ({taskID,taskDescription}) => {
+const MyTaskCard = ({taskID,taskDescription} :EachTask) => {
     return (
         <>
         <Typography />
