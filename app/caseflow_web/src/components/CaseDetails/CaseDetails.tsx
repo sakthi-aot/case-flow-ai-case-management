@@ -19,7 +19,7 @@ const CaseDetails = () => {
     courtRef:"2022-11-01"
   }
   const optionsForAction = ["Start Workflow","Wake","Complete","Merge"]
-  const onActionChangehandler = (e) =>{
+  const onActionChangehandler = (e:any) =>{
     console.log("Chnaged")
   }  
   return (

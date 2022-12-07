@@ -39,13 +39,13 @@ const allRecentCases = [
   },
 ];
 
-let  sortingkeysOfAllRecentCases =[]
+let  sortingkeysOfAllRecentCases:any[] =[]
 for( let field in allRecentCases[0]){
   sortingkeysOfAllRecentCases = [...sortingkeysOfAllRecentCases,{value:field,sortOrder:true}]
 }
 
 
-const CaseList =React.memo( (props) => {
+const CaseList =React.memo( (props:any) => {
 
   const [sortValue,setSortValue] = useState({value:"",sortOrder:null})
   const [recentCases,setRecentCases] = useState([...allRecentCases])
@@ -56,7 +56,7 @@ const CaseList =React.memo( (props) => {
    setRecentCases(updatedSortedDate)
   },[sortValue])
 
-  const onSortingValueChangeHandler = (e) =>{
+  const onSortingValueChangeHandler = (e:any) =>{
     let tempSelectedValue = e.target.value;
 
     const updatedSortValueState =sortSelectValue.map(sortValue =>{

@@ -34,7 +34,7 @@ const CaseHistory = () => {
     ]
 
     const optionsForFilter = ["name","date","owner"]
-    const onFilterChangehandler = (e) =>{
+    const onFilterChangehandler = (e:any) =>{
       console.log("chnaged")
     }
 
