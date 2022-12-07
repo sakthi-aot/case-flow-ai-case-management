@@ -5,7 +5,7 @@ import "./NewCaseComponent.scss"
 
 const NewCaseComponent = () => {
  
-  let dropDownArrayItem:String[]=[];
+  let dropDownArrayItem:string[]=[];
   const serachField =(e:any) =>{
     console.log("serachField")
   }
