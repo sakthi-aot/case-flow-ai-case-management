@@ -22,11 +22,12 @@ import { Button } from "@mui/material";
 import UserService from "../../services/UserService";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useSelector } from "react-redux";
+import { State } from "../../interfaces/stateInterface";
 import "./navigation.scss"
 
 const drawerWidth = 240;
 
-const openedMixin = (theme) => ({
+const openedMixin = (theme:any) => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
@@ -35,7 +36,7 @@ const openedMixin = (theme) => ({
   overflowX: "hidden",
 });
 
-const closedMixin = (theme) => ({
+const closedMixin = (theme:any) => ({
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -76,7 +77,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
+})(({ theme,variant,className, open }:{theme?:any,variant?:string, className?:any,open:any}) => ({
   width: drawerWidth,
   flexShrink: 0,
   whiteSpace: "nowrap",
@@ -91,11 +92,11 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function MiniDrawer({ children }) {
+export default function MiniDrawer({ children }:{children:any}) {
  
   const [open, setOpen] = React.useState(false); 
 
-  const userInfo = useSelector(state=>state.auth.userDetails)
+  const userInfo = useSelector((state:State)=>state.auth.userDetails)
 
   const routes = [
     {
@@ -113,7 +114,7 @@ export default function MiniDrawer({ children }) {
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
-  const getLogo = (index) => {
+  const getLogo = (index:Number) => {
     switch (index) {
       case 0:
         return <HomeOutlinedIcon />;
@@ -137,7 +138,7 @@ export default function MiniDrawer({ children }) {
   return (     
     <Box >
       <CssBaseline />
-      <Drawer variant="permanent" open={open} className="navaigation-drawer-container">
+      <Drawer variant="permanent" open={open} className="navaigation-drawer-container" >
         <DrawerHeader style={{ display: "flaex" }}>
           <div className="naviagtion-header">
             <AccountCircleIcon
@@ -159,11 +160,8 @@ export default function MiniDrawer({ children }) {
           margin:".7rem auto 0",
           backgroundColor:"#404040",
           borderRadius:"8px",
-          transition:"all 1s ease",
-          "&:hover":{
-            backgroundColor:"black"
-          }
-          
+          transition:"all 1s ease",  
+
         }} component={Link} to="/private/cases/create">Start New Cases</Button>}
         
         <List>

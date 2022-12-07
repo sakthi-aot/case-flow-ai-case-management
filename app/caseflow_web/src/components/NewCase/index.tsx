@@ -8,7 +8,7 @@ import Divider from "@mui/material/Divider";
 
 const NewCase = () => {
   const { handleSubmit, reset, control,register } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data:any) => console.log(data);
 
 
   return (

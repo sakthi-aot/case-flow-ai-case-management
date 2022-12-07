@@ -6,7 +6,11 @@ import Grid from "@mui/material/Grid";
 import { Card, Typography } from "@mui/material";
 import "./LOBCUstomContentCard.scss"
 
-const LOBCUstomContentCard = ({ caseCategory, district, link }) => {
+interface LOBCUstomContentCardProps{
+  caseCategory:any, district:any, link:any
+}
+
+const LOBCUstomContentCard = ({ caseCategory, district, link }:LOBCUstomContentCardProps) => {
   // const caseDate = date.toJSON().slice(0,10).replace(/-/g,'/')
  
   return (
