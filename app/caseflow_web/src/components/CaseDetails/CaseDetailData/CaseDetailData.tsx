@@ -1,7 +1,15 @@
 import React from 'react'
 import "./CaseDetailData.scss"
 
-const CaseDetailData = ({name,date,owner,caseDescription,tasks}) => {
+interface CaseDetailDataProps {
+  name:String,
+  date:any,
+  owner:String,
+  caseDescription:String,
+  tasks:any
+}
+
+const CaseDetailData = ({name,date,owner,caseDescription,tasks}:CaseDetailDataProps) => {
   return (
     <>
     <div className='case-detail-first-row'>
@@ -24,7 +32,7 @@ const CaseDetailData = ({name,date,owner,caseDescription,tasks}) => {
     </div>
     <div className='case-detail-third-row'>
       <h3>Current Task(s)</h3>
-      {tasks.map((task,index)=><p key={index}>{task}</p>)}
+      {tasks.map((task:any,index:any)=><p key={index}>{task}</p>)}
     </div>
     </>
   )

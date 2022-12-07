@@ -10,14 +10,18 @@ const caseListProps = {
   isShowSort :false
 }
 
-const Dashboard = ({ children }) => {
+interface DashboardProps{
+  children:any
+}
+
+const Dashboard = ({ children }:DashboardProps) => {
 
   useEffect(() => {
-    getRecentCases({}, (err, res) => {
+    getRecentCases({}, (err:any, res:any) => {
       // const {token } = res;
       // dispatch(setAuthToken(token));
       // dispatch(setAuthenticated(true));
-      // });
+      // });   
     });
   })
   return (
