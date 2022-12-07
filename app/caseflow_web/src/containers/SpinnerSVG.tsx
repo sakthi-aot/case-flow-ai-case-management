@@ -1,4 +1,10 @@
-export const SpinnerSVG = ({fill='grey',className}) => {
+import React from 'react';
+
+interface SpinnerSVGProps{
+  fill:string,
+  className?:string
+}
+export const SpinnerSVG = ({fill='grey',className}:SpinnerSVGProps) => {
   return (
     <svg className={className} version="1.1" id="L5" x="0px" y="0px"
          style={{width: "100px",height:"100px",margin:"20px",display:"inline-block"}}
