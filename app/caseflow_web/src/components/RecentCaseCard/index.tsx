@@ -5,8 +5,11 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import { Typography } from "@mui/material";
 import "./recentCaseCard.scss"
+import { RecentCase } from "../../interfaces/componentInterface";
 
-const RecentCaseCard = ({ caseID, caseDescription, status }) => {
+
+
+const RecentCaseCard = ({ caseID, caseDescription, status } : RecentCase) => {
   // const caseDate = date.toJSON().slice(0,10).replace(/-/g,'/')
  
   return (

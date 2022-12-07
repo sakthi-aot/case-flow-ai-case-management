@@ -12,6 +12,13 @@ export interface SearchProps{
   
   }
 
+  export interface RecentCase{
+    caseID: string;
+    caseDescription: string;
+    status: string;
+ 
+  }
+
   export interface CustomContent {
     caseCategory: string;
     district: string;

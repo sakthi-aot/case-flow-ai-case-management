@@ -10,8 +10,10 @@ import RecentCasecard from "../RecentCaseCard";
 import { SortCasesByField } from "../../helper/SortCases";
 import "./caselist.scss"
 import { Link, } from "react-router-dom";
+import { RecentCase } from "../../interfaces/componentInterface";
 
-const allRecentCases = [
+
+const allRecentCases : RecentCase[] = [
   {
     caseID: "1",
     caseDescription: "A CaseSentive",

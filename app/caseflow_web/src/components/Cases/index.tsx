@@ -7,14 +7,18 @@ const caseListProps = {
   count : 5,
   isShowSort :false
 }
-const Dashboard = (
+const Cases = (
   // { children }
   ) => {
   return (
     <section className="dashboard">
       <h1 className="title">CaseFlow</h1>
       <div className="search">
-        <Search></Search>
+      <Search
+            setSearchField={() => {}}
+            dropDownArray={[]}
+            setSearchColumn={() => {}}
+          ></Search>
       </div>     
         <div className="recent-cases"><CaseList  config={caseListProps}></CaseList></div>
         {/* <div className="my-task"><MyTask></MyTask></div> */} 
@@ -22,4 +26,4 @@ const Dashboard = (
   );
 };
 
-export default Dashboard;
+export default Cases;

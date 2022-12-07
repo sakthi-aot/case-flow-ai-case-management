@@ -1,5 +1,22 @@
 export const BASE_ROUTE = "/";
 
+interface ENV{
+  REACT_APP_KEYCLOAK_WEB_CLIENTID :string,
+  REACT_APP_KEYCLOAK_URL_REALM :string,
+  REACT_APP_KEYCLOAK_URL :string, 
+  REACT_APP_CLIENT_ROLE :string,
+  REACT_APP_ADMINISTRATOR: string,
+  REACT_APP_CLIENT :string
+}
+
+declare global {
+    interface Window {
+      _env_:ENV;
+    }
+}
+
+
+
 //keycloak
 export const KEYCLOAK_CLIENT =
   (window._env_ && window._env_.REACT_APP_KEYCLOAK_WEB_CLIENTID) ||
