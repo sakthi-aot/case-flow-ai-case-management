@@ -17,3 +17,12 @@ export interface SearchProps{
     district: string;
     link: string;
   }
+
+  export interface DocumentList {
+    id: string;
+    name: string;
+    dms_provider: number;
+    description:string,
+    creationdate:string,
+    modificationdate:string
+  }

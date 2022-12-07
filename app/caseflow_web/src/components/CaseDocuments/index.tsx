@@ -23,6 +23,9 @@ import txt from "../../assets/txt.png";
 import {useSelector} from "react-redux";
 import Upload from "../Upload";
 import EditIcon from '@mui/icons-material/Edit';
+import { State, USerDetails } from "../../interfaces/stateInterface";
+import { DocumentList } from "../../interfaces/componentInterface";
+
 
 
 const CaseDocuments = () => {
@@ -32,8 +35,8 @@ const CaseDocuments = () => {
   const [searchField, setSearchField] = useState("");
   const [searchColumn, setSearchColumn] = useState("Name");
   const dropDownArray = ["Name", "Id", "Creation Date", "modification Date"];
-   const documents =  useSelector(state=>state.documents.documentsList);
-  const getFileIcon = (fileName) => {
+   const documents =  useSelector((state:State)=>state.document.documentsList);
+  const getFileIcon = (fileName:any) => {
     let ext = fileName.split(".").pop();
     ext = ext.toLowerCase();
     switch (ext) {
@@ -53,7 +56,7 @@ const CaseDocuments = () => {
     switch (searchColumn) {
       case "Name":
         return setFilteredDocumentDetails(
-          documentDetails.filter((eachValue) => {
+          documentDetails.filter((eachValue:any) => {
             return eachValue.name
               .toLowerCase()
               .includes(searchField.toLowerCase());
@@ -61,7 +64,7 @@ const CaseDocuments = () => {
         );
       case "Id":
         return setFilteredDocumentDetails(
-          documentDetails.filter((eachValue) => {
+          documentDetails.filter((eachValue:any) => {
             return eachValue.id
               .toString()
               .toLowerCase()
@@ -70,7 +73,7 @@ const CaseDocuments = () => {
         );
       case "Creation Date":
         return setFilteredDocumentDetails(
-          documentDetails.filter((eachValue) => {
+          documentDetails.filter((eachValue:any) => {
             return eachValue.creationdate
               .toString()
               .toLowerCase()
@@ -79,7 +82,7 @@ const CaseDocuments = () => {
         );
       case "modification Date":
         return setFilteredDocumentDetails(
-          documentDetails.filter((eachValue) => {
+          documentDetails.filter((eachValue:any) => {
             return eachValue.modificationdate
               .toString()
               .toLowerCase()
@@ -88,7 +91,7 @@ const CaseDocuments = () => {
         );
       default:
         return setFilteredDocumentDetails(
-          documentDetails.filter((eachValue) => {
+          documentDetails.filter((eachValue:any) => {
             return eachValue.name
               .toLowerCase()
               .includes(searchField.toLowerCase());
@@ -108,11 +111,11 @@ const CaseDocuments = () => {
   }, [searchField]);
 
 
- const  fetchDocumentDetails=(data)=>{
+ const  fetchDocumentDetails=(data:any)=>{
 setDocumentDetailsForEdit(data)
   }
-  return (
-    <div className="background">
+
+  return (<div className="background">
     <div className="file-card">
 
     <div>
@@ -156,7 +159,7 @@ setDocumentDetailsForEdit(data)
 
           <TableBody>
             {filteredDocumentDetails &&
-              filteredDocumentDetails.map((documentDetail) => (
+              filteredDocumentDetails.map((documentDetail:DocumentList) => (
                 <TableRow
                   key={documentDetail.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -215,8 +218,7 @@ setDocumentDetailsForEdit(data)
 
    
     </div>
-    </div></div></div>
-  );
+    </div></div></div>);
 };
 
 export default CaseDocuments;
