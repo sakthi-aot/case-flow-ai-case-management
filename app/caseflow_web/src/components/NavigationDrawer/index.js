@@ -91,7 +91,9 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function MiniDrawer({ children }) {
+export default function MiniDrawer(
+  // { children }
+  ) {
  
   const [open, setOpen] = React.useState(false); 
 
@@ -245,7 +247,7 @@ export default function MiniDrawer({ children }) {
                 )}
     </div>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        {children}
+        {/* {children} */}
       </Box>
     </Box>   
     

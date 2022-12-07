@@ -10,7 +10,9 @@ const caseListProps = {
   isShowSort :false
 }
 
-const Dashboard = ({ children }) => {
+const Dashboard = (
+  // { children }
+  ) => {
 
   useEffect(() => {
     getRecentCases({}, (err, res) => {

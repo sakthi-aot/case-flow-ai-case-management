@@ -7,7 +7,9 @@ const caseListProps = {
   count : 5,
   isShowSort :false
 }
-const Dashboard = ({ children }) => {
+const Dashboard = (
+  // { children }
+  ) => {
   return (
     <section className="dashboard">
       <h1 className="title">CaseFlow</h1>

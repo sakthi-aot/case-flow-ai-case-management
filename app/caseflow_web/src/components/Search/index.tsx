@@ -10,15 +10,11 @@ import {
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import SearchIcon from "@mui/icons-material/Search";
+import { SearchProps } from "../../interfaces/componentInterface";
 
-interface searchProps{
-  dropDownArray : string[],
-  setSearchField :React.Dispatch<React.SetStateAction<string>>,
-  setSearchColumn : React.Dispatch<React.SetStateAction<string>>
 
-}
 
-const Search = ({ setSearchField, dropDownArray, setSearchColumn } :searchProps) => {
+const Search = ({ setSearchField, dropDownArray, setSearchColumn } :SearchProps) => {
   return (
     <>
       <FormControl fullWidth sx={{ m: 1 }} variant="standard">

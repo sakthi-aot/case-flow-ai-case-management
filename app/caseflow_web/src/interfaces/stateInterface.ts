@@ -5,7 +5,13 @@ export interface State {
   Cases: Cases
 }
 
-export interface Auth {
+export type AuthState  = {
+    token: string;
+    roles: string;
+    userDetails: USerDetails,
+    isAuthenticated: boolean;
+  };
+  export interface  Auth   {
     token: string;
     roles: string;
     userDetails: USerDetails,

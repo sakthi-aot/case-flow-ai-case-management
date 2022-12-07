@@ -4,16 +4,17 @@ import List from "@mui/material/List";
 
 import Divider from "@mui/material/Divider";
 import MyTaskCard from "../MyTaskCard";
+import { EachTask } from "../../interfaces/componentInterface";
 
 const MyTask = () => {
-  const allTasks = [
+  const allTasks : EachTask[] = [
     {
-      taskID: "1",
+      taskID: 1,
       taskDescription: "  My Bonnie lies over the ocean.My Bonnie lies over the ocean.",
       
     },
     {
-      taskID: "2",
+      taskID: 2,
       taskDescription: " My Bonnie lies over the scvea.My Bonnie lies over the sea.",
     },
   ];
