@@ -1,3 +1,4 @@
+import json
 import boto3
 from botocore.exceptions import ClientError
 from flask import current_app
@@ -19,10 +20,26 @@ def create_bucket(bucket_name):
     except Exception as e:
         return e
 
-
-def upload_object(bucket_name, privacy_policy, data, file_name):
+def upload_object(bucket_name, privacy_policy, data, file_name,metadata):
     """ Upload object to s3 bucket ."""
     try :
+     json_list = []
+
+     json_list.append(json.loads(metadata))
+     json.dumps(json_list)
+     for index, item in enumerate(json_list):
+      print(index, item)  
+      my_dict = {}
+      for index, items in enumerate(item):
+       my_dict.update({items['MetadataField']:items['MetadataValue']})
+    #    print(str)    
+    #    print(type(str))
+    #   my_dict = {}
+    #   for i, label in enumerate(item):
+    #         my_dict[label['']] = my_dict[label['MetadataValue']]
+    #         print(my_dict)
+     print(my_dict)
+     strrn=my_dict
      s3_file_name = str(uuid.uuid4()) + "_"+ file_name
      is_exists = check_bucket(bucket_name)
      if is_exists is False :
@@ -36,7 +53,7 @@ def upload_object(bucket_name, privacy_policy, data, file_name):
                 object = s3.Object(bucket_name, s3_file_name)
                 # object.set_metadata('name',file_name)
                 # Privacy policy 'private'|'public-read'|'public-read-write'|'authenticated-read'|'aws-exec-read'|'bucket-owner-read'|'bucket-owner-full-control'
-                result = object.put(Body=data,Metadata ={'name':file_name})
+                result = object.put(Body=data,Metadata =strrn)
 
                 res = result.get('ResponseMetadata')
 

@@ -1,9 +1,11 @@
 """API endpoints for managing s3 bucket."""
 
+import base64
 from http import HTTPStatus
 import json
 from flask import current_app, request,make_response,Response
 from flask_restx import Namespace, Resource,reqparse
+from sqlalchemy import JSON
 from caseflow.services import DocManageService
 from caseflow.resources.s3_helper import get_object,upload_object,delete_object,update_object
 from caseflow.utils import auth, cors_preflight
@@ -25,6 +27,7 @@ class CMISConnectorUploadResource(Resource):
     upload_parser.add_argument('upload', location='files',type=FileStorage, required=True)
     upload_parser.add_argument('name', type=str, location='form', required=True)
     upload_parser.add_argument('cm:description', type=str, location='form', required=True)    
+    upload_parser.add_argument('metaData', type=str, location='form', required=True)    
     @API.expect(upload_parser)
     @auth.require
     def post(self):
@@ -34,17 +37,23 @@ class CMISConnectorUploadResource(Resource):
             return {"message": "No upload files in the request"}, HTTPStatus.BAD_REQUEST
 
         content_file = args["upload"]
+        content_data1=base64.b64encode(content_file.read())
+        content_data = content_data1.decode('utf-8')
+        meta_data = args["metaData"]
+        print(type(meta_data))
+        print(meta_data)
+      
         file_name = content_file.filename
         data =content_file.read()
         bucket_name = current_app.config.get("S3_BUCKET_NAME")
         access_level = current_app.config.get("S3_DEFAULT_PERMISSION")
         if file_name != "":
             try:
-                data = upload_object(bucket_name,access_level,data,file_name)
+                data = upload_object(bucket_name,access_level,data,file_name,meta_data)
                 response = data.get('response')
                 if response.get('HTTPStatusCode') == 200:
                     file_data = data.get('object')
-                    formatted_document = DMSConnector.doc_upload_connector(file_data,DMSCode.DMS02.value)
+                    formatted_document = DMSConnector.doc_upload_connector(file_data,DMSCode.DMS02.value,content_data)
                     formatted_document["doc_type"] =  content_file.content_type
                     formatted_document["doc_description"] =  args.get('cm:description')
                     uploaded_data = DocManageService.doc_upload_mutation(request,formatted_document)

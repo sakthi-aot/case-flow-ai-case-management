@@ -28,12 +28,13 @@ class DocManageService:
         doc_created = document['doc_created']
         doc_download_url = document["doc_download_url"]
         dms_provider=document["dms_provider"]
+        dms_content=document["dms_content"]
         doc_createdby = user_id
     
         query = """mutation insertDocument {
         insertDocument(
             documentid: "%s"
-            content: "nil"
+            content: "%s"
             contentsize: %s
             contenttype: "%s"
             creationdate: "%s"
@@ -54,9 +55,10 @@ class DocManageService:
         }
         }
 
-        #     """ % (doc_id,doc_size,doc_type,doc_created,doc_createdby,doc_description,doc_download_url,version,doc_createdby,doc_name,doc_dmsname,doc_modified,dms_provider)
+        #     """ % (doc_id,dms_content,doc_size,doc_type,doc_created,doc_createdby,doc_description,doc_download_url,version,doc_createdby,doc_name,doc_dmsname,doc_modified,dms_provider)
         variables = {}
         try:
+            print(query)
             headers = {"Content-Type": "application/json", "Authorization": "Apikey "+stepzen_api_key}
             r = requests.post(stepzen_endpoint_url, json={'query': query, 'variables': variables}, headers=headers)
             data = r.json()
@@ -240,7 +242,8 @@ class DocManageService:
            query MyQuery {
             getDocumentList {
                 name
-                id
+                id,
+                content,
                 downloadurl
                 documentid
                 description

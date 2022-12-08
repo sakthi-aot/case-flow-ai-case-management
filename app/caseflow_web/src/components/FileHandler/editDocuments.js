@@ -1,5 +1,21 @@
+
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+
+import "./fileHandler.scss";
+import Upload from "../Upload";
+import CaseDocuments from "../CaseDocuments";
+import { useHistory, useParams } from "react-router-dom";
+
+
+
 import React, { useEffect, useState } from "react";
-import "./upload.scss";
 import {
   uploadCMISfile,
   updateCMISdocument,
@@ -15,11 +31,25 @@ import Typography from "@mui/material/Typography";
 import FileViewer from 'react-file-viewer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {useSelector,useDispatch} from "react-redux";
 import { setDocumentList } from "../../reducers/documentsReducer";
 import { getAllDocuments } from "../../services/DocumentManagementService";
-const Upload = (props) => {
-  const [response,setResponse] = useState("")
+import {useSelector,useDispatch} from "react-redux";
+
+const EditDocuments = (props) => {
+  const params = useParams();
+  const documents =  useSelector(state=>state.documents.documentsList);
+  console.warn(documents)
+  const existingDocuments= documents.filter(doc => doc.id == params.id);
+  console.log(existingDocuments);
+  const {dms_provider,content,description,docname,name,documentid,downloadurl}=existingDocuments[0]
+  const [values, setValues] = useState({
+    dms:dms_provider,
+    content:content,
+    fileName:docname,
+    fileDescription:description
+  });
+
+  const dispatch = useDispatch();
   const [file, setFile] = useState("");
   const [fileName, setFileName] = useState("");
   const [fileDescription, setFileDescription] = useState("");
@@ -27,8 +57,6 @@ const Upload = (props) => {
   const [documentID, setDocumentID] = useState(1);
   const[previewURL,setPreviewURL] = useState()
   const [filetypeUploaded,setfileTypeUploaded] = useState(null) 
-  // const documents = useSelector(state=>state.documents.getDocumentList);
-  const dispatch = useDispatch();
   useEffect(() => {
     fetchDocumentDetails();
     
@@ -64,30 +92,10 @@ const Upload = (props) => {
     setFileName(event.target.value); //set the filename from text box if name is alterded
   }
 
-  const onActionSelectChange = (event) => {
-    setActionSelected(event.target.value);
-  };
-  const onSubmitHandler = async () => {
-    if (actionSelected === "upload") {
-      const response = await  uploadCMISfile(file, fileName, fileDescription,props.selectedDMS);
-      console.log(response.data)
-      if (response && response.data && response.data.status == "success")
-        {fetchDocumentDetails();
-          toast.success("Success")
-          setFile("");
-          setFileName("")
-          setFileDescription("")
-          setPreviewURL("")
-      }
-        else
-        toast.error("Error")
-      setResponse(response)      
-      console.log(response);
-    }
 
-    if (actionSelected === "update") {
-      updateCMISdocument(documentID, file, fileName, fileDescription,props.selectedDMS);
-    }
+  const onSubmitHandler = async () => {
+       const dms="DMS1"
+       updateCMISdocument(documentID, file, fileName, fileDescription,dms);
   };
 
   const onDescriptionchange = (event) => {   
@@ -103,10 +111,29 @@ const Upload = (props) => {
   const onPreviewErrorhandler = (e) =>{
     console.log(e);
   }
-
   return (
-    <>
-    <div className="upload-grid">
+    <div className="background">
+      <div className="file-card">  
+      <div className="accordion">
+    
+            <Typography variant="h5">Update Documents</Typography>
+     
+          <div className="DMS-selector">
+        <Box sx={{ minWidth: 120 ,backgroundColor: "white"}}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">DMS</InputLabel>
+  
+            <TextField autoComplete="id" name="id" variant="outlined" required  id="id" label="DMS" autoFocus value={values.dms} disabled />
+            <img
+                        className="pdf-file-img"
+                       src={`data:image/jpeg;base64,${values.content}`} 
+                    
+                        alt="pdf"
+                      />
+          </FormControl>
+        </Box>
+      </div>
+      <div className="upload-grid">
       <div className="upload-left">
         <div className="upload-row">
           <input type="file" id="actual-btn" onChange={handleUpload} hidden />
@@ -122,7 +149,7 @@ const Upload = (props) => {
             </label>
           </Button>
           <TextField
-            id="disabled-basic"
+            
             sx={{
               "& .MuiInputLabel-root": { color: "#404040" },
               borderBottom: "1px solid #404040",              
@@ -131,7 +158,7 @@ const Upload = (props) => {
             label="File Name"
             variant="standard"
             className="file-name-text-field-upload"             
-            value={fileName}
+            value={values.fileName}
             onChange={fileNameChange}
             placeholder="File Name..."
           />
@@ -142,7 +169,7 @@ const Upload = (props) => {
             width: "100%",
           }}
         >
-          {file !== "" && (
+          {values.fileName !== "" && (
             <div
               style={{
                 paddingTop: "1rem",
@@ -161,81 +188,16 @@ const Upload = (props) => {
                   width: "100%",            
                 }}    
                 InputProps={{ disableUnderline: true }}           
-                value={fileDescription}
+                value={values.fileDescription}
                 onChange={onDescriptionchange}
                 placeholder="My text document description..."
               />
             </div>
           )}
         </div>
-        <div className="upload-type-selection">
-          <FormControl>
-            <FormLabel id="demo-row-radio-buttons-group-label">
-              Choose upload
-            </FormLabel>
-            <RadioGroup
-              row
-              aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
-              value={actionSelected}
-              onChange={onActionSelectChange}
-            >
-              <FormControlLabel
-                value="upload"
-                control={<Radio 
-                   sx={{
-                  '&, &.Mui-checked': {
-                    color: '#404040',
-                  },
-                }} />}
-                label="Upload"
-              />
-              <FormControlLabel
-                value="update"
-                control={<Radio 
-                   sx={{
-                  '&, &.Mui-checked': {
-                    color: '#404040',
-                  },
-                }}/>}
-                label="update"
-              />
-            </RadioGroup>
-          </FormControl>
-        </div>
-        {actionSelected === "update" && (
-          <div          
-            style={{
-              paddingTop: "1rem",
-              width: "100%",
-            }}
-          >
-            <TextField
-              id="outlined-basic"
-              className="document-update-id-text-field"
-              label="Document Id"
-              variant="standard"
-              sx={{
-                "& .MuiInputLabel-root": { color: "#404040" },
-                borderBottom: "1px solid #404040",  
-                width: "100%",            
-              }}    
-              InputProps={{ disableUnderline: true }}             
-              onChange={onIDchange}
-              placeholder="Document ID..."
-            />
-          </div>
-        )}
-         {/* {(previewURL &&filetypeUploaded!=="plain" ) && <div className="pgViewContainer" >
-          <p className="preview-heading">Preview</p>
-         <FileViewer 
-          key={Math.random()}      
-          fileType={filetypeUploaded}
-          filePath={previewURL}
-          onError={onPreviewErrorhandler}
-        >
-        </FileViewer>
-         </div>}   */}
+   
+
+         
 
         <div className="upload-button">
           <Button
@@ -247,7 +209,7 @@ const Upload = (props) => {
             variant="outlined"
             onClick={onSubmitHandler}
           >
-            Upload file
+            Update file
           </Button>
         </div>
       </div>
@@ -280,8 +242,15 @@ const Upload = (props) => {
       {/* </div> */}
     </div> 
     <ToastContainer/>
-    </>
+       
+   
+      </div>
+
+
+      </div>
+      
+    </div>
   );
 };
 
-export default Upload;
+export default EditDocuments;
