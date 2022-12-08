@@ -3,7 +3,6 @@ import Typography from "@mui/material/Typography";
 // import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 // import CaseDocumentCard from "../CaseDocumentCard";
-import { getAllDocuments } from "../../services/DocumentManagementService";
 import { useEffect, useState } from "react";
 import Search from "../Search";
 import Grid from "@mui/material/Grid";
@@ -22,15 +21,22 @@ import png from "../../assets/png.png";
 import pdf from "../../assets/pdf.png";
 import txt from "../../assets/txt.png";
 import {useSelector} from "react-redux";
-import { setDocumentList } from "../../reducers/documentsReducer";
+import Upload from "../Upload";
+import EditIcon from '@mui/icons-material/Edit';
+import { State, USerDetails } from "../../interfaces/stateInterface";
+import { DocumentList } from "../../interfaces/componentInterface";
+
+
+
 const CaseDocuments = () => {
   const [filteredDocumentDetails, setFilteredDocumentDetails] = useState([]);
   const [documentDetails, setDocumentDetails] = useState([]);
+  const [documentDetailsForEdit, setDocumentDetailsForEdit] = useState(null);
   const [searchField, setSearchField] = useState("");
   const [searchColumn, setSearchColumn] = useState("Name");
   const dropDownArray = ["Name", "Id", "Creation Date", "modification Date"];
-   const documents =  useSelector(state=>state.documents.documentsList);
-  const getFileIcon = (fileName) => {
+   const documents =  useSelector((state:State)=>state.document.documentsList);
+  const getFileIcon = (fileName:any) => {
     let ext = fileName.split(".").pop();
     ext = ext.toLowerCase();
     switch (ext) {
@@ -50,7 +56,7 @@ const CaseDocuments = () => {
     switch (searchColumn) {
       case "Name":
         return setFilteredDocumentDetails(
-          documentDetails.filter((eachValue) => {
+          documentDetails.filter((eachValue:any) => {
             return eachValue.name
               .toLowerCase()
               .includes(searchField.toLowerCase());
@@ -58,7 +64,7 @@ const CaseDocuments = () => {
         );
       case "Id":
         return setFilteredDocumentDetails(
-          documentDetails.filter((eachValue) => {
+          documentDetails.filter((eachValue:any) => {
             return eachValue.id
               .toString()
               .toLowerCase()
@@ -67,7 +73,7 @@ const CaseDocuments = () => {
         );
       case "Creation Date":
         return setFilteredDocumentDetails(
-          documentDetails.filter((eachValue) => {
+          documentDetails.filter((eachValue:any) => {
             return eachValue.creationdate
               .toString()
               .toLowerCase()
@@ -76,7 +82,7 @@ const CaseDocuments = () => {
         );
       case "modification Date":
         return setFilteredDocumentDetails(
-          documentDetails.filter((eachValue) => {
+          documentDetails.filter((eachValue:any) => {
             return eachValue.modificationdate
               .toString()
               .toLowerCase()
@@ -85,7 +91,7 @@ const CaseDocuments = () => {
         );
       default:
         return setFilteredDocumentDetails(
-          documentDetails.filter((eachValue) => {
+          documentDetails.filter((eachValue:any) => {
             return eachValue.name
               .toLowerCase()
               .includes(searchField.toLowerCase());
@@ -104,8 +110,18 @@ const CaseDocuments = () => {
     filterDocumentDetails();
   }, [searchField]);
 
-  return (
+
+ const  fetchDocumentDetails=(data:any)=>{
+setDocumentDetailsForEdit(data)
+  }
+
+  return (<div className="background">
+    <div className="file-card">
+
     <div>
+           <Upload selectedDMS = "dms1" documentDetailsForEdit={documentDetailsForEdit}  />
+           <div className="case-document-list">
+
       <Grid container spacing={1}>
         <Grid item xs={6}>
           <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6">
@@ -143,7 +159,7 @@ const CaseDocuments = () => {
 
           <TableBody>
             {filteredDocumentDetails &&
-              filteredDocumentDetails.map((documentDetail) => (
+              filteredDocumentDetails.map((documentDetail:DocumentList) => (
                 <TableRow
                   key={documentDetail.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -178,7 +194,7 @@ const CaseDocuments = () => {
                   </TableCell>
                   <TableCell
                     align="left"
-                    className="download-icon"
+                    className="action-icon"
                     onClick={fetchCMISfile(
                       documentDetail.id,
                       documentDetail.dms_provider,false
@@ -186,35 +202,23 @@ const CaseDocuments = () => {
                   >
                     {<DownloadIcon />}
                   </TableCell>
+                  <TableCell
+                    align="left"
+                    onClick={()=>{fetchDocumentDetails(documentDetail)}}
+                  >
+                    <span className="action-icon"> {<EditIcon />}</span>
+                  </TableCell>
+
+                
                 </TableRow>
               ))}
           </TableBody>
         </Table>
       </TableContainer>
 
-      {/* <List
-        sx={{
-          width: "100%",
-          bgcolor: "background.paper",
-        }}
-        component="nav"
-        aria-label="mailbox folders"
-      >
-        {filteredDocumentDetails &&
-          filteredDocumentDetails.map((documentDetail) => (
-            <CaseDocumentCard
-              name={documentDetail.name}
-              size={documentDetail.contentsize}
-              creationDate={documentDetail.creationdate}
-              lastUpdated={documentDetail.modificationdate}
-              id={documentDetail.id}
-              dms_provider={documentDetail.dms_provider}
-              key={documentDetail.id}
-            />
-          ))}
-      </List> */}
+   
     </div>
-  );
+    </div></div></div>);
 };
 
 export default CaseDocuments;
