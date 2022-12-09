@@ -17,7 +17,7 @@ export interface SearchProps{
     caseDescription: string;
     status: string;
  
-  }
+  }  
 
   export interface CustomContent {
     caseCategory: string;
@@ -33,3 +33,18 @@ export interface SearchProps{
     creationdate:string,
     modificationdate:string
   }
+
+  export interface SortValue{
+    value: string;
+    sortOrder: null | boolean;
+  
+  }
+  export interface PropsConfig{
+    title : string,
+    count : number | string,
+    isShowSort :boolean
+  }
+  export interface caseListprops{
+    config:PropsConfig
+  }
+ 
