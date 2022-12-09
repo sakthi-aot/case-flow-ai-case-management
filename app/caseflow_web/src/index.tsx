@@ -4,5 +4,5 @@ import App from "./components/App";
 import { store, history } from "./services/Store";
 import "./styles.scss";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(<App {...{ store, history }} />);
