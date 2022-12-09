@@ -10,8 +10,10 @@ import RecentCasecard from "../RecentCaseCard";
 import { SortCasesByField } from "../../helper/SortCases";
 import "./caselist.scss"
 import { Link, } from "react-router-dom";
+import { caseListprops,  PropsConfig, RecentCase, SortValue } from "../../interfaces/componentInterface";
 
-const allRecentCases = [
+
+const allRecentCases : RecentCase[] = [
   {
     caseID: "1",
     caseDescription: "A CaseSentive",
@@ -39,21 +41,22 @@ const allRecentCases = [
   },
 ];
 
-let  sortingkeysOfAllRecentCases:any[] =[]
+let  sortingkeysOfAllRecentCases:SortValue[] =[]
 for( let field in allRecentCases[0]){
-  sortingkeysOfAllRecentCases = [...sortingkeysOfAllRecentCases,{value:field,sortOrder:true}]
+  // sortingkeysOfAllRecentCases = [...sortingkeysOfAllRecentCases,{value:field,sortOrder:true}]
+  sortingkeysOfAllRecentCases.push({value:field,sortOrder:true})
 }
 
 
-const CaseList =React.memo( (props:any) => {
+const CaseList =React.memo( ({config}:caseListprops) => {
 
   const [sortValue,setSortValue] = useState({value:"",sortOrder:null})
   const [recentCases,setRecentCases] = useState([...allRecentCases])
   const [sortSelectValue,setSortSelectValues] = useState(sortingkeysOfAllRecentCases)
 
   useEffect(()=>{ 
-   const updatedSortedDate = SortCasesByField(sortValue,recentCases)
-   setRecentCases(updatedSortedDate)
+   const updatedSortedData = SortCasesByField(sortValue,recentCases)
+   setRecentCases(updatedSortedData)
   },[sortValue])
 
   const onSortingValueChangeHandler = (e:any) =>{
@@ -78,9 +81,9 @@ const CaseList =React.memo( (props:any) => {
         sx={{ padding: "1rem 1rem 1rem 1rem" }}
         variant="h6"
       >
-        {props.config.title}
+        {config.title}
       </Typography>     
-      { props.config.isShowSort ? <FormControl sx={{ m: 1, minWidth: 120, }}>
+      { config.isShowSort ? <FormControl sx={{ m: 1, minWidth: 120, }}>
         <InputLabel id="demo-simple-select-label">Sorting</InputLabel>
           <Select
             labelId="demo-simple-select-label"

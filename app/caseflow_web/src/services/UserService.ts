@@ -12,7 +12,7 @@ import { _kc } from "../constants/tenantConstant";
  * @param onAuthenticatedCallback
  */
 
-const initKeycloak = (store, ...rest) => {
+const initKeycloak = (store:any, ...rest :any[]) => {
   const done = rest.length ? rest[0] : () => {};
   KeycloakData.init({
     onLoad: "check-sso",
@@ -64,8 +64,9 @@ const initKeycloak = (store, ...rest) => {
     }
   });
 };
-let refreshInterval;
-const refreshToken = (store) => {  
+
+let refreshInterval :any;
+const refreshToken = (store:any) => {  
   refreshInterval = setInterval(() => {
     KeycloakData &&
       KeycloakData.updateToken(5)

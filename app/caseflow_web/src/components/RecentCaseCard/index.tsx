@@ -3,10 +3,13 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import { Card, Typography } from "@mui/material";
-import "./LOBCUstomContentCard.scss"
+import { Typography } from "@mui/material";
+import "./recentCaseCard.scss"
+import { RecentCase } from "../../interfaces/componentInterface";
 
-const LOBCUstomContentCard = ({ caseCategory, district, link }) => {
+
+
+const RecentCaseCard = ({ caseID, caseDescription, status } : RecentCase) => {
   // const caseDate = date.toJSON().slice(0,10).replace(/-/g,'/')
  
   return (
@@ -14,37 +17,37 @@ const LOBCUstomContentCard = ({ caseCategory, district, link }) => {
       <Typography />
       <ListItem button>
         <Grid container spacing={1}>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <ListItemText
               primary={
                 <Typography 
                 variant="body2"
                 style={{ "fontWeight": "700" }}>
-                  Case Category
+                  Case ID
                 </Typography>
               }
-              secondary={caseCategory}
+              secondary={caseID}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <ListItemText
               primary={
                 <Typography
                 variant="body2"
                 
                 style={{ "fontWeight": "700" }}>
-                  District
+                  Case Description
                 </Typography>
               }
-              secondary={district}
+              secondary={caseDescription}
             />
           </Grid>          
-          <Grid item xs={4}>
-          <ListItemText
-             
-              secondary={ <a className="LOB-link" href={link}>Link to the LOB record specific to this case</a>}
-            />
-         
+          <Grid item xs={3}>
+            <div className="recent-case-card-status">
+              <div className="recent-case-card-status-text">
+                {status}
+              </div>
+            </div>
           </Grid>
         </Grid>
       </ListItem>
@@ -53,4 +56,4 @@ const LOBCUstomContentCard = ({ caseCategory, district, link }) => {
   );
 };
 
-export default LOBCUstomContentCard;
+export default RecentCaseCard;

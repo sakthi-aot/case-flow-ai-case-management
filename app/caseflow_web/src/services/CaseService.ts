@@ -6,8 +6,8 @@ import {
   import API from "../apiManager/endpoints";
   
   
-  export const getCases = (documentId) => {
-    return (dispatch) => {
+  export const getCases = (documentId :string) => {
+    return () => {
       const url = API.DMS_API + "download?id=" + documentId;
       httpGETRequest(url)
         .then((res) => {})
