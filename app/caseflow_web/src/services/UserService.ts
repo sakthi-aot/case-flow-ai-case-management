@@ -64,6 +64,7 @@ const initKeycloak = (store:any, ...rest :any[]) => {
     }
   });
 };
+
 let refreshInterval :any;
 const refreshToken = (store:any) => {  
   refreshInterval = setInterval(() => {
