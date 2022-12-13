@@ -29,9 +29,11 @@ const PrivateRoute = React.memo(({store}:any) => {
       console.log(store);
     }
     // UserService.setKeycloakJson(null, (clientId) => {
-    UserService.initKeycloak(store, (res:any) => {     
-      const {token ,userInfo} = res;
-      userInfo.then((res:any)=> res && dispatch(setUserDetails(res)))
+    UserService.initKeycloak(store, (res:any) => {    
+      console.log("inside");
+      console.log("res",res); 
+      const {token ,userInfo} = res|| {};
+      userInfo.then((res:any)=> res  && dispatch(setUserDetails(res)))
       dispatch(setAuthToken(token));
       dispatch(setAuthenticated(true));
       // });

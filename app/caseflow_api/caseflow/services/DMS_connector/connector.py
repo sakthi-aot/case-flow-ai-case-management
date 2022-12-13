@@ -26,7 +26,7 @@ class DMSConnector:
             elif DMS == DMSCode.DMS03.value :
                 #  If the DMS system is Sharepoint following code is executed
 
-                return Sharepoint.doc_upload(document)
+                return Sharepoint.doc_upload(document,content_data)
 
             else :
                 raise Exception('The given DMS is not configured')

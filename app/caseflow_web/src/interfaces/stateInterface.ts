@@ -1,7 +1,7 @@
 export interface State {
   auth: Auth
-  Application: Application
-  document: Document
+  app: Application
+  documents: Document
   Cases: Cases
 }
 

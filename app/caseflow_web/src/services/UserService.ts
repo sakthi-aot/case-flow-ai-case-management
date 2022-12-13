@@ -22,6 +22,7 @@ const initKeycloak = (store:any, ...rest :any[]) => {
     pkceMethod: "S256",
     checkLoginIframe: false,
   }).then((authenticated) => {
+    console.log("authenticated",authenticated);
     if (authenticated) {
       console.log(KeycloakData);
       if (
@@ -48,7 +49,11 @@ const initKeycloak = (store:any, ...rest :any[]) => {
         const email = KeycloakData?.tokenParsed?.email || "external";
         // authenticateFormio(email, roles);
         // onAuthenticatedCallback();
-        done(null, {
+        console.log("UserRoles",UserRoles)
+        console.log("KeycloakData",KeycloakData.token)
+        console.log("userInfo",userInfo)
+        console.log("email",email)
+        done({
           roles: UserRoles,
           token: KeycloakData.token,
           userInfo:userInfo,

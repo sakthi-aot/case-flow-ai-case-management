@@ -4,7 +4,7 @@ import "./Loader.scss";
 import SVG from "../../assets/loading.svg";
 import { State } from "../../interfaces/stateInterface";
 export default function Loader() {
-  const isLoading = useSelector((state:State) => state.Application.isShowLoader);
+  const isLoading = useSelector((state:State) => state.app.isShowLoader);
   return (
     <>
       {isLoading ? (

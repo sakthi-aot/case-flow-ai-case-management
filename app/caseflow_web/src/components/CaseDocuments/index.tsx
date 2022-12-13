@@ -35,7 +35,7 @@ const CaseDocuments = () => {
   const [searchField, setSearchField] = useState("");
   const [searchColumn, setSearchColumn] = useState("Name");
   const dropDownArray = ["Name", "Id", "Creation Date", "modification Date"];
-   const documents =  useSelector((state:State)=>state.document.documentsList);
+   const documents =  useSelector((state:State)=>state.documents.documentsList);
   const getFileIcon = (fileName:any) => {
     let ext = fileName.split(".").pop();
     ext = ext.toLowerCase();
