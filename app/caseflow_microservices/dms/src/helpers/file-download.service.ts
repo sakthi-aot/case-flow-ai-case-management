@@ -4,15 +4,14 @@ import { Injectable } from '@nestjs/common';
 import { AmazonS3Service } from './amazon-s3.service';
 
 @Injectable()
-export class FileUploadService {
+export class FileDownloadService {
   constructor(private readonly s3Service: AmazonS3Service) {}
 
-  // summery : Upload File to crespective DMS 
-  // Created By : Don C Varghese
-  async uploadFile(file, fileName, dms) {
+
+  async downloadFile(documentId, dms) {
     switch (dms) {
       case '1': {
-        return await this.s3Service.uploadDocument(file, fileName);
+        return await this.s3Service.getDocument(documentId);
       }
     }
   }
