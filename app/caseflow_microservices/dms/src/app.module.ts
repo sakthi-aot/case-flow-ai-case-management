@@ -7,9 +7,9 @@ import { ConfigModule } from '@nestjs/config';
 //_____________________Custom Imports_____________________//
 import { DocumentsModule } from './documents/documents.module';
 import { HelpersModule } from './helpers/helpers.module';
-
+import {HttpModule} from  '@nestjs/axios'
 @Module({
-  imports: [
+  imports: [HttpModule,
     DocumentsModule,
     HelpersModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({

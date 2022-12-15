@@ -25,6 +25,7 @@ export class DmsController {
   async uploadDocument(
     @UploadedFile() file: Express.Multer.File, @Body() body
   ): Promise<any> {
-    return this.dmsService.uploadDocument(file.buffer, body);
+    console.log(body)
+    return this.dmsService.uploadDocument(file, body);
   }
 }
