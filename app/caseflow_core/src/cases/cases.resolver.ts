@@ -15,7 +15,7 @@ export class CasesResolver {
 
   @Query((returns) => [Cases])
   getCase(@Args('id', { type: () => Int }) id: number): Promise<Cases> {
-    return this.casesService.findOne({ id });
+    return this.casesService.findOne( id );
   }
   @Query((returns) => [Cases])
   case(): Promise<Cases[]> {
@@ -33,7 +33,7 @@ export class CasesResolver {
 
   @Mutation(() => Cases)
   updateCases(@Args('cases') updateCaseInput: UpdateCaseInput) {
-    return this.casesService.update(updateCaseInput.id, updateCaseInput);
+    return this.casesService.updateCase(updateCaseInput.id, updateCaseInput);
   }
 
   @Mutation(() => Cases)

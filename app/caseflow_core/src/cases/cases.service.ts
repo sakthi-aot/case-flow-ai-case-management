@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException,BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -6,6 +6,8 @@ import { Repository } from 'typeorm';
 import { Cases } from './cases.entity';
 import { CreateCaseInput } from './dto/create-case.input';
 import { UpdateCaseInput } from './dto/update-case.input';
+import { HttpStatus } from '@nestjs/common/enums';
+import { HttpException } from '@nestjs/common/exceptions';
 
 @Injectable()
 export class CasesService {
@@ -26,18 +28,28 @@ export class CasesService {
     }
   }
 
-  async findOne({ id }: { id: number }): Promise<Cases> {
-    return this.caseRepository.findOne({
-      where: {
-        id: id,
-      },
-    });
+  async findOne(id: number): Promise<Cases> {
+      if(id){
+        const value = await this.caseRepository.findOne({
+          where: {
+            id: id,
+          },
+        });
+        if(value)return value
+        throw new NotFoundException(`Record cannot find by id ${id}`);
+      }
+      throw new BadRequestException("request doesn't have any id")
+
   }
 
-  async update(id: number, updateCaseInput: UpdateCaseInput) {
-    let cases: Cases = this.caseRepository.create(updateCaseInput);
-    cases.id = id;
-    return this.caseRepository.save(cases);
+  async updateCase(id: number, updateCaseInput: UpdateCaseInput) {
+    return await this.caseRepository
+      .update(id, updateCaseInput)
+      .then(() => {
+        return this.findOne(id).catch((err)=>{
+          throw new HttpException(err.response, HttpStatus.NOT_FOUND)
+        });
+      })
   }
 
   async remove(id: number) {

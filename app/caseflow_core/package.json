@@ -26,6 +26,7 @@
     "@apollo/subgraph": "^2.2.1",
     "@nestjs/apollo": "^10.1.6",
     "@nestjs/common": "^9.0.0",
+    "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/graphql": "^10.1.6",
     "@nestjs/microservices": "^9.2.1",
