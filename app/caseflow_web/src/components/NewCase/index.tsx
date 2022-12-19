@@ -5,10 +5,29 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import { Controller, useForm } from "react-hook-form";
 import Divider from "@mui/material/Divider";
+import {Case} from "../../dto/cases"
+import { addCases } from "../../services/CaseService";
+import {useDispatch} from "react-redux";
+import { useNavigate } from "react-router";
 
 const NewCase = () => {
   const { handleSubmit, reset, control,register } = useForm();
-  const onSubmit = (data:any) => console.log(data);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const onSubmit = (data:any) => 
+  {
+    console.log("data",data)
+    const caseData:Case|void = new Case();
+    caseData.name = data.name;
+    caseData.statusid = 1;
+    addCases(caseData);
+    // const caseData:Case|void = new Case();
+    // caseData.name = data.name;
+    // caseData.statusid = 1;
+    // dispatch(addCases(caseData)).unwrap();
+    // navigate("/cases/create");
+  }
+
 
 
   return (
@@ -76,35 +95,7 @@ const NewCase = () => {
       />          
         </Grid>
       </Grid>
-      <Grid container spacing={1} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
-        <Grid item xs={4}>
-          <Typography sx={{ padding: "1rem 1rem 0rem 0rem" }} variant="body2">
-            Attach Documents :
-          </Typography>
-        </Grid>
-        <Grid item xs={8}>
-          <input type="file" id="actual-btn" {...register("file")} hidden />
 
-          <Button
-            style={{
-              width: "100%",
-              height: "3.4375rem",
-              border:"1px solid #404040"
-            }}
-            variant="outlined"
-          >
-            <label
-              htmlFor="actual-btn"
-              style={{
-                width: "100%",
-                color:"#404040"
-              }}
-            >
-              Choose File
-            </label>
-          </Button>
-        </Grid>
-      </Grid>
       <div style={{"display" : "flex", padding: "2rem 1rem 1rem 1rem"}}>
           <Button
             style={{

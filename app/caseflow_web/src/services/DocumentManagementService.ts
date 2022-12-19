@@ -2,7 +2,7 @@ import {
   httpGETRequest,
 
 } from "../apiManager/httpRequestHandler";
-import API from "../apiManager/endpoints";
+import {API} from "../apiManager/endpoints";
 
 // export const getDocumetById = (documentId) => {
 //   return (dispatch) => {

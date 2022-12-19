@@ -3,7 +3,7 @@ import {
   httpPOSTRequest,
   httpPUTRequest,
 } from "../../apiManager/httpRequestHandler";
-import API from "../endpoints/index";
+import {API} from "../endpoints/index";
 // import fs from 'fs';
 
 export const fetchCMISfile = (documentId,DMS,newTab = true) => {
