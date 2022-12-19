@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { ApolloDriver, ApolloDriverConfig, ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 
@@ -38,8 +38,8 @@ const keyCloakOptionsProvider =  {
     DmsModule,
     CasesModule,
     KeycloakConnectModule.registerAsync(keyCloakOptionsProvider),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      driver: ApolloDriver,
+    GraphQLModule.forRoot<ApolloFederationDriverConfig>({
+      driver: ApolloFederationDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     TypeOrmModule.forRoot({
@@ -60,10 +60,10 @@ const keyCloakOptionsProvider =  {
       provide: APP_GUARD,
       useClass: AuthGuard,
      },
-    {
-      provide: APP_GUARD,
-      useClass: RoleGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: RoleGuard,
+    // },
   ],
 
 })
