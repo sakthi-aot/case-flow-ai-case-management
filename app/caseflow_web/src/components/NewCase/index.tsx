@@ -9,18 +9,23 @@ import {Case} from "../../dto/cases"
 import { addCases } from "../../services/CaseService";
 import {useDispatch} from "react-redux";
 import { useNavigate } from "react-router";
+import { ToastContainer, toast } from "react-toastify";
 
 const NewCase = () => {
   const { handleSubmit, reset, control,register } = useForm();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const onSubmit = (data:any) => 
+  const onSubmit = async (data:any) => 
   {
     console.log("data",data)
     const caseData:Case|void = new Case();
     caseData.name = data.name;
     caseData.statusid = 1;
-    addCases(caseData);
+    const response = await addCases(caseData);
+    console.log(response);
+    // if(response)
+    // if (response && response.data && response.data.status == "success") {
+    //   toast.success("Success");
+    //   }
+    //  else{ toast.error("Error");}
     // const caseData:Case|void = new Case();
     // caseData.name = data.name;
     // caseData.statusid = 1;

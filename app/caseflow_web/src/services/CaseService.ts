@@ -32,7 +32,7 @@ import {
     };
   };
   
-  export const addCases = (newCase: Case) => {
+  export const addCases = async(newCase: Case) => {
 
       console.log("data11",newCase)
       const url =  GRAPHQL;
@@ -44,7 +44,9 @@ import {
           },
         },
       },null)
-        .then((res) => {})
+        .then((res) => {
+          return {"success" : res};
+        })
         .catch((error) => {
           if (error?.response?.data) {
             return({"error" : error})
