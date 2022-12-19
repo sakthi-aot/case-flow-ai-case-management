@@ -1,0 +1,28 @@
+# Author: Shibin Thomas
+version: "3.7"
+
+services:
+  keycloak:
+    image: jboss/keycloak:latest
+    restart: unless-stopped
+    container_name: keycloak
+    volumes:
+      - ./imports:/opt/jboss/keycloak/imports
+      - ./themes/caseflow:/opt/jboss/keycloak/themes/caseflow
+      
+    command: 
+      - "-b 0.0.0.0 -Dkeycloak.import=/opt/jboss/keycloak/imports/caseflow-realm.json -Dkeycloak.migration.strategy=OVERWRITE_EXISTING"
+    environment:
+      - DB_VENDOR=POSTGRES
+      - DB_ADDR=caseflowdev.ccizdidwz3tj.ca-central-1.rds.amazonaws.com
+      - DB_PORT=5432
+      - DB_DATABASE=${KEYCLOAK_JDBC_DB:-keycloak}
+      - DB_USER=${KEYCLOAK_JDBC_USER:-postgres}
+      - DB_PASSWORD=${KEYCLOAK_JDBC_PASSWORD:-0DhoxLWL5HlS27WjLkUL}
+      - KEYCLOAK_USER=${KEYCLOAK_ADMIN_USER:-admin}
+      - KEYCLOAK_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD:-changeme}
+      - PROXY_ADDRESS_FORWARDING=true
+    ports:
+      - 8085:8080
+
+   

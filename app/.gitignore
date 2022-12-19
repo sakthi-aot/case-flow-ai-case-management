@@ -5,3 +5,6 @@ caseflow_dms/data
 *.pyc
 *.pyc
 caseflow_api/venv
+caseflow_api/postgres
+caseflow_api/migrations
+caseflow-graphql-server/*
