@@ -10,23 +10,23 @@ class DMSConnector:
     """This class manages the connecton various DMS system with the API"""
 
     @staticmethod
-    def doc_upload_connector(document, DMS) -> Dict:
+    def doc_upload_connector(document, DMS,content_data) -> Dict:
         # DMS connector for the document upload API
         try :
             if DMS == DMSCode.DMS01.value :
                 #  If the DMS system is alfresco following code is executed
 
-                return Alfresco.doc_upload(document)
+                return Alfresco.doc_upload(document,content_data)
 
             elif DMS == DMSCode.DMS02.value :
                 #  If the DMS system is S3 following code is executed
 
-                return S3.doc_upload(document)
+                return S3.doc_upload(document,content_data)
 
             elif DMS == DMSCode.DMS03.value :
                 #  If the DMS system is Sharepoint following code is executed
 
-                return Sharepoint.doc_upload(document)
+                return Sharepoint.doc_upload(document,content_data)
 
             else :
                 raise Exception('The given DMS is not configured')

@@ -9,7 +9,8 @@ import API from "../endpoints/index";
 export const fetchCMISfile = (documentId,DMS,newTab = true) => {
   return (dispatch) => {
     const downloadURL = API.DMS_API + "/dms" + DMS + "/download";
-
+    
+    console.warn(downloadURL)
     httpGETBolbRequest(downloadURL, { id: documentId ,"DMS" :DMS})
       .then((response) => {
         const downloadUrl = window.URL.createObjectURL(
@@ -47,8 +48,9 @@ export const fetchCMISfile = (documentId,DMS,newTab = true) => {
 };
 
 //uploadCMISfile is used to send and save  files into the cmis server
-export const uploadCMISfile = async (file,fileName,description,DMS) => { 
-    const uploadURL = API.DMS_API + "/"+ DMS.toLowerCase() + "/upload";
+export const uploadCMISfile = async (file,fileName,description,DMS,metaData) => { 
+  console.warn(metaData)
+    const uploadURL = API.DMS_API + "/dms"+ DMS + "/upload";
     let formData = {
       "upload": file,
       "name": fileName ? fileName : file.name,
@@ -56,7 +58,9 @@ export const uploadCMISfile = async (file,fileName,description,DMS) => {
       "cm:title": "My text",
       "cm:description": description,
       "relativePath": "Uploads",
-      "DMS" : DMS
+      "DMS" : DMS,
+      "metaData" : metaData
+
     };
     let bodyFormData = new FormData(); 
     for (let key in formData) {           //converts the javascript object into FormData type
@@ -87,7 +91,7 @@ export const uploadCMISfile = async (file,fileName,description,DMS) => {
 
 
 export const updateCMISdocument = (id,file,fileName,description,DMS) =>{      
-    const updateURL = API.DMS_API + "/"+ DMS.toLowerCase() + "/update";
+    const updateURL = API.DMS_API + "/dms"+ DMS + "/update";
     let formData = {
       "upload": file,
       "id":id,
