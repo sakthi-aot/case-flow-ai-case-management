@@ -47,7 +47,17 @@ export class TransformService {
   transformAlfresco = (type, document, data) => {
     switch (type) {
       case 'CREATE':
-        return {};
+        return {
+
+          documentref: document.entry.id,
+          desc: data.desc,
+          addedbyuserid: data.addedbyuserid,
+          creationdate: new Date(),
+          dmsprovider: 1,
+          latestversion: document.entry.properties['cm:versionLabel'],
+          isdeleted: false,
+
+        };
 
       case 'UPDATE':
         return {};
@@ -76,10 +86,12 @@ export class TransformService {
         return this.transformS3(type, document, data);
 
       case '2':
-        return this.transformAlfresco(type, document, data);
+          return this.transformSharepoint(type, document, data);
 
       case '3':
-        return this.transformSharepoint(type, document, data);
+        return this.transformAlfresco(type, document, data);
+
+     
     }
   };
 }

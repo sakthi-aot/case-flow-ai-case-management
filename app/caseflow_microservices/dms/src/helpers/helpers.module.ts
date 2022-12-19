@@ -4,10 +4,9 @@ import { HttpModule } from '@nestjs/axios';
 //_____________________Custom Imports_____________________//
 import { TransformService } from './transform.service';
 import { AmazonS3Service } from './amazon-s3.service';
-import { FileUploadService } from './file-upload.service';
+import { FileService } from './file.service';
 import { AlfrescoService } from './alfresco.service';
-import {FileDownloadService} from './file-download.service'
-import { FileDeleteService } from './file-delete-service ';
+
 
 @Module({
   imports:[HttpModule],
@@ -15,11 +14,9 @@ import { FileDeleteService } from './file-delete-service ';
     TransformService,
     AmazonS3Service,
     ConfigService,
-    FileUploadService,
+    FileService,
     AlfrescoService,
-    FileDownloadService,
-    FileDeleteService
   ],
-  exports: [TransformService, AmazonS3Service, FileUploadService,AlfrescoService,FileDownloadService, FileDeleteService],
+  exports: [TransformService, AmazonS3Service, FileService,AlfrescoService,],
 })
 export class HelpersModule {}

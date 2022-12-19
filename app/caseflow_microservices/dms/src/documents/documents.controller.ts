@@ -1,21 +1,18 @@
-import { Body, Controller, Post, UploadedFile, UseInterceptors,Delete, Get, Patch,NotFoundException } from '@nestjs/common';
+import { Body, Controller, Post, UploadedFile, UseInterceptors,Delete, Get, Patch,NotFoundException, Put } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 //_____________________Custom Imports_____________________//
 import { TransformService } from 'src/helpers/transform.service';
-import { FileUploadService } from '../helpers/file-upload.service';
-import { FileDownloadService } from 'src/helpers/file-download.service';
-import { FileDeleteService } from 'src/helpers/file-delete-service ';
+import { FileService } from '../helpers/file.service';
+
 
 import { DocumentsService } from './documents.service';
 import { Express } from 'express';
 @Controller('documents')
 export class DocumentsController {
   constructor(
-    private readonly fileUpload: FileUploadService,
-    private readonly FileDownload: FileDownloadService,
-    private readonly FileDelete: FileDeleteService,
+    private readonly fileService: FileService,
     private helper: TransformService,
     private documentService: DocumentsService,
   ) {}
@@ -24,35 +21,35 @@ export class DocumentsController {
   // @UseInterceptors(FileInterceptor('file'))
   async uploadDocument(data) {
    
-    let documentDetails = await this.fileUpload.uploadFile(data.file, data, data.dmsprovider);
+    let documentDetails = await this.fileService.uploadFile(data.file, data, data.dmsprovider);
     // console.log(documentDetails)
-    let document: any = this.helper.transform(
+    let formattedDocument: any = this.helper.transform(
       data.dmsprovider,
       'CREATE',
       documentDetails,
       data,
     );
-    console.log('document', document);
-    return this.documentService.createDocument(document);
+    console.log('document', formattedDocument);
+    return this.documentService.createDocument(formattedDocument);
   }
 
-  @Patch()
+  @Put()
   @MessagePattern({ cmd: 'edit_document' })
   async editDocument(data) {
     try {
-      const field = await this.documentService.findOne(parseInt(data.id));
-      let docname: string = field.name;
-      if(!field.isdeleted) {
-        let documentDetails = await (data.file && docname && data.dmsprovider
-          ? this.fileUpload.uploadFile(data.file, docname, data.dmsprovider)
+      const document = await this.documentService.findOne(parseInt(data.id));
+ 
+      if(!document.isdeleted) {
+        let documentDetails = await (data.file && document && data.dmsprovider
+          ? this.fileService.updateFile(data.file, data,document, data.dmsprovider,)
           : null);
-        let document: any = this.helper.transform(
+        let formattedDocument: any = this.helper.transform(
           data.dmsprovider,
           'UPDATE',
           documentDetails,
           data,
         );
-        console.log('document', document);
+        console.log('document', formattedDocument);
         return this.documentService.update(data.id, document);
       }
       else {
@@ -71,7 +68,7 @@ export class DocumentsController {
       const id = await (
         await this.documentService.findOne(parseInt(param.id))
       ).documentref;
-      return this.FileDownload.downloadFile(id, param.dms);
+      return this.fileService.downloadFile(id, param.dms);
     } catch (error) {
       console.log(error.message);
     }
@@ -83,7 +80,7 @@ export class DocumentsController {
     try {
       let field = await this.documentService.findOne(parseInt(param.id));
       field.isdeleted = true;
-      return this.FileDelete.deleteFile(field.documentref, param.dms).then(
+      return this.fileService.deleteFile(field.documentref, param.dms).then(
         () => {
           return this.documentService.update(param.id, field);
         },

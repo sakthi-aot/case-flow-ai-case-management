@@ -8,6 +8,7 @@ import {
   Patch,
   Query,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
@@ -34,7 +35,7 @@ export class DmsController {
     return this.dmsService.uploadDocument(file, body);
   }
 
-    @Patch()
+    @Put()
     @UseInterceptors(FileInterceptor('file'))
     async editDocument(
       @UploadedFile() file: Express.Multer.File, @Body() body
