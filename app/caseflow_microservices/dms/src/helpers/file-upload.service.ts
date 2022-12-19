@@ -10,10 +10,10 @@ export class FileUploadService {
 
   // Summary : Upload File to crespective DMS 
   // Created By : Don C Varghese
-  async uploadFile(file, data, dms) {
+  async uploadFile(file, fileName, dms) {
     switch (dms) {
       case '1': {
-        return await this.s3Service.uploadDocument(file, data.fileName);
+        return await this.s3Service.uploadDocument(file, fileName);
       }
       case '3': {
         return await this.alfrescoService.uploadDocument(file, data);

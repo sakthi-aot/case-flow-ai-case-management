@@ -13,7 +13,7 @@ export class TransformService {
       case 'CREATE':
         try{
           return {
-            caseid: data.caseid,
+            caseid: parseInt(data.caseid),
             documentref: document.key,
             name: data.name,
             desc: data.desc,
@@ -30,7 +30,15 @@ export class TransformService {
         
 
       case 'UPDATE':
-        return {};
+        return {
+          documentref: document.key,
+          desc: data.desc,
+          addedbyuserid: data.addedbyuserid,
+          creationdate: new Date(),
+          dmsprovider: 1,
+          latestversion: document.VersionId,
+          isdeleted: false,
+        };
     }
   };
 
