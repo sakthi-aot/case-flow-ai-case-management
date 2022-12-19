@@ -93,7 +93,7 @@ export class AlfrescoService {
       
       }));
       console.log("response",response)
-      return response;
+      return response.data;
     }
     catch(err){
     console.log(err);

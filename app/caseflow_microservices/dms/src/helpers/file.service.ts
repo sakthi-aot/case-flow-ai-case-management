@@ -42,7 +42,7 @@ export class FileService {
         return await this.s3Service.getDocument(documentId);
       }
       case '3': {
-        return await this.s3Service.getDocument(documentId);
+        return await this.alfrescoService.getDocument(documentId);
       }
     }
   }
