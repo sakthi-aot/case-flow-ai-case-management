@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException,BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { AuthGuard, RoleGuard, RoleMatchingMode, Roles, Unprotected } from 'nest-keycloak-connect';
 
 //_____________________Custom Imports_____________________//
 import { Cases } from './cases.entity';
@@ -19,6 +20,7 @@ export class CasesService {
     return this.caseRepository.find();
   }
 
+  // @Roles({ roles: ['manage-account'], mode: RoleMatchingMode.ANY })
   async createCase(createCaseInput: CreateCaseInput): Promise<Cases> {
     try {
       const newCase = this.caseRepository.create(createCaseInput);

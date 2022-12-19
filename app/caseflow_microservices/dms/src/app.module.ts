@@ -3,13 +3,42 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
+
+import {
+  AuthGuard,KeycloakConnectModule,
+  PolicyEnforcementMode,
+  ResourceGuard,
+  RoleGuard,
+} from 'nest-keycloak-connect';
+import { ConfigModule,ConfigService } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
+
+
+
+
 //_____________________Custom Imports_____________________//
 import { DocumentsModule } from './documents/documents.module';
 import { HelpersModule } from './helpers/helpers.module';
 
+const keyCloakOptionsProvider =  {
+  provide: 'keyCloakDataProvider',
+  useFactory: (config: ConfigService) => {
+    return {
+      authServerUrl: config.get('KEYCLOCK_AUTH_URL'),
+      realm: config.get('KEYCLOCK_REALM'),
+      clientId: config.get('KEYCLOCK_CLIENT_ID'),
+      secret: config.get('KEYCLOAK_CLIENT_SECRET')
+    }
+  },
+  inject: [ ConfigService],
+};
+
+
 @Module({
-  imports: [
+  imports: [ConfigModule.forRoot({
+    isGlobal: true,
+  }),
+  KeycloakConnectModule.registerAsync(keyCloakOptionsProvider),
     DocumentsModule,
     HelpersModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -30,6 +59,14 @@ import { HelpersModule } from './helpers/helpers.module';
     ConfigModule.forRoot(),
   ],
   controllers: [],
-  providers: [],
-})
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+     },
+    {
+      provide: APP_GUARD,
+      useClass: RoleGuard,
+    },
+  ],})
 export class AppModule {}
