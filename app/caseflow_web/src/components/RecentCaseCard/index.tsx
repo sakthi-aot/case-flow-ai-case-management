@@ -6,6 +6,8 @@ import Grid from "@mui/material/Grid";
 import { Typography } from "@mui/material";
 import "./recentCaseCard.scss"
 import { RecentCase } from "../../interfaces/componentInterface";
+import { Link, } from "react-router-dom";
+
 
 
 
@@ -14,6 +16,8 @@ const RecentCaseCard = ({ caseID, caseDescription, status } : RecentCase) => {
  
   return (
     <div>
+      <Link key={caseID} to={'/private/cases/' + caseID+'/details'} style={{ textDecoration: 'none' ,color:'#404040'}}>
+
       <Typography />
       <ListItem button>
         <Grid container spacing={1}>
@@ -52,6 +56,8 @@ const RecentCaseCard = ({ caseID, caseDescription, status } : RecentCase) => {
         </Grid>
       </ListItem>
       <Divider />
+      </Link>
+
     </div>
   );
 };

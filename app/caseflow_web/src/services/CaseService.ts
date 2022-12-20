@@ -56,3 +56,22 @@ import {
         });
    
   };
+
+  export const getCasesList = async () => {
+     
+    const url = GRAPHQL;
+    const  output =  await httpGETRequest(url,{query: print(FETCH_CASES),
+      variables: {
+      },
+    },null)
+      .then((res) => {return res})
+      .catch((error) => {
+        if (error?.response?.data) {
+          return({"error" : error})
+        } else {
+          return({"error" : "something went wrong"})
+        }
+      });
+    return output?.data.data.case
+    
+  };
