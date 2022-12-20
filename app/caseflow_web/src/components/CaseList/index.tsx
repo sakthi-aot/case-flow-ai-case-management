@@ -54,10 +54,10 @@ const CaseList =React.memo( ({config}:caseListprops) => {
   const [recentCases,setRecentCases] = useState([...allRecentCases])
   const [sortSelectValue,setSortSelectValues] = useState(sortingkeysOfAllRecentCases)
 
-  useEffect(()=>{ 
-   const updatedSortedData = SortCasesByField(sortValue,recentCases)
-   setRecentCases(updatedSortedData)
-  },[sortValue])
+  // useEffect(()=>{ 
+  //  const updatedSortedData = SortCasesByField(sortValue,recentCases)
+  //  setRecentCases(updatedSortedData)
+  // },[sortValue])
 
   const onSortingValueChangeHandler = (e:any) =>{
     let tempSelectedValue = e.target.value;
@@ -110,7 +110,7 @@ const CaseList =React.memo( ({config}:caseListprops) => {
         aria-label="mailbox folders"
       >
          
-        {recentCases.map((eachcases) => (
+        {/* {recentCases.map((eachcases) => (
           <Link key={eachcases.caseID} to={'/private/cases/' + eachcases.caseID+'/details'} style={{ textDecoration: 'none' ,color:'#404040'}}>
           <RecentCasecard
             caseID={eachcases.caseID}
@@ -119,7 +119,9 @@ const CaseList =React.memo( ({config}:caseListprops) => {
             key={eachcases.caseID}            
           />
           </Link>
-        ))}
+        ))} */}
+
+<RecentCasecard caseDetails={recentCases}/>
       </List>
     </div>
   );
