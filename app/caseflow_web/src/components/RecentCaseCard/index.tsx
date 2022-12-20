@@ -1,88 +1,108 @@
-import React, { useState } from "react";
+
+import { React,useEffect, useState } from "react";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import { Typography } from "@mui/material";
 import "./recentCaseCard.scss"
 import { RecentCase } from "../../interfaces/componentInterface";
-import { editCaseDetails } from "../../services/CaseService";
+import { Link, } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
-import Paper from "@mui/material/Paper";
-import { Case } from "../../dto/cases";
+import { updateCases } from "../../services/CaseService";
+import { useDispatch } from "react-redux";
+import { setSelectedCase } from "../../reducers/newCaseReducer";
+import { useNavigate } from "react-router-dom";
 
-const RecentCaseCard = () => {
-const [caseDetails, setCaseDetails] = useState([]);
+
+const RecentCaseCard = ({ caseID,caseName, caseDescription, status } : RecentCase) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   // const caseDate = date.toJSON().slice(0,10).replace(/-/g,'/')
- 
+  // const  fetchDocumentDetails=(caseid,casedesc)=>{
+  //   setDocumentDetailsForEdit({
+  //     caseid:caseid,
+  //     casedesc:casedesc
+  //   })
+  //     }
+
+
+       // to fetch the case list and set the state of cases 
+  // useEffect(() => {
+  //   fetchDocumentDetails();
+  // }, []);
+  
+ const fetchDocumentDetails=(caseid,casename,casedesc)=> {
+    const output =  {
+      caseid :caseid,
+      casename:casename,
+      casedesc:casedesc,
+
+      };
+      dispatch(setSelectedCase(output));
+      navigate("/private/cases/create");
+    }
+   
+   
   return (
     <div>
+     
 
-
-<Divider sx={{ borderBottomWidth: 3 }} />
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow
-              sx={{
-                "& th": {
-                  fontWeight: "bold",
-                },
-              }}
-            >
-              <TableCell>Id</TableCell>
-              <TableCell align="left">Name</TableCell>
-              <TableCell align="left">Description</TableCell>
-              <TableCell align="left">Status</TableCell>
-              <TableCell align="left">Edit </TableCell>
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {caseDetails &&
-              caseDetails.map((caseDetail:Case) => (
-                <TableRow
-                  key={caseDetail.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {caseDetail.id}
-                  </TableCell>
-            
-                  <TableCell align="left">
-                    {caseDetail.description}
-                  </TableCell>
-                  <TableCell align="left">
-                    {caseDetail.description}
-                  </TableCell>
-                
-                 
-                  <TableCell
-                    align="left"
-                    onClick={()=>{}}
-                  >
-                    <span className="action-icon"> {<EditIcon />}</span>
-                  </TableCell>
-
-                
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-
-
-    
-      <Divider />
-    </div>
-  
-  );
+      <Typography />
+      <ListItem button>
+        <Grid container spacing={1}>
+          <Grid item xs={3}>
+            <ListItemText
+              primary={
+                <Typography 
+                variant="body2"
+                style={{ "fontWeight": "700" }}>
+                  Case ID
+                </Typography>
               }
+              secondary={caseID}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <ListItemText
+              primary={
+                <Typography
+                variant="body2"
+                
+                style={{ "fontWeight": "700" }}>
+                  Case Description
+                </Typography>
+              }
+              secondary={caseDescription}
+            />
+          </Grid>   
+           
+          {/*  <Link key={caseID} to={'/private/cases/' + caseID+'/details'} style={{ textDecoration: 'none' ,color:'#404040'}}>      */}
+          <Grid item xs={3}>
+            <div className="recent-case-card-status">
+              <div className="recent-case-card-status-text">
+                {status}
+              </div>
+            </div>  
+            {/* </Link> */}
+          </Grid>
+        
+          <Grid item xs={2}>
+          <div onClick={()=>{fetchDocumentDetails({caseID},{caseName},{caseDescription})}}>  
+              <span className="action-icon"> {<EditIcon />}</span>
+              </div>
+           
+          </Grid>
+        </Grid>
+      </ListItem>
+      <Divider />
+     
+
+    </div>
+  );
+};
 
 export default RecentCaseCard;
+
+

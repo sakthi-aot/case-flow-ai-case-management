@@ -9,69 +9,73 @@ import Divider from "@mui/material/Divider";
 import RecentCasecard from "../RecentCaseCard";
 import { SortCasesByField } from "../../helper/SortCases";
 import "./caselist.scss"
-import { Link, } from "react-router-dom";
 import { caseListprops,  PropsConfig, RecentCase, SortValue } from "../../interfaces/componentInterface";
+import { getCasesList } from "../../services/CaseService";
+import { setCaseList } from "../../reducers/newCaseReducer";
+import {useSelector,useDispatch} from "react-redux";
 
 
-const allRecentCases : RecentCase[] = [
-  {
-    caseID: "1",
-    caseDescription: "A CaseSentive",
-    status: "open",    
-  },
-  {
-    caseID: "3",
-    caseDescription: "lorems",
-    status: "Pending Approval",    
-  },
-  {
-    caseID: "2",
-    caseDescription: "Bust New",
-    status: "Pending Approval",    
-  },
-  {
-    caseID: "9",
-    caseDescription: "new And fresh",
-    status: "Pending Approval",    
-  },
-  {
-    caseID: "5",
-    caseDescription: "Finished",
-    status: "Pending Approval",    
-  },
-];
 
-let  sortingkeysOfAllRecentCases:SortValue[] =[]
-for( let field in allRecentCases[0]){
-  // sortingkeysOfAllRecentCases = [...sortingkeysOfAllRecentCases,{value:field,sortOrder:true}]
-  sortingkeysOfAllRecentCases.push({value:field,sortOrder:true})
-}
+
+
+
+// let  sortingkeysOfAllRecentCases:SortValue[] =[]
+// for( let field in allRecentCases[0]){
+//   // sortingkeysOfAllRecentCases = [...sortingkeysOfAllRecentCases,{value:field,sortOrder:true}]
+//   sortingkeysOfAllRecentCases.push({value:field,sortOrder:true})
+// }
 
 
 const CaseList =React.memo( ({config}:caseListprops) => {
 
-  const [sortValue,setSortValue] = useState({value:"",sortOrder:null})
-  const [recentCases,setRecentCases] = useState([...allRecentCases])
-  const [sortSelectValue,setSortSelectValues] = useState(sortingkeysOfAllRecentCases)
+
+  // const [sortValue,setSortValue] = useState({value:"",sortOrder:null})
+  // const [recentCases,setRecentCases] = useState([...allRecentCases])
+  // const [sortSelectValue,setSortSelectValues] = useState(sortingkeysOfAllRecentCases)
+  const dispatch = useDispatch();
+  const allRecentCases =  useSelector(state=>state.cases.caseList);
 
   // useEffect(()=>{ 
   //  const updatedSortedData = SortCasesByField(sortValue,recentCases)
   //  setRecentCases(updatedSortedData)
   // },[sortValue])
 
-  const onSortingValueChangeHandler = (e:any) =>{
-    let tempSelectedValue = e.target.value;
+  // const onSortingValueChangeHandler = (e:any) =>{
+  //   let tempSelectedValue = e.target.value;
 
-    const updatedSortValueState =sortSelectValue.map(sortValue =>{
-      if(sortValue.value === tempSelectedValue){
-        let sortedDummyvalue = {value:tempSelectedValue,sortOrder:!sortValue.sortOrder}
-        tempSelectedValue = sortedDummyvalue
-         return sortedDummyvalue
-        }else return sortValue
+  //   const updatedSortValueState =sortSelectValue.map(sortValue =>{
+  //     if(sortValue.value === tempSelectedValue){
+  //       let sortedDummyvalue = {value:tempSelectedValue,sortOrder:!sortValue.sortOrder}
+  //       tempSelectedValue = sortedDummyvalue
+  //        return sortedDummyvalue
+  //       }else return sortValue
       
-    }) 
-    setSortSelectValues(updatedSortValueState) 
-    setSortValue(tempSelectedValue)    
+  //   }) 
+  //   setSortSelectValues(updatedSortValueState) 
+  //   setSortValue(tempSelectedValue)    
+  // }
+
+
+ // to fetch the case list and set the state of cases 
+  useEffect(() => {
+    fetchDocumentDetails();
+  }, []);
+  
+  async function fetchDocumentDetails() {
+    let output = await getCasesList();
+    console.log(output)
+
+    output = output.map((element) => {
+      return {
+        id :element.id,
+        name:element.name,
+        description:element.desc,
+        status:'open'    //need to change in future
+      };
+    });
+    dispatch(setCaseList(output))
+
+
   }
   
   return (
@@ -83,7 +87,7 @@ const CaseList =React.memo( ({config}:caseListprops) => {
       >
         {config.title}
       </Typography>     
-      { config.isShowSort ? <FormControl sx={{ m: 1, minWidth: 120, }}>
+      {/* { config.isShowSort ? <FormControl sx={{ m: 1, minWidth: 120, }}>
         <InputLabel id="demo-simple-select-label">Sorting</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -97,7 +101,7 @@ const CaseList =React.memo( ({config}:caseListprops) => {
             })}
            
          </Select>
-        </FormControl> : "" }
+        </FormControl> : "" } */}
       </span>
       <Divider sx={{ borderBottomWidth: 3 }} />
 
@@ -110,18 +114,15 @@ const CaseList =React.memo( ({config}:caseListprops) => {
         aria-label="mailbox folders"
       >
          
-        {/* {recentCases.map((eachcases) => (
-          <Link key={eachcases.caseID} to={'/private/cases/' + eachcases.caseID+'/details'} style={{ textDecoration: 'none' ,color:'#404040'}}>
+        {allRecentCases.map((eachcases) => (
           <RecentCasecard
-            caseID={eachcases.caseID}
-            caseDescription={eachcases.caseDescription}
+            caseID={eachcases.id}
+            caseDescription={eachcases.description}
+            caseName={eachcases.name}
             status={eachcases.status}
             key={eachcases.caseID}            
           />
-          </Link>
-        ))} */}
-
-<RecentCasecard caseDetails={recentCases}/>
+        ))}
       </List>
     </div>
   );

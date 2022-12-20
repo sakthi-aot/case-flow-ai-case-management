@@ -1,13 +1,13 @@
 import gql from 'graphql-tag'
 
 export const FETCH_CASES = gql`
-  query{
-    cases{      
-      data{
-        name
-      }
-    }
-  }`
+query{
+  case{
+    id,
+    name,
+    desc,
+  }
+}`
 
 
 export const ADD_CASE = gql`
