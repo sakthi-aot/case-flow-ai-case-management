@@ -57,6 +57,31 @@ import {
    
   };
 
+
+  export const updateCases = async(newCase: Case) => {
+console.log("update");
+    console.log("data11",newCase)
+    const url =  GRAPHQL;
+    httpPOSTRequest(url,{query: print(ADD_CASE),
+      variables: {
+        createCaseInput: {
+          name: newCase.name,
+          statusid: newCase.statusid,
+        },
+      },
+    },null)
+      .then((res) => {
+        return {"success" : res};
+      })
+      .catch((error) => {
+        if (error?.response?.data) {
+          return({"error" : error})
+        } else {
+          return({"error" : "something went wrong"})
+        }
+      });
+ 
+};
   export const getCasesList = async () => {
      
     const url = GRAPHQL;

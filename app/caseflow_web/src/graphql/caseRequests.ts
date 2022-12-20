@@ -27,9 +27,8 @@ export const DELETE_CASE = gql`
 
 export const UPDATE_CASE = gql`
   mutation updateCase($updateCase:UpdateCaseInput!){
-    updateUser(updateCaseInput:$updateCase){
-      httpStatusCode
-      recordUpdated
+    updateCase(updateCaseInput:$updateCase){
+     id
     }
   }`
 

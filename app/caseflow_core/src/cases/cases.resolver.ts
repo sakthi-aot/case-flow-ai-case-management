@@ -32,7 +32,7 @@ export class CasesResolver {
   }
 
   @Mutation(() => Cases)
-  updateCases(@Args('cases') updateCaseInput: UpdateCaseInput) {
+  updateCases(@Args('updateCaseInput') updateCaseInput: UpdateCaseInput) {
     return this.casesService.updateCase(updateCaseInput.id, updateCaseInput);
   }
 

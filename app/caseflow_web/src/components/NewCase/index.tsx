@@ -1,4 +1,4 @@
-import React from "react";
+
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
@@ -7,11 +7,25 @@ import { Controller, useForm } from "react-hook-form";
 import Divider from "@mui/material/Divider";
 import {Case} from "../../dto/cases"
 import { addCases } from "../../services/CaseService";
-import {useDispatch} from "react-redux";
-import { useNavigate } from "react-router";
+import {useDispatch, useSelector} from "react-redux";
+import { useNavigate, useParams } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
+import React, { useEffect, useState } from "react";
 
-const NewCase = () => {
+const NewCase = (props) => {
+  const params = useParams();
+  const initialFieldValues = {
+    caseID:0,
+    name: '',
+    statusid: 1,
+   
+}
+const caseList =  useSelector(state=>state.cases.selectedCase);
+const {casename,casedesc}=caseList;
+console.log("caseList",caseList);
+const  recordForEdit = props.documentDetailsForEdit
+  const [values, setValues] = useState(initialFieldValues)
+
   const { handleSubmit, reset, control,register } = useForm();
   const onSubmit = async (data:any) => 
   {
@@ -32,9 +46,21 @@ const NewCase = () => {
     // dispatch(addCases(caseData)).unwrap();
     // navigate("/cases/create");
   }
-
-
-
+  useEffect(() => {
+    if (recordForEdit!= null){
+         setValues(editFieldValues); //set the edit value to focument inputs
+        }else{
+          // refreshDocumentList();
+        }
+    }, [recordForEdit])
+    let editFieldValues;
+    if (recordForEdit!= null){
+      const {dms_provider,content,description,docname,name,documentid,downloadurl}=recordForEdit;
+      editFieldValues = {
+        name: dms_provider,
+        statusid: name,
+     
+    }}
   return (
     <div style={{ padding: "2rem 3rem 0rem 8rem" }}>
       <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6">
@@ -61,7 +87,7 @@ const NewCase = () => {
                 border:"none"
                 
               }}
-              value={value} 
+              value={casename.caseName} 
               onChange={onChange}
               placeholder="File Name..."
             />
@@ -93,7 +119,7 @@ const NewCase = () => {
             }}    
             InputProps={{ disableUnderline: true }} 
             placeholder="Enter the details of the Case"
-            value={value} 
+            value={casedesc.caseDescription}
             onChange={onChange}
           />
         )}
