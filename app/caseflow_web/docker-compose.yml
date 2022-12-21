@@ -8,11 +8,11 @@ services:
       dockerfile: dev_Dockerfile
       args:
         - NODE_ENV=${NODE_ENV:-production}
-        - REACT_APP_KEYCLOAK_CLIENT=${KEYCLOAK_WEB_CLIENTID:-case-flow-web}
+        - REACT_APP_KEYCLOAK_CLIENT=${REACT_APP_KEYCLOAK_WEB_CLIENTID:-case-flow-web}
         - REACT_APP_KEYCLOAK_URL_REALM=${REACT_APP_KEYCLOAK_URL_REALM:-caseflow}
         - REACT_APP_KEYCLOAK_URL=${REACT_APP_KEYCLOAK_URL}
         - REACT_APP_APPLICATION_NAME=${APPLICATION_NAME:-caseflow.ai}
-        - REACT_CASEFLOW_API_URL=${REACT_CASEFLOW_API_URL}
+        - REACT_APP_CASEFLOW_API_URL=${REACT_APP_CASEFLOW_API_URL}
        
     ports:
       - "3000:3000"

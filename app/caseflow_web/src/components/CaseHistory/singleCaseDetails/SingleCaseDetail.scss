@@ -1,0 +1,37 @@
+.case-grid-container{
+    display: grid;
+    grid-template-columns: 1fr .3fr 1fr;
+    grid-template-rows: auto ;  
+    text-align: center; 
+    
+    .case-grid-line{
+        border-left: 3px solid rgb(161, 159, 159);
+        height: 100%;
+        margin: 0 .5rem;
+        position: relative;
+        width: 0px;
+
+        .case-grid-line-ball{
+            width: 1rem;
+            height: 1rem;
+            background-color: #404040;
+            border-radius: 50%;
+            position: absolute;
+            top: 20px;
+            right:-6.5px;
+        }
+    }
+    .case-gird-details{
+        text-align: left;
+    }
+    .case-grid-date{
+        margin-top: 1.2rem;
+    }
+    .case-gird-details-header{
+        text-align: center;
+        display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: .2rem;
+    }
+}

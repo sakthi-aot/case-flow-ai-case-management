@@ -9,7 +9,10 @@ from http import HTTPStatus
 from flask import Flask, current_app, g, request
 from werkzeug.middleware.proxy_fix import ProxyFix
 from caseflow.resources import API
-from caseflow import config
+from caseflow import config,models
+from caseflow.models import db, ma
+from flask_migrate import Migrate
+
 from caseflow.utils import (
     jwt,
     CASEFLOW_API_CORS_ORIGINS,
@@ -25,10 +28,12 @@ def create_app(run_mode=os.getenv("FLASK_ENV", "development")):
     API.init_app(app)
     setup_jwt_manager(app, jwt)
 
+
     @app.after_request
     def cors_origin(response):  # pylint: disable=unused-variable
         if CASEFLOW_API_CORS_ORIGINS == ALLOW_ALL_ORIGINS:
             response.headers["Access-Control-Allow-Origin"] = "*"
+            response.headers["Access-Control-Expose-Headers"] = "*,*"
         else:
             for url in CORS_ORIGINS:
                 assert request.headers["Host"]
@@ -68,6 +73,7 @@ def create_app(run_mode=os.getenv("FLASK_ENV", "development")):
         except Exception as err:  # pylint: disable=broad-except
             current_app.logger.critical(err)
             return response
+    register_shellcontext(app)        
     return app
 
 def setup_jwt_manager(app, jwt_manager):
@@ -85,7 +91,7 @@ def register_shellcontext(app):
 
     def shell_context():
         """Shell context objects."""
-        return {"app": app, "jwt": jwt}  # pragma: no cover
+        return {"app": app, "jwt": jwt, "db": db, "models": models}  # pragma: no cover
 
     app.shell_context_processor(shell_context)
 

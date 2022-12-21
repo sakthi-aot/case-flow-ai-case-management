@@ -1,4 +1,4 @@
 configurationset:
   - configuration:
       name: postgresql_config
-      uri: postgresql://{your-ngrok-ip-address}/{your-db}?user={your-db-username}&password={your-db-password}
+      uri: postgresql://caseflowdev.ccizdidwz3tj.ca-central-1.rds.amazonaws.com/caseflow_core?user=postgres&password=0DhoxLWL5HlS27WjLkUL

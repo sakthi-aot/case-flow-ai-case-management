@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+@import "../../styles.scss";
+
+.home {
+  .content-section {
+    background-color: #f3f8ff;
+    ;
+
+  }
+
+  .inner_text {
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: 10fr 8fr;
+    padding-top: 10vh;
+  }
+
+  .grid-left {
+    padding: 0vh 4vw 0vh 10vw;
+    text-align: center;
+  }
+
+  .grid-right {
+    padding: 0vh 1vw 0vh 1vw;
+    text-align: center;
+  }
+
+  .landingImage {
+    width: 70vh;
+    height: 60vh;
+    margin: 1rem 0rem 3em 0rem;
+    box-shadow: rgba(0, 0, 0, 0.20) 0px 5px 40px;
+  }
+
+  .buttons {
+    margin: auto;
+    padding: 1rem 0rem 3rem 0rem;
+    width: 60%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1rem;
+   
+  }
+  .landing-page-getStarted-btn{
+    background-color:  $primary-theme-black-color;
+  
+  }
+  .landing-page-getStarted-btn:hover{
+    background-color:$primary-theme-black-color-hover ;
+  }
+  .landing-page-explore-more-btn{
+    color:$primary-theme-black-color;
+    border-color: $primary-theme-black-color;
+  }
+  .landing-page-explore-more-btn:hover{
+    border-color: $primary-theme-black-color-hover;
+    color: $primary-theme-black-color-hover;
+  }
+  .title {
+    margin: auto;
+    padding: 1rem 0rem 1rem 0rem;
+    font-size: 3rem;
+
+  }
+
+  .text {
+    padding: 1rem 0rem 1rem 0rem;
+    font-size: 16px;
+
+  }
+
+  .bottom-blog {
+    width: 100vw;
+  }
+}

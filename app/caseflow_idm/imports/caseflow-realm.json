@@ -46,6 +46,22 @@
   "roles": {
     "realm": [
       {
+        "id": "8cae5508-28b8-4584-8741-20f668db0971",
+        "name": "caseflowClient",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "caseflow",
+        "attributes": {}
+      },
+      {
+        "id": "6562a8c3-ae86-44f7-b3c0-d189521f901c",
+        "name": "administrator",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "caseflow",
+        "attributes": {}
+      },
+      {
         "id": "251dfa09-67e1-4174-ade2-bd06905e4f9c",
         "name": "offline_access",
         "description": "${role_offline-access}",
@@ -1175,7 +1191,7 @@
           "config": {
             "user.attribute": "foo",
             "access.token.claim": "true",
-            "claim.name": "realm_access.roles",
+            "claim.name": "resource_access.case-flow-web.roles",
             "jsonType.label": "String",
             "multivalued": "true"
           }

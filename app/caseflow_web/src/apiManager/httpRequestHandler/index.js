@@ -1,9 +1,8 @@
 import axios from "axios";
 
 import UserService from "../../services/UserService";
-
-// const qs = require("querystring");
-
+import {store} from "../../services/Store";
+import {setLoader} from "../../reducers/applicationReducer";
 export const httpGETRequest = (
   url,
   data,
@@ -21,7 +20,7 @@ export const httpGETRequest = (
             : token,
         }
       : headers,
-      config : config,
+    config: config,
   });
 };
 
@@ -96,24 +95,29 @@ export const httpGETBolbRequest = (
             : token,
         }
       : headers,
-      responseType: 'blob',
+    responseType: "blob",
   });
 };
 
-/*export const httpPUTRequest = (url, data, token, isBearer=true) => {
-  return axios.put(url, data, 
-    { headers: { Authorization: isBearer ?`Bearer ${ token || UserService.getToken()}`: token } });
-};*/
+axios.interceptors.request.use(function (config) {
+  // Do something before request is sent
+  store.dispatch(setLoader(true));
+  return config;
+}, function (error) {
+  // Do something with request error
+  store.dispatch(setLoader(false));
+  return Promise.reject(error);
+});
 
-/*export const httpPOSTRequestWithoutToken = (url, data) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-  };
-  return axios.post(url, qs.stringify(data), config);
-};
-
-export const httpGETRequestWithoutToken = (url, token) => {
-  return axios.get(url);
-};*/
+// Add a response interceptor
+axios.interceptors.response.use(function (response) {
+  // Any status code that lie within the range of 2xx cause this function to trigger
+  // Do something with response data
+  store.dispatch(setLoader(false));
+  return response;
+}, function (error) {
+  // Any status codes that falls outside the range of 2xx cause this function to trigger
+  // Do something with response error
+  store.dispatch(setLoader(false));
+  return Promise.reject(error);
+});

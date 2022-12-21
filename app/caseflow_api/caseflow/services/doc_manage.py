@@ -3,30 +3,38 @@ import requests
 from typing import Dict
 from flask import current_app
 from datetime import datetime
+from caseflow.utils.user_context import UserContext, user_context
 
 
 class DocManageService:
     """This class manages doc service."""
     @staticmethod
-    def doc_upload_mutation(request,document)-> Dict:
+    @user_context
+    def doc_upload_mutation(request,document, **kwargs)-> Dict:
         """ Do upload document """
-
+        user: UserContext = kwargs["user"]
+        user_id: str = user.user_name
         stepzen_endpoint_url =current_app.config.get("STEPZEN_ENDPOINT_URL")  
         stepzen_api_key =current_app.config.get("STEPZEN_API_KEY") 
 
         doc_id = document['doc_id']
         doc_name = document['doc_name']
+        doc_dmsname = document['doc_dmsname']
         doc_type = document['doc_type']
         doc_size = document['doc_size']
         doc_description=document['doc_description']
         version=document['version']
         doc_modified = document['doc_modified']
         doc_created = document['doc_created']
+        doc_download_url = document["doc_download_url"]
+        dms_provider=document["dms_provider"]
+        dms_content=document["dms_content"]
+        doc_createdby = user_id
     
         query = """mutation insertDocument {
         insertDocument(
             documentid: "%s"
-            content: "nil"
+            content: "%s"
             contentsize: %s
             contenttype: "%s"
             creationdate: "%s"
@@ -37,18 +45,20 @@ class DocManageService:
             metadata: "nil"
             modificationuser: "%s"
             name: "%s"
+            docname: "%s"
             modificationdate: "%s"
+            dms_provider: %s
         ) {
             id,
-            documentid
+            documentid,
+            dms_provider
         }
         }
 
-        #     """ % (doc_id,doc_size,doc_type,doc_created,doc_name,doc_description,doc_name,version,doc_name,doc_name,doc_modified)
-
-        # print(query)
+        #     """ % (doc_id,dms_content,doc_size,doc_type,doc_created,doc_createdby,doc_description,doc_download_url,version,doc_createdby,doc_name,doc_dmsname,doc_modified,dms_provider)
         variables = {}
         try:
+            print(query)
             headers = {"Content-Type": "application/json", "Authorization": "Apikey "+stepzen_api_key}
             r = requests.post(stepzen_endpoint_url, json={'query': query, 'variables': variables}, headers=headers)
             data = r.json()
@@ -88,15 +98,20 @@ class DocManageService:
 
 
     @staticmethod
-    def doc_update_mutation(doc_id,document):
+    @user_context
+    def doc_update_mutation(doc_id,document, **kwargs):
         """ Do Update document """
+        
         stepzen_endpoint_url =current_app.config.get("STEPZEN_ENDPOINT_URL")  
         stepzen_api_key =current_app.config.get("STEPZEN_API_KEY") 
+
+        user: UserContext = kwargs["user"]
+        user_id: str = user.user_name
 
         query = """
         query getDocument($id: Int!){
             getDocument(id: $id){
-                documentid
+                documentid                
                 
             }
         }
@@ -106,13 +121,16 @@ class DocManageService:
         r = requests.post(stepzen_endpoint_url, json={'query': query, 'variables': variables}, headers=headers)
         data = r.json()
         documentId=data['data']['getDocument']['documentid']
-
+        user: UserContext = kwargs["user"]
+        user_id: str = user.user_name
         doc_name = document['doc_name']
         doc_type = document['doc_type']
         doc_size = document['doc_size']
         description=document['doc_description']
         version=document['version']
         doc_modified = document['doc_modified']
+        doc_modificationuser=user_id
+        doc_dmsname = document['doc_dmsname']
 
         query = """mutation updateDocument {
         updateDocument(
@@ -120,12 +138,12 @@ class DocManageService:
             name: "%s"
             contentsize: %s
             contenttype: "%s"
-            creationuser: "%s"
             description: "%s"
             downloadurl: "%s"
             latestversion: "%s"
             modificationdate: "%s"
             modificationuser: "%s"
+            docname: "%s"
     
         ) {
             documentid,
@@ -133,9 +151,9 @@ class DocManageService:
         }
         }
 
-        #     """ % (documentId,doc_name,doc_size,doc_type,doc_name,description,doc_name,version,doc_modified,doc_name)
+        #     """ % (documentId,doc_name,doc_size,doc_type,description,doc_name,version,doc_modified,doc_modificationuser,doc_dmsname)
 
-
+        print(query)
         variables = {}
         try:
             headers = {"Content-Type": "application/json", "Authorization": "Apikey "+stepzen_api_key}
@@ -156,8 +174,7 @@ class DocManageService:
                 }
                 
             #     """ % (doc_id,version,documentId,doc_modified,doc_modified)
-
-                #variables = {"docid": documentInsertedID,"versions": version,"modificationdate": doc_modified,"creationdate": doc_created}
+            
             headers = {"Content-Type": "application/json", "Authorization": "Apikey "+stepzen_api_key}
             res = requests.post(stepzen_endpoint_url, json={'query': queryVersion}, headers=headers)
             dataversion = res.json()
@@ -167,7 +184,6 @@ class DocManageService:
                     "status": "success",
             } 
 
-            print(data)
         except TypeError as update_error:
             response = {
                 "message": "Updation Error",
@@ -184,19 +200,27 @@ class DocManageService:
         query getDocument($id: Int!){
             getDocument(id: $id){
                 documentid
+                downloadurl
+                name
+                contenttype
                 
             }
         }
             """
         variables = {"id": documetId}
         try:
-            print(query)
             headers = {"Content-Type": "application/json", "Authorization": "Apikey "+stepzen_api_key}
             r = requests.post(stepzen_endpoint_url, json={'query': query, 'variables': variables}, headers=headers)
             data = r.json()
             documentId=data['data']['getDocument']['documentid']
+            doc_download_url = data['data']['getDocument']['downloadurl']
+            doc_name = data['data']['getDocument']['name']
+            doc_contenttype = data['data']['getDocument']['contenttype']
             response = {
-                    "message": documentId,
+                    "documentId": documentId,
+                    "doc_download_url":doc_download_url,
+                    "name": doc_name,
+                    "contenttype": doc_contenttype,
                     "status": "success",
             } 
         except TypeError as update_error:
@@ -206,3 +230,46 @@ class DocManageService:
             }    
         return response    
      
+
+     
+    @staticmethod
+    def doc_fetch_alldata():
+        """ Do Fetch  document List """
+        stepzen_endpoint_url =current_app.config.get("STEPZEN_ENDPOINT_URL")  
+        stepzen_api_key =current_app.config.get("STEPZEN_API_KEY") 
+        try:
+            query = """
+           query MyQuery {
+            getDocumentList {
+                name
+                id,
+                content,
+                downloadurl
+                documentid
+                description
+                creationdate
+                modificationdate
+                contentsize
+                dms_provider
+                docname
+                versionsList {
+                versions
+                }
+            }
+            }
+
+                """
+            variables = {}
+            headers = {"Content-Type": "application/json", "Authorization": "Apikey "+stepzen_api_key}
+            r = requests.post(stepzen_endpoint_url, json={'query': query, 'variables': variables}, headers=headers)
+            data = r.json()
+            response = {
+                    "message": data,
+                    "status": "success",
+            } 
+        except TypeError as update_error:
+            response = {
+                "message": "Fetch Error",
+                "error": update_error,
+            }    
+        return response

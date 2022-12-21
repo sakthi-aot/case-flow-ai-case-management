@@ -8,6 +8,16 @@ on:
         required: true
       reponame:
         required: true
+      NODE_ENV:
+        required: true
+      REACT_APP_KEYCLOAK_WEB_CLIENTID:
+        required: true
+      REACT_APP_KEYCLOAK_URL_REALM:
+        required: true
+      REACT_APP_KEYCLOAK_URL:
+        required: true
+      REACT_APP_CASEFLOW_API_URL:
+        required: true
 jobs:
   build:
     name: Build Image
@@ -29,7 +39,7 @@ jobs:
         cache-dependency-path: "./app/caseflow_web/package-lock.json"
     - run: npm install --force
       working-directory: ./app/caseflow_web
-    - run: npm run build
+    - run: CI=false npm run build
       working-directory: ./app/caseflow_web
 
     - name: Configure AWS credentials
@@ -49,3 +59,19 @@ jobs:
         context: ./app/caseflow_web
         push: true
         tags: ${{ github.event.inputs.ecr }}/${{ github.event.inputs.reponame }}:${{ github.event.inputs.version }}
+    
+    - name: Fill in the new image ID in the Amazon ECS task definition
+      id: task-def
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: caseflow_web.json
+        container-name: caseflow_web
+        image: ${{ github.event.inputs.ecr }}/${{ github.event.inputs.reponame }}:${{ github.event.inputs.version }}
+    
+    - name: Deploy Amazon ECS task definition
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        service: caseflow_web
+        cluster: caseflow
+        wait-for-service-stability: true

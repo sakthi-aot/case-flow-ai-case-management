@@ -1,0 +1,57 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type CaseDocuments {
+  id: Int!
+  caseid: Float!
+  documentref: String!
+  desc: String
+  addedbyuserid: Float!
+  creationdate: DateTime!
+  dmsprovider: Float!
+  name: String!
+  latestversion: String!
+  isdeleted: Boolean!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  documents: [CaseDocuments!]!
+  getCase(id: Int!): [CaseDocuments!]!
+}
+
+type Mutation {
+  createCase(createCaseInput: CreateDocumentInput!): CaseDocuments!
+  updateCases(cases: UpdateDocumentInput!): CaseDocuments!
+  removeCases(id: Float!): CaseDocuments!
+}
+
+input CreateDocumentInput {
+  caseid: Int
+  documentref: String!
+  desc: String
+  addedbyuserid: Float
+  creationdate: DateTime = "2022-12-08T11:47:18.860Z"
+  dmsprovider: Float!
+  name: String!
+  latestversion: String!
+  isdeleted: Boolean = false
+}
+
+input UpdateDocumentInput {
+  id: Int!
+  caseid: Int
+  documentref: String!
+  desc: String
+  addedbyuserid: Float!
+  creationdate: DateTime = "2022-12-08T11:47:18.861Z"
+  dmsprovider: Float!
+  name: String!
+  latestversion: String!
+  isdeleted: Boolean = false
+}

@@ -1,0 +1,33 @@
+.case-detail-first-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    h3{
+        margin-bottom: 0;
+        color: #404040;
+    }
+    p{
+        margin-top: 10px;
+    }
+}
+.case-detail-second-row{
+    text-align: left;
+    h3{
+        margin-bottom: 0;
+        color:#404040
+    }
+    p{
+        margin-top: 10px;
+    }
+}
+.case-detail-third-row{
+    text-align: left;
+    h3{
+        margin-bottom: 0;
+        color:#404040
+    }
+    p{
+        margin-top: 10px;
+    }
+}

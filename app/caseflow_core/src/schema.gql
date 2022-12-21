@@ -1,0 +1,97 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @key(fields: String!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
+
+directive @extends on OBJECT | INTERFACE
+
+directive @external on OBJECT | FIELD_DEFINITION
+
+directive @requires(fields: String!) on FIELD_DEFINITION
+
+directive @provides(fields: String!) on FIELD_DEFINITION
+
+directive @shareable on FIELD_DEFINITION | OBJECT
+
+directive @link(url: String!, import: [link__Import]) on SCHEMA
+
+directive @tag(name: String!) repeatable on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+directive @override(from: String!) on FIELD_DEFINITION
+
+type Cases {
+  id: Int!
+  lobid: Int!
+  name: String!
+  desc: String
+  statusid: Float!
+  typeid: Float!
+  linkedcases: [Int!]
+  creationdate: DateTime!
+  completiondate: DateTime
+  lastmodificationdate: DateTime
+  penduntildate: DateTime
+  archivedate: DateTime
+  startuserid: Float
+  currentownerid: Float!
+  involvedparties: [Int!]
+  isdeleted: Boolean!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  getCase(id: Int!): [Cases!]!
+  case: [Cases!]!
+}
+
+type Mutation {
+  createCase(createCaseInput: CreateCaseInput!): Cases!
+  updateCases(cases: UpdateCaseInput!): Cases!
+  removeCases(id: Float!): Cases!
+}
+
+input CreateCaseInput {
+  lobid: Int
+  name: String!
+  desc: String
+  statusid: Int!
+  typeid: Float
+  linkedcases: [Int!]
+  creationdate: DateTime = "2022-12-19T05:45:46.755Z"
+  completiondate: DateTime
+  lastmodificationdate: DateTime
+  penduntildate: DateTime
+  archivedate: DateTime
+  startuserid: Int
+  currentownerid: Int
+  involvedparties: [Int!]
+  isdeleted: Boolean = false
+}
+
+input UpdateCaseInput {
+  id: Int!
+  lobid: Int
+  name: String!
+  desc: String
+  statusid: Int!
+  typeid: Float
+  linkedcases: [Int!]
+  creationdate: DateTime = "2022-12-19T05:45:46.752Z"
+  completiondate: DateTime
+  lastmodificationdate: DateTime
+  penduntildate: DateTime
+  archivedate: DateTime
+  startuserid: Int
+  currentownerid: Int
+  involvedparties: [Int!]
+  isdeleted: Boolean = false
+}
+
+scalar link__Import

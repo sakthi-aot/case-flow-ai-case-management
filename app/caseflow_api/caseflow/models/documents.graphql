@@ -11,8 +11,10 @@ type Document {
   metadata: String
   modificationuser: String
   name: String
+  docname: String
   creationdate: DateTime
   modificationdate: DateTime
+  dms_provider:Int
   documentList: [Document] @materializer(query: "getDocumentUsingVersions")
   versionsList: [Versions] @materializer(query: "getVersionsUsingDocid")
 }
@@ -50,7 +52,7 @@ type Query {
     @dbquery(
       type: "postgresql"
       query: """
-      SELECT T."content", T."contentsize", T."contenttype", T."creationdate", T."creationuser", T."description", T."documentid", T."downloadurl", T."id", T."latestversion", T."metadata", T."modificationdate", T."modificationuser", T."name", T."versions"
+      SELECT T."content", T."contentsize", T."contenttype", T."creationdate", T."creationuser", T."description", T."documentid", T."downloadurl", T."dms_provider", T."id", T."latestversion", T."metadata", T."modificationdate", T."modificationuser", T."name", T."docname", T."versions"
         FROM "public"."Document" T
         WHERE T."versions" = $1
       """
@@ -68,6 +70,7 @@ type Mutation {
     creationuser: String!
     description: String!
     name: String!
+    docname: String!
     documentid: String!
     content: String!
     modificationuser: String!
@@ -76,6 +79,7 @@ type Mutation {
     latestversion: String!
     metadata: String!
     contenttype: String!
+    dms_provider: Int!
   ): Document
     @dbquery(
       type: "postgresql"
@@ -102,7 +106,6 @@ type Mutation {
     documentid: String!
     modificationdate: DateTime
     downloadurl: String
-    creationuser: String
     description: String
     name: String
     content: String
@@ -110,22 +113,25 @@ type Mutation {
     contentsize: Int
     latestversion: String
     contenttype: String
+    docname: String
   ): Document
     @dbquery(
       type: "postgresql"
       query: """
-      UPDATE "Document" SET
+      UPDATE "document" SET
       "modificationdate"= $2,
       "downloadurl"= $3,
-      "creationuser"= $4,
-      "description"= $5,
-      "name"=$6,
-      "content"= $7,
-      "modificationuser"= $8,
-      "contentsize"= $9,
-      "latestversion"= $10,
-      "contenttype"= $11  WHERE "documentid" = $1
+      "description"= $4,
+      "name"=$5,
+      "content"= $6,
+      "modificationuser"= $7,
+      "contentsize"= $8,
+      "latestversion"= $9,
+      "contenttype"= $10, 
+      "docname"= $11 WHERE "documentid" = $1
       """
       configuration: "postgresql_config"
     )
 }
+
+
