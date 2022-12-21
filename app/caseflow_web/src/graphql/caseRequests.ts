@@ -26,8 +26,8 @@ export const DELETE_CASE = gql`
   }`
 
 export const UPDATE_CASE = gql`
-  mutation updateCase($updateCase:UpdateCaseInput!){
-    updateCase(updateCaseInput:$updateCase){
+  mutation updateCase($updateCaseInput:UpdateCaseInput!){
+    updateCase(updateCaseInput:$updateCaseInput){
      id
     }
   }`
