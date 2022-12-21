@@ -1,11 +1,13 @@
-import { Field, ObjectType, Int } from '@nestjs/graphql';
+import { Field, ObjectType, Int,Directive,ID } from '@nestjs/graphql';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Cases } from './cases.entity';
 
 @Entity()
 @ObjectType()
+@Directive('@key(fields:"id")')
 export class CaseDocuments {
   @PrimaryGeneratedColumn()
-  @Field((type) => Int)
+  @Field((type) => ID)
   id: number;
 
   @Column()
@@ -43,4 +45,7 @@ export class CaseDocuments {
   @Column()
   @Field()
   isdeleted: boolean;
+
+  @Field(() => Cases)
+  cases: Cases;
 }

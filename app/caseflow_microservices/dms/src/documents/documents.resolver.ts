@@ -8,7 +8,7 @@ import { UpdateDocumentInput } from './dto/update-documet.input';
 
 @Resolver((of) => CaseDocuments)
 export class DocumentsResolver {
-  constructor(private documentService: DocumentsService) {}
+  constructor(private readonly  documentService: DocumentsService) {}
 
   //_____________________Query_____________________//
 
