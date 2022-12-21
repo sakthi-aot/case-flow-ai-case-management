@@ -1,8 +1,9 @@
-import { Field, ObjectType, Int } from '@nestjs/graphql';
+import { Field, ObjectType, Int ,Directive } from '@nestjs/graphql';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 @ObjectType()
+@Directive('@key(fields:"id")')
 export class Cases {
   @PrimaryGeneratedColumn()
   @Field((type) => Int)

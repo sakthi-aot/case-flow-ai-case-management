@@ -67,4 +67,8 @@ export class DocumentsService {
     }
     throw new NotFoundException(`Record cannot find by id ${id}`);
   }
+
+  async forCases(id:number){
+    return this.documentRepository.find({ where:{ "caseid":id}})
+  }
 }

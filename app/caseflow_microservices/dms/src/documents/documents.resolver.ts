@@ -1,4 +1,4 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver, ResolveField, Parent } from '@nestjs/graphql';
 
 //_____________________Custom Imports_____________________//
 import { CaseDocuments } from './documents.entity';
@@ -12,31 +12,37 @@ export class DocumentsResolver {
 
   //_____________________Query_____________________//
 
-  @Query((returns) => [CaseDocuments])
+  @Query(() => [CaseDocuments],{ name: 'documents' })
   documents(): Promise<CaseDocuments[]> {
     return this.documentService.findAll();
   }
   @Query((returns) => [CaseDocuments])
-  getCase(@Args('id', { type: () => Int }) id: number): Promise<CaseDocuments> {
+  getCaseDocument(@Args('id', { type: () => Int }) id: number): Promise<CaseDocuments> {
     return this.documentService.findOne({ id });
   }
 
   //_____________________Mutation_____________________//
 
   @Mutation((returns) => CaseDocuments)
-  createCase(
-    @Args('createCaseInput') createCaseInput: CreateDocumentInput,
+  createDocument(
+    @Args('createDocumentInput') createDocumentInput: CreateDocumentInput,
   ): Promise<CaseDocuments> {
-    return this.documentService.createDocument(createCaseInput);
+    return this.documentService.createDocument(createDocumentInput);
   }
 
   @Mutation(() => CaseDocuments)
-  updateCases(@Args('cases') updateCaseInput: UpdateDocumentInput) {
-    return this.documentService.update(updateCaseInput.id, updateCaseInput);
+  updateDocument(@Args('updateDocumentInput') updateDocumentInput: UpdateDocumentInput) {
+    return this.documentService.update(updateDocumentInput.id, updateDocumentInput);
   }
 
   @Mutation(() => CaseDocuments)
-  removeCases(@Args('id') id: number) {
+  removeDocument(@Args('id') id: number) {
     return this.documentService.remove(id);
   }
+
+  @ResolveField((of)=>CaseDocuments)
+  cases(@Parent() document:CaseDocuments){
+    return {__typename:"Cases",id:document.caseid}
+  }
+
 }
