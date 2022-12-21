@@ -1,4 +1,4 @@
-name: caseflow core
+name: Caseflow core
 on:
   workflow_dispatch:
     inputs:
@@ -12,7 +12,7 @@ jobs:
   build:
     name: Build Image
     runs-on: ubuntu-latest
-
+    
     steps:
     
     - name: Check out code
@@ -28,11 +28,10 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
-
+    
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
         context: ./app/caseflow_core
         push: true
         tags: ${{ github.event.inputs.ecr }}/${{ github.event.inputs.reponame }}:${{ github.event.inputs.version }}
-    
