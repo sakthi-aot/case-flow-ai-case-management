@@ -3,14 +3,14 @@
 .upload-grid {
   display: grid;
   grid-template-columns: 60% 40%;
-  column-gap: 3rem;
-  padding: 0rem 0rem 3rem 0rem;
+  column-gap: 1rem;
+  // padding: 0rem 0rem 3rem 0rem;
   .upload-left {
     padding: 1rem 0rem 0rem 3rem;
     
     .upload-row {
       display: grid;
-      grid-template-columns: 2fr 3fr;
+      grid-template-columns: 3fr 3fr;
       column-gap: 1rem;
       .choose-file-btn-upload{
         background-color:$primary-theme-black-color ;
@@ -33,24 +33,27 @@
       }
     }
 
-    .upload-button {
-      padding: 2rem 0rem 2rem 0rem;
-      Button{
-        border-color: $primary-theme-black-color;
-        color: $primary-theme-black-color;
-      }
-    }
+   
   }
 
   .upload-right {
     .display-upload-result {
       margin: 0rem 1rem 0rem 1rem;
-      width: 80%;
-      height: 95%;
+     
       max-height: 95%;
       box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;
       border-radius: 10px;
     }
+  }
+}
+.hidden-inputs{
+  padding: 1rem 0rem 0rem 3rem;
+}
+.upload-button {
+  padding: 2rem 0rem 3rem 0rem;
+  Button{
+    border-color: $primary-theme-black-color;
+    color: $primary-theme-black-color;
   }
 }
 .pg-viewer-wrapper{

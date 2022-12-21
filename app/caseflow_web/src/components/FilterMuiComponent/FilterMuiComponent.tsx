@@ -8,10 +8,10 @@ import Select from '@mui/material/Select'
 interface FilterMuiComponentProps{
   label:any,
   options:any[],
-  onChnagehandler:any}
+  onChnagehandler:any,selected : any}
 
 
-const FilterMuiComponent = ({label,options,onChnagehandler}:FilterMuiComponentProps) => {
+const FilterMuiComponent = ({label,options,onChnagehandler,selected}:FilterMuiComponentProps) => {
   return (
     <Box sx={{ minWidth: 120 }}>
             <FormControl sx={{ m: 1, minWidth: 90, }} size="small">
@@ -19,10 +19,11 @@ const FilterMuiComponent = ({label,options,onChnagehandler}:FilterMuiComponentPr
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"          
-                  label="Age"    
+                  label="Age" 
+                  value={selected}   
                   onChange={onChnagehandler}      
                 >
-                   {options.map((option,index) => <MenuItem key={index} value={option}>{option}</MenuItem>)}                  
+                   {options.map((option,index) => <MenuItem key={index}  value={option.id}>{option.text}</MenuItem>)}                  
                 </Select>
             </FormControl>
         </Box>
