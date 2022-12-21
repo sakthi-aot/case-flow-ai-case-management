@@ -62,9 +62,10 @@ import {
 console.log("update");
     console.log("data11",newCase)
     const url =  GRAPHQL;
-    httpPOSTRequest(url,{query: print(ADD_CASE),
+    httpPOSTRequest(url,{query: print(UPDATE_CASE),
       variables: {
-        createCaseInput: {
+        updateCaseInput: {
+          id:newCase.id,
           name: newCase.name,
           statusid: newCase.statusid,
         },
@@ -89,14 +90,11 @@ console.log("update");
       variables: {
       },
     },null)
-      .then((res) => {return res})
+      .then((res) => {return res.data.data.case})
       .catch((error) => {
-        if (error?.response?.data) {
-          return({"error" : error})
-        } else {
-          return({"error" : "something went wrong"})
-        }
+        console.log({"error" : "error loading data"})
+        return []
       });
-    return output?.data.data.case
-    
+      return output
+
   };

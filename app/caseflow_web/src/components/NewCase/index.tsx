@@ -6,65 +6,67 @@ import Button from "@mui/material/Button";
 import { Controller, useForm } from "react-hook-form";
 import Divider from "@mui/material/Divider";
 import {Case} from "../../dto/cases"
-import { addCases } from "../../services/CaseService";
+import { addCases, updateCases } from "../../services/CaseService";
 import {useDispatch, useSelector} from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
+import { setSelectedCase } from "../../reducers/newCaseReducer";
 
-const NewCase = (props) => {
-  const params = useParams();
+const NewCase = () => {
+  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const initialFieldValues = {
-    caseID:0,
+    id:0,
     name: '',
-    statusid: 1,
-   
+    description:'',
+    statusid: 1
 }
-const caseList =  useSelector(state=>state.cases.selectedCase);
-const {casename,casedesc}=caseList;
-console.log("caseList",caseList);
-const  recordForEdit = props.documentDetailsForEdit
-  const [values, setValues] = useState(initialFieldValues)
 
-  const { handleSubmit, reset, control,register } = useForm();
+const caseList =  useSelector(state=>state.cases.selectedCase);
+const [values, setValues] = useState(initialFieldValues)
+const { handleSubmit, reset, control,register } = useForm();
+
   const onSubmit = async (data:any) => 
   {
-    console.log("data",data)
+
     const caseData:Case|void = new Case();
     caseData.name = data.name;
     caseData.statusid = 1;
-    const response = await addCases(caseData);
+    let response;
+    if(values.id){
+     caseData.id=values.id;
+     response = await updateCases(caseData);
+     refreshCases();
+    }else{
+    response = await addCases(caseData);
+    refreshCases();
+    }
     console.log(response);
     // if(response)
-    // if (response && response.data && response.data.status == "success") {
-    //   toast.success("Success");
-    //   }
-    //  else{ toast.error("Error");}
-    // const caseData:Case|void = new Case();
-    // caseData.name = data.name;
-    // caseData.statusid = 1;
-    // dispatch(addCases(caseData)).unwrap();
-    // navigate("/cases/create");
+    if (response && response.data) {
+      toast.success("Success");
+      }
+     else{ toast.error("Error");}
+
   }
   useEffect(() => {
-    if (recordForEdit!= null){
-         setValues(editFieldValues); //set the edit value to focument inputs
-        }else{
-          // refreshDocumentList();
-        }
-    }, [recordForEdit])
-    let editFieldValues;
-    if (recordForEdit!= null){
-      const {dms_provider,content,description,docname,name,documentid,downloadurl}=recordForEdit;
-      editFieldValues = {
-        name: dms_provider,
-        statusid: name,
-     
-    }}
+    console.log("inside");
+  if(caseList)
+  setValues(caseList);
+}, []);
+
+const refreshCases=()=>{
+  dispatch(setSelectedCase(initialFieldValues));
+  setValues(initialFieldValues);
+  navigate("/private/cases");
+}
   return (
     <div style={{ padding: "2rem 3rem 0rem 8rem" }}>
       <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6">
-        New Case
+      {values.id==0?"New Case":"Update Case"}  
       </Typography>
       <Divider sx={{ borderBottomWidth: 3 }} />
       <Grid container spacing={3} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
@@ -82,14 +84,10 @@ const  recordForEdit = props.documentDetailsForEdit
               id="standard-basic"
               label="Case Name"
               variant="standard"
-              style={{
-                width: "100%",
-                border:"none"
-                
-              }}
-              value={casename.caseName} 
+           
+              value={values.name} 
               onChange={onChange}
-              placeholder="File Name..."
+              placeholder="Case Name"
             />
           )}
         />          
@@ -119,7 +117,7 @@ const  recordForEdit = props.documentDetailsForEdit
             }}    
             InputProps={{ disableUnderline: true }} 
             placeholder="Enter the details of the Case"
-            value={casedesc.caseDescription}
+            value={values.description}
             onChange={onChange}
           />
         )}
@@ -139,7 +137,7 @@ const  recordForEdit = props.documentDetailsForEdit
             variant="contained"
             onClick={handleSubmit(onSubmit)}
           >
-            Submit
+           {values.id==0?"Submit":"Update"}  
           </Button>
           <Button
             style={{

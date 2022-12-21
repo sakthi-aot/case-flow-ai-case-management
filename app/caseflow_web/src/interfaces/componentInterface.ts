@@ -13,9 +13,7 @@ export interface SearchProps{
   }
 
   export interface RecentCase{
-    caseID: string;
-    caseDescription: string;
-    status: string;
+    case :Case
  
   }  
 
@@ -48,3 +46,9 @@ export interface SearchProps{
     config:PropsConfig
   }
  
+  export interface Case{
+    id: number;
+    name: string;
+    description: string;
+    status: string;
+  };

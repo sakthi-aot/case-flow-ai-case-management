@@ -1,14 +1,19 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import FilterMuiComponent from "../FilterMuiComponent/FilterMuiComponent";
 import CaseDetailData from "./CaseDetailData/CaseDetailData";
 import CaseDetailReference from "./CaseDetailReference/CaseDetailReference";
 import "./CaseDetails.scss";
 import Search from "../Search";
 import CaseHistory from "../CaseHistory/caseHistory";
+import {useSelector} from "react-redux";
+import { store } from "../../interfaces/stateInterface";
+
+
 
 const CaseDetails = () => {
-  const caseDetail = {
-    id: "26111245",
+  let selectedCase =  useSelector((state:store)=>state.cases.selectedCase);
+  const [caseDetail, setcaseDetail] = useState({
+    id: 26111245,
     status: "OPEN",
     name: "Deer poaching Shawinigan Lake",
     date: "2022-11-01",
@@ -18,11 +23,20 @@ const CaseDetails = () => {
     tasks: ["Send for approval 1", "Send for approval 2"],
     docketNum: "1234",
     courtRef: "2022-11-01",
-  };
+  });
   const optionsForAction = ["Start Workflow", "Wake", "Complete", "Merge"];
   const onActionChangehandler = (e: any) => {
     console.log("Chnaged");
   };
+  useEffect(() => {
+
+    const clone = structuredClone(caseDetail);
+    const value = Object.assign(clone, selectedCase);
+    setcaseDetail(value)
+    console.log(selectedCase)
+    console.log(caseDetail)
+
+  }, [selectedCase]);
   return (
     <div className="details-container">
       <h1 className="title">CaseFlow</h1>

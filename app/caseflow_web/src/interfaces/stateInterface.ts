@@ -1,3 +1,4 @@
+import { RouterState } from "redux-first-history"
 export interface State {
   auth: Auth
   app: Application
@@ -43,11 +44,22 @@ export type AuthState  = {
 
   export interface Cases {
     selectedCase: SelectedCase
-    caseList: CaseList
+    caseList: CaseList[]
   }
   export interface USerDetails {
     
         email: string;
         userName: string;
       
+  }
+
+
+  export interface store{
+
+      router: RouterState;
+      auth: AuthState;
+      documents: Document;
+      app: Application;
+      cases: Cases;
+    
   }
