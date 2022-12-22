@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+  case-flow-core:
+    container_name: case-flow-gateway-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - NODE_ENV=${NODE_ENV:-production}
+
+
+        
+
+       
+
+
+    ports:
+      - "7000:7000"
+    tty: true

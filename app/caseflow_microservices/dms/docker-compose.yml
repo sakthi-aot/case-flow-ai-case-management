@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+  case-flow-core:
+    container_name: case-flow-microservices
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - NODE_ENV=${NODE_ENV:-production}
+        - KEYCLOCK_CLIENT_ID=${KEYCLOCK_CLIENT_ID:-case-flow-nest}
+        - KEYCLOCK_REALM=${KEYCLOCK_REALM:-caseflow}
+        - KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET:-Qhvu0sBg15UsiplYL5msFVqjzyOVaxRr}
+        - KEYCLOCK_AUTH_URL=${KEYCLOCK_AUTH_URL:-https://caseflow-idm.aot-technologies.com:8443/auth}
+
+        
+
+       
+
+
+    ports:
+      - "7002:7002"
+    tty: true
