@@ -3,10 +3,11 @@ import { Injectable } from '@nestjs/common';
 //_____________________Custom Imports_____________________//
 import { AmazonS3Service } from './amazon-s3.service';
 import { AlfrescoService } from './alfresco.service';
+import { SharepointServices } from './sharepoint.service';
 
 @Injectable()
 export class FileService {
-  constructor(private readonly s3Service: AmazonS3Service,private readonly alfrescoService: AlfrescoService) {}
+  constructor(private readonly s3Service: AmazonS3Service,private readonly alfrescoService: AlfrescoService,private readonly spService:SharepointServices) {}
 
   // Summary : Upload File to crespective DMS 
   // Created By : Don C Varghese
@@ -14,6 +15,9 @@ export class FileService {
     switch (dms) {
       case '1': {
         return await this.s3Service.uploadDocument(file, data.fileName);
+      }
+      case '2': {
+        return await this.spService.uploadDocument(file, data.name);
       }
       case '3': {
         return await this.alfrescoService.uploadDocument(file, data);
@@ -28,6 +32,9 @@ export class FileService {
       case '1': {
         return await this.s3Service.uploadDocument(file, data.fileName);
       }
+      case '2': {
+        return await this.spService.uploadDocument(file, data.fileName);
+      }
       case '3': {
         return await this.alfrescoService.updateDocument(file,document, data);
       }
@@ -41,16 +48,22 @@ export class FileService {
       case '1': {
         return await this.s3Service.getDocument(documentId);
       }
+      case '2': {
+        return await this.spService.getDocument(documentId);
+      }
       case '3': {
         return await this.alfrescoService.getDocument(documentId);
       }
     }
   }
 
-  async deleteFile(documentId, dms) {
+  async deleteFile(document, dms) {
     switch (dms) {
       case '1': {
-        return await this.s3Service.deleteDocument(documentId);
+        return await this.s3Service.deleteDocument(document.documentref);
+      }
+      case '2': {
+        return await this.spService.deleteDocument(document.name);
       }
     }
   }

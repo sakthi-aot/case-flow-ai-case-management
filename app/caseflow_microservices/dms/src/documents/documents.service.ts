@@ -36,11 +36,15 @@ export class DocumentsService {
   // summery : Select  single document
   // Created By : Don C Varghese
   async findOne( id : number ): Promise<CaseDocuments> {
-    return this.documentRepository.findOne({
-      where: {
-        id: id,
-      },
-    });
+    try{
+      return await this.documentRepository.findOne({
+        where: {
+          id: id,
+        },
+      });           
+    }catch(err){
+      console.log(err)
+    }
   }
 
   // summery : Update a new document

@@ -64,11 +64,20 @@ export class DocumentsController {
   @Get()
   @MessagePattern({ cmd: 'fetch_document' })
   async fetchDocument(param) {
-    try {
-      const id = await (
-        await this.documentService.findOne(parseInt(param.id))
-      ).documentref;
-      return this.fileService.downloadFile(id, param.dms);
+    try {   
+      let id ;
+      if(param.dms==='2'){
+         id = await (
+          await this.documentService.findOne(parseInt(param.id))
+        ).name;
+      }   else{
+         id = await (
+          await this.documentService.findOne(parseInt(param.id))
+        ).documentref;
+      }    
+      console.log(id)
+      const result  =await this.fileService.downloadFile(id, param.dms);
+      return result
     } catch (error) {
       console.log(error.message);
     }
@@ -80,7 +89,7 @@ export class DocumentsController {
     try {
       let field = await this.documentService.findOne(parseInt(param.id));
       field.isdeleted = true;
-      return this.fileService.deleteFile(field.documentref, param.dms).then(
+      return this.fileService.deleteFile(field, param.dms).then(
         () => {
           return this.documentService.update(param.id, field);
         },

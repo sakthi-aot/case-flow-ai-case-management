@@ -65,14 +65,32 @@ export class TransformService {
   };
 
   // summery : Transform Sharepoint object to schema specific format
-  // Created By : 
+  // Created By : Gokul VG
   transformSharepoint = (type, document, data) => {
     switch (type) {
-      case 'CREATE':
-        return {};
-
+      case 'CREATE':       
+          return {
+              caseid: data.caseid,
+              documentref: document.UniqueId,
+              name: data.name,
+              desc: data.desc,
+              addedbyuserid: data.addedbyuserid,
+              creationdate: new Date(),
+              dmsprovider: data.dmsprovider,
+              latestversion: document.UIVersionLabel,
+              isdeleted: false,
+          };
+      
       case 'UPDATE':
-        return {};
+        return {
+          documentref: document.UniqueId,
+          desc: data.desc,
+          addedbyuserid: data.addedbyuserid,
+          creationdate: new Date(),
+          dmsprovider: data.dmsprovider,
+          latestversion: document.UIVersionLabel,
+          isdeleted: false,
+        };
     }
   };
 
