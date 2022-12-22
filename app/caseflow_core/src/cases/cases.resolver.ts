@@ -1,4 +1,4 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver, ResolveReference } from '@nestjs/graphql';
 
 //_____________________Custom Imports_____________________//
 
@@ -13,7 +13,7 @@ export class CasesResolver {
 
   //_____________________Query_____________________//
 
-  @Query((returns) => [Cases])
+  @Query((returns) => Cases)
   getCase(@Args('id', { type: () => Int }) id: number): Promise<Cases> {
     return this.casesService.findOne( id );
   }
@@ -40,4 +40,10 @@ export class CasesResolver {
   removeCase(@Args('id') id: number) {
     return this.casesService.remove(id);
   }
+
+  @ResolveReference()
+         resolverefernce(ref:{__typename:number,id:number}){
+          return this.casesService.findOne(ref.id)
+         }
+
 }

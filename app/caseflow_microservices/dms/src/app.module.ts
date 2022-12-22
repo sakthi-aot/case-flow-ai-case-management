@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { join } from 'path';
+import { ApolloDriver, ApolloDriverConfig, ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { join } from 'path';
 
 import {
-  AuthGuard,KeycloakConnectModule,
+  AuthGuard,
+  KeycloakConnectModule,
   PolicyEnforcementMode,
   ResourceGuard,
   RoleGuard,
@@ -13,36 +14,32 @@ import {
 import { ConfigModule,ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 
-
-
-
 //_____________________Custom Imports_____________________//
 import { DocumentsModule } from './documents/documents.module';
 import { HelpersModule } from './helpers/helpers.module';
-
+import {HttpModule} from  '@nestjs/axios'
 const keyCloakOptionsProvider =  {
   provide: 'keyCloakDataProvider',
   useFactory: (config: ConfigService) => {
     return {
-      authServerUrl: config.get('KEYCLOCK_AUTH_URL'),
-      realm: config.get('KEYCLOCK_REALM'),
-      clientId: config.get('KEYCLOCK_CLIENT_ID'),
-      secret: config.get('KEYCLOAK_CLIENT_SECRET')
+      authServerUrl: "https://caseflow-idm.aot-technologies.com:8443/auth",
+      realm: "caseflow",
+      clientId: "case-flow-nest",
+      secret: "Qhvu0sBg15UsiplYL5msFVqjzyOVaxRr"
     }
   },
   inject: [ ConfigService],
 };
-
-
 @Module({
-  imports: [ConfigModule.forRoot({
-    isGlobal: true,
-  }),
-  KeycloakConnectModule.registerAsync(keyCloakOptionsProvider),
+  imports: [HttpModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     DocumentsModule,
     HelpersModule,
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      driver: ApolloDriver,
+    KeycloakConnectModule.registerAsync(keyCloakOptionsProvider),
+    GraphQLModule.forRoot<ApolloFederationDriverConfig>({
+      driver: ApolloFederationDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     TypeOrmModule.forRoot({
@@ -56,17 +53,18 @@ const keyCloakOptionsProvider =  {
       entities: ['dist/**/*.entity{.ts,.js}'],
       migrations: ['./src/migrations/*.ts'],
     }),
-    ConfigModule.forRoot(),
   ],
   controllers: [],
   providers: [
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-     },
-    {
-      provide: APP_GUARD,
-      useClass: RoleGuard,
-    },
-  ],})
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AuthGuard,
+    //  },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: RoleGuard,
+    // },
+  ],
+
+})
 export class AppModule {}

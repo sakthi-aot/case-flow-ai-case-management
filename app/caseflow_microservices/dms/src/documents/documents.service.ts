@@ -35,20 +35,26 @@ export class DocumentsService {
 
   // summery : Select  single document
   // Created By : Don C Varghese
-  async findOne({ id }: { id: number }): Promise<CaseDocuments> {
-    return this.documentRepository.findOne({
-      where: {
-        id: id,
-      },
-    });
+  async findOne( id : number ): Promise<CaseDocuments> {
+    try{
+      return await this.documentRepository.findOne({
+        where: {
+          id: id,
+        },
+      });           
+    }catch(err){
+      console.log(err)
+    }
   }
 
   // summery : Update a new document
   // Created By : Don C Varghese
   async update(id: number, updateCaseInput: UpdateDocumentInput) {
-    let cases: CaseDocuments = this.documentRepository.create(updateCaseInput);
-    cases.id = id;
-    return this.documentRepository.save(cases);
+    return this.documentRepository.update({id:id},updateCaseInput)
+    .then( ()=> this.findOne(id))
+    .catch( (e) => {
+      console.error(e.message)
+    })
   }
 
   // summery : Delete a new document
@@ -66,5 +72,9 @@ export class DocumentsService {
       }
     }
     throw new NotFoundException(`Record cannot find by id ${id}`);
+  }
+
+  async forCases(id:number){
+    return this.documentRepository.find({ where:{ "caseid":id}})
   }
 }

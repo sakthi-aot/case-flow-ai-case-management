@@ -13,7 +13,7 @@ export class TransformService {
       case 'CREATE':
         try{
           return {
-            caseid: data.caseid,
+            caseid: parseInt(data.caseid),
             documentref: document.key,
             name: data.name,
             desc: data.desc,
@@ -30,7 +30,15 @@ export class TransformService {
         
 
       case 'UPDATE':
-        return {};
+        return {
+          documentref: document.key,
+          desc: data.desc,
+          addedbyuserid: data.addedbyuserid,
+          creationdate: new Date(),
+          dmsprovider: 1,
+          latestversion: document.VersionId,
+          isdeleted: false,
+        };
     }
   };
 
@@ -39,7 +47,17 @@ export class TransformService {
   transformAlfresco = (type, document, data) => {
     switch (type) {
       case 'CREATE':
-        return {};
+        return {
+
+          documentref: document.entry.id,
+          desc: data.desc,
+          addedbyuserid: data.addedbyuserid,
+          creationdate: new Date(),
+          dmsprovider: 1,
+          latestversion: document.entry.properties['cm:versionLabel'],
+          isdeleted: false,
+
+        };
 
       case 'UPDATE':
         return {};
@@ -47,14 +65,32 @@ export class TransformService {
   };
 
   // summery : Transform Sharepoint object to schema specific format
-  // Created By : 
+  // Created By : Gokul VG
   transformSharepoint = (type, document, data) => {
     switch (type) {
-      case 'CREATE':
-        return {};
-
+      case 'CREATE':       
+          return {
+              caseid: data.caseid,
+              documentref: document.UniqueId,
+              name: data.name,
+              desc: data.desc,
+              addedbyuserid: data.addedbyuserid,
+              creationdate: new Date(),
+              dmsprovider: data.dmsprovider,
+              latestversion: document.UIVersionLabel,
+              isdeleted: false,
+          };
+      
       case 'UPDATE':
-        return {};
+        return {
+          documentref: document.UniqueId,
+          desc: data.desc,
+          addedbyuserid: data.addedbyuserid,
+          creationdate: new Date(),
+          dmsprovider: data.dmsprovider,
+          latestversion: document.UIVersionLabel,
+          isdeleted: false,
+        };
     }
   };
 
@@ -68,10 +104,12 @@ export class TransformService {
         return this.transformS3(type, document, data);
 
       case '2':
-        return this.transformAlfresco(type, document, data);
+          return this.transformSharepoint(type, document, data);
 
       case '3':
-        return this.transformSharepoint(type, document, data);
+        return this.transformAlfresco(type, document, data);
+
+     
     }
   };
 }
