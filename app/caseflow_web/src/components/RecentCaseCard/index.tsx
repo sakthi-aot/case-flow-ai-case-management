@@ -5,12 +5,14 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import { Typography } from "@mui/material";
 import "./recentCaseCard.scss"
-import { Link, } from "react-router-dom";
-import { Case } from "../../interfaces/componentInterface"
 import { useNavigate } from "react-router-dom";
 import {useDispatch} from "react-redux";
 import { setSelectedCase } from "../../reducers/newCaseReducer";
 import EditIcon from '@mui/icons-material/Edit';
+import { setDocumentList } from "../../reducers/documentsReducer";
+import {getDocumentofCaseList } from "../../services/CaseService";
+
+
 
 
 
@@ -20,7 +22,9 @@ const RecentCaseCard = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const viewCaseDetails = (CaseDetails)=>{
+  const viewCaseDetails = async (CaseDetails)=>{
+    let documenList = await getDocumentofCaseList(CaseDetails.id);
+    dispatch(setDocumentList(documenList))
     dispatch(setSelectedCase(CaseDetails));
     navigate("/private/cases/"  + CaseDetails.id+'/details');
 

@@ -60,10 +60,10 @@ const CaseList =React.memo( ({config}:caseListprops) => {
 
  // to fetch the case list and set the state of cases 
   useEffect(() => {
-    fetchDocumentDetails();
+    fetchCaseDetails();
   }, []);
   
-  async function fetchDocumentDetails() {
+  async function fetchCaseDetails() {
     let output = await getCasesList();
 
     output = output.map((element) => {

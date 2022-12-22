@@ -14,7 +14,7 @@ import { DmsService } from './dms.service';
       {
         name: 'DMS',
         transport: Transport.TCP,
-        options: { port: 3001 },
+        options: { port: 3002 },
       },
     ]),
   ],

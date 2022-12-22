@@ -9,6 +9,20 @@ query{
   }
 }`
 
+export const FETCH_DOCUMENT_OF_CASES = gql`
+query getCase($CaseId:Int!){
+  getCase(id:$CaseId){
+    documents{
+      id,
+      name,
+      caseid,
+      latestversion,
+      creationdate
+    }
+  }
+  }`
+
+
 
 export const ADD_CASE = gql`
   mutation createCase($createCaseInput:CreateCaseInput!){

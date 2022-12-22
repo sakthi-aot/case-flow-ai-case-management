@@ -35,7 +35,7 @@ const [isOpenPopup,setOpenPopup] = useState(false);
     name: "Deer poaching Shawinigan Lake",
     date: "2022-11-01",
     owner: "Chris Robinson",
-    caseDescription:
+    description:
       "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
     tasks: ["Send for approval 1", "Send for approval 2"],
     docketNum: "1234",
@@ -64,9 +64,13 @@ const [isOpenPopup,setOpenPopup] = useState(false);
 
     const clone = structuredClone(caseDetail);
     const value = Object.assign(clone, selectedCase);
+    // console.log(value)
+    // console.log(clone)
+
+
     setcaseDetail(value)
-    console.log(selectedCase)
-    console.log(caseDetail)
+    // console.log(selectedCase)
+    // console.log(caseDetail)
 
   }, [selectedCase]);
   return (
@@ -98,7 +102,7 @@ const [isOpenPopup,setOpenPopup] = useState(false);
           name={caseDetail.name}
           date={caseDetail.date}
           owner={caseDetail.status}
-          caseDescription={caseDetail.caseDescription}
+          caseDescription={caseDetail.description}
           tasks={caseDetail.tasks}
         />
         <CaseDetailReference
