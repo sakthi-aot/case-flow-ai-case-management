@@ -26,8 +26,8 @@ const handleAuth = ({ req }) => {
       buildService: ({ url }) => new RequestHandler({ url }),
       supergraphSdl: new IntrospectAndCompose({
         subgraphs: [
-        { name: 'Case', url: 'http://localhost:7001/graphql' },
-        { name: 'Document', url: 'http://localhost:7002/graphql' }
+        { name: 'Case', url: 'http://caseflow-core:7001/graphql' },
+        { name: 'Document', url: 'http://caseflow-microservice:7002/graphql' }
         ],
       }),
     },
