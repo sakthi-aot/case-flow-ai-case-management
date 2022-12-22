@@ -17,7 +17,7 @@ import { APP_GUARD } from '@nestjs/core';
 //_____________________Custom Imports_____________________//
 import { DocumentsModule } from './documents/documents.module';
 import { HelpersModule } from './helpers/helpers.module';
-
+import {HttpModule} from  '@nestjs/axios'
 const keyCloakOptionsProvider =  {
   provide: 'keyCloakDataProvider',
   useFactory: (config: ConfigService) => {
@@ -31,7 +31,7 @@ const keyCloakOptionsProvider =  {
   inject: [ ConfigService],
 };
 @Module({
-  imports: [
+  imports: [HttpModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),

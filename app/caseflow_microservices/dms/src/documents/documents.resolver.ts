@@ -18,7 +18,7 @@ export class DocumentsResolver {
   }
   @Query((returns) => [CaseDocuments])
   getCaseDocument(@Args('id', { type: () => Int }) id: number): Promise<CaseDocuments> {
-    return this.documentService.findOne({ id });
+    return this.documentService.findOne( id );
   }
 
   //_____________________Mutation_____________________//
