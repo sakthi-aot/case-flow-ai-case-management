@@ -146,7 +146,8 @@ const Upload = (props) => {
       );
       
       console.log(response.data);
-      if (response && response.data && response.data.status == "success") {
+      if (response && response.data && response.data.id) {
+        props.onSuccess(response.data)
         fetchDocumentDetails();
         toast.success("Success");
         refreshDocumentList();

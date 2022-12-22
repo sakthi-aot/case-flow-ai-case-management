@@ -127,7 +127,7 @@ const [isOpenPopup,setOpenPopup] = useState(false);
         <CaseHistory></CaseHistory>
       </section>
     </div>
-    <CustomizedDialog title="Upload File" isOpen={isOpenPopup} setIsOpen={setOpenPopup} handleClose={handleClose}><Upload/></CustomizedDialog>
+    <CustomizedDialog title="Upload File" isOpen={isOpenPopup} setIsOpen={setOpenPopup} handleClose={handleClose}><Upload onSuccess={handleClose} /></CustomizedDialog>
     </>
   );
 };

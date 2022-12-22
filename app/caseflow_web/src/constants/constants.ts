@@ -9,6 +9,9 @@ interface ENV{
   REACT_APP_CLIENT :string
   REACT_APP_CASEFLOW_GRAPHQL_API_URL : string
   CASEFLOW_DMS : string;
+  REACT_APP_CASEFLOW_API_URL : string;
+
+
 }
 
 declare global {
@@ -65,3 +68,9 @@ export const ROLES = [
 export  const CASEFLOW_DMS =  (window._env_ && window._env_.CASEFLOW_DMS) ||
 process.env.CASEFLOW_DMS ||
 "1";
+export  const CASEFLOW_API_URL =  (window._env_ && window._env_.REACT_APP_CASEFLOW_API_URL) ||
+process.env.REACT_APP_CASEFLOW_API_URL ||
+"";
+export  const CASEFLOW_GRAPHQL_API_URL =  (window._env_ && window._env_.REACT_APP_CASEFLOW_GRAPHQL_API_URL) ||
+process.env.REACT_APP_CASEFLOW_GRAPHQL_API_URL ||
+"";
