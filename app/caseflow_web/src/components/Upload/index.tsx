@@ -16,20 +16,9 @@ import { setDocumentList } from "../../reducers/documentsReducer";
 import { getAllDocuments } from "../../services/DocumentManagementService";
 
 import { v4 as uuidv4 } from "uuid";
-import Container from "@mui/material/Container";
-import IconButton from "@mui/material/IconButton";
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
 
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-
-import Select from "@mui/material/Select";
+import { store } from "../../interfaces/stateInterface";
+import {CASEFLOW_DMS} from "../../constants/constants"
 
 const Upload = (props) => {
   //inital fields values for the documents
@@ -78,7 +67,8 @@ const Upload = (props) => {
       content: content,
     };
   }
-
+  let selectedCase =  useSelector((state:store)=>state.cases.selectedCase);
+  
   const handleChanges = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
@@ -144,13 +134,17 @@ const Upload = (props) => {
     console.log(values.documentID);
     if (values.documentID == 0) {
       // check with docid exist or not id documentID=0 insert opertaion work
-      const response = await uploadCMISfile(
-        values.file,
-        values.fileName,
-        values.fileDescription,
-        values.dms,
-        JSON.stringify(inputFields)
+    
+      const response = await uploadCMISfile({
+       "file" :  values.file,
+       "name" : values.fileName,
+       "desc" : values.fileDescription,
+       "caseid" : selectedCase.id,
+       "dmsprovider" : CASEFLOW_DMS,
+       "metaData" :JSON.stringify(inputFields)
+      }
       );
+      
       console.log(response.data);
       if (response && response.data && response.data.status == "success") {
         fetchDocumentDetails();

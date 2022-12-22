@@ -6,7 +6,7 @@ export const GRAPHQLAPI:string = `${CASEFLOW_API_URL}`
 
 //alert(CASEFLOW_API_URL)
 export const API = {
-  DMS_API: `${CASEFLOW_API_URL}/doc`,
+  DMS_API: `${CASEFLOW_API_URL}/dms/`,
  
 
 };

@@ -34,7 +34,6 @@ export class TransformService {
           documentref: document.key,
           desc: data.desc,
           addedbyuserid: data.addedbyuserid,
-          creationdate: new Date(),
           dmsprovider: 1,
           latestversion: document.VersionId,
           isdeleted: false,
@@ -48,19 +47,27 @@ export class TransformService {
     switch (type) {
       case 'CREATE':
         return {
-
+          name: data.name,
           documentref: document.entry.id,
           desc: data.desc,
           addedbyuserid: data.addedbyuserid,
           creationdate: new Date(),
-          dmsprovider: 1,
+          dmsprovider: 3,
           latestversion: document.entry.properties['cm:versionLabel'],
           isdeleted: false,
 
         };
 
       case 'UPDATE':
-        return {};
+        return {
+          documentref: document.entry.id,
+          desc: data.desc,
+          addedbyuserid: data.addedbyuserid,
+          dmsprovider: 3,
+          latestversion: document.entry.properties['cm:versionLabel'],
+          isdeleted: false,
+
+        };
     }
   };
 
@@ -76,7 +83,7 @@ export class TransformService {
               desc: data.desc,
               addedbyuserid: data.addedbyuserid,
               creationdate: new Date(),
-              dmsprovider: data.dmsprovider,
+              dmsprovider: 2,
               latestversion: document.UIVersionLabel,
               isdeleted: false,
           };
@@ -86,8 +93,7 @@ export class TransformService {
           documentref: document.UniqueId,
           desc: data.desc,
           addedbyuserid: data.addedbyuserid,
-          creationdate: new Date(),
-          dmsprovider: data.dmsprovider,
+          dmsprovider: 2,
           latestversion: document.UIVersionLabel,
           isdeleted: false,
         };

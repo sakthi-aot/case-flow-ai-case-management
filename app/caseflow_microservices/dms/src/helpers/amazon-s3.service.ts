@@ -27,7 +27,7 @@ export class AmazonS3Service {
   // summery : Upload File to S3
   // Created By : Don C Varghese
   async uploadDocument(data: any, fileName: string): Promise<any> {
-    let base64data = new Buffer(data, 'binary');
+    let base64data = new Buffer(data.buffer, 'binary');
 
     return await this.s3
       .upload({
