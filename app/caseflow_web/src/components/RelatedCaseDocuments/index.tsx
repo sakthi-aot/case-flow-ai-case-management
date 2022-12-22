@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState} from "react";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,6 +6,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import {useSelector} from "react-redux";
+import { store } from "../../interfaces/stateInterface";
+
+
 
 function createData(
   name: string,
@@ -17,15 +21,23 @@ function createData(
   return { name, size, creationDate, lastUpdated, version };
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, new Date(), new Date(), 4.0),
-  createData('Ice cream sandwich', 237, new Date(), new Date(), 4.3),
-  createData('Eclair', 262, new Date(), new Date(), 6.0),
-  createData('Cupcake', 305, new Date(), new Date(), 4.3),
-  createData('Gingerbread', 356, new Date(), new Date(), 3.9),
-];
 
 export default function RelatedCaseDocuments() {
+
+  let selectedDocuments =  useSelector((state:store)=>state.documents.documentsList);
+
+  const [docDetail, setdocDetail] = useState([]);
+
+  useEffect(() => {
+
+    const clone = structuredClone(selectedDocuments);
+    const value = Object.assign(clone, selectedDocuments);
+    // console.log(selectedDocuments)
+    // console.log(value)
+    // console.log(clone)
+    setdocDetail(value)
+
+  }, [selectedDocuments]);
   return (
     <TableContainer component={Paper} sx={{ boxShadow : 0}}>
       <Table sx={{ minWidth: 650 ,border : 0}} aria-label="simple table" >
@@ -39,7 +51,7 @@ export default function RelatedCaseDocuments() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {docDetail.map((row) => (
             <TableRow
               key={row.name}
               sx={{  border: 0 }}
@@ -47,10 +59,10 @@ export default function RelatedCaseDocuments() {
               <TableCell style={{borderBottom: "none"}} component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell style={{borderBottom: "none"}} align="right">{row.size}</TableCell>
-              <TableCell style={{borderBottom: "none"}} align="right">{row.creationDate.toDateString()}</TableCell>
-              <TableCell style={{borderBottom: "none"}} align="right">{row.lastUpdated.toDateString()}</TableCell>
-              <TableCell  style={{borderBottom: "none"}} align="right">{row.version}</TableCell>
+              <TableCell style={{borderBottom: "none"}} align="right">{row.size ? row.size : "1kb"}</TableCell>
+              <TableCell style={{borderBottom: "none"}} align="right">{row.creationdate}</TableCell>
+              <TableCell style={{borderBottom: "none"}} align="right">{row.creationdate}</TableCell>
+              <TableCell  style={{borderBottom: "none"}} align="right">{row.latestversion}</TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -10,6 +10,7 @@ import {
     ADD_CASE,
     DELETE_CASE,
     UPDATE_CASE,
+    FETCH_DOCUMENT_OF_CASES
   } from "../graphql/caseRequests"
   import { Case } from "../dto/cases"
   import { print } from "graphql";
@@ -96,5 +97,22 @@ console.log("update");
         return []
       });
       return output
+
+  };
+  export const getDocumentofCaseList = async (id) => {
+    console.log(parseInt(id))
+    const url = GRAPHQL;
+    const  output =  await httpPOSTRequest(url,{query: print(FETCH_DOCUMENT_OF_CASES),
+      variables: {
+        CaseId : parseInt(id),
+      },
+    },null)
+      .then((res) => {return res.data.data.getCase.documents})
+      .catch((error) => {
+        console.log({"error" : error})
+        return []
+      });
+      return output
+
 
   };
