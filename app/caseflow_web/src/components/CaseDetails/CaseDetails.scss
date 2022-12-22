@@ -58,6 +58,17 @@
 }
 .case-documents{
     box-shadow: none;
+    .caseDocuments-headtag{
+        padding: 0;
+    }
+    .case-documents-head-section{
+        padding:0 ;
+        margin: 0;
+        border-bottom: 1px solid grey;
+    }
+    .MuiAccordionSummary-content{
+        margin-bottom: 0;
+    }
 }
 
 }
