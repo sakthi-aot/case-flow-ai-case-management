@@ -20,7 +20,7 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 
 # Expose port 
-EXPOSE 7001
+EXPOSE 7000
 
 # Start up command, with max heap size as 50Megs
 ENTRYPOINT ["node", "--max-old-space-size=50","dist/main"]
