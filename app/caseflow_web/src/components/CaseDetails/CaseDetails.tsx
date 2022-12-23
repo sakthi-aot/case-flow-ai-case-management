@@ -5,9 +5,8 @@ import CaseDetailReference from "./CaseDetailReference/CaseDetailReference";
 import "./CaseDetails.scss";
 import Search from "../Search";
 import CaseHistory from "../CaseHistory/caseHistory";
-import {useSelector} from "react-redux";
-import { store } from "../../interfaces/stateInterface";
-
+import { getCaseDetails } from "../../services/CaseService";
+import { useLocation } from 'react-router-dom'
 import RelatedCaseDocuments from "../RelatedCaseDocuments";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -16,31 +15,25 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CustomizedDialog from '../Dialog'
 import Upload from '../Upload'
+import EditIcon from '@mui/icons-material/Edit';
+import { setSelectedCase } from "../../reducers/newCaseReducer";
+import {useDispatch} from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
 const CaseDetails = () => {
-  let selectedCase =  useSelector((state:store)=>state.cases.selectedCase);
-const [isOpenPopup,setOpenPopup] = useState(false);
-  const [selected, setSelected] = useState(0);
-  const handleClose = (
-    event,
-    reason
-  ) => {
-   setOpenPopup(false);
-   setSelected(0)
-  };
-  const [caseDetail, setcaseDetail] = useState({
-    id: 26111245,
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const caseDetail = {
     status: "OPEN",
-    name: "Deer poaching Shawinigan Lake",
     date: "2022-11-01",
     owner: "Chris Robinson",
-    description:
-      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
     tasks: ["Send for approval 1", "Send for approval 2"],
     docketNum: "1234",
     courtRef: "2022-11-01",
-  });
+  }
   const optionsForAction = [{id : 0, code :'1' ,text: "Select Action"},
   {id : 1, code :'1' ,text: "Start Workflow"},
   {id : 2, code :2 ,text: "Wake"},
@@ -50,8 +43,27 @@ const [isOpenPopup,setOpenPopup] = useState(false);
   {id : 6, code :6 ,text: "Upload Document"},
   {id : 7, code :7 ,text: "Delete"},
 ];
+  async function fetchCaseDetails() {
+    var matches = location.pathname.match(/(\d+)/);
+    if(matches && matches[0]){
+      let output = await getCaseDetails(matches[0]);
+      (setselectedCaseDetails(output))
+    }
+  }
+  
+const [selectedCase, setselectedCaseDetails]:any = useState({});
+const [isOpenPopup,setOpenPopup] = useState(false);
+  const [selected, setSelected] = useState(0);
+  const handleClose = (
+    event,
+    reason
+  ) => {
+   setOpenPopup(false);
+   setSelected(0)
+  };
+
   const onActionChangehandler = (e: any) => {
-    console.log("Chnaged",e);
+
     setSelected(e.target.value)
     switch(e.target.value){
 
@@ -60,19 +72,16 @@ const [isOpenPopup,setOpenPopup] = useState(false);
       }
     }
   };
+  const editCaseDetails=(selectedCase)=> {
+    dispatch(setSelectedCase(selectedCase));
+    navigate("/private/cases/create");
+
+    }
+
   useEffect(() => {
+    fetchCaseDetails();
+  }, []);
 
-    const clone = structuredClone(caseDetail);
-    const value = Object.assign(clone, selectedCase);
-    // console.log(value)
-    // console.log(clone)
-
-
-    setcaseDetail(value)
-    // console.log(selectedCase)
-    // console.log(caseDetail)
-
-  }, [selectedCase]);
   return (
     <>
     <div className="details-container">
@@ -88,8 +97,12 @@ const [isOpenPopup,setOpenPopup] = useState(false);
       <section className="case-detail-container">
         <span className="case-detail-header">
           <div className="case-id-status">
-            <p className="case-id">Case ID :{caseDetail.id}</p>
+            <p className="case-id">Case ID :{selectedCase.id}</p>
             <p className="case-status">{caseDetail.status}</p>
+          <div onClick={()=>{editCaseDetails(selectedCase)}}>  
+          <span className="action-icon"> {<EditIcon />}</span>
+              </div>
+           
           </div>
           <FilterMuiComponent
             label="Action"
@@ -99,10 +112,10 @@ const [isOpenPopup,setOpenPopup] = useState(false);
           />
         </span>
         <CaseDetailData
-          name={caseDetail.name}
+          name={selectedCase.name}
           date={caseDetail.date}
           owner={caseDetail.status}
-          caseDescription={caseDetail.description}
+          caseDescription={selectedCase.description}
           tasks={caseDetail.tasks}
         />
         <CaseDetailReference
@@ -118,7 +131,7 @@ const [isOpenPopup,setOpenPopup] = useState(false);
          <h2>Case Documents</h2>
         </AccordionSummary>
         <AccordionDetails>
-        <RelatedCaseDocuments></RelatedCaseDocuments>
+        <RelatedCaseDocuments id = {selectedCase.id} ></RelatedCaseDocuments>
         </AccordionDetails>
       </Accordion>
       

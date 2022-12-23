@@ -6,38 +6,37 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {useSelector} from "react-redux";
-import { store } from "../../interfaces/stateInterface";
+import { getDocumentofCaseList } from "../../services/CaseService";
 
 
+// function createData(
+//   name: string,
+//   size: number,
+//   creationDate: Date,
+//   lastUpdated: Date,
+//   version: number,
+// ) {
+//   return { name, size, creationDate, lastUpdated, version };
+// }
 
-function createData(
-  name: string,
-  size: number,
-  creationDate: Date,
-  lastUpdated: Date,
-  version: number,
-) {
-  return { name, size, creationDate, lastUpdated, version };
-}
+
+export default function RelatedCaseDocuments({id}) {
 
 
-export default function RelatedCaseDocuments() {
+  async function fetchCaseDetails() {
+    if(id){
+      let output = await getDocumentofCaseList(id);
+      (setdocDetail(output))
+    }
 
-  let selectedDocuments =  useSelector((state:store)=>state.documents.documentsList);
-
-  const [docDetail, setdocDetail] = useState([]);
-
+  
+  }
+  const [docDetail, setdocDetail] :any = useState([]);
   useEffect(() => {
+    fetchCaseDetails();
+  }, [id]);
 
-    const clone = structuredClone(selectedDocuments);
-    const value = Object.assign(clone, selectedDocuments);
-    // console.log(selectedDocuments)
-    // console.log(value)
-    // console.log(clone)
-    setdocDetail(value)
 
-  }, [selectedDocuments]);
   return (
     <TableContainer component={Paper} sx={{ boxShadow : 0}}>
       <Table sx={{ minWidth: 650 ,border : 0}} aria-label="simple table" >

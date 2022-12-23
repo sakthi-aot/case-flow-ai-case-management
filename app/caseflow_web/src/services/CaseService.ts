@@ -10,28 +10,14 @@ import {
     ADD_CASE,
     DELETE_CASE,
     UPDATE_CASE,
-    FETCH_DOCUMENT_OF_CASES
+    FETCH_DOCUMENT_OF_CASES,
+    FETCH_CASE_DETAILS
   } from "../graphql/caseRequests"
   import { Case } from "../dto/cases"
   import { print } from "graphql";
   
 
-  
-  
-  export const getCases = (documentId :string) => {
-    return () => {
-      const url = API + "download?id=" + documentId;
-      httpGETRequest(url,null,null)
-        .then((res) => {})
-        .catch((error) => {
-          if (error?.response?.data) {
-            return({"error" : error})
-          } else {
-            return({"error" : "something went wrong"})
-          }
-        });
-    };
-  };
+
   
   export const addCases = async(newCase: Case) => {
 
@@ -114,5 +100,22 @@ console.log("update");
       });
       return output
 
+
+  };
+
+  export const getCaseDetails = async (id) => {
+    console.log(parseInt(id))
+    const url = GRAPHQL;
+    const  output =  await httpPOSTRequest(url,{query: print(FETCH_CASE_DETAILS),
+      variables: {
+        CaseId : parseInt(id),
+      },
+    },null)
+      .then((res) => {return res.data.data.getCase})
+      .catch((error) => {
+        console.log({"error" : error})
+        return {}
+      });
+      return output
 
   };

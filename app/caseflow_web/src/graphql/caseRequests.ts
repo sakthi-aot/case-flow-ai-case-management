@@ -22,6 +22,16 @@ query getCase($CaseId:Int!){
   }
   }`
 
+  export const FETCH_CASE_DETAILS= gql`
+query getCase($CaseId:Int!){
+  getCase(id:$CaseId){
+    id,
+    name,
+    desc,
+  }
+  }`
+
+
 
 
 export const ADD_CASE = gql`
