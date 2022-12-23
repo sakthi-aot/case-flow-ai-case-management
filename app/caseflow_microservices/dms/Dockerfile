@@ -6,6 +6,7 @@ RUN dnf module install -y nodejs:14
 WORKDIR /app
 COPY . ./
 RUN npm ci
+RUN npm install
 RUN npm run build
 # --only=prod
 RUN npm ci --only=prod  
