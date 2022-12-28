@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   case-flow-core:
-    container_name: case-flow-microservices
+    container_name: caseflow-microservice
     build:
       context: .
       dockerfile: Dockerfile
