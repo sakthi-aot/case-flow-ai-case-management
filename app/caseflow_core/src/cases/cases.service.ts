@@ -19,7 +19,11 @@ export class CasesService {
   async findAll(): Promise<Cases[]> {
     return this.caseRepository.find();
   }
-
+  async findAllWithLimit(): Promise<Cases[]> {
+    return this.caseRepository.find({
+      take: 10,
+  });
+  }
   // @Roles({ roles: ['manage-account'], mode: RoleMatchingMode.ANY })
   async createCase(createCaseInput: CreateCaseInput): Promise<Cases> {
     try {
