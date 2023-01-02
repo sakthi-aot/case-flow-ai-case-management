@@ -48,20 +48,10 @@ export const fetchCMISfile = (documentId,DMS,newTab = true) => {
 };
 
 //uploadCMISfile is used to send and save  files into the cmis server
-export const uploadCMISfile = async (file,fileName,description,DMS,metaData) => { 
-  console.warn(metaData)
-    const uploadURL = API.DMS_API + "/dms"+ DMS + "/upload";
-    let formData = {
-      "upload": file,
-      "name": fileName ? fileName : file.name,
-      "nodeType": "cm:content",
-      "cm:title": "My text",
-      "cm:description": description,
-      "relativePath": "Uploads",
-      "DMS" : DMS,
-      "metaData" : metaData
+export const uploadCMISfile = async (formData) => { 
+ 
+    const uploadURL = API.DMS_API;
 
-    };
     let bodyFormData = new FormData(); 
     for (let key in formData) {           //converts the javascript object into FormData type
       bodyFormData.append(key, formData[key]);

@@ -9,6 +9,30 @@ query{
   }
 }`
 
+export const FETCH_DOCUMENT_OF_CASES = gql`
+query getCase($CaseId:Int!){
+  getCase(id:$CaseId){
+    documents{
+      id,
+      name,
+      caseid,
+      latestversion,
+      creationdate
+    }
+  }
+  }`
+
+  export const FETCH_CASE_DETAILS= gql`
+query getCase($CaseId:Int!){
+  getCase(id:$CaseId){
+    id,
+    name,
+    desc,
+  }
+  }`
+
+
+
 
 export const ADD_CASE = gql`
   mutation createCase($createCaseInput:CreateCaseInput!){
@@ -31,4 +55,18 @@ export const UPDATE_CASE = gql`
      id
     }
   }`
+
+export const FETCH_CASEHISTORY = gql`
+  query casehistory($caseId:Int!){
+    case(id:$caseId){
+      datetime,
+      outcome,
+      eventId{
+        eventtype{
+          text
+        }
+      },
+    }
+  }`
+
 

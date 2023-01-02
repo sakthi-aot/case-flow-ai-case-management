@@ -13,7 +13,6 @@ import { caseListprops,  PropsConfig, RecentCase, SortValue } from "../../interf
 import { getCasesList } from "../../services/CaseService";
 import { setCaseList } from "../../reducers/newCaseReducer";
 import {useSelector,useDispatch} from "react-redux";
-import { store } from "../../interfaces/stateInterface";
 import { Case } from "../../interfaces/componentInterface";
 
 
@@ -28,14 +27,13 @@ import { Case } from "../../interfaces/componentInterface";
 // }
 
 
-const CaseList =React.memo( ({config}:caseListprops) => {
+const CaseList =React.memo( ({config,allRecentCases}:any) => {
 
 
   // const [sortValue,setSortValue] = useState({value:"",sortOrder:null})
   // const [recentCases,setRecentCases] = useState([...allRecentCases])
   // const [sortSelectValue,setSortSelectValues] = useState(sortingkeysOfAllRecentCases)
   const dispatch = useDispatch();
-  let allRecentCases =  useSelector((state:store)=>state.cases.caseList);
 
   // useEffect(()=>{ 
   //  const updatedSortedData = SortCasesByField(sortValue,recentCases)
@@ -60,10 +58,10 @@ const CaseList =React.memo( ({config}:caseListprops) => {
 
  // to fetch the case list and set the state of cases 
   useEffect(() => {
-    fetchDocumentDetails();
+    fetchCaseDetails();
   }, []);
   
-  async function fetchDocumentDetails() {
+  async function fetchCaseDetails() {
     let output = await getCasesList();
 
     output = output.map((element) => {
