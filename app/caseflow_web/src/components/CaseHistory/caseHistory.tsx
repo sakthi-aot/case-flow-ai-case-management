@@ -4,7 +4,7 @@ import "./caseHistory.scss"
 import FilterMuiComponent from '../FilterMuiComponent/FilterMuiComponent';
 
 
-const CaseHistory = () => {
+const CaseHistory = ({casehistory}) => {
 
     const caseHistoryData = [
         {

@@ -56,3 +56,17 @@ export const UPDATE_CASE = gql`
     }
   }`
 
+export const FETCH_CASEHISTORY = gql`
+  query casehistory($caseId:Int!){
+    case(id:$caseId){
+      datetime,
+      outcome,
+      eventId{
+        eventtype{
+          text
+        }
+      },
+    }
+  }`
+
+

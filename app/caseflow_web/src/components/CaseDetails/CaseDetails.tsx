@@ -5,7 +5,7 @@ import CaseDetailReference from "./CaseDetailReference/CaseDetailReference";
 import "./CaseDetails.scss";
 import Search from "../Search";
 import CaseHistory from "../CaseHistory/caseHistory";
-import { getCaseDetails } from "../../services/CaseService";
+import { getCaseDetails, getCaseHistory } from "../../services/CaseService";
 import { useLocation } from 'react-router-dom'
 import RelatedCaseDocuments from "../RelatedCaseDocuments";
 import Accordion from '@mui/material/Accordion';
@@ -47,11 +47,14 @@ const CaseDetails = () => {
     var matches = location.pathname.match(/(\d+)/);
     if(matches && matches[0]){
       let output = await getCaseDetails(matches[0]);
+      let caseHistory = await getCaseHistory(matches[0]);
       (setselectedCaseDetails(output))
+      setCaseHistory(caseHistory)
     }
   }
   
 const [selectedCase, setselectedCaseDetails]:any = useState({});
+const [caseHistory,setCaseHistory]:any = useState();
 const [isOpenPopup,setOpenPopup] = useState(false);
   const [selected, setSelected] = useState(0);
   const handleClose = (
@@ -137,7 +140,7 @@ const [isOpenPopup,setOpenPopup] = useState(false);
       
       </section>
       <section className="case-history-container">
-        <CaseHistory></CaseHistory>
+        <CaseHistory casehistory = {caseHistory}></CaseHistory>
       </section>
     </div>
     <CustomizedDialog title="Upload File" isOpen={isOpenPopup} setIsOpen={setOpenPopup} handleClose={handleClose}><Upload onSuccess={handleClose} /></CustomizedDialog>
