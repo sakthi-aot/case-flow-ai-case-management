@@ -85,9 +85,9 @@ export class SharepointServices{
        try{
         const data = {
             grant_type:"client_credentials",
-            client_id:"79c5eec2-a00b-4816-b812-7f5203bee023@d34e6929-73f4-48ce-bac5-faf8cfea0be6",
-            client_secret:"BcyMO5JtHHHrIDU7a7IrD1am9i6M1mA8tT2z08Xof+M=",
-            resource:"00000003-0000-0ff1-ce00-000000000000/aottech.sharepoint.com@d34e6929-73f4-48ce-bac5-faf8cfea0be6"
+            client_id:this.configService.get('SHAREPOINT_CLIENT_ID'),
+            client_secret:this.configService.get('SHAREPOINT_CLIENT_SECRET'),
+            resource:this.configService.get('SHAREPOINT_RESOURCE')           
         } 
          const headersRequest = {
                 "Content-Type": "application/x-www-form-urlencoded"                        
@@ -97,7 +97,7 @@ export class SharepointServices{
         )   )
         return  getToken.data.access_token;
 
-       }catch(err){
+       }catch(err){    
         console.log(err)
        }
     }
