@@ -15,6 +15,9 @@ import { setCaseList } from "../../reducers/newCaseReducer";
 import {useSelector,useDispatch} from "react-redux";
 import { store } from "../../interfaces/stateInterface";
 import { Case } from "../../interfaces/componentInterface";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Grid from "@mui/material/Grid";
 
 
 
@@ -113,14 +116,30 @@ const CaseList =React.memo( ({config}:caseListprops) => {
         }}
         component="nav"
         aria-label="mailbox folders"
-      >
-         
-        {allRecentCases.map((eachcases:Case) => (
+      >         
+        { allRecentCases.length !== 0?
+        allRecentCases.map((eachcases:Case) => (
           <RecentCasecard
             case = {eachcases}
             key={eachcases.id}            
           />
-        ))}
+        )):
+        <ListItem >
+          <Grid container spacing={1}  >
+          <Grid item xs={12} >
+            <ListItemText
+              primary={
+                <Typography 
+                variant="body2"
+                style={{ "fontWeight": "700" ,"textAlign":"center","color":"rgba(0, 0, 0, 0.6)"}}>
+                  No Recent Cases Found!
+                </Typography>
+              }             
+            />
+          </Grid>
+          </Grid>
+        </ListItem>
+        }
       </List>
     </div>
   );

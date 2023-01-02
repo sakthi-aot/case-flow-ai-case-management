@@ -81,9 +81,10 @@ let selected = 0;
     }
 
   }
-  return (    
+  return ( 
+   
     <TableContainer component={Paper} sx={{ boxShadow : 0,}}>
-      <Table sx={{ minWidth: 650 ,border : 0,}} aria-label="simple table" className="case-document-table" >
+    {docDetail.length!==0 ?  <Table sx={{ minWidth: 650 ,border : 0,}} aria-label="simple table" className="case-document-table" >
         <TableHead >
           <TableRow>
             <TableCell  sx={{ color: '#606060',fontWeight: 'bold',fontSize: 16,border:0}} >Name</TableCell>
@@ -127,7 +128,9 @@ let selected = 0;
             </TableRow>
           ))}
         </TableBody>
-      </Table>
+      </Table> :
+      <p className="no-case-doc-found">No Case Documents Found !</p>
+      }
     </TableContainer>    
   );
 }
