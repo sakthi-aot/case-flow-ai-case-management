@@ -130,10 +130,12 @@ const [isOpenPopup,setOpenPopup] = useState(false);
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
+          className="case-documents-head-section"
+          sx={{marginBottom:0}}
         >
-         <h2>Case Documents</h2>
+         <h2 className="caseDocuments-headtag">Case Documents</h2>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{paddingLeft:0}}>
         <RelatedCaseDocuments id = {selectedCase.id} ></RelatedCaseDocuments>
         </AccordionDetails>
       </Accordion>

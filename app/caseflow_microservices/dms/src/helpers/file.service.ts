@@ -45,13 +45,13 @@ export class FileService {
   // Created By : Don Basil
   async downloadFile(documentId, dms) {
     switch (dms) {
-      case '1': {
+      case 1: {
         return await this.s3Service.getDocument(documentId);
       }
-      case '2': {
+      case 2: {
         return await this.spService.getDocument(documentId);
       }
-      case '3': {
+      case 3: {
         return await this.alfrescoService.getDocument(documentId);
       }
     }

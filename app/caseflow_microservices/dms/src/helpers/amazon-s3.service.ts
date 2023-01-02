@@ -17,7 +17,7 @@ export class AmazonS3Service {
       let data = await this.s3.getObject(
         { Bucket: this.bucket, Key: documentId }
       ).promise();
-      return data
+      return data.Body ? (data.Body) : new NotFoundException("No item Found")
     } catch (err) {
       console.log(err);
       return new NotFoundException("No item Found")

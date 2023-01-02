@@ -22,6 +22,7 @@ export class TransformService {
             dmsprovider: 1,
             latestversion: document.VersionId,
             isdeleted: false,
+            type : data.file.mimetype,
           };
         }
         catch(err){
@@ -55,6 +56,8 @@ export class TransformService {
           dmsprovider: 3,
           latestversion: document.entry.properties['cm:versionLabel'],
           isdeleted: false,
+          type : data.file.mimetype,
+          caseid: data.caseid,
 
         };
 
@@ -86,6 +89,7 @@ export class TransformService {
               dmsprovider: 2,
               latestversion: document.UIVersionLabel,
               isdeleted: false,
+              type : data.file.mimetype,
           };
       
       case 'UPDATE':

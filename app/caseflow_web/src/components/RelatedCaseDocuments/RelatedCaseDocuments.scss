@@ -1,0 +1,21 @@
+
+.case-document-table{
+    padding: 0;
+  .caseDocumentAction-center{
+    background-color:#BCBCBC;
+    opacity: 0.3;
+    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    color: black;
+    &:first-child{
+        font-weight: bolder;
+    }
+   
+}
+.document-actions{
+  font-size: 0rem;
+}
+  
+}

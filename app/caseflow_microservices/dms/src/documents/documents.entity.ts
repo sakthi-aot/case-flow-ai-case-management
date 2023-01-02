@@ -46,6 +46,10 @@ export class CaseDocuments {
   @Field()
   isdeleted: boolean;
 
+  @Column()
+  @Field({ nullable: true })
+  type: string;
+
   @Field(() => Cases)
   cases: Cases;
 }

@@ -9,11 +9,12 @@ import {
   Query,
   Delete,
   Put,
+  Response
 } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Express } from 'express';
+import { Express, Response as ExpressResponse } from 'express';
 
 //_____________________Custom Imports_____________________//
 import { DmsService } from './dms.service';
@@ -44,10 +45,12 @@ export class DmsController {
     }
   
     @Get()
-    async fetchDocument(@Query() param,): Promise<any>   {
-      return this.dmsService.fetchDocument(param).catch((err)=>{
-        throw new HttpException('No item found', HttpStatus.NOT_FOUND)
-      });
+    async fetchDocument(@Query() param,@Response() res: ExpressResponse): Promise<any>   {
+     const document = await this.dmsService.fetchDocument(param).then(data=> data);
+    //  res.set("Content-Type",document.type);
+    //  res.set("file-name",document.name);
+
+          return res.send(new Buffer(document.data));
     }
     @Delete()
     async deleteDocument(@Query() param,): Promise<any>   {

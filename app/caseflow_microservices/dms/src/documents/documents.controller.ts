@@ -65,19 +65,34 @@ export class DocumentsController {
   @MessagePattern({ cmd: 'fetch_document' })
   async fetchDocument(param) {
     try {   
-      let id ;
-      if(param.dms==='2'){
-         id = await (
-          await this.documentService.findOne(parseInt(param.id))
+      // let id ;
+      // if(param.dms==='2'){
+      //    id = await (
+      //     await this.documentService.findOne(parseInt(param.id))
+      //   ).name;
+      // }   else{
+      //    id = await (
+      //     await this.documentService.findOne(parseInt(param.id))
+      //   ).documentref;
+      // }    
+      // console.log(id)
+      // const result  =await this.fileService.downloadFile(id, param.dms);
+      let doc_id = null;
+      let documentDetails = await this.documentService.findOne(parseInt(param.id));
+      let dms = await documentDetails.dmsprovider;
+      if(dms===2){
+         doc_id = await (
+          documentDetails
         ).name;
       }   else{
-         id = await (
-          await this.documentService.findOne(parseInt(param.id))
+        doc_id = await (
+          documentDetails
         ).documentref;
-      }    
-      console.log(id)
-      const result  =await this.fileService.downloadFile(id, param.dms);
-      return result
+      }  
+      const data = await this.fileService.downloadFile(doc_id, dms);
+      return {data : data , type : documentDetails.type,name : documentDetails.name,dmsprovider : documentDetails.dmsprovider}
+
+
     } catch (error) {
       console.log(error.message);
     }
