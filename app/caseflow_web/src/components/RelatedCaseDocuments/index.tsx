@@ -10,6 +10,7 @@ import {useSelector} from "react-redux";
 import { store } from "../../interfaces/stateInterface";
 import "./RelatedCaseDocuments.scss"
 import { getDocument } from "../../services/DocumentManagementService";
+import { MenuItem, Select } from "@mui/material";
 
 
 
@@ -27,11 +28,35 @@ function createData(
 export default function RelatedCaseDocuments() {
 
   let selectedDocuments =  useSelector((state:store)=>state.documents.documentsList);
-  const downloadDocument = async (id,value)=>{
-    if(value == "download"){
+  const options = [{id :0,text : '...'},
+  {id :1,text : 'Download'},
+  {id :2,text : 'Delete'}
+];
+let selected = 0;
+  const downloadDocument = async (id,name,type)=>{
+  
+      let response = await getDocument(id)
+      const downloadUrl = window.URL.createObjectURL(
+        new Blob([response["data"]],)
+      );
+
+      const link = document.createElement("a");
+  
+        link.href = downloadUrl;
+        const file_name : string = name;
+        link.setAttribute("download", file_name)//any other extension
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        link.remove();
+      
+  }
+  const deleteDocument = async (id)=>{
+  
       let document = await getDocument(id)
-      //handle download
-    }
+  
   }
 
   const [docDetail, setdocDetail] = useState([]);
@@ -47,6 +72,15 @@ export default function RelatedCaseDocuments() {
     setdocDetail(value)
 
   }, [selectedDocuments]);
+
+  const onChnagehandler =(row,action) =>{
+    switch(action){
+
+      case 1 :{ downloadDocument(row.id,row.name,row.type); break;}
+      case 2 :{ deleteDocument(row.id); break;}
+    }
+
+  }
   return (    
     <TableContainer component={Paper} sx={{ boxShadow : 0,}}>
       <Table sx={{ minWidth: 650 ,border : 0,}} aria-label="simple table" className="case-document-table" >
@@ -72,14 +106,23 @@ export default function RelatedCaseDocuments() {
               <TableCell style={{borderBottom: "none"}} align="right">{row.creationdate}</TableCell>
               <TableCell  style={{borderBottom: "none"}} align="right">{row.latestversion}</TableCell>
               <TableCell  style={{borderBottom: "none"}} align="right">
-                <select className="caseDocumentAction-center" onChange={(e)=>{downloadDocument(row.id,e.target.value)}}>                
+                {/* <select className="caseDocumentAction-center" onChange={(e)=>{downloadDocument(row.id,e.target.value)}}>                
                 <option selected  >...</option>
                 <option >Delete</option>
                 <option >Update</option>
                 <option >Merge</option>
-                <option value = "download" >download</option>
+                <option value = "download" >download</option> */}
+                <Select
+                  id="document-actions"  
+                  className="document-actions"        
+                  label="Age"  
+                  value={selected}   
+                  onChange={(e)=>{onChnagehandler(row,e.target.value)}  }    
+                >
+                   {options.map((option,index) => <MenuItem key={index}  value={option.id}>{option.text}</MenuItem>)}                  
+                </Select>
 
-                </select>
+                {/* </select> */}
                 </TableCell>
             </TableRow>
           ))}

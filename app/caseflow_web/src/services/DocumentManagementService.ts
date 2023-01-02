@@ -1,4 +1,5 @@
 import {
+  httpGETBolbRequest,
   httpGETRequest,
 
 } from "../apiManager/httpRequestHandler";
@@ -40,7 +41,7 @@ export const  getAllDocuments = async () => {
 
 export const  getDocument = async (id) => {
   const url = API.DMS_API + "?id=" + id;
-  const data = await httpGETRequest(url,null,null)
+  const data = await httpGETBolbRequest(url,null,null)
   .then((res) => {return res})
   .catch((error) => {
     if (error?.response?.data) {

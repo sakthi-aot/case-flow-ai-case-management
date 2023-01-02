@@ -24,7 +24,7 @@ export class AlfrescoService {
     username: 'admin',
     password: 'admin'
   }
-    const url = this.configService.get('ALFRESCO_REPO_URL') + "1/nodes/-root-/children"
+    const url = this.configService.get('ALFRESCO_REPO_URL') + "/1/nodes/-root-/children"
     try{
       let response = await firstValueFrom(this.httpService.post(url,body,{
         auth: {
@@ -56,7 +56,7 @@ export class AlfrescoService {
     username: 'admin',
     password: 'admin'
   }
-    const url = this.configService.get('ALFRESCO_REPO_URL') + "1/nodes/" + documnet.documentref + '/content'
+    const url = this.configService.get('ALFRESCO_REPO_URL') + "/1/nodes/" + documnet.documentref + '/content'
   const params =  {
     "name" : data.name,
     "cm:description" : data.desc
@@ -84,7 +84,7 @@ export class AlfrescoService {
   // Created By : Don C Varghese
   async getDocument(documentId: string): Promise<any> {
     try{
-      const url = this.configService.get('ALFRESCO_REPO_URL') + "1/nodes/"+ documentId +"/content?attachment=true"
+      const url = this.configService.get('ALFRESCO_REPO_URL') + "/1/nodes/"+ documentId +"/content?attachment=false"
       let response = await firstValueFrom(this.httpService.get(url,{
         auth: {
           username: 'admin',
@@ -92,7 +92,7 @@ export class AlfrescoService {
         },
       
       }));
-      console.log("response",response)
+      // console.log("response",response)
       return response.data;
     }
     catch(err){
@@ -106,7 +106,7 @@ export class AlfrescoService {
   // Created By : Don C Varghese
   async deleteDocument(documentId: string): Promise<any> {
     try{
-      const url = this.configService.get('ALFRESCO_REPO_URL') + "1/nodes/"+ documentId +"/content?attachment=true"
+      const url = this.configService.get('ALFRESCO_REPO_URL') + "/1/nodes/"+ documentId +"/content?attachment=true"
       let response = await firstValueFrom(this.httpService.delete(url,{
         auth: {
           username: 'admin',

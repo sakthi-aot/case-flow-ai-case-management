@@ -78,18 +78,19 @@ export class DocumentsController {
       // console.log(id)
       // const result  =await this.fileService.downloadFile(id, param.dms);
       let doc_id = null;
-      let data = await this.documentService.findOne(parseInt(param.id));
-      let dms = await data.dmsprovider;
+      let documentDetails = await this.documentService.findOne(parseInt(param.id));
+      let dms = await documentDetails.dmsprovider;
       if(dms===2){
          doc_id = await (
-          data
+          documentDetails
         ).name;
       }   else{
         doc_id = await (
-          data
+          documentDetails
         ).documentref;
       }  
-      return await this.fileService.downloadFile(doc_id, dms);
+      const data = await this.fileService.downloadFile(doc_id, dms);
+      return {data : data , type : documentDetails.type,name : documentDetails.name,dmsprovider : documentDetails.dmsprovider}
 
 
     } catch (error) {

@@ -5,7 +5,8 @@ export class DmsService {
   constructor(@Inject('DMS') private readonly dmsClient: ClientProxy) {}
 
   async fetchDocument(data): Promise<any> {
-    return this.dmsClient.send({ cmd: 'fetch_document' }, { ...data });
+    let response = await this.dmsClient.send({ cmd: 'fetch_document' }, { ...data }).toPromise();
+    return response;
   }
 
   uploadDocument(file, data): any {

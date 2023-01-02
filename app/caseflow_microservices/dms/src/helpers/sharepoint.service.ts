@@ -51,7 +51,7 @@ export class SharepointServices{
                 }
             }))          
            
-          return responseUpload.data    
+          return responseUpload.data.buffer;
         } catch (e) {
           console.log(e)
 

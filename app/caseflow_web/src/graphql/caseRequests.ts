@@ -17,7 +17,8 @@ query getCase($CaseId:Int!){
       name,
       caseid,
       latestversion,
-      creationdate
+      creationdate,
+      type,
     }
   }
   }`

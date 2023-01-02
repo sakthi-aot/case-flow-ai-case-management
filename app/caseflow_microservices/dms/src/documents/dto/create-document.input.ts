@@ -28,4 +28,7 @@ export class CreateDocumentInput {
 
   @Field({ defaultValue: false })
   isdeleted: boolean;
+
+  @Field({ nullable: true })
+  type: string;
 }
