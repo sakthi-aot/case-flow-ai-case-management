@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import {useSelector} from "react-redux";
 import { store } from "../../interfaces/stateInterface";
 import "./RelatedCaseDocuments.scss"
+import { getDocument } from "../../services/DocumentManagementService";
 
 
 
@@ -26,8 +27,15 @@ function createData(
 export default function RelatedCaseDocuments() {
 
   let selectedDocuments =  useSelector((state:store)=>state.documents.documentsList);
+  const downloadDocument = async (id,value)=>{
+    if(value == "download"){
+      let document = await getDocument(id)
+      //handle download
+    }
+  }
 
   const [docDetail, setdocDetail] = useState([]);
+  
 
   useEffect(() => {
 
@@ -53,22 +61,24 @@ export default function RelatedCaseDocuments() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {docDetail.map((row) => (
+          {docDetail.map((row:any) => (
             <TableRow
               key={row.name}
               sx={{  border: 0 }}
             >
-              <TableCell style={{borderBottom: "none"}} component="th" scope="row">{row.name}</TableCell>
+              <TableCell   style={{borderBottom: "none"}} component="th" scope="row">{row.name}</TableCell>
               <TableCell style={{borderBottom: "none"}} align="right">{row.size ? row.size : "1kb"}</TableCell>
               <TableCell style={{borderBottom: "none"}} align="right">{row.creationdate}</TableCell>
               <TableCell style={{borderBottom: "none"}} align="right">{row.creationdate}</TableCell>
               <TableCell  style={{borderBottom: "none"}} align="right">{row.latestversion}</TableCell>
               <TableCell  style={{borderBottom: "none"}} align="right">
-                <select className="caseDocumentAction-center" >                
-                <option selected >...</option>
+                <select className="caseDocumentAction-center" onChange={(e)=>{downloadDocument(row.id,e.target.value)}}>                
+                <option selected  >...</option>
                 <option >Delete</option>
                 <option >Update</option>
                 <option >Merge</option>
+                <option value = "download" >download</option>
+
                 </select>
                 </TableCell>
             </TableRow>
