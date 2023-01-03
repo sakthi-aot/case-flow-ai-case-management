@@ -11,7 +11,7 @@ import {useDispatch, useSelector} from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
-import { setSelectedCase } from "../../reducers/newCaseReducer";
+import { setSelectedCase,resetSelectedCase } from "../../reducers/newCaseReducer";
 
 const NewCase = () => {
   
@@ -53,18 +53,18 @@ const { handleSubmit, control,register } = useForm();
 
   }
   useEffect(() => {
-  if(caseList)
+  if(caseList.isEdit)
   setValues(caseList);
 }, [caseList]);
 
 const refreshCases=()=>{
-  dispatch(setSelectedCase(initialFieldValues));
+  dispatch(resetSelectedCase());
   setValues(initialFieldValues);
   navigate("/private/cases");
 }
 
 const resetCases=()=>{
-  dispatch(setSelectedCase(initialFieldValues));
+  dispatch(resetSelectedCase());
   setValues(initialFieldValues);
 
 }

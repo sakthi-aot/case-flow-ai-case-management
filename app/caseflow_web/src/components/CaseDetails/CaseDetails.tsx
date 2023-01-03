@@ -76,7 +76,8 @@ const [isOpenPopup,setOpenPopup] = useState(false);
     }
   };
   const editCaseDetails=(selectedCase)=> {
-    dispatch(setSelectedCase(selectedCase));
+
+    dispatch(setSelectedCase({...selectedCase,isEdit:true}));
     navigate("/private/cases/create");
 
     }
