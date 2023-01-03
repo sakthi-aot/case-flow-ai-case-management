@@ -24,19 +24,21 @@ import { MenuItem, Select } from "@mui/material";
 
 
 export default function RelatedCaseDocuments({id}) {
-
+  
+const [docDetail, setdocDetail] = useState([]);
 
   async function fetchCaseDetails() {
     if(id){
       let output = await getDocumentofCaseList(id);
       (setdocDetail(output))
     }
+  }
   const options = [{id :0,text : '...'},
   {id :1,text : 'Download'},
   {id :2,text : 'Delete'}
-];
-let selected = 0;
-  const downloadDocument = async (id,name,type)=>{
+    ];
+      let selected = 0;
+      const downloadDocument = async (id,name,type)=>{
   
       let response = await getDocument(id)
       const downloadUrl = window.URL.createObjectURL(
@@ -62,7 +64,6 @@ let selected = 0;
   
   }
 
-  const [docDetail, setdocDetail] = useState([]);
   
 
   useEffect(() => {

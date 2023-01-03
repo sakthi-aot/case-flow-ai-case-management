@@ -113,7 +113,7 @@ const CaseList =React.memo( ({config,allRecentCases}:any) => {
         aria-label="mailbox folders"
       >
          
-        {allRecentCases.map((eachcases:Case) => (
+        {allRecentCases && allRecentCases.map((eachcases:Case) => (
           <RecentCasecard
             case = {eachcases}
             key={eachcases.id}            
