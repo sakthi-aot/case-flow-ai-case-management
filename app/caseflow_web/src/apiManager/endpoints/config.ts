@@ -14,6 +14,6 @@ process.env.REACT_APP_KEYCLOAK_URL;
 export const KEYCLOAK_AUTH_URL = `${KEYCLOAK_URL}/auth`;
 
 export const CASEFLOW_DMS :string=
-(window._env_ && window._env_.EACT_APP_CASEFLOW_DMS) ||
-process.env.EACT_APP_CASEFLOW_DMS;
+(window._env_ && window._env_.REACT_APP_CASEFLOW_DMS) ||
+process.env.REACT_APP_CASEFLOW_DMS;
 
