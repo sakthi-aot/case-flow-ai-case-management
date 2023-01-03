@@ -15,7 +15,7 @@ import { DmsService } from './dms.service';
         name: 'DMS',
         transport: Transport.TCP,
         
-        options: { host : "caseflow-microservice", port: 7003 },
+        options: { host : "35.182.42.147", port: 7003 },
       },
     ]),
   ],
