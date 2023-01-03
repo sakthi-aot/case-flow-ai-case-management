@@ -20,6 +20,8 @@ on:
         required: true
       REACT_APP_CASEFLOW_GRAPHQL_API_URL:
         required: true
+      REACT_APP_CASEFLOW_DMS:
+        required: true
 jobs:
   build:
     name: Build Image
