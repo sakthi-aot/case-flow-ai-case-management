@@ -27,7 +27,7 @@ const NewCase = () => {
 
 const caseList =  useSelector(state=>state.cases.selectedCase);
 const [values, setValues] = useState(initialFieldValues)
-const { handleSubmit, reset, control,register } = useForm();
+const { handleSubmit, control,register } = useForm();
 
   const onSubmit = async (data:any) => 
   {
@@ -53,16 +53,27 @@ const { handleSubmit, reset, control,register } = useForm();
 
   }
   useEffect(() => {
-    console.log("inside");
   if(caseList)
   setValues(caseList);
-}, []);
+}, [caseList]);
 
 const refreshCases=()=>{
   dispatch(setSelectedCase(initialFieldValues));
   setValues(initialFieldValues);
   navigate("/private/cases");
 }
+
+const resetCases=()=>{
+  dispatch(setSelectedCase(initialFieldValues));
+  setValues(initialFieldValues);
+
+}
+
+  //set values when document input fiels changes
+  // const handleDocumentInputChange = (e) => {
+  //   const target = e.target;
+  //   setValues({ ...values, [name]: value });
+  // };
   return (
     <div style={{ padding: "2rem 3rem 0rem 8rem" }}>
       <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6">
@@ -84,10 +95,15 @@ const refreshCases=()=>{
               id="standard-basic"
               label="Case Name"
               variant="standard"
-           
+              rows={1}
+              sx={{
+
+                width: "100%",            
+              }} 
               value={values.name} 
-              onChange={onChange}
+              onChange={(e)=>{setValues({"name":e.target.value})}}
               placeholder="Case Name"
+              
             />
           )}
         />          
@@ -118,7 +134,7 @@ const refreshCases=()=>{
             InputProps={{ disableUnderline: true }} 
             placeholder="Enter the details of the Case"
             value={values.description}
-            onChange={onChange}
+            onChange={(e)=>{setValues({"description":e.target.value})}}
           />
         )}
       />          
@@ -148,7 +164,7 @@ const refreshCases=()=>{
               backgroundColor:"#404040"
             }}
             variant="contained"
-            onClick={() => reset()} 
+            onClick={() => resetCases()} 
           >
            Reset
           </Button>
