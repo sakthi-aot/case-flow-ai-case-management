@@ -21,9 +21,11 @@ import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import { Button } from "@mui/material";
 import UserService from "../../services/UserService";
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { State } from "../../interfaces/stateInterface";
 import "./navigation.scss"
+import { resetSelectedCase } from "../../reducers/newCaseReducer";
+
 
 const drawerWidth = 240;
 
@@ -95,10 +97,11 @@ const Drawer = styled(MuiDrawer, {
 export default function MiniDrawer(
   // { children }
   ) {
- 
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false); 
 
   const userInfo = useSelector((state:State)=>state.auth.userDetails)
+
 
   const routes = [
     {
@@ -164,7 +167,9 @@ export default function MiniDrawer(
           borderRadius:"8px",
           transition:"all 1s ease",  
 
-        }} component={Link} to="/private/cases/create">Start New Cases</Button>}
+        }} 
+        onClick={()=>{dispatch(resetSelectedCase())}}
+        component={Link} to="/private/cases/create">Start New Cases</Button>}
         
         <List>
           {routes.map((route, index) => (

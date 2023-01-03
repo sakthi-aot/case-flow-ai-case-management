@@ -22,6 +22,12 @@ export class CasesResolver {
     return this.casesService.findAll();
   }
 
+  @Query((returns) => [Cases])
+  fetchRecentCase(): Promise<Cases[]> {
+    return this.casesService.findAllWithLimit();
+  }
+
+  
   //_____________________Mutation_____________________//
 
   @Mutation((returns) => Cases)
