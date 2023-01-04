@@ -27,7 +27,7 @@ export interface SearchProps{
     id: string;
     name: string;
     dms_provider: number;
-    description:string,
+    desc:string,
     creationdate:string,
     modificationdate:string
   }

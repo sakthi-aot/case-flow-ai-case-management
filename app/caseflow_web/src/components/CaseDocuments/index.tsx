@@ -20,11 +20,13 @@ import jpeg from "../../assets/jpeg.png";
 import png from "../../assets/png.png";
 import pdf from "../../assets/pdf.png";
 import txt from "../../assets/txt.png";
-import {useSelector} from "react-redux";
+import {useSelector,useDispatch} from "react-redux";
 import Upload from "../Upload";
 import EditIcon from '@mui/icons-material/Edit';
 import { State, USerDetails } from "../../interfaces/stateInterface";
 import { DocumentList } from "../../interfaces/componentInterface";
+import { getAllDocuments } from "../../services/DocumentManagementService";
+import { setDocumentList } from "../../reducers/documentsReducer";
 
 
 
@@ -36,6 +38,7 @@ const CaseDocuments = () => {
   const [searchColumn, setSearchColumn] = useState("Name");
   const dropDownArray = ["Name", "Id", "Creation Date", "modification Date"];
    const documents =  useSelector((state:State)=>state.documents.documentsList);
+   const dispatch = useDispatch();
   const getFileIcon = (fileName:any) => {
     let ext = fileName.split(".").pop();
     ext = ext.toLowerCase();
@@ -102,24 +105,47 @@ const CaseDocuments = () => {
 
   useEffect(() => {
     // fetchDocumentDetails();
+    
     setDocumentDetails(documents);
      setFilteredDocumentDetails(documents);
   }, [documents]);
 
   useEffect(() => {
+    fetchDocumentDetailsList()
     filterDocumentDetails();
   }, [searchField]);
-
+  async function fetchDocumentDetailsList() {
+    let output = await getAllDocuments();
+    // output = output.map((element) => {
+    //   return {
+    //     ...element,
+    //     creationdate: element.creationdate.split("T")[0],
+    //     modificationdate: element.modificationdate.split("T")[0],
+    //   };
+    // });
+    dispatch(setDocumentList(output));
+  }
 
  const  fetchDocumentDetails=(data:any)=>{
 setDocumentDetailsForEdit(data)
   }
 
-  return (<div className="background">
+  return (
+  
+    <section className="dashboard">
+    <h1 className="title">CaseFlow</h1>
+    <div className="search">
+    <Search
+          setSearchField={setSearchField}
+          dropDownArray={dropDownArray}
+          setSearchColumn={setSearchColumn}
+        ></Search>
+    </div>     
+      <div className="recent-cases"> <div className="background">
     <div className="file-card">
 
     <div>
-           <Upload selectedDMS = "dms1" documentDetailsForEdit={documentDetailsForEdit}  />
+           {/* <Upload selectedDMS = "dms1" documentDetailsForEdit={documentDetailsForEdit}  /> */}
            <div className="case-document-list">
 
       <Grid container spacing={1}>
@@ -129,11 +155,11 @@ setDocumentDetailsForEdit(data)
           </Typography>
         </Grid>
         <Grid item xs={6}>
-          <Search
+          {/* <Search
             setSearchField={setSearchField}
             dropDownArray={dropDownArray}
             setSearchColumn={setSearchColumn}
-          ></Search>
+          ></Search> */}
         </Grid>
       </Grid>
 
@@ -149,11 +175,12 @@ setDocumentDetailsForEdit(data)
               }}
             >
               <TableCell>Id</TableCell>
+              <TableCell align="left">Case Id</TableCell>
               <TableCell align="left">Name</TableCell>
               <TableCell align="left">Description</TableCell>
               <TableCell align="left">Creation Date</TableCell>
-              <TableCell align="left">Last Modified Date </TableCell>
-              <TableCell align="left">Download </TableCell>
+              {/* <TableCell align="left">Last Modified Date </TableCell>
+              <TableCell align="left">Download </TableCell> */}
             </TableRow>
           </TableHead>
 
@@ -166,6 +193,9 @@ setDocumentDetailsForEdit(data)
                 >
                   <TableCell component="th" scope="row">
                     {documentDetail.id}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {documentDetail.caseid}
                   </TableCell>
                   <TableCell align="left">
                     {" "}
@@ -184,7 +214,7 @@ setDocumentDetailsForEdit(data)
                     </div>
                   </TableCell>
                   <TableCell align="left">
-                    {documentDetail.description}
+                    {documentDetail.desc}
                   </TableCell>
                   <TableCell align="left">
                     {documentDetail.creationdate}
@@ -192,7 +222,7 @@ setDocumentDetailsForEdit(data)
                   <TableCell align="left">
                     {documentDetail.modificationdate}
                   </TableCell>
-                  <TableCell
+                  {/* <TableCell
                     align="left"
                     className="action-icon"
                     onClick={fetchCMISfile(
@@ -207,7 +237,7 @@ setDocumentDetailsForEdit(data)
                     onClick={()=>{fetchDocumentDetails(documentDetail)}}
                   >
                     <span className="action-icon"> {<EditIcon />}</span>
-                  </TableCell>
+                  </TableCell> */}
 
                 
                 </TableRow>
@@ -218,7 +248,12 @@ setDocumentDetailsForEdit(data)
 
    
     </div>
-    </div></div></div>);
+    </div></div></div></div>
+      {/* <div className="my-task"><MyTask></MyTask></div> */} 
+  </section>
+  
+  
+ );
 };
 
 export default CaseDocuments;

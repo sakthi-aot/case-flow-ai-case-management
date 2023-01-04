@@ -141,26 +141,26 @@ const resetCases=()=>{
         </Grid>
       </Grid>
 
-      <div style={{"display" : "flex", padding: "2rem 1rem 1rem 1rem"}}>
+      <div style={{"display" : "flex", padding: "2rem 1rem 1rem 1rem", "justify-content": "center"}}>
           <Button
             style={{
               alignItems :"center",
-              margin: "auto",
-              height: "3.4375rem",
-              width: "30%",
+              // margin: "auto",
+              height: "2.4375rem",
+              width: "20%",
               backgroundColor:"#404040"
             }}
             variant="contained"
             onClick={handleSubmit(onSubmit)}
           >
-           {values.id==0?"Submit":"Update"}  
+           {values.id==0?"Create":"Update"}  
           </Button>
           <Button
             style={{
               alignItems :"center",
-              margin: "auto",
-              height: "3.4375rem",
-              width: "30%",
+               marginLeft: "2rem",
+              height: "2.4375rem",
+              width: "20%",
               backgroundColor:"#404040"
             }}
             variant="contained"
