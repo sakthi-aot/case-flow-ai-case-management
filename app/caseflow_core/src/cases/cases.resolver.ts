@@ -6,6 +6,8 @@ import { Cases } from './cases.entity';
 import { CasesService } from './cases.service';
 import { CreateCaseInput } from './dto/create-case.input';
 import { UpdateCaseInput } from './dto/update-case.input';
+import { HttpException } from '@nestjs/common/exceptions';
+
 
 @Resolver((of) => Cases)
 export class CasesResolver {
@@ -20,6 +22,15 @@ export class CasesResolver {
   @Query((returns) => [Cases])
   case(): Promise<Cases[]> {
     return this.casesService.findAll();
+  }
+
+  @Query((returns) => [Cases] )
+  Searchcase(
+    @Args('searchField') searchField: string,
+    @Args('searchColumn') searchColumn : string,
+     ): Promise<Cases[]> | HttpException{
+
+    return this.casesService.searchCase(searchField,searchColumn);
   }
 
   @Query((returns) => [Cases])

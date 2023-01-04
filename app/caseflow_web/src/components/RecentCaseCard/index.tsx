@@ -49,7 +49,7 @@ const RecentCaseCard = (props) => {
                   Case Description
                 </Typography>
               }
-              secondary={CaseDetails.description}
+              secondary={CaseDetails.desc}
             />
           </Grid>          
 
