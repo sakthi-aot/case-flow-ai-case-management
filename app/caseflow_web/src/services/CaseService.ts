@@ -12,7 +12,8 @@ import {
     UPDATE_CASE,
     FETCH_DOCUMENT_OF_CASES,
     FETCH_CASE_DETAILS,
-    FETCH_CASEHISTORY
+    FETCH_CASEHISTORY,
+    SEARCH_CASE_LIST
   } from "../graphql/caseRequests"
   import { Case } from "../dto/cases"
   import { print } from "graphql";
@@ -136,3 +137,20 @@ console.log("update");
       });
       return output
   }
+
+  
+  export const searchCases = async (searchField,searchColumn) => {
+    const url = GRAPHQL;
+    const  output =  await httpGETRequest(url,{query: print(SEARCH_CASE_LIST),
+      variables: {
+        searchField : searchField,
+        searchColumn : searchColumn
+      },
+    },null)
+      .then((res) => {return (res.data.data.Searchcase) })
+      .catch((error) => {
+        console.log({"error" : "error loading data"})
+        return []
+      });
+      return output
+  };

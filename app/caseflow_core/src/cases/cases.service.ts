@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException,BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository,Like } from 'typeorm';
 import { AuthGuard, RoleGuard, RoleMatchingMode, Roles, Unprotected } from 'nest-keycloak-connect';
 
 //_____________________Custom Imports_____________________//
@@ -71,5 +71,31 @@ export class CasesService {
       }
     }
     throw new NotFoundException(`Record cannot find by id ${id}`);
+  }
+
+  searchCase(searchField,searchColumn){
+    try{
+    if(searchColumn){
+      switch(searchColumn){
+        case 'Description': {
+          return this.caseRepository.createQueryBuilder("table")
+          .where("LOWER(table.desc) LIKE :title", { title: `%${ searchField.toLowerCase() }%` })
+          .getMany();
+        }
+        default :
+        return this.caseRepository.createQueryBuilder("table")
+        .where("LOWER(table.name) LIKE :title", { title: `%${ searchField.toLowerCase() }%` })
+        .getMany();
+      }
+    }
+    else{
+      return  new HttpException("select a field", HttpStatus.BAD_REQUEST)
+    }
+
+    }
+    catch{
+      throw new HttpException("something went wrong", HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+
   }
 }

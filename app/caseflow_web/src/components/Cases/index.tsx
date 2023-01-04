@@ -4,6 +4,7 @@ import "./cases.scss"
 import CaseList from "../CaseList";
 import {useSelector,useDispatch} from "react-redux";
 import { store } from "../../interfaces/stateInterface";
+import { searchCases } from "../../services/CaseService";
 
 const caseListProps = {
   title : "Cases",
@@ -13,78 +14,22 @@ const caseListProps = {
 const Cases = (
   // { children }
   ) => {
-  let allRecentCases :any =  useSelector((state:store)=>state.cases.caseList);
   const [filteredCaseDetails, setFilteredCaseDetails] = useState([]);
   const [searchField, setSearchField] = useState("");
   const [searchColumn, setSearchColumn] = useState("name");
-  const [dropDownArray, setdropDownArray] = useState([""]);
+  const [dropDownArray, setdropDownArray] = useState(['Name', "Description"]);
 
-  const filterDocumentDetails = () => {
-    switch (searchColumn) {
-      case "name":
-        return setFilteredCaseDetails(
-          allRecentCases.filter((eachValue:any) => {
-            if( eachValue.name) {
-            return eachValue.name
-              .toLowerCase()
-              .includes(searchField.toLowerCase());
-            }
-          })
-          
-        );
-        case "description":
-          return setFilteredCaseDetails(
-            
-            allRecentCases.filter((eachValue:any) => {
-            if( eachValue.description) {
-              return eachValue.description
-              .toLowerCase()
-              .includes(searchField.toLowerCase());
-            }
-
-            })
-          );
-      case "id":
-        return setFilteredCaseDetails(
-          allRecentCases.filter((eachValue:any) => {
-            if( eachValue.id) {
-            return eachValue.id
-              .toString()
-              .toLowerCase()
-              .includes(searchField.toLowerCase());
-            }
-          })
-        );
-        case "status":
-          return setFilteredCaseDetails(
-            allRecentCases.filter((eachValue:any) => {
-            if( eachValue.status) {   
-              return eachValue.status
-                .toString()
-                .toLowerCase()
-                .includes(searchField.toLowerCase());
-            }
-            })
-          );
-      default:
-        return setFilteredCaseDetails(
-          allRecentCases.filter((eachValue:any) => {
-            return eachValue.name
-              .toLowerCase()
-              .includes(searchField.toLowerCase());
-          })
-        );
-    }
+  const filterDocumentDetails = async () => {
+    let searchResult = await searchCases(searchField,searchColumn)
+    if(searchResult)
+    setFilteredCaseDetails(searchResult)
   };
-  useEffect(() => {
-    setFilteredCaseDetails(allRecentCases);
-    setdropDownArray(Object.keys(allRecentCases[0]))
-  }, [allRecentCases]);
+
 
 
   useEffect(() => {
     filterDocumentDetails();
-  }, [searchField]);
+  }, [searchField,searchColumn]);
 
 
   return (
