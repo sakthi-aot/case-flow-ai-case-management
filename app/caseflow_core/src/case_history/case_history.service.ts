@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cases } from 'src/cases/cases.entity';
 import { CasesService } from 'src/cases/cases.service';
@@ -24,9 +24,20 @@ export class CaseHistoryService {
 
 
 
-  findOne(id: number) {
-    return `This action returns a #${id} caseHistory`;
-  }
+  async findOne(id: number): Promise<CaseHistory> {
+    if(id){
+      const value = await this.caseHistoryRepository.findOne({
+        where: {
+          id: id,
+        },
+      });
+      if(value)
+      return value
+      throw new NotFoundException(`Record cannot find by id ${id}`);
+    }
+    throw new BadRequestException("request doesn't have any id")
+
+}
 
   update(id: number, updateCaseHistoryInput: UpdateCaseHistoryInput) {
     return `This action updates a #${id} caseHistory`;
