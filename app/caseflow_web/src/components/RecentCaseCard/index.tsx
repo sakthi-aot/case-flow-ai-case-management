@@ -7,12 +7,22 @@ import Grid from "@mui/material/Grid";
 import { Typography } from "@mui/material";
 import "./recentCaseCard.scss"
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux/es/exports";
+import { setSelectedCase } from "../../reducers/newCaseReducer";
 
 const RecentCaseCard = (props) => {
   const [CaseDetails, setcaseDetails] = useState(props.case);
+  const dispatch = useDispatch()
   const navigate = useNavigate();
 
-  const viewCaseDetails = async (CaseDetails)=>{
+  const viewCaseDetails = async (CaseDetails)=>{    
+    dispatch(setSelectedCase({
+      id:CaseDetails.id,
+      name:CaseDetails.name,
+      description:CaseDetails.description,
+      status:CaseDetails.status,
+      isEdit:false
+    }))
     navigate("/private/cases/"  + CaseDetails.id+'/details');
   }
 
