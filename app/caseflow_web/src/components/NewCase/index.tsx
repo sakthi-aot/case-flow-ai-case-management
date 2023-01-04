@@ -29,19 +29,14 @@ const caseList =  useSelector(state=>state.cases.selectedCase);
 const [values, setValues] = useState(initialFieldValues)
 const { handleSubmit, control,register } = useForm();
 
-  const onSubmit = async (data:any) => 
+  const onSubmit = async () => 
   {
-
-    const caseData:Case|void = new Case();
-    caseData.name = data.name;
-    caseData.statusid = 1;
     let response;
-    if(values.id){
-     caseData.id=values.id;
-     response = await updateCases(caseData);
+    if(caseList.isEdit){
+     response = await updateCases(values);
      refreshCases();
     }else{
-    response = await addCases(caseData);
+    response = await addCases(values);
     refreshCases();
     }
     console.log(response);
@@ -77,7 +72,7 @@ const resetCases=()=>{
   return (
     <div style={{ padding: "2rem 3rem 0rem 8rem" }}>
       <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6">
-      {values.id==0?"New Case":"Update Case"}  
+      {caseList.isEdit?"Update Case":"New Case"}  
       </Typography>
       <Divider sx={{ borderBottomWidth: 3 }} />
       <Grid container spacing={3} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
@@ -101,7 +96,7 @@ const resetCases=()=>{
                 width: "100%",            
               }} 
               value={values.name} 
-              onChange={(e)=>{setValues({"name":e.target.value})}}
+              onChange={(e)=>{setValues({...values,name:e.target.value})}}
               placeholder="Case Name"
               
             />
@@ -134,7 +129,7 @@ const resetCases=()=>{
             InputProps={{ disableUnderline: true }} 
             placeholder="Enter the details of the Case"
             value={values.description}
-            onChange={(e)=>{setValues({"description":e.target.value})}}
+            onChange={(e)=>{setValues({...values,description:e.target.value})}}
           />
         )}
       />          
@@ -153,7 +148,7 @@ const resetCases=()=>{
             variant="contained"
             onClick={handleSubmit(onSubmit)}
           >
-           {values.id==0?"Submit":"Update"}  
+           {caseList.isEdit?"Update":"Submit"}  
           </Button>
           <Button
             style={{

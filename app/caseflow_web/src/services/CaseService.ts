@@ -29,6 +29,7 @@ import {
           createCaseInput: {
             name: newCase.name,
             statusid: newCase.statusid,
+            desc: newCase.description
           },
         },
       },null)
