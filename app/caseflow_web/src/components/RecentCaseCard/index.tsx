@@ -35,28 +35,39 @@ const RecentCaseCard = (props) => {
     <div className="caselist" >
       <Typography />
       <ListItem button>
-        <Grid container spacing={1}  >
-
-          <Grid item xs={4} onClick={()=>{viewCaseDetails(CaseDetails)}}>
+        <Grid container spacing={1}  onClick={()=>{viewCaseDetails(CaseDetails)}}>
+          <Grid item xs={3} >
             <ListItemText
               primary={
                 <Typography 
                 variant="body2"
                 style={{ "fontWeight": "700" }}>
-                  Case ID
+                   ID
                 </Typography>
               }
               secondary={CaseDetails.id}
             />
           </Grid>
-          <Grid item xs={6}  onClick={()=>{viewCaseDetails(CaseDetails)}}>
+          <Grid item xs={3} >
+            <ListItemText
+              primary={
+                <Typography 
+                variant="body2"
+                style={{ "fontWeight": "700" }}>
+                   Name
+                </Typography>
+              }
+              secondary={CaseDetails.name}
+            />
+          </Grid>
+          <Grid item xs={4} >
             <ListItemText
               primary={
                 <Typography
                 variant="body2"
                 
                 style={{ "fontWeight": "700" }}>
-                  Case Description
+                   Description
                 </Typography>
               }
               secondary={CaseDetails.desc}
@@ -64,7 +75,7 @@ const RecentCaseCard = (props) => {
           </Grid>          
 
 
-          <Grid  item xs={2}  onClick={()=>{viewCaseDetails(CaseDetails)}}>
+          <Grid  item xs={2}  >
           <Box display="flex" justifyContent="flex-end">
           <div className="recent-case-card-status">
               <div className="recent-case-card-status-text">
