@@ -22,8 +22,17 @@ directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUM
 
 directive @override(from: String!) on FIELD_DEFINITION
 
+type CaseHistory {
+  id: ID!
+  datetime: Int!
+  outcome: String!
+  userid: Float!
+  caseid: Float!
+  cases: [Cases!]
+}
+
 type Cases {
-  id: Int!
+  id: ID!
   lobid: Int!
   name: String!
   desc: String
@@ -39,6 +48,7 @@ type Cases {
   currentownerid: Float!
   involvedparties: [Int!]
   isdeleted: Boolean!
+  casehistory: [CaseHistory!]
 }
 
 """
@@ -47,14 +57,19 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Query {
-  getCase(id: Int!): [Cases!]!
+  getCase(id: Int!): Cases!
   case: [Cases!]!
+  fetchRecentCase: [Cases!]!
+  caseHistory(id: Int!): CaseHistory!
 }
 
 type Mutation {
   createCase(createCaseInput: CreateCaseInput!): Cases!
-  updateCases(cases: UpdateCaseInput!): Cases!
-  removeCases(id: Float!): Cases!
+  updateCase(updateCaseInput: UpdateCaseInput!): Cases!
+  removeCase(id: Float!): Cases!
+  createCaseHistory(createCaseHistoryInput: CreateCaseHistoryInput!): CaseHistory!
+  updateCaseHistory(updateCaseHistoryInput: UpdateCaseHistoryInput!): CaseHistory!
+  removeCaseHistory(id: Int!): CaseHistory!
 }
 
 input CreateCaseInput {
@@ -64,7 +79,7 @@ input CreateCaseInput {
   statusid: Int!
   typeid: Float
   linkedcases: [Int!]
-  creationdate: DateTime = "2022-12-19T05:45:46.755Z"
+  creationdate: DateTime = "2022-12-23T08:49:13.639Z"
   completiondate: DateTime
   lastmodificationdate: DateTime
   penduntildate: DateTime
@@ -83,7 +98,7 @@ input UpdateCaseInput {
   statusid: Int!
   typeid: Float
   linkedcases: [Int!]
-  creationdate: DateTime = "2022-12-19T05:45:46.752Z"
+  creationdate: DateTime = "2022-12-23T08:49:13.638Z"
   completiondate: DateTime
   lastmodificationdate: DateTime
   penduntildate: DateTime
@@ -92,6 +107,17 @@ input UpdateCaseInput {
   currentownerid: Int
   involvedparties: [Int!]
   isdeleted: Boolean = false
+}
+
+input CreateCaseHistoryInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateCaseHistoryInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }
 
 scalar link__Import

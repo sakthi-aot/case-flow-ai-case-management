@@ -17,6 +17,7 @@ import { APP_GUARD } from '@nestjs/core';
 //_____________________Custom Imports_____________________//
 import { DmsModule } from './dms/dms.module';
 import { CasesModule } from './cases/cases.module';
+import { CaseHistoryModule } from './case_history/case_history.module';
 
 const keyCloakOptionsProvider =  {
   provide: 'keyCloakDataProvider',
@@ -41,6 +42,8 @@ const keyCloakOptionsProvider =  {
     GraphQLModule.forRoot<ApolloFederationDriverConfig>({
       driver: ApolloFederationDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      playground: true,
+      introspection: true,
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -53,6 +56,7 @@ const keyCloakOptionsProvider =  {
       entities: ['dist/**/*.entity{.ts,.js}'],
       migrations: ['./src/migrations/*.ts'],
     }),
+    CaseHistoryModule,
   ],
   controllers: [],
   providers: [
