@@ -21,6 +21,10 @@ const Cases = (
 
   const filterDocumentDetails = async () => {
     let searchResult = await searchCases(searchField,searchColumn)
+    searchResult = searchResult.map((element) => {
+      return {...element,status:"Open"};
+    });
+    
     if(searchResult)
     setFilteredCaseDetails(searchResult)
   };
