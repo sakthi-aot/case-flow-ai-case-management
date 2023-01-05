@@ -1,6 +1,7 @@
 import {
   httpGETBolbRequest,
   httpGETRequest,
+  httpDELETERequest
 
 } from "../apiManager/httpRequestHandler";
 import {API, GRAPHQL} from "../apiManager/endpoints";
@@ -54,6 +55,23 @@ export const  getDocument = async (id) => {
   return data;
 }
 
+
+export const  deleteDocument = async (id) => {
+  const url = API.DMS_API + "?id=" + id;
+  const data = await httpDELETERequest(url,null)
+  .then((res) => {return res})
+  .catch((error) => {
+    if (error?.response?.data) {
+      return({"error" : error})
+    } else {
+      return({"error" : "something went wrong"})
+
+    }
+  })
+  
+  return data;
+}
+
 export const searchCaseDocument= async (searchField,searchColumn) => {
   const url = GRAPHQL;
   const  output =  await httpGETRequest(url,{query: print(SEARCH_DOCUMENT_LIST),
@@ -69,3 +87,4 @@ export const searchCaseDocument= async (searchField,searchColumn) => {
     });
     return output
 };
+

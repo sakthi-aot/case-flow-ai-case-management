@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { getDocumentofCaseList } from "../../services/CaseService";
 import "./RelatedCaseDocuments.scss"
-import { getDocument } from "../../services/DocumentManagementService";
+import { getDocument,deleteDocument } from "../../services/DocumentManagementService";
 import { MenuItem, Select } from "@mui/material";
 
 
@@ -58,9 +58,9 @@ const [docDetail, setdocDetail] = useState([]);
         link.remove();
       
   }
-  const deleteDocument = async (id)=>{
+  const deleteDocuments = async (id)=>{
   
-      let document = await getDocument(id)
+      let document = await deleteDocument(id)
   
   }
 
@@ -76,13 +76,14 @@ const [docDetail, setdocDetail] = useState([]);
     switch(action){
 
       case 1 :{ downloadDocument(row.id,row.name,row.type); break;}
-      case 2 :{ deleteDocument(row.id); break;}
+      case 2 :{ deleteDocuments(row.id); break;}
     }
 
   }
-  return (    
+  return ( 
+   
     <TableContainer component={Paper} sx={{ boxShadow : 0,}}>
-      <Table sx={{ minWidth: 650 ,border : 0,}} aria-label="simple table" className="case-document-table" >
+    {docDetail.length!==0 ?  <Table sx={{ minWidth: 650 ,border : 0,}} aria-label="simple table" className="case-document-table" >
         <TableHead >
           <TableRow>
             <TableCell  sx={{ color: '#606060',fontWeight: 'bold',fontSize: 16,border:0}} >Name</TableCell>
@@ -126,7 +127,9 @@ const [docDetail, setdocDetail] = useState([]);
             </TableRow>
           ))}
         </TableBody>
-      </Table>
+      </Table> :
+      <p className="no-case-doc-found">No Case Documents Found !</p>
+      }
     </TableContainer>    
   );
 }

@@ -64,19 +64,8 @@ export class DocumentsController {
   @Get()
   @MessagePattern({ cmd: 'fetch_document' })
   async fetchDocument(param) {
+    const token=param.authorization;
     try {   
-      // let id ;
-      // if(param.dms==='2'){
-      //    id = await (
-      //     await this.documentService.findOne(parseInt(param.id))
-      //   ).name;
-      // }   else{
-      //    id = await (
-      //     await this.documentService.findOne(parseInt(param.id))
-      //   ).documentref;
-      // }    
-      // console.log(id)
-      // const result  =await this.fileService.downloadFile(id, param.dms);
       let doc_id = null;
       let documentDetails = await this.documentService.findOne(parseInt(param.id));
       let dms = await documentDetails.dmsprovider;
@@ -89,10 +78,8 @@ export class DocumentsController {
           documentDetails
         ).documentref;
       }  
-      const data = await this.fileService.downloadFile(doc_id, dms);
+      const data = await this.fileService.downloadFile(doc_id, dms,token);
       return {data : data , type : documentDetails.type,name : documentDetails.name,dmsprovider : documentDetails.dmsprovider}
-
-
     } catch (error) {
       console.log(error.message);
     }
@@ -104,7 +91,9 @@ export class DocumentsController {
     try {
       let field = await this.documentService.findOne(parseInt(param.id));
       field.isdeleted = true;
-      return this.fileService.deleteFile(field, param.dms).then(
+      let documentDetails = await this.documentService.findOne(parseInt(param.id));
+      let dms = await documentDetails.dmsprovider;
+      return this.fileService.deleteFile(field,dms).then(
         () => {
           return this.documentService.update(param.id, field);
         },

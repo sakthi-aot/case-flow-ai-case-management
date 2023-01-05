@@ -1,7 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { ConfigService} from '@nestjs/config';
-import {AxiosResponse} from 'axios'
+import axios, {AxiosResponse} from 'axios'
 import { createReadStream } from 'fs';
 import { firstValueFrom, map, Observable } from 'rxjs';
 
@@ -12,11 +12,12 @@ export class AlfrescoService {
 
   // Summary : Upload File to S3
   // Created By : Don C Varghese
-  async uploadDocument(file: any, data: any):  Promise<any>  {
+  async uploadDocument(file: any, data: any,token:string):  Promise<any>  {
    console.log(file,data);
    let body = this.mapAlfrescoForm(file,data)
    const headersRequest = {
-    'Content-Type': 'multipart/form-data'
+    'Content-Type': 'multipart/form-data',
+    "Authorization": token ,
 };
 
    console.log(body);
@@ -27,10 +28,6 @@ export class AlfrescoService {
     const url = this.configService.get('ALFRESCO_REPO_URL') + "/1/nodes/-root-/children"
     try{
       let response = await firstValueFrom(this.httpService.post(url,body,{
-        auth: {
-          username: 'admin',
-          password: 'admin'
-        },
         headers : headersRequest
       
       }));
@@ -46,10 +43,12 @@ export class AlfrescoService {
 
   // Summary : Upload File to S3
   // Created By : Don C Varghese
-  async updateDocument(file: any,documnet : any,data: any):  Promise<any>  {
+  async updateDocument(file: any,documnet : any,data: any,token:string):  Promise<any>  {
    console.log(file,data);
    let body = new Buffer(file.buffer ? file.buffer : file);
-
+   const headersRequest = {
+    "Authorization": token ,
+};
 
    console.log(body);
    const auth = {
@@ -63,10 +62,8 @@ export class AlfrescoService {
   }
     try{
       let response = await firstValueFrom(this.httpService.put(url,body,{
-        auth: {
-          username: 'admin',
-          password: 'admin'
-        },
+        
+        headers : headersRequest,
         params: params,
       
       }));
@@ -82,18 +79,14 @@ export class AlfrescoService {
 
     // Summary : Get  File from afresco
   // Created By : Don C Varghese
-  async getDocument(documentId: string): Promise<any> {
+  async getDocument(documentId: string,token:string): Promise<any> {
     try{
-      const url = this.configService.get('ALFRESCO_REPO_URL') + "/1/nodes/"+ documentId +"/content?attachment=false"
-      let response = await firstValueFrom(this.httpService.get(url,{
-        auth: {
-          username: 'admin',
-          password: 'admin'
-        },
-      
-      }));
-      // console.log("response",response)
-      return response.data;
+       const url = this.configService.get('ALFRESCO_REPO_URL') + "/1/nodes/"+ documentId +"/content?attachment=false"
+    return axios.get(url, {
+      headers : {"Authorization": token },
+      responseType: 'arraybuffer'
+    })
+    .then(response => Buffer.from(response.data, 'binary'))
     }
     catch(err){
     console.log(err);
@@ -104,14 +97,14 @@ export class AlfrescoService {
 
     // Summary : Delete  File from afresco
   // Created By : Don C Varghese
-  async deleteDocument(documentId: string): Promise<any> {
+  async deleteDocument(documentId: string,token:string): Promise<any> {
     try{
+      const headersRequest = {
+        "Authorization": token 
+    };
       const url = this.configService.get('ALFRESCO_REPO_URL') + "/1/nodes/"+ documentId +"/content?attachment=true"
       let response = await firstValueFrom(this.httpService.delete(url,{
-        auth: {
-          username: 'admin',
-          password: 'admin'
-        },
+        headers : headersRequest
       
       }));
       console.log("response",response)

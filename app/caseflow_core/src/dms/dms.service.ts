@@ -4,20 +4,20 @@ import { ClientProxy } from '@nestjs/microservices';
 export class DmsService {
   constructor(@Inject('DMS') private readonly dmsClient: ClientProxy) {}
 
-  async fetchDocument(data): Promise<any> {
-    let response = await this.dmsClient.send({ cmd: 'fetch_document' }, { ...data }).toPromise();
+  async fetchDocument(data,headers): Promise<any> {
+    let response = await this.dmsClient.send({ cmd: 'fetch_document' }, { ...data,...headers }).toPromise();
     return response;
   }
 
-  uploadDocument(file, data): any {
-    return this.dmsClient.send({ cmd: 'create_document' }, { file, ...data });
+  uploadDocument(file, data,headers): any {
+    return this.dmsClient.send({ cmd: 'create_document' }, { file, ...data,...headers });
   }
 
-  editDocument(file, data): any {
-    return this.dmsClient.send({ cmd: 'edit_document' }, { file, ...data });
+  editDocument(file, data,headers): any {
+    return this.dmsClient.send({ cmd: 'edit_document' }, { file, ...data,...headers });
   }
 
-  deleteDocument(data): any {
-    return this.dmsClient.send({ cmd: 'delete_document' }, { ...data });
+  deleteDocument(data,headers): any {
+    return this.dmsClient.send({ cmd: 'delete_document' }, { ...data,...headers });
   }
 }
