@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import {useSelector} from "react-redux";
 import { store } from "../../interfaces/stateInterface";
 import "./RelatedCaseDocuments.scss"
-import { getDocument } from "../../services/DocumentManagementService";
+import { getDocument,deleteDocument } from "../../services/DocumentManagementService";
 import { MenuItem, Select } from "@mui/material";
 
 
@@ -53,9 +53,9 @@ let selected = 0;
         link.remove();
       
   }
-  const deleteDocument = async (id)=>{
+  const deleteDocuments = async (id)=>{
   
-      let document = await getDocument(id)
+      let document = await deleteDocument(id)
   
   }
 
@@ -77,7 +77,7 @@ let selected = 0;
     switch(action){
 
       case 1 :{ downloadDocument(row.id,row.name,row.type); break;}
-      case 2 :{ deleteDocument(row.id); break;}
+      case 2 :{ deleteDocuments(row.id); break;}
     }
 
   }

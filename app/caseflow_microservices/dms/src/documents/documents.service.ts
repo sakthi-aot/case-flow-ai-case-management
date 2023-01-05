@@ -17,7 +17,14 @@ export class DocumentsService {
   // summery : Get all documents
   // Created By : Don C Varghese
   async findAll(): Promise<CaseDocuments[]> {
-    return this.documentRepository.find();
+    return this.documentRepository.find({
+      where: {
+        isdeleted: false,
+      },
+      order: {
+        id: "DESC",
+}
+    });
   }
 
   // summery : Create a new document
@@ -40,8 +47,13 @@ export class DocumentsService {
       return await this.documentRepository.findOne({
         where: {
           id: id,
+        
         },
-      });           
+        order: {
+          id: "DESC",
+  }
+      },
+       );           
     }catch(err){
       console.log(err)
     }
@@ -50,7 +62,7 @@ export class DocumentsService {
   // summery : Update a new document
   // Created By : Don C Varghese
   async update(id: number, updateCaseInput: UpdateDocumentInput) {
-    return this.documentRepository.update({id:id},updateCaseInput)
+    return this.documentRepository.update(id,updateCaseInput)
     .then( ()=> this.findOne(id))
     .catch( (e) => {
       console.error(e.message)
@@ -75,6 +87,8 @@ export class DocumentsService {
   }
 
   async forCases(id:number){
-    return this.documentRepository.find({ where:{ "caseid":id}})
+    return this.documentRepository.find({ where:{ "caseid":id,isdeleted: false}, order: {
+      id: "DESC",
+}})
   }
 }
