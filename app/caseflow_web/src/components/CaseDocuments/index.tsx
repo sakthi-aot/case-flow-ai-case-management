@@ -27,17 +27,16 @@ import { State, USerDetails } from "../../interfaces/stateInterface";
 import { DocumentList } from "../../interfaces/componentInterface";
 import { getAllDocuments } from "../../services/DocumentManagementService";
 import { setDocumentList } from "../../reducers/documentsReducer";
+import { searchCaseDocument } from "../../services/DocumentManagementService";
 
 
 
 const CaseDocuments = () => {
   const [filteredDocumentDetails, setFilteredDocumentDetails] = useState([]);
-  const [documentDetails, setDocumentDetails] = useState([]);
   const [documentDetailsForEdit, setDocumentDetailsForEdit] = useState(null);
   const [searchField, setSearchField] = useState("");
   const [searchColumn, setSearchColumn] = useState("Name");
-  const dropDownArray = ["Name", "Id", "Creation Date", "modification Date"];
-   const documents =  useSelector((state:State)=>state.documents.documentsList);
+  const dropDownArray = ["Name","Description"];
    const dispatch = useDispatch();
   const getFileIcon = (fileName:any) => {
     let ext = fileName.split(".").pop();
@@ -55,65 +54,22 @@ const CaseDocuments = () => {
   };
 
 
-  const filterDocumentDetails = () => {
-    switch (searchColumn) {
-      case "Name":
-        return setFilteredDocumentDetails(
-          documentDetails.filter((eachValue:any) => {
-            return eachValue.name
-              .toLowerCase()
-              .includes(searchField.toLowerCase());
-          })
-        );
-      case "Id":
-        return setFilteredDocumentDetails(
-          documentDetails.filter((eachValue:any) => {
-            return eachValue.id
-              .toString()
-              .toLowerCase()
-              .includes(searchField.toLowerCase());
-          })
-        );
-      case "Creation Date":
-        return setFilteredDocumentDetails(
-          documentDetails.filter((eachValue:any) => {
-            return eachValue.creationdate
-              .toString()
-              .toLowerCase()
-              .includes(searchField.toLowerCase());
-          })
-        );
-      case "modification Date":
-        return setFilteredDocumentDetails(
-          documentDetails.filter((eachValue:any) => {
-            return eachValue.modificationdate
-              .toString()
-              .toLowerCase()
-              .includes(searchField.toLowerCase());
-          })
-        );
-      default:
-        return setFilteredDocumentDetails(
-          documentDetails.filter((eachValue:any) => {
-            return eachValue.name
-              .toLowerCase()
-              .includes(searchField.toLowerCase());
-          })
-        );
-    }
+  const filterDocumentDetails = async () => {
+    let searchResult = await searchCaseDocument(searchField,searchColumn)
+    // searchResult = searchResult.map((element) => {
+
+    // });
+    if(searchResult)
+    setFilteredDocumentDetails(searchResult)
   };
 
-  useEffect(() => {
-    // fetchDocumentDetails();
-    
-    setDocumentDetails(documents);
-     setFilteredDocumentDetails(documents);
-  }, [documents]);
+
 
   useEffect(() => {
     fetchDocumentDetailsList()
     filterDocumentDetails();
   }, [searchField]);
+  
   async function fetchDocumentDetailsList() {
     let output = await getAllDocuments();
     // output = output.map((element) => {

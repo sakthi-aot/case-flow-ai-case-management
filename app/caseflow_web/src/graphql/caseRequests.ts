@@ -80,3 +80,12 @@ query Searchcase($searchField:String!,$searchColumn:String!){
     desc
     }
   }`
+
+  export const FETCH_RECENT_CASES = gql`
+query{
+  fetchRecentCase{
+    id,
+    name,
+    desc,
+  }
+}`
