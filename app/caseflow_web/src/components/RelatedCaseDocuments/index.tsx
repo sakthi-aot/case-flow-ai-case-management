@@ -6,34 +6,39 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {useSelector} from "react-redux";
-import { store } from "../../interfaces/stateInterface";
+import { getDocumentofCaseList } from "../../services/CaseService";
 import "./RelatedCaseDocuments.scss"
 import { getDocument,deleteDocument } from "../../services/DocumentManagementService";
 import { MenuItem, Select } from "@mui/material";
 
 
+// function createData(
+//   name: string,
+//   size: number,
+//   creationDate: Date,
+//   lastUpdated: Date,
+//   version: number,
+// ) {
+//   return { name, size, creationDate, lastUpdated, version };
+// }
 
-function createData(
-  name: string,
-  size: number,
-  creationDate: Date,
-  lastUpdated: Date,
-  version: number,
-) {
-  return { name, size, creationDate, lastUpdated, version };
-}
 
+export default function RelatedCaseDocuments({id}) {
+  
+const [docDetail, setdocDetail] = useState([]);
 
-export default function RelatedCaseDocuments() {
-
-  let selectedDocuments =  useSelector((state:store)=>state.documents.documentsList);
+  async function fetchCaseDetails() {
+    if(id){
+      let output = await getDocumentofCaseList(id);
+      (setdocDetail(output))
+    }
+  }
   const options = [{id :0,text : '...'},
   {id :1,text : 'Download'},
   {id :2,text : 'Delete'}
-];
-let selected = 0;
-  const downloadDocument = async (id,name,type)=>{
+    ];
+      let selected = 0;
+      const downloadDocument = async (id,name,type)=>{
   
       let response = await getDocument(id)
       const downloadUrl = window.URL.createObjectURL(
@@ -59,19 +64,13 @@ let selected = 0;
   
   }
 
-  const [docDetail, setdocDetail] = useState([]);
   
 
   useEffect(() => {
+    fetchCaseDetails();
+  }, [id]);
 
-    const clone = structuredClone(selectedDocuments);
-    const value = Object.assign(clone, selectedDocuments);
-    // console.log(selectedDocuments)
-    // console.log(value)
-    // console.log(clone)
-    setdocDetail(value)
 
-  }, [selectedDocuments]);
 
   const onChnagehandler =(row,action) =>{
     switch(action){

@@ -4,8 +4,9 @@ import {
   httpDELETERequest
 
 } from "../apiManager/httpRequestHandler";
-import {API} from "../apiManager/endpoints";
-
+import {API, GRAPHQL} from "../apiManager/endpoints";
+import { FETCH_DOCUMENTS } from "../graphql/documentsRequests";
+import { print } from "graphql";
 // export const getDocumetById = (documentId) => {
 //   return (dispatch) => {
 //     const url = API.DMS_API + "download?id=" + documentId;
@@ -25,19 +26,17 @@ import {API} from "../apiManager/endpoints";
 
 
 export const  getAllDocuments = async () => {
-  const url = API.DMS_API + "/doc_fetchdata";
-  const data = await httpGETRequest(url,null,null)
-  .then((res) => {return res["data"]["message"]["data"]["getDocumentList"]})
-  .catch((error) => {
-    if (error?.response?.data) {
-      return({"error" : error})
-    } else {
-      return({"error" : "something went wrong"})
-
-    }
-  })
-  
-  return data;
+  const url = GRAPHQL;
+  const  output =  await httpGETRequest(url,{query: print(FETCH_DOCUMENTS),
+    variables: {
+    },
+  },null)
+    .then((res) => {return res.data.data.documents    })
+    .catch((error) => {
+      console.log({"error" : "error loading data"})
+      return []
+    });
+    return output
 }
 
 export const  getDocument = async (id) => {

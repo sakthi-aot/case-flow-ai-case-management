@@ -13,7 +13,6 @@ import { caseListprops,  PropsConfig, RecentCase, SortValue } from "../../interf
 import { getCasesList } from "../../services/CaseService";
 import { setCaseList } from "../../reducers/newCaseReducer";
 import {useSelector,useDispatch} from "react-redux";
-import { store } from "../../interfaces/stateInterface";
 import { Case } from "../../interfaces/componentInterface";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -31,14 +30,13 @@ import Grid from "@mui/material/Grid";
 // }
 
 
-const CaseList =React.memo( ({config}:caseListprops) => {
+const CaseList =React.memo( ({config,allRecentCases}:any) => {
 
 
   // const [sortValue,setSortValue] = useState({value:"",sortOrder:null})
   // const [recentCases,setRecentCases] = useState([...allRecentCases])
   // const [sortSelectValue,setSortSelectValues] = useState(sortingkeysOfAllRecentCases)
   const dispatch = useDispatch();
-  let allRecentCases =  useSelector((state:store)=>state.cases.caseList);
 
   // useEffect(()=>{ 
   //  const updatedSortedData = SortCasesByField(sortValue,recentCases)
@@ -116,9 +114,9 @@ const CaseList =React.memo( ({config}:caseListprops) => {
         }}
         component="nav"
         aria-label="mailbox folders"
-      >         
-        { allRecentCases.length !== 0?
-        allRecentCases.map((eachcases:Case) => (
+
+         
+        {allRecentCases && allRecentCases.map((eachcases:Case) => (
           <RecentCasecard
             case = {eachcases}
             key={eachcases.id}            

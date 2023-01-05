@@ -4,7 +4,8 @@ selectedCase : {
   id : 0,
   name : "",
    description :  "" ,
-   status : ""
+   status : "",
+   isEdit: false
 },
 caseList : [{
   id : 0,
@@ -25,6 +26,9 @@ const caseSlice = createSlice({
     setSelectedCase: (state, action) => {
         state.selectedCase = action.payload;
     },
+    resetSelectedCase: (state) => {
+      state.selectedCase = initialState.selectedCase;
+  },
 
   }
 });
@@ -32,5 +36,6 @@ const caseSlice = createSlice({
 export const {
   setCaseList,
   setSelectedCase,
+  resetSelectedCase,
 } = caseSlice.actions;
 export default caseSlice.reducer;

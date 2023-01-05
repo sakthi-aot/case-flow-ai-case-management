@@ -5,6 +5,7 @@ RUN dnf module install -y nodejs:14
 # Install packages, build and keep only prod packages
 WORKDIR /app
 COPY . ./
+RUN npm install
 RUN npm ci
 RUN npm run build
 # --only=prod
@@ -20,7 +21,7 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 
 # Expose port 
-EXPOSE 7002
+EXPOSE 7002 7003
 
 # Start up command, with max heap size as 50Megs
 ENTRYPOINT ["node", "--max-old-space-size=50","dist/main"]

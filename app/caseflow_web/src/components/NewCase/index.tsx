@@ -11,7 +11,7 @@ import {useDispatch, useSelector} from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
-import { setSelectedCase } from "../../reducers/newCaseReducer";
+import { setSelectedCase,resetSelectedCase } from "../../reducers/newCaseReducer";
 
 const NewCase = () => {
   
@@ -27,21 +27,16 @@ const NewCase = () => {
 
 const caseList =  useSelector(state=>state.cases.selectedCase);
 const [values, setValues] = useState(initialFieldValues)
-const { handleSubmit, reset, control,register } = useForm();
+const { handleSubmit, control,register } = useForm();
 
-  const onSubmit = async (data:any) => 
+  const onSubmit = async () => 
   {
-
-    const caseData:Case|void = new Case();
-    caseData.name = data.name;
-    caseData.statusid = 1;
     let response;
-    if(values.id){
-     caseData.id=values.id;
-     response = await updateCases(caseData);
+    if(caseList.isEdit){
+     response = await updateCases(values);
      refreshCases();
     }else{
-    response = await addCases(caseData);
+    response = await addCases(values);
     refreshCases();
     }
     console.log(response);
@@ -53,20 +48,31 @@ const { handleSubmit, reset, control,register } = useForm();
 
   }
   useEffect(() => {
-    console.log("inside");
-  if(caseList)
+  if(caseList.isEdit)
   setValues(caseList);
-}, []);
+}, [caseList]);
 
 const refreshCases=()=>{
-  dispatch(setSelectedCase(initialFieldValues));
+  dispatch(resetSelectedCase());
   setValues(initialFieldValues);
   navigate("/private/cases");
 }
+
+const resetCases=()=>{
+  dispatch(resetSelectedCase());
+  setValues(initialFieldValues);
+
+}
+
+  //set values when document input fiels changes
+  // const handleDocumentInputChange = (e) => {
+  //   const target = e.target;
+  //   setValues({ ...values, [name]: value });
+  // };
   return (
     <div style={{ padding: "2rem 3rem 0rem 8rem" }}>
       <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6">
-      {values.id==0?"New Case":"Update Case"}  
+      {caseList.isEdit?"Update Case":"New Case"}  
       </Typography>
       <Divider sx={{ borderBottomWidth: 3 }} />
       <Grid container spacing={3} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
@@ -84,10 +90,15 @@ const refreshCases=()=>{
               id="standard-basic"
               label="Case Name"
               variant="standard"
-           
+              rows={1}
+              sx={{
+
+                width: "100%",            
+              }} 
               value={values.name} 
-              onChange={onChange}
+              onChange={(e)=>{setValues({...values,name:e.target.value})}}
               placeholder="Case Name"
+              
             />
           )}
         />          
@@ -118,37 +129,37 @@ const refreshCases=()=>{
             InputProps={{ disableUnderline: true }} 
             placeholder="Enter the details of the Case"
             value={values.description}
-            onChange={onChange}
+            onChange={(e)=>{setValues({...values,description:e.target.value})}}
           />
         )}
       />          
         </Grid>
       </Grid>
 
-      <div style={{"display" : "flex", padding: "2rem 1rem 1rem 1rem"}}>
+      <div style={{"display" : "flex", padding: "2rem 1rem 1rem 1rem", "justify-content": "center"}}>
           <Button
             style={{
               alignItems :"center",
-              margin: "auto",
-              height: "3.4375rem",
-              width: "30%",
+              // margin: "auto",
+              height: "2.4375rem",
+              width: "20%",
               backgroundColor:"#404040"
             }}
             variant="contained"
             onClick={handleSubmit(onSubmit)}
           >
-           {values.id==0?"Submit":"Update"}  
+           {caseList.isEdit?"Update":"Create"}  
           </Button>
           <Button
             style={{
               alignItems :"center",
-              margin: "auto",
-              height: "3.4375rem",
-              width: "30%",
+               marginLeft: "2rem",
+              height: "2.4375rem",
+              width: "20%",
               backgroundColor:"#404040"
             }}
             variant="contained"
-            onClick={() => reset()} 
+            onClick={() => resetCases()} 
           >
            Reset
           </Button>
