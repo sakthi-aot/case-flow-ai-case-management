@@ -71,11 +71,12 @@ console.log("update");
       });
  
 };
-  export const getCasesList = async () => {
-     
+  export const getCasesList = async (number) => {
+    let pNo = number?number:1;
     const url = GRAPHQL;
     const  output =  await httpGETRequest(url,{query: print(FETCH_CASES),
-      variables: {
+      variables: {       
+        Skip:0
       },
     },null)
       .then((res) => {return res.data.data.case})

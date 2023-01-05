@@ -58,7 +58,7 @@ scalar DateTime
 
 type Query {
   getCase(id: Int!): Cases!
-  case: [Cases!]!
+  case(skip: Int = 0, take: Int = 25): [Cases!]!
   fetchRecentCase: [Cases!]!
   caseHistory(id: Int!): CaseHistory!
 }

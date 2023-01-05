@@ -14,6 +14,7 @@ import { getCasesList } from "../../services/CaseService";
 import { setCaseList } from "../../reducers/newCaseReducer";
 import {useSelector,useDispatch} from "react-redux";
 import { Case } from "../../interfaces/componentInterface";
+import { Pagination } from "@mui/material";
 
 
 
@@ -33,7 +34,9 @@ const CaseList =React.memo( ({config,allRecentCases}:any) => {
   // const [sortValue,setSortValue] = useState({value:"",sortOrder:null})
   // const [recentCases,setRecentCases] = useState([...allRecentCases])
   // const [sortSelectValue,setSortSelectValues] = useState(sortingkeysOfAllRecentCases)
+  const [pageNo,setPageNo]= useState(0);
   const dispatch = useDispatch();
+
 
   // useEffect(()=>{ 
   //  const updatedSortedData = SortCasesByField(sortValue,recentCases)
@@ -62,7 +65,7 @@ const CaseList =React.memo( ({config,allRecentCases}:any) => {
   }, []);
   
   async function fetchCaseDetails() {
-    let output = await getCasesList();
+    let output = await getCasesList(pageNo);
 
     output = output.map((element) => {
       return {
@@ -75,6 +78,11 @@ const CaseList =React.memo( ({config,allRecentCases}:any) => {
     dispatch(setCaseList(output))
 
 
+  }
+
+  const caseListpagination = (e) =>{
+    console.log(Number(e.target.innerText))
+    setPageNo(Number(e.target.innerText))
   }
   
   return (
@@ -119,6 +127,7 @@ const CaseList =React.memo( ({config,allRecentCases}:any) => {
             key={eachcases.id}            
           />
         ))}
+        <Pagination count={10} shape="rounded" className="pagination-case-list" onClick={caseListpagination} />
       </List>
     </div>
   );

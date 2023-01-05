@@ -9,6 +9,7 @@ import { CreateCaseInput } from './dto/create-case.input';
 import { UpdateCaseInput } from './dto/update-case.input';
 import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
+import { FetchArgs } from './dto/fetch.input';
 
 @Injectable()
 export class CasesService {
@@ -16,8 +17,20 @@ export class CasesService {
     @InjectRepository(Cases) private caseRepository: Repository<Cases>,
   ) {}
 
-  async findAll(): Promise<Cases[]> {
-    return this.caseRepository.find();
+  async findAll(args: FetchArgs = { skip: 0, take: 5 }): Promise<Cases[]> {
+    const take = 10;
+    // const skip =parseInt(args.skip)
+    const output = this.caseRepository.find(
+      {
+        take: args.take,
+        skip: args.skip,
+      }
+    );
+    // const output = this.caseRepository.find({
+    //   take:take,
+    //   skip:skip
+    // });
+    return output
   }
   async findAllWithLimit(): Promise<Cases[]> {
     return this.caseRepository.find({

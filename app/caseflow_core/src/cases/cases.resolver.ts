@@ -5,6 +5,7 @@ import { Args, Int, Mutation, Query, Resolver, ResolveReference } from '@nestjs/
 import { Cases } from './cases.entity';
 import { CasesService } from './cases.service';
 import { CreateCaseInput } from './dto/create-case.input';
+import { FetchArgs } from './dto/fetch.input';
 import { UpdateCaseInput } from './dto/update-case.input';
 
 @Resolver((of) => Cases)
@@ -17,9 +18,13 @@ export class CasesResolver {
   getCase(@Args('id', { type: () => Int }) id: number): Promise<Cases> {
     return this.casesService.findOne( id );
   }
+
+
   @Query((returns) => [Cases])
-  case(): Promise<Cases[]> {
-    return this.casesService.findAll();
+  case(@Args() args: FetchArgs): Promise<Cases[]> {
+    
+    // console.log(id)
+    return this.casesService.findAll(args);
   }
 
   @Query((returns) => [Cases])

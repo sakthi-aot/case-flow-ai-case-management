@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 export const FETCH_CASES = gql`
-query{
-  case{
+query case($Skip:Int) {
+  case(take:10 skip:$Skip){
     id,
     name,
     desc,
