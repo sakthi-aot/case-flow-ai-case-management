@@ -10,3 +10,14 @@ query{
     creationdate,
   }
 }`
+
+export const SEARCH_DOCUMENT_LIST = gql`
+query SearchcaseDocument($searchField:String!,$searchColumn:String!){
+  SearchcaseDocument(searchField:$searchField,searchColumn:$searchColumn){
+    id,
+    name,
+    desc,
+    caseid,
+    creationdate,
+    }
+  }`

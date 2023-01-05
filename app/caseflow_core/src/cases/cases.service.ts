@@ -21,7 +21,9 @@ export class CasesService {
   }
   async findAllWithLimit(): Promise<Cases[]> {
     return this.caseRepository.find({
-      take: 10,
+      take: 10,    order: {
+        id:"DESC"
+    }
   });
   }
   // @Roles({ roles: ['manage-account'], mode: RoleMatchingMode.ANY })
