@@ -31,7 +31,7 @@ import Grid from "@mui/material/Grid";
 
 
 const CaseList =React.memo( ({config,allRecentCases}:any) => {
-
+ 
 
   // const [sortValue,setSortValue] = useState({value:"",sortOrder:null})
   // const [recentCases,setRecentCases] = useState([...allRecentCases])
@@ -115,8 +115,9 @@ const CaseList =React.memo( ({config,allRecentCases}:any) => {
         component="nav"
         aria-label="mailbox folders"
 
-         
-        {allRecentCases && allRecentCases.map((eachcases:Case) => (
+         >
+
+        {allRecentCases.length!=0 ? allRecentCases.map((eachcases:Case) => (
           <RecentCasecard
             case = {eachcases}
             key={eachcases.id}            
