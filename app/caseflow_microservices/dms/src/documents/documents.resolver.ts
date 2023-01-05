@@ -5,6 +5,8 @@ import { CaseDocuments } from './documents.entity';
 import { DocumentsService } from './documents.service';
 import { CreateDocumentInput } from './dto/create-document.input';
 import { UpdateDocumentInput } from './dto/update-documet.input';
+import { HttpException } from '@nestjs/common/exceptions';
+
 
 @Resolver((of) => CaseDocuments)
 export class DocumentsResolver {
@@ -19,6 +21,15 @@ export class DocumentsResolver {
   @Query((returns) => [CaseDocuments])
   getCaseDocument(@Args('id', { type: () => Int }) id: number): Promise<CaseDocuments> {
     return this.documentService.findOne( id );
+  }
+
+  @Query((returns) => [CaseDocuments] )
+  SearchcaseDocument(
+    @Args('searchField') searchField: string,
+    @Args('searchColumn') searchColumn : string,
+     ): Promise<CaseDocuments[]> | HttpException{
+
+    return this.documentService.searchCaseDocument(searchField,searchColumn);
   }
 
   //_____________________Mutation_____________________//

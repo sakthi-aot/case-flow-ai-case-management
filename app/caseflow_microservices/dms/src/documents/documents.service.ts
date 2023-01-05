@@ -6,6 +6,8 @@ import { Repository } from 'typeorm';
 import { CreateDocumentInput } from './dto/create-document.input';
 import { CaseDocuments } from './documents.entity';
 import { UpdateDocumentInput } from './dto/update-documet.input';
+import { HttpStatus } from '@nestjs/common/enums';
+import { HttpException } from '@nestjs/common/exceptions';
 
 @Injectable()
 export class DocumentsService {
@@ -76,5 +78,31 @@ export class DocumentsService {
 
   async forCases(id:number){
     return this.documentRepository.find({ where:{ "caseid":id}})
+  }
+
+  searchCaseDocument(searchField,searchColumn){
+    try{
+    if(searchColumn){
+      switch(searchColumn){
+        case 'Description': {
+          return this.documentRepository.createQueryBuilder("table")
+          .where("LOWER(table.desc) LIKE :title", { title: `%${ searchField.toLowerCase() }%` })
+          .getMany();
+        }
+        default :
+        return this.documentRepository.createQueryBuilder("table")
+        .where("LOWER(table.name) LIKE :title", { title: `%${ searchField.toLowerCase() }%` })
+        .getMany();
+      }
+    }
+    else{
+      return  new HttpException("select a field", HttpStatus.BAD_REQUEST)
+    }
+
+    }
+    catch{
+      throw new HttpException("something went wrong", HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+
   }
 }
