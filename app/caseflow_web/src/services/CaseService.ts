@@ -13,7 +13,8 @@ import {
     FETCH_DOCUMENT_OF_CASES,
     FETCH_CASE_DETAILS,
     FETCH_CASEHISTORY,
-    SEARCH_CASE_LIST
+    SEARCH_CASE_LIST,
+    FETCH_RECENT_CASES
   } from "../graphql/caseRequests"
   import { Case } from "../dto/cases"
   import { print } from "graphql";
@@ -154,3 +155,20 @@ console.log("update");
       });
       return output
   };
+
+  
+  export const fetchRecentCaseList = async () => {
+    const url = GRAPHQL;
+    const  output =  await httpGETRequest(url,{query: print(FETCH_RECENT_CASES),
+      variables: {
+      },
+    },null)
+      .then((res) => {return (res.data.data.fetchRecentCase) })
+      .catch((error) => {
+        console.log({"error" : "error loading data"})
+        return []
+      });
+      return output
+  };
+
+  
