@@ -18,6 +18,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { DmsModule } from './dms/dms.module';
 import { CasesModule } from './cases/cases.module';
 import { CaseHistoryModule } from './case_history/case_history.module';
+import { CaseEventsModule } from './case_events/case_events.module';
 
 const keyCloakOptionsProvider =  {
   provide: 'keyCloakDataProvider',
@@ -57,6 +58,7 @@ const keyCloakOptionsProvider =  {
       migrations: ['./src/migrations/*.ts'],
     }),
     CaseHistoryModule,
+    CaseEventsModule,
   ],
   controllers: [],
   providers: [
