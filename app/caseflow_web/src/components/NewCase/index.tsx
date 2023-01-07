@@ -34,10 +34,10 @@ const { handleSubmit, control,register } = useForm();
     let response;
     if(caseList.isEdit){
      response = await updateCases(values);
-     navigate("/private/cases/"  + response.data.updateCase.id+'/details');
+     navigate("/private/cases/"  + response.success.data.createCase.id+'/details');
     }else{
     response = await addCases(values);
-    navigate("/private/cases/"  + response.data.createCase.id+'/details');
+    navigate("/private/cases/"  + response.success.data.createCase.id+'/details');
     }
     console.log(response);
     // if(response)

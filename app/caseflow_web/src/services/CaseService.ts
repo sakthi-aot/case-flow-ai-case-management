@@ -24,7 +24,7 @@ import {
   
   export const addCases = async(newCase: Case) => {
       const url =  GRAPHQL;
-      httpPOSTRequest(url,{query: print(ADD_CASE),
+      return httpPOSTRequest(url,{query: print(ADD_CASE),
         variables: {
           createCaseInput: {
             name: newCase.name,
@@ -49,7 +49,7 @@ import {
 
   export const updateCases = async(newCase: Case) => {
     const url =  GRAPHQL;
-    httpPOSTRequest(url,{query: print(UPDATE_CASE),
+    return httpPOSTRequest(url,{query: print(UPDATE_CASE),
       variables: {
         updateCaseInput: {
           id:newCase.id,
