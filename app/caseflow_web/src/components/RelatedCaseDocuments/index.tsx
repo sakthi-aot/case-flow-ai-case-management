@@ -70,7 +70,7 @@ const [docDetail, setdocDetail] = useState([]);
 
   useEffect(() => {
     fetchCaseDocumentDetails();
-  }, []);
+  }, [id]);
 
 
 
