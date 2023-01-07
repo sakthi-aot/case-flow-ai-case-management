@@ -27,7 +27,7 @@ export default function RelatedCaseDocuments({id}) {
   
 const [docDetail, setdocDetail] = useState([]);
 
-  async function fetchCaseDetails() {
+  async function fetchCaseDocumentDetails() {
     if(id){
       let output = await getDocumentofCaseList(id);
       (setdocDetail(output))
@@ -61,13 +61,15 @@ const [docDetail, setdocDetail] = useState([]);
   const deleteDocuments = async (id)=>{
   
       let document = await deleteDocument(id)
+      fetchCaseDocumentDetails()
+
   
   }
 
   
 
   useEffect(() => {
-    fetchCaseDetails();
+    fetchCaseDocumentDetails();
   }, [id]);
 
 

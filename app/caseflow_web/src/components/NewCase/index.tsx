@@ -34,10 +34,10 @@ const { handleSubmit, control,register } = useForm();
     let response;
     if(caseList.isEdit){
      response = await updateCases(values);
-     refreshCases();
+     navigate("/private/cases/"  + response.success.data.createCase.id+'/details');
     }else{
     response = await addCases(values);
-    refreshCases();
+    navigate("/private/cases/"  + response.success.data.createCase.id+'/details');
     }
     console.log(response);
     // if(response)
@@ -127,7 +127,7 @@ const resetCases=()=>{
               width: "100%",            
             }}    
             InputProps={{ disableUnderline: true }} 
-            placeholder="Enter the details of the Case"
+            placeholder="Enter the details of the Case"z
             value={values.description}
             onChange={(e)=>{setValues({...values,description:e.target.value})}}
           />
@@ -159,9 +159,9 @@ const resetCases=()=>{
               backgroundColor:"#404040"
             }}
             variant="contained"
-            onClick={() => resetCases()} 
+            onClick={() => navigate("/private/cases")} 
           >
-           Reset
+           Back
           </Button>
         </div>
     </div>

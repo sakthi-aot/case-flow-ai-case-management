@@ -23,10 +23,8 @@ import {
 
   
   export const addCases = async(newCase: Case) => {
-
-      console.log("data11",newCase)
       const url =  GRAPHQL;
-      httpPOSTRequest(url,{query: print(ADD_CASE),
+      return httpPOSTRequest(url,{query: print(ADD_CASE),
         variables: {
           createCaseInput: {
             name: newCase.name,
@@ -36,7 +34,7 @@ import {
         },
       },null)
         .then((res) => {
-          return {"success" : res};
+          return {"success" : res.data};
         })
         .catch((error) => {
           if (error?.response?.data) {
@@ -50,10 +48,8 @@ import {
 
 
   export const updateCases = async(newCase: Case) => {
-console.log("update");
-    console.log("data11",newCase)
     const url =  GRAPHQL;
-    httpPOSTRequest(url,{query: print(UPDATE_CASE),
+    return httpPOSTRequest(url,{query: print(UPDATE_CASE),
       variables: {
         updateCaseInput: {
           id:newCase.id,
@@ -63,7 +59,7 @@ console.log("update");
       },
     },null)
       .then((res) => {
-        return {"success" : res};
+        return {"success" : res.data};
       })
       .catch((error) => {
         if (error?.response?.data) {
