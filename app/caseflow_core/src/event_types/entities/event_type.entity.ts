@@ -1,32 +1,27 @@
 import { Field, ObjectType, Int ,Directive,ID } from '@nestjs/graphql';
+import { CaseEvents } from 'src/case_events/entities/case_event.entity';
 import { CaseHistory } from 'src/case_history/entities/case_history.entity';
-import { EventTypes } from 'src/event_types/entities/event_type.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 
 @Entity()
 @ObjectType()
 @Directive('@key(fields:"id")')
-export class CaseEvents {
+export class EventTypes {
   @PrimaryGeneratedColumn()
   @Field((type) => ID)
   id: number;
 
   @Column({ nullable: true })
   @Field({ nullable: true })
-  eventtypeId: number;
+  text: string;
 
   @Column({ nullable: true })
   @Field()
-  artifactid: number;
+  code: number;
 
 
 
-  @OneToMany(() => CaseHistory, (casehistory) => casehistory.event)
-  @Field(() => [CaseHistory], { nullable: true })
-  casehistory: CaseHistory[]
-
-  
-  @ManyToOne(() => EventTypes, (eventtype) => eventtype.caseevent)
-  @Field(() => EventTypes, { nullable: true })
-  eventtype: EventTypes;
+  @OneToMany(() => CaseEvents, (caseevent) => caseevent.eventtype)
+  @Field(() => [CaseEvents], { nullable: true })
+  caseevent: CaseEvents[]
 }

@@ -23,21 +23,26 @@ export class CaseHistory {
   @Field()
   userid: number;
 
-  @Column({ nullable: true })
-  @Field()
-  caseid: number;
 
-  @Column({ nullable: true })
-  @Field()
-  eventid: number;
+
   
+  @Column({ nullable: true })
+  @Field()
+  eventId: number;
 
-  @ManyToOne(()=>Cases,cases => cases.id)
-  @Field(type=>[Cases],{nullable:true})
-  cases?:Cases[];
 
-  @ManyToOne(()=>CaseEvents,event => event.id)
-  @Field(type=>[CaseEvents],{nullable:true})
-  event?:CaseEvents[];
 
+  @ManyToOne(() => CaseEvents, (event) => event.casehistory)
+  @Field(() => CaseEvents, { nullable: true })
+  event: CaseEvents;
+
+  @ManyToOne(() => Cases, (cases) => cases.casehistory)
+  @Field(() => [Cases], { nullable: true })
+  case: [Cases];
+
+
+
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  caseId: number;
 }

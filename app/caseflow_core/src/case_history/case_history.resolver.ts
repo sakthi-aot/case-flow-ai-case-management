@@ -13,7 +13,7 @@ export class CaseHistoryResolver {
     return this.caseHistoryService.create(createCaseHistoryInput);
   }
 
-  @Query(() => [CaseHistory], { name: 'caseHistory' })
+  @Query(() => [CaseHistory], { name: 'caseHistoryFindAll' })
   findAll() {
     return this.caseHistoryService.findAll();
   }

@@ -19,6 +19,7 @@ import { DmsModule } from './dms/dms.module';
 import { CasesModule } from './cases/cases.module';
 import { CaseHistoryModule } from './case_history/case_history.module';
 import { CaseEventsModule } from './case_events/case_events.module';
+import { EventTypesModule } from './event_types/event_types.module';
 
 const keyCloakOptionsProvider =  {
   provide: 'keyCloakDataProvider',
@@ -59,6 +60,7 @@ const keyCloakOptionsProvider =  {
     }),
     CaseHistoryModule,
     CaseEventsModule,
+    EventTypesModule,
   ],
   controllers: [],
   providers: [

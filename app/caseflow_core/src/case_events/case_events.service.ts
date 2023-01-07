@@ -17,7 +17,7 @@ export class CaseEventsService {
   }
 
   async findAll(): Promise<CaseEvents[]> {
-    return this.caseEventRepository.find();
+    return this.caseEventRepository.find({relations:["eventtype"]});
   }
 
 
@@ -28,6 +28,9 @@ export class CaseEventsService {
           where: {
             id: id,
           },
+          
+        relations:["eventtype"]
+          
         });
         if(value)return value
         throw new NotFoundException(`Record cannot find by id ${id}`);
@@ -43,4 +46,5 @@ export class CaseEventsService {
   remove(id: number) {
     return `This action removes a #${id} caseEvent`;
   }
+  
 }

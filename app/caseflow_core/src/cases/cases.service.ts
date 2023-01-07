@@ -9,15 +9,17 @@ import { CreateCaseInput } from './dto/create-case.input';
 import { UpdateCaseInput } from './dto/update-case.input';
 import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
+import { CaseHistoryService } from 'src/case_history/case_history.service';
+import { CaseHistory } from 'src/case_history/entities/case_history.entity';
 
 @Injectable()
 export class CasesService {
   constructor(
-    @InjectRepository(Cases) private caseRepository: Repository<Cases>,
+    @InjectRepository(Cases) private caseRepository: Repository<Cases>
   ) {}
 
   async findAll(): Promise<Cases[]> {
-    return this.caseRepository.find();
+    return this.caseRepository.find({relations:["casehistory"]});
   }
   async findAllWithLimit(): Promise<Cases[]> {
     return this.caseRepository.find({
@@ -42,7 +44,7 @@ export class CasesService {
           where: {
             id: id,
           },
-        });
+          relations:["casehistory"]},);
         if(value)return value
         throw new NotFoundException(`Record cannot find by id ${id}`);
       }

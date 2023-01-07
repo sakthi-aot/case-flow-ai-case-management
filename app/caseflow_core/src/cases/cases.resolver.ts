@@ -59,8 +59,8 @@ export class CasesResolver {
   }
 
   @ResolveReference()
-         resolverefernce(ref:{__typename:number,id:number}){
-          return this.casesService.findOne(ref.id)
-         }
+    resolverefernce(ref:{__typename:number,id:number}){
+    return this.casesService.findOne(ref.id)
+    }
 
 }
