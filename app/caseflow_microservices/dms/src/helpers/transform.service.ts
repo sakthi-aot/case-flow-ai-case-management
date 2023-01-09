@@ -8,21 +8,22 @@ export class TransformService {
   // summery : Transform S3 object to schema specific format
   // Created By : Don C Varghese
   transformS3 = (type, document, data) => {
+    const docdata=data.data;
     console.log(type)
     switch (type) {
       case 'CREATE':
         try{
           return {
-            caseid: parseInt(data.caseid),
+            caseid: parseInt(docdata.caseid),
             documentref: document.key,
-            name: data.name,
-            desc: data.desc,
-            addedbyuserid: data.addedbyuserid,
+            name: docdata.name,
+            desc: docdata.desc,
+            addedbyuserid: docdata.addedbyuserid,
             creationdate: new Date(),
             dmsprovider: 1,
             latestversion: document.VersionId,
             isdeleted: false,
-            type : data.file.mimetype,
+            type : data?.file?.mimetype,
           };
         }
         catch(err){

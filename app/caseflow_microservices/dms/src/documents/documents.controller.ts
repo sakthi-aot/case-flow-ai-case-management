@@ -16,20 +16,17 @@ export class DocumentsController {
     private helper: TransformService,
     private documentService: DocumentsService,
   ) {}
-  @Post()
-  @MessagePattern({ cmd: 'create_document' })
-  // @UseInterceptors(FileInterceptor('file'))
-  async uploadDocument(data) {
-   
-    let documentDetails = await this.fileService.uploadFile(data.file, data, data.dmsprovider);
-    // console.log(documentDetails)
+  @Post('/uploadDocument')
+  // @MessagePattern({ cmd: 'create_document' })
+   @UseInterceptors(FileInterceptor('file'))
+  async uploadDocument(@Body() body) {
+    let documentDetails = await this.fileService.uploadFile(body.file, body.data.name, body.data.dmsprovider);
     let formattedDocument: any = this.helper.transform(
-      data.dmsprovider,
+      body.data.dmsprovider,
       'CREATE',
       documentDetails,
-      data,
+      body,
     );
-    console.log('document', formattedDocument);
     return this.documentService.createDocument(formattedDocument);
   }
 
