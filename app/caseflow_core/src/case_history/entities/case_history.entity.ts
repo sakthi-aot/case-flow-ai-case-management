@@ -24,7 +24,7 @@ export class CaseHistory {
 
   @Column({ nullable: true })
   @Field()
-  caseid: number;
+  caseId: number;
 
   @ManyToOne(()=>Cases,cases => cases.id)
   @Field(type=>[Cases],{nullable:true})

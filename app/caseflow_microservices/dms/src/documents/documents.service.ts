@@ -89,7 +89,7 @@ export class DocumentsService {
   }
 
   async forCases(id:number){
-    return this.documentRepository.find({ where:{ "caseid":id,isdeleted: false}, order: {
+    return this.documentRepository.find({ where:{ "caseId":id,isdeleted: false}, order: {
       id: "DESC",
 }})
   }

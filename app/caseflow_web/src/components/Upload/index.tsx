@@ -139,7 +139,7 @@ const Upload = (props) => {
        "file" :  values.file,
        "name" : values.fileName,
        "desc" : values.fileDescription,
-       "caseid" : selectedCase.id,
+       "caseId" : selectedCase.id,
        "dmsprovider" : CASEFLOW_DMS,
        "metaData" :JSON.stringify(inputFields)
       }

@@ -3,7 +3,7 @@ import { Field, InputType, Int } from '@nestjs/graphql';
 @InputType()
 export class CreateDocumentInput {
   @Field((type) => Int, { nullable: true })
-  caseid: number;
+  caseId: number;
 
   @Field()
   documentref: string;

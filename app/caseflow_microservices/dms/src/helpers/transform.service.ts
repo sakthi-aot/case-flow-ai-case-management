@@ -13,7 +13,7 @@ export class TransformService {
       case 'CREATE':
         try{
           return {
-            caseid: parseInt(data.caseid),
+            caseId: parseInt(data.caseId),
             documentref: document.key,
             name: data.name,
             desc: data.desc,
@@ -57,7 +57,7 @@ export class TransformService {
           latestversion: document.entry.properties['cm:versionLabel'],
           isdeleted: false,
           type : data.file.mimetype,
-          caseid: data.caseid,
+          caseId: data.caseId,
 
         };
 
@@ -80,7 +80,7 @@ export class TransformService {
     switch (type) {
       case 'CREATE':       
           return {
-              caseid: data.caseid,
+              caseId: data.caseId,
               documentref: document.UniqueId,
               name: data.name,
               desc: data.desc,

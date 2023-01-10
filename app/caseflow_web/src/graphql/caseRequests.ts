@@ -15,7 +15,7 @@ query getCase($CaseId:Int!){
     documents{
       id,
       name,
-      caseid,
+      caseId,
       latestversion,
       creationdate,
       type,

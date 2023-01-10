@@ -171,7 +171,7 @@ setDocumentDetailsForEdit(data)
                                 {documentDetail.id}
                               </TableCell>
                               <TableCell component="th" scope="row">
-                                {documentDetail.caseid}
+                                {documentDetail.caseId}
                               </TableCell>
                               <TableCell align="left">
                                 {" "}
