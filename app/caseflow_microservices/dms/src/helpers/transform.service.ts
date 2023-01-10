@@ -8,6 +8,7 @@ export class TransformService {
   // summery : Transform S3 object to schema specific format
   // Created By : Don C Varghese
   transformS3 = (type, document, data) => {
+
     console.log(type)
     switch (type) {
       case 'CREATE':
@@ -22,7 +23,7 @@ export class TransformService {
             dmsprovider: 1,
             latestversion: document.VersionId,
             isdeleted: false,
-            type : data.file.mimetype,
+            type : data?.file?.mimetype,
           };
         }
         catch(err){
