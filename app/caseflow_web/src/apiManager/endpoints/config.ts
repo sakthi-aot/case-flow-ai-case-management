@@ -17,3 +17,7 @@ export const CASEFLOW_DMS :string=
 (window._env_ && window._env_.REACT_APP_CASEFLOW_DMS) ||
 process.env.REACT_APP_CASEFLOW_DMS;
 
+export const PAGINATION_TAKE :string=
+(window._env_ && window._env_.REACT_APP_PAGINATION_TAKE) ||
+process.env.REACT_APP_PAGINATION_TAKE;
+

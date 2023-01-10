@@ -10,6 +10,7 @@ const caseListProps = {
   title: "Recent Cases",
   count: 5,
   isShowSort: false,
+  pagination:false
 };
 
 
@@ -38,7 +39,7 @@ const Dashboard = () =>
           ></Search>
         </div>
         <div className="recent-cases">
-          <CaseList config={caseListProps} allRecentCases ={allRecentCases} ></CaseList>
+          <CaseList config={caseListProps} allRecentCases ={allRecentCases}  ></CaseList>
         </div>
         <div className="my-task">
           <MyTask></MyTask>

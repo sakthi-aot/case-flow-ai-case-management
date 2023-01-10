@@ -8,7 +8,8 @@ import { store } from "../../interfaces/stateInterface";
 const caseListProps = {
   title : "Cases",
   count : 5,
-  isShowSort :false
+  isShowSort :false,
+  pagination:true
 }
 const Cases = (
   // { children }

@@ -12,12 +12,12 @@ import {
     UPDATE_CASE,
     FETCH_DOCUMENT_OF_CASES,
     FETCH_CASE_DETAILS,
-    FETCH_CASEHISTORY
+    FETCH_CASEHISTORY,    
   } from "../graphql/caseRequests"
   import { Case } from "../dto/cases"
   import { print } from "graphql";
-  
-
+  // import { PAGINATION_TAK}";
+  import { PAGINATION_TAKE } from "../apiManager/endpoints/config"; 
 
   
   export const addCases = async(newCase: Case) => {
@@ -71,12 +71,14 @@ console.log("update");
       });
  
 };
-  export const getCasesList = async (number) => {
-    let pNo = number?number:1;
+  export const getCasesList = async (number) => {   
+   const  skip =(number-1)*10;   
     const url = GRAPHQL;
-    const  output =  await httpGETRequest(url,{query: print(FETCH_CASES),
+    const  output =  await httpPOSTRequest(url,{query: print(FETCH_CASES),
       variables: {       
-        Skip:0
+        Skip:skip,
+        Take:Number(PAGINATION_TAKE)
+        
       },
     },null)
       .then((res) => {return res.data.data.case})
@@ -87,15 +89,20 @@ console.log("update");
       return output
 
   };
-  export const getDocumentofCaseList = async (id) => {
+  
+  export const getDocumentofCaseList = async (id,number) => {
     console.log(parseInt(id))
-    const url = GRAPHQL;
+    const  skip =(number-1)*10; 
+    const url = GRAPHQL;    
     const  output =  await httpPOSTRequest(url,{query: print(FETCH_DOCUMENT_OF_CASES),
       variables: {
         CaseId : parseInt(id),
+        Skip:skip,
+        Take:Number(PAGINATION_TAKE)
       },
     },null)
-      .then((res) => {return res.data.data.getCase.documents})
+      .then((res) => {       
+        return res.data.data.getCase.documents})
       .catch((error) => {
         console.log({"error" : error})
         return []

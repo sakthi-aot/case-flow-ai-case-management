@@ -14,42 +14,54 @@ export class CaseDocuments {
   @Field()
   caseid: number;
 
-  @Column()
-  @Field()
+  @Column({ nullable: true })
+  @Field({ nullable: true })
   documentref: string;
 
-  @Column()
+  @Column({ nullable: true })
   @Field({ nullable: true })
   desc: string;
 
-  @Column()
-  @Field()
+  @Column({ nullable: true })
+  @Field({ nullable: true })
   addedbyuserid: number;
 
-  @Column()
-  @Field()
+  @Column({ nullable: true })
+  @Field({ nullable: true })
   creationdate: Date;
 
-  @Column()
-  @Field()
+  @Column({ nullable: true })
+  @Field({ nullable: true })
   dmsprovider: number;
 
-  @Column()
-  @Field()
+  @Column({ nullable: true })
+  @Field({ nullable: true })
   name: string;
 
-  @Column()
-  @Field()
+  @Column({ nullable: true })
+  @Field({ nullable: true })
   latestversion: string;
 
-  @Column()
-  @Field()
+  @Column({ nullable: true })
+  @Field({ nullable: true })
   isdeleted: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   @Field({ nullable: true })
   type: string;
 
   @Field(() => Cases)
   cases: Cases;
 }
+
+@ObjectType()
+export class caseDocumentResponse {
+  @Field(type => [CaseDocuments])
+  CaseDocuments: CaseDocuments[]
+
+  @Field(type => Int)
+  totalCount: number
+}
+
+
+

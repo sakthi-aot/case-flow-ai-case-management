@@ -12,3 +12,18 @@ export class FetchArgs {
   @Max(50)
   take = 25
 }
+
+@ArgsType()
+export class FetchCaseDocumentArgs{
+  @Field(() => Int)
+  @Min(0)
+  skip = 0
+
+  @Field(() => Int)
+  @Min(1)
+  @Max(50)
+  take = 25
+
+  @Field(()=>Int)
+  id
+}

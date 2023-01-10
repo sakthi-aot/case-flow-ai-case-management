@@ -74,3 +74,14 @@ export class Cases {
   @Field(type=>[CaseHistory],{nullable:true})
   casehistory?:CaseHistory[];
 }
+
+@ObjectType()
+export class casesResponse {
+  @Field(type => [Cases])
+  Cases: Cases[]
+
+  @Field(type => Int)
+  totalCount: number
+}
+
+

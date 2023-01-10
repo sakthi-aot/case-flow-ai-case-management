@@ -4,8 +4,9 @@ import { Repository } from 'typeorm';
 
 //_____________________Custom Imports_____________________//
 import { CreateDocumentInput } from './dto/create-document.input';
-import { CaseDocuments } from './documents.entity';
+import { caseDocumentResponse, CaseDocuments } from './documents.entity';
 import { UpdateDocumentInput } from './dto/update-documet.input';
+import { FetchArgs } from './dto/fetch-args.input';
 
 @Injectable()
 export class DocumentsService {
@@ -17,7 +18,10 @@ export class DocumentsService {
   // summery : Get all documents
   // Created By : Don C Varghese
   async findAll(): Promise<CaseDocuments[]> {
-    return this.documentRepository.find();
+    return this.documentRepository.find({
+      take:2,
+      skip:0
+    });
   }
 
   // summery : Create a new document
@@ -74,7 +78,30 @@ export class DocumentsService {
     throw new NotFoundException(`Record cannot find by id ${id}`);
   }
 
-  async forCases(id:number){
-    return this.documentRepository.find({ where:{ "caseid":id}})
+   // summery : Paginated Document list by caseID
+  // Created By : Gokul VG
+  async forCases(args: FetchArgs,id:number):Promise<caseDocumentResponse>{
+    const [CaseDocuments,totalCount] =await Promise.all([
+      this.documentRepository.find(
+        {
+          take: args.take,
+          skip: args.skip,
+          where:{ "caseid":id}
+        }
+      ),
+      this.documentRepository.count(
+        {
+          where:{ "caseid":id}
+        }
+      )
+    ])    
+    return {CaseDocuments,totalCount} 
+    // const output =await this.documentRepository.findAndCount({
+    //       take:args.take,
+    //       skip:args.skip,
+    //        where:{ "caseid":id}})
+    // return {output,count}
   }
+
+   
 }
