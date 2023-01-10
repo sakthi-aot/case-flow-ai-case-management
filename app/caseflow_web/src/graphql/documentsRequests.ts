@@ -8,6 +8,7 @@ query{
     desc,
     caseid,
     creationdate,
+    type
   }
 }`
 
@@ -19,5 +20,6 @@ query SearchcaseDocument($searchField:String!,$searchColumn:String!){
     desc,
     caseid,
     creationdate,
+    type
     }
   }`

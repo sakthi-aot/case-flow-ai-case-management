@@ -66,6 +66,17 @@ const [docDetail, setdocDetail] = useState([]);
   
   }
 
+  const previewDocument = async (id,type) => {
+      let response = await getDocument(id)
+      let newWindow = window.open('/')!
+          newWindow.onload = () => {
+            newWindow.location = window.URL.createObjectURL(
+              new Blob([response["data"]], {type: type})
+            );
+          }
+
+  }
+
   
 
   useEffect(() => {
@@ -99,8 +110,12 @@ const [docDetail, setdocDetail] = useState([]);
         <TableBody>
           {docDetail.map((row:any) => (
             <TableRow
-              key={row.name}
+              key={row.id}
               sx={{  border: 0 }}
+              onClick={()=>{
+                previewDocument(row.id,row.type)
+              }
+              }
             >
               <TableCell   style={{borderBottom: "none"}} component="th" scope="row">{row.name}</TableCell>
               <TableCell style={{borderBottom: "none"}} align="right">{row.size ? row.size : "1kb"}</TableCell>
