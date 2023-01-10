@@ -37,8 +37,19 @@ export class DmsController {
   ): Promise<any> {
     try{
     const url = "http://localhost:7002/documents/uploadDocument"
-    await axios.post(url, {file:file,
-           data:body,headers:headers}
+    var FormData = require("form-data");
+    const formData = new FormData();
+    const headersRequest = {
+      'Content-Type': 'multipart/form-data',
+      "Authorization": headers.authorization ,
+  };
+    formData.append('file', file.buffer,file.originalname,);
+    formData.append('caseid', body.caseid);
+    formData.append('desc', body.desc);
+    formData.append('dmsprovider', body.dmsprovider);
+    formData.append('metaData', body.metaData);
+    formData.append('name', body.name);
+    await axios.post(url, formData,{headers:headersRequest}
      ).then(response => {
        return  res.send(response.data)});
      }  
