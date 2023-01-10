@@ -59,7 +59,7 @@ export const uploadCMISfile = async (formData) => {
     console.log(bodyFormData)
 
     try{
-      let response = await httpPOSTRequest(uploadURL,bodyFormData,null);
+      let response = await httpPOSTRequest(uploadURL,bodyFormData,null,false,true);
       return response;
     }
     catch(err){

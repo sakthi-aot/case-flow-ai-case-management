@@ -17,3 +17,6 @@ export const CASEFLOW_DMS :string=
 (window._env_ && window._env_.REACT_APP_CASEFLOW_DMS) ||
 process.env.REACT_APP_CASEFLOW_DMS;
 
+export const CASEFLOW_LOB_GRAPHQL_API_URL :string=
+(window._env_ && window._env_.REACT_APP_CASEFLOW_LOB_GRAPHQL_API_URL) ||
+process.env.REACT_APP_CASEFLOW_LOB_GRAPHQL_API_URL;

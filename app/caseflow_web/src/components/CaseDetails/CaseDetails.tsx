@@ -48,7 +48,8 @@ const CaseDetails = () => {
     if(matches && matches[0]){
       let output = await getCaseDetails(matches[0]);
       let caseHistory = await getCaseHistory(matches[0]);
-      (setselectedCaseDetails(output))
+      dispatch(setSelectedCase({...output,isEdit:false}));
+      setselectedCaseDetails(output)
       setCaseHistory(caseHistory)
     }
   }
@@ -122,10 +123,10 @@ const [isOpenPopup,setOpenPopup] = useState(false);
           caseDescription={selectedCase.description}
           tasks={caseDetail.tasks}
         />
-        <CaseDetailReference
-          docketNum={caseDetail.docketNum}
-          courtRef={caseDetail.courtRef}
-        />
+        {(selectedCase && selectedCase.id) ? <CaseDetailReference
+          caseId={selectedCase.id}
+        
+        />: ""}
          <Accordion className="case-documents">
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}

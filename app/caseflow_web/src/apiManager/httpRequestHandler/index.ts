@@ -2,7 +2,7 @@ import axios from "axios";
 
 import UserService from "../../services/UserService";
 import {store} from "../../services/Store";
-import {setLoader} from "../../reducers/applicationReducer";
+import {setLoader, setProgress} from "../../reducers/applicationReducer";
 export const httpGETRequest = (
   url,
   data,
@@ -22,12 +22,18 @@ export const httpGETRequest = (
   });
 };
 
-export const httpPOSTRequest = (url, data, token, isBearer = true) => {
+export const httpPOSTRequest = (url, data, token, isBearer = true,isUpload= false) => {
   return axios.post(url, data, {
     headers: {
       Authorization: isBearer
         ? `Bearer ${token || UserService.getToken()}`
         : token,
+    },
+    onUploadProgress: data => {
+      //Set the progress value to show the progress bar
+      if(isUpload)
+      store.dispatch(setProgress(Math.round((100 * data.loaded) /(data["total"] ? data["total"] : 0))));
+      
     },
   });
 };

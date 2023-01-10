@@ -14,7 +14,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
 import { setDocumentList } from "../../reducers/documentsReducer";
 import { getAllDocuments } from "../../services/DocumentManagementService";
-
+import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
+import Box from '@mui/material/Box';
 import { v4 as uuidv4 } from "uuid";
 
 import { store } from "../../interfaces/stateInterface";
@@ -35,6 +36,8 @@ const Upload = (props) => {
     dms_provider: 0,
     content: "",
   };
+  const [isSumbitted, setSubmitted] = useState(false);
+  const [progressBarColor, setProgressBarColor] = useState("success");
 
   const [values, setValues] = useState(initialFieldValues);
   const [expanded, setExpanded] = useState(false);
@@ -68,6 +71,7 @@ const Upload = (props) => {
     };
   }
   let selectedCase =  useSelector((state:store)=>state.cases.selectedCase);
+  const progress = useSelector((state:store)=>state.app.progressBarStatus);
   
   const handleChanges = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -134,7 +138,7 @@ const Upload = (props) => {
     console.log(values.documentID);
     if (values.documentID == 0) {
       // check with docid exist or not id documentID=0 insert opertaion work
-    
+      setSubmitted(true);
       const response = await uploadCMISfile({
        "file" :  values.file,
        "name" : values.fileName,
@@ -145,16 +149,21 @@ const Upload = (props) => {
       }
       );
       
+     
+      
       console.log(response.data);
       if (response && response.data && response.data.id) {
         props.onSuccess(response.data)
+        setSubmitted(false);
         fetchDocumentDetails();
         toast.success("Success");
         refreshDocumentList();
-      } else toast.error("Error");
+      } else {
+        setProgressBarColor("error")
+        toast.error("Error");}
     } else {
       // for update
-
+      setSubmitted(true);
       updateCMISdocument(
         values.documentID,
         values.file,
@@ -162,7 +171,7 @@ const Upload = (props) => {
         values.fileDescription,
         values.dms_provider
       );
-
+      
       fetchDocumentDetails();
       toast.success("Success");
       refreshDocumentList();
@@ -183,6 +192,20 @@ const Upload = (props) => {
 
     setInputFields(newInputFields);
   };
+  const LinearProgressWithLabel = (props: LinearProgressProps & { value: number }) =>{
+    return (
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ width: '100%', mr: 1 }}>
+          <LinearProgress variant="determinate" {...props} />
+        </Box>
+        <Box sx={{ minWidth: 35 }}>
+          <Typography variant="body2" color={props.color}>{`${Math.round(
+            props.value,
+          )}%`}</Typography>
+        </Box>
+      </Box>
+    );
+          }
   //metadata add operation
   const handleAddFields = () => {
     setInputFields([
@@ -353,6 +376,7 @@ const Upload = (props) => {
                 
               )}
               <div className="upload-button">
+              {isSumbitted ? <LinearProgressWithLabel value={progress} color={progressBarColor} /> :""}
               <Button
                 style={{
                   margin: "auto",
