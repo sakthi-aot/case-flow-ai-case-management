@@ -18,10 +18,7 @@ export class DocumentsService {
   // summery : Get all documents
   // Created By : Don C Varghese
   async findAll(): Promise<CaseDocuments[]> {
-    return this.documentRepository.find({
-      take:2,
-      skip:0
-    });
+    return this.documentRepository.find();
   }
 
   // summery : Create a new document
