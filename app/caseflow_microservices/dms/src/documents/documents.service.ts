@@ -97,7 +97,7 @@ export class DocumentsService {
         {
           take: args.take,
           skip: args.skip,
-          where:{ "caseid":id,isdeleted: false},
+          where:{ "caseId":id,isdeleted: false},
           order: {
           id: "DESC",
          }
@@ -105,7 +105,7 @@ export class DocumentsService {
       ),
       this.documentRepository.count(
         {
-          where:{ "caseid":id}
+          where:{ "caseId":id,isdeleted: false}
         }
       )
     ])    
