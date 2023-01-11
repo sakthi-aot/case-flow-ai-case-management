@@ -1,8 +1,9 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
 import { CaseHistoryService } from './case_history.service';
 import { CaseHistory } from './entities/case_history.entity';
 import { CreateCaseHistoryInput } from './dto/create-case_history.input';
 import { UpdateCaseHistoryInput } from './dto/update-case_history.input';
+import { Cases } from 'src/cases/cases.entity';
 
 @Resolver(() => CaseHistory)
 export class CaseHistoryResolver {
@@ -32,4 +33,9 @@ export class CaseHistoryResolver {
   removeCaseHistory(@Args('id', { type: () => Int }) id: number) {
     return this.caseHistoryService.remove(id);
   }
+@ResolveField(()=>Cases)
+case(@Parent() casehistory:CaseHistory){
+  this.caseHistoryService.getCases(casehistory.caseId);
+}
+
 }

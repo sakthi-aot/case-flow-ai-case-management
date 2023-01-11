@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cases } from 'src/cases/cases.entity';
+import { CasesModule } from 'src/cases/cases.module';
 import { CasesService } from 'src/cases/cases.service';
 import { Repository } from 'typeorm';
 import { CreateCaseHistoryInput } from './dto/create-case_history.input';
@@ -11,11 +12,11 @@ import { CaseHistory } from './entities/case_history.entity';
 export class CaseHistoryService {
 
   constructor(
-    @InjectRepository(CaseHistory) private caseHistoryRepository: Repository<CaseHistory>
+    @InjectRepository(CaseHistory) private caseHistoryRepository: Repository<CaseHistory>,private caseService: CasesService
   ) {}
 
   async findAll(): Promise<CaseHistory[]> {
-    return this.caseHistoryRepository.find();
+    return this.caseHistoryRepository.find({relations:["event"]});
   }
 
   create(createCaseHistoryInput: CreateCaseHistoryInput) {
@@ -48,5 +49,9 @@ export class CaseHistoryService {
   remove(id: number) {
     return `This action removes a #${id} caseHistory`;
   }
+
+  async getCases(id: number): Promise<Cases> {
+    return this.caseService.findOne(id)
+}
 
 }

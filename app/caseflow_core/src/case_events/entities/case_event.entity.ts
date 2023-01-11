@@ -1,7 +1,7 @@
 import { Field, ObjectType, Int ,Directive,ID } from '@nestjs/graphql';
 import { CaseHistory } from 'src/case_history/entities/case_history.entity';
 import { EventTypes } from 'src/event_types/entities/event_type.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -17,16 +17,17 @@ export class CaseEvents {
 
   @Column({ nullable: true })
   @Field()
-  artifactid: number;
+  artifactId: number;
 
 
 
   @OneToMany(() => CaseHistory, (casehistory) => casehistory.event)
-  @Field(() => [CaseHistory], { nullable: true })
-  casehistory: CaseHistory[]
+  @Field(() => CaseHistory, { nullable: true })
+  casehistory: CaseHistory
 
   
   @ManyToOne(() => EventTypes, (eventtype) => eventtype.caseevent)
   @Field(() => EventTypes, { nullable: true })
+  @JoinColumn({name: 'eventtypeId'})
   eventtype: EventTypes;
 }
