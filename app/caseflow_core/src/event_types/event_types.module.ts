@@ -7,7 +7,8 @@ import { CaseEventsModule } from 'src/case_events/case_events.module';
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([EventTypes]),CaseEventsModule],
-  providers: [EventTypesResolver, EventTypesService]
+  imports: [TypeOrmModule.forFeature([EventTypes])],
+  providers: [EventTypesResolver, EventTypesService],
+  exports:[EventTypesService]
 })
 export class EventTypesModule {}

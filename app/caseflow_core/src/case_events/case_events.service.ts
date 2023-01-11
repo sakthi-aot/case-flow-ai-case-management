@@ -1,5 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { EventTypes } from 'src/event_types/entities/event_type.entity';
+import { EventTypesService } from 'src/event_types/event_types.service';
 import { Repository } from 'typeorm';
 import { CreateCaseEventInput } from './dto/create-case_event.input';
 import { UpdateCaseEventInput } from './dto/update-case_event.input';
@@ -9,7 +11,7 @@ import { CaseEvents } from './entities/case_event.entity';
 export class CaseEventsService {
 
   constructor(
-    @InjectRepository(CaseEvents) private caseEventRepository: Repository<CaseEvents>,
+    @InjectRepository(CaseEvents) private caseEventRepository: Repository<CaseEvents>,private eventTypeService:EventTypesService
   ) {}
   
   create(createCaseEventInput: CreateCaseEventInput) {
@@ -46,5 +48,9 @@ export class CaseEventsService {
   remove(id: number) {
     return `This action removes a #${id} caseEvent`;
   }
+
+  async getEventType(id: number): Promise<EventTypes> {
+    return this.eventTypeService.findOne(id)
+}
   
 }

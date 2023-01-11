@@ -39,8 +39,8 @@ export class CaseHistory {
 
 
   @ManyToOne(() => Cases, (cases) => cases.casehistory)
-  @Field(() => [Cases], { nullable: true })
-  case: [Cases];
+  @Field(() => Cases, { nullable: true })
+  case: Cases;
 
 
 

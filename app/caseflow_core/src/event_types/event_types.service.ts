@@ -18,7 +18,7 @@ export class EventTypesService {
   }
 
   async findAll(): Promise<EventTypes[]> {
-    return this.eventTypeRepository.find();
+    return this.eventTypeRepository.find({relations:["caseevent"]});
   }
 
 
@@ -29,6 +29,7 @@ export class EventTypesService {
           where: {
             id: id,
           },
+          relations:["caseevent"]
         });
         if(value)return value
         throw new NotFoundException(`Record cannot find by id ${id}`);

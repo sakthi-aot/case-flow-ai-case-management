@@ -19,7 +19,8 @@ export class CasesService {
   ) {}
 
   async findAll(): Promise<Cases[]> {
-    return this.caseRepository.find({relations:["casehistory"]});
+     const data = await this.caseRepository.find({relations:["casehistory",,"casehistory.event","casehistory.event.eventtype"]});
+     return data;
   }
   async findAllWithLimit(): Promise<Cases[]> {
     return this.caseRepository.find({
@@ -44,7 +45,7 @@ export class CasesService {
           where: {
             id: id,
           },
-          relations:["casehistory"]},);
+          relations:["casehistory","casehistory.event","casehistory.event.eventtype"]},);
         if(value)return value
         throw new NotFoundException(`Record cannot find by id ${id}`);
       }

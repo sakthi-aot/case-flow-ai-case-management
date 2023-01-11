@@ -22,12 +22,11 @@ export class CaseEvents {
 
 
   @OneToMany(() => CaseHistory, (casehistory) => casehistory.event)
-  @Field(() => CaseHistory, { nullable: true })
-  casehistory: CaseHistory
+  @Field(() => [CaseHistory], { nullable: true })
+  casehistory: CaseHistory[]
 
   
   @ManyToOne(() => EventTypes, (eventtype) => eventtype.caseevent)
   @Field(() => EventTypes, { nullable: true })
-  @JoinColumn({name: 'eventtypeId'})
   eventtype: EventTypes;
 }
