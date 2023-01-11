@@ -15,11 +15,12 @@ import {
     FETCH_CASEHISTORY,
     SEARCH_CASE_LIST,
     FETCH_RECENT_CASES
+    FETCH_CASEHISTORY,    
   } from "../graphql/caseRequests"
   import { Case } from "../dto/cases"
   import { print } from "graphql";
-  
-
+  // import { PAGINATION_TAK}";
+  import { PAGINATION_TAKE } from "../apiManager/endpoints/config"; 
 
   
   export const addCases = async(newCase: Case) => {
@@ -70,11 +71,14 @@ import {
       });
  
 };
-  export const getCasesList = async () => {
-     
+  export const getCasesList = async (number) => {   
+   const  skip =(number-1)*10;   
     const url = GRAPHQL;
-    const  output =  await httpGETRequest(url,{query: print(FETCH_CASES),
-      variables: {
+    const  output =  await httpPOSTRequest(url,{query: print(FETCH_CASES),
+      variables: {       
+        Skip:skip,
+        Take:Number(PAGINATION_TAKE)
+        
       },
     },null)
       .then((res) => {return res.data.data.case})
@@ -85,15 +89,20 @@ import {
       return output
 
   };
-  export const getDocumentofCaseList = async (id) => {
+  
+  export const getDocumentofCaseList = async (id,number) => {
     console.log(parseInt(id))
-    const url = GRAPHQL;
+    const  skip =(number-1)*10; 
+    const url = GRAPHQL;    
     const  output =  await httpPOSTRequest(url,{query: print(FETCH_DOCUMENT_OF_CASES),
       variables: {
         CaseId : parseInt(id),
+        Skip:skip,
+        Take:Number(PAGINATION_TAKE)
       },
     },null)
-      .then((res) => {return res.data.data.getCase.documents})
+      .then((res) => {       
+        return res.data.data.getCase.documents})
       .catch((error) => {
         console.log({"error" : error})
         return []

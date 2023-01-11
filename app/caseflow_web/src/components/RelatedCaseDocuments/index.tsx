@@ -10,6 +10,12 @@ import { getDocumentofCaseList } from "../../services/CaseService";
 import "./RelatedCaseDocuments.scss"
 import { getDocument,deleteDocument } from "../../services/DocumentManagementService";
 import { MenuItem, Select } from "@mui/material";
+import { Pagination } from "@mui/material";
+import { PAGINATION_TAKE } from "../../apiManager/endpoints/config";
+import { setSelectedCaseDocuments } from "../../reducers/newCaseReducer";
+import {useSelector,useDispatch} from "react-redux";
+import { store } from "../../interfaces/stateInterface";
+
 
 
 // function createData(
@@ -25,12 +31,30 @@ import { MenuItem, Select } from "@mui/material";
 
 export default function RelatedCaseDocuments({id}) {
   
-const [docDetail, setdocDetail] = useState([]);
+// const [docDetail, setdocDetail] = useState([]);
+const [totalPageNo,setTotalPageNo] = useState(0);
+const [pageNo,setPageNo]= useState(1);
 
-  async function fetchCaseDocumentDetails() {
+const dispatch = useDispatch()
+const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents);
+
+useEffect(() => {
+  fetchCaseDetails(pageNo);
+}, [id,pageNo]);
+
+
+  async function fetchCaseDetails(pNo) {
     if(id){
-      let output = await getDocumentofCaseList(id);
-      (setdocDetail(output))
+      let output = await getDocumentofCaseList(id,pNo);
+
+      const TotalDocCount = output.totalCount;
+      const TotalPage = Math.ceil(TotalDocCount/PAGINATION_TAKE) 
+      setTotalPageNo(TotalPage);
+      console.log(output.CaseDocuments)
+      // setdocDetail([])
+      dispatch(setSelectedCaseDocuments(output.CaseDocuments))
+      
+      // console.log(docDetail)
     }
   }
   const options = [{id :0,text : '...'},
@@ -82,9 +106,12 @@ const [docDetail, setdocDetail] = useState([]);
     }
 
   }
-  return ( 
-   
-    <TableContainer component={Paper} sx={{ boxShadow : 0,}}>
+
+  const onChangePageNumber = (e) =>{
+    setPageNo(Number(e.target.innerText)) 
+  }
+  return (    
+    <TableContainer component={Paper} sx={{ boxShadow : 0,}} >
     {docDetail.length!==0 ?  <Table sx={{ minWidth: 650 ,border : 0,}} aria-label="simple table" className="case-document-table" >
         <TableHead >
           <TableRow>
@@ -97,9 +124,9 @@ const [docDetail, setdocDetail] = useState([]);
           </TableRow>
         </TableHead>
         <TableBody>
-          {docDetail.map((row:any) => (
+          {docDetail.map((row:any,index) => (
             <TableRow
-              key={row.name}
+              key={index}
               sx={{  border: 0 }}
             >
               <TableCell   style={{borderBottom: "none"}} component="th" scope="row">{row.name}</TableCell>
@@ -132,6 +159,9 @@ const [docDetail, setdocDetail] = useState([]);
       </Table> :
       <p className="no-case-doc-found">No Case Documents Found !</p>
       }
+        <Pagination count={totalPageNo} shape="rounded" className="pagination-case-list" onClick={onChangePageNumber}  />
     </TableContainer>    
   );
 }
+
+

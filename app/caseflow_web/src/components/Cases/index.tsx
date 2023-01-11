@@ -9,7 +9,8 @@ import { searchCases } from "../../services/CaseService";
 const caseListProps = {
   title : "Cases",
   count : 5,
-  isShowSort :false
+  isShowSort :false,
+  pagination:true
 }
 const Cases = (
   // { children }

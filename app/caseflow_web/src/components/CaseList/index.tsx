@@ -10,13 +10,14 @@ import RecentCasecard from "../RecentCaseCard";
 import { SortCasesByField } from "../../helper/SortCases";
 import "./caselist.scss"
 import { caseListprops,  PropsConfig, RecentCase, SortValue } from "../../interfaces/componentInterface";
-import { getCasesList } from "../../services/CaseService";
+import {  getCasesList } from "../../services/CaseService";
 import { setCaseList } from "../../reducers/newCaseReducer";
-import {useSelector,useDispatch} from "react-redux";
+import {useDispatch} from "react-redux";
 import { Case } from "../../interfaces/componentInterface";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
+import { Pagination } from "@mui/material";
 
 
 
@@ -36,7 +37,10 @@ const CaseList =React.memo( ({config,allRecentCases}:any) => {
   // const [sortValue,setSortValue] = useState({value:"",sortOrder:null})
   // const [recentCases,setRecentCases] = useState([...allRecentCases])
   // const [sortSelectValue,setSortSelectValues] = useState(sortingkeysOfAllRecentCases)
+  const [pageNo,setPageNo]= useState(1);
   const dispatch = useDispatch();
+  const [totalPCount,setTotalPCount] = useState(0);
+
 
   // useEffect(()=>{ 
   //  const updatedSortedData = SortCasesByField(sortValue,recentCases)
@@ -61,12 +65,15 @@ const CaseList =React.memo( ({config,allRecentCases}:any) => {
 
  // to fetch the case list and set the state of cases 
   useEffect(() => {
-    fetchCaseDetails();
-  }, []);
+    fetchCaseDetails(pageNo);   
+  }, [pageNo]);
   
-  async function fetchCaseDetails() {
-    let output = await getCasesList();
-
+  async function fetchCaseDetails(pageNo) {    
+    const getCaseResponse = await getCasesList(pageNo);
+    let output = getCaseResponse.Cases;
+    const totalCount = getCaseResponse.totalCount;
+    const TotalPage = Math.ceil(totalCount/10)   
+    setTotalPCount(TotalPage)
     output = output.map((element) => {
       return {
         id :element.id,
@@ -76,8 +83,10 @@ const CaseList =React.memo( ({config,allRecentCases}:any) => {
       };
     });
     dispatch(setCaseList(output))
+  } 
 
-
+  const caseListpagination = (e) =>{    
+    setPageNo(Number(e.target.innerText))      
   }
   
   return (
@@ -106,12 +115,11 @@ const CaseList =React.memo( ({config,allRecentCases}:any) => {
         </FormControl> : "" } */}
       </span>
       <Divider sx={{ borderBottomWidth: 3 }} />
+      <div >
 
       <List
-        sx={{
-          width: "100%",
-          bgcolor: "background.paper",
-        }}
+       
+        className="superbassClass"
         component="nav"
         aria-label="mailbox folders"
 
@@ -140,6 +148,9 @@ const CaseList =React.memo( ({config,allRecentCases}:any) => {
         </ListItem>
         }
       </List>
+        {config.pagination && <Pagination count={totalPCount} shape="rounded" className="pagination-case-list" onClick={caseListpagination} />}
+      </div>
+
     </div>
   );
 });

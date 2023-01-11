@@ -35,6 +35,7 @@ export type AuthState  = {
     description: string;
     status: string;
     lobDetails : any;
+    documents:any[];
   };
 
   export interface CaseList{

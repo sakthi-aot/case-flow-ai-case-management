@@ -1,24 +1,34 @@
 import gql from 'graphql-tag'
 
+
+
 export const FETCH_CASES = gql`
-query{
-  case{
-    id,
-    name,
-    desc,
+query case($Skip:Int,$Take:Int) { 
+    case(take:$Take skip:$Skip){  
+      totalCount
+      Cases{
+         id,
+         name,
+         desc,
+
+      }    
   }
 }`
 
 export const FETCH_DOCUMENT_OF_CASES = gql`
-query getCase($CaseId:Int!){
-  getCase(id:$CaseId){
-    documents{
+query getCase($CaseId:Int!,$Skip:Int,$Take:Int){
+  getCase(id:$CaseId){    
+    documents(skip:$Skip,take:$Take){
+      totalCount,
+      CaseDocuments{
       id,
       name,
       caseid,
       latestversion,
       creationdate,
       type,
+
+      }
     }
   }
   }`
