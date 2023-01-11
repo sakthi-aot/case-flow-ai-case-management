@@ -14,7 +14,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import DownloadIcon from "@mui/icons-material/Download";
-import { fetchCMISfile } from "../../apiManager/services/cmisService";
 import "./CaseDocuments.scss";
 import jpeg from "../../assets/jpeg.png";
 import png from "../../assets/png.png";
@@ -25,9 +24,8 @@ import Upload from "../Upload";
 import EditIcon from '@mui/icons-material/Edit';
 import { State, USerDetails } from "../../interfaces/stateInterface";
 import { DocumentList } from "../../interfaces/componentInterface";
-import { getAllDocuments } from "../../services/DocumentManagementService";
+import { getAllDocuments,getDocument,searchCaseDocument } from "../../services/DocumentManagementService";
 import { setDocumentList } from "../../reducers/documentsReducer";
-import { searchCaseDocument } from "../../services/DocumentManagementService";
 
 
 
@@ -57,6 +55,7 @@ const CaseDocuments = () => {
   const filterDocumentDetails = async () => {
     let searchResult = await searchCaseDocument(searchField,searchColumn)
     // searchResult = searchResult.map((element) => {
+      console.log(searchResult)
 
     // });
     if(searchResult)
@@ -69,6 +68,8 @@ const CaseDocuments = () => {
     fetchDocumentDetailsList()
     filterDocumentDetails();
   }, [searchField]);
+
+
   
   async function fetchDocumentDetailsList() {
     let output = await getAllDocuments();
@@ -85,100 +86,122 @@ const CaseDocuments = () => {
  const  fetchDocumentDetails=(data:any)=>{
 setDocumentDetailsForEdit(data)
   }
+  
+  const previewDocument = async (id,type) => {
+    let response = await getDocument(id)
+    let newWindow = window.open('/')!
+        newWindow.onload = () => {
+          newWindow.location = window.URL.createObjectURL(
+            new Blob([response["data"]], {type: type})
+          );
+        }
+
+}
+
 
   return (
-  
     <section className="dashboard">
-    <h1 className="title">CaseFlow</h1>
-    <div className="search">
-    <Search
+      <h1 className="title">CaseFlow</h1>
+      <div className="search">
+        <Search
           setSearchField={setSearchField}
           dropDownArray={dropDownArray}
           setSearchColumn={setSearchColumn}
         ></Search>
-    </div>     
-      <div className="recent-cases"> <div className="background">
-    <div className="file-card">
-
-    <div>
-           {/* <Upload selectedDMS = "dms1" documentDetailsForEdit={documentDetailsForEdit}  /> */}
-           <div className="case-document-list">
-
-      <Grid container spacing={1}>
-        <Grid item xs={6}>
-          <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6">
-            Case Documents 
-          </Typography>
-        </Grid>
-        <Grid item xs={6}>
-          {/* <Search
+      </div>
+      <div className="recent-cases">
+        {" "}
+        <div className="background">
+          <div className="file-card">
+            <div>
+              {/* <Upload selectedDMS = "dms1" documentDetailsForEdit={documentDetailsForEdit}  /> */}
+              <div className="case-document-list">
+                <Grid container spacing={1}>
+                  <Grid item xs={6}>
+                    <Typography
+                      sx={{ padding: "1rem 1rem 1rem 1rem" }}
+                      variant="h6"
+                    >
+                      Case Documents
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    {/* <Search
             setSearchField={setSearchField}
             dropDownArray={dropDownArray}
             setSearchColumn={setSearchColumn}
           ></Search> */}
-        </Grid>
-      </Grid>
+                  </Grid>
+                </Grid>
 
-      <Divider sx={{ borderBottomWidth: 3 }} />
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow
-              sx={{
-                "& th": {
-                  fontWeight: "bold",
-                },
-              }}
-            >
-              <TableCell>Id</TableCell>
-              <TableCell align="left">Case Id</TableCell>
-              <TableCell align="left">Name</TableCell>
-              <TableCell align="left">Description</TableCell>
-              <TableCell align="left">Creation Date</TableCell>
-              {/* <TableCell align="left">Last Modified Date </TableCell>
+                <Divider sx={{ borderBottomWidth: 3 }} />
+                <TableContainer component={Paper}>
+                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                      <TableRow
+                        sx={{
+                          "& th": {
+                            fontWeight: "bold",
+                          },
+                        }}
+                      >
+                        <TableCell>Id</TableCell>
+                        <TableCell align="left">Case Id</TableCell>
+                        <TableCell align="left">Name</TableCell>
+                        <TableCell align="left">Description</TableCell>
+                        <TableCell align="left">Creation Date</TableCell>
+                        {/* <TableCell align="left">Last Modified Date </TableCell>
               <TableCell align="left">Download </TableCell> */}
-            </TableRow>
-          </TableHead>
+                      </TableRow>
+                    </TableHead>
 
-          <TableBody>
-            {filteredDocumentDetails &&
-              filteredDocumentDetails.map((documentDetail:DocumentList) => (
-                <TableRow
-                  key={documentDetail.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {documentDetail.id}
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    {documentDetail.caseid}
-                  </TableCell>
-                  <TableCell align="left">
-                    {" "}
-                    <div className="name-field">
-                      <img
-                        className="pdf-file-img"
-                        src={`${getFileIcon(documentDetail.name)}`}
-                        alt="pdf"
-                      />
-                      <div className="case-document-name">
-                        <a onClick={fetchCMISfile(
-                      documentDetail.id,
-                      documentDetail.dms_provider,true
-                    )}>{documentDetail.name}</a>
-                      </div>
-                    </div>
-                  </TableCell>
-                  <TableCell align="left">
-                    {documentDetail.desc}
-                  </TableCell>
-                  <TableCell align="left">
-                    {documentDetail.creationdate}
-                  </TableCell>
-                  <TableCell align="left">
-                    {documentDetail.modificationdate}
-                  </TableCell>
-                  {/* <TableCell
+                    <TableBody>
+                      {filteredDocumentDetails &&
+                        filteredDocumentDetails.map(
+                          (documentDetail: DocumentList) => (
+                            <TableRow
+                              key={documentDetail.id}
+                              sx={{
+                                "&:last-child td, &:last-child th": {
+                                  border: 0,
+                                },
+                              }}
+                            >
+                              <TableCell component="th" scope="row">
+                                {documentDetail.id}
+                              </TableCell>
+                              <TableCell component="th" scope="row">
+                                {documentDetail.caseId}
+                              </TableCell>
+                              <TableCell align="left">
+                                {" "}
+                                <div className="name-field">
+                                  <img
+                                    className="pdf-file-img"
+                                    src={`${getFileIcon(documentDetail.name)}`}
+                                    alt="pdf"
+                                  />
+                                  <div className="case-document-name">
+                                    <a
+               onClick={()=>{
+                previewDocument(documentDetail.id,documentDetail.type)
+              }}
+                                    >
+                                      {documentDetail.name}
+                                    </a>
+                                  </div>
+                                </div>
+                              </TableCell>
+                              <TableCell align="left">
+                                {documentDetail.desc}
+                              </TableCell>
+                              <TableCell align="left">
+                                {documentDetail.creationdate}
+                              </TableCell>
+                              <TableCell align="left">
+                                {documentDetail.modificationdate}
+                              </TableCell>
+                              {/* <TableCell
                     align="left"
                     className="action-icon"
                     onClick={fetchCMISfile(
@@ -194,22 +217,20 @@ setDocumentDetailsForEdit(data)
                   >
                     <span className="action-icon"> {<EditIcon />}</span>
                   </TableCell> */}
-
-                
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-   
-    </div>
-    </div></div></div></div>
-      {/* <div className="my-task"><MyTask></MyTask></div> */} 
-  </section>
-  
-  
- );
+                            </TableRow>
+                          )
+                        )}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <div className="my-task"><MyTask></MyTask></div> */}
+    </section>
+  );
 };
 
 export default CaseDocuments;

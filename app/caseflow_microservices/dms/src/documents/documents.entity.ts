@@ -12,7 +12,7 @@ export class CaseDocuments {
 
   @Column()
   @Field()
-  caseid: number;
+  caseId: number;
 
   @Column({ nullable: true })
   @Field({ nullable: true })

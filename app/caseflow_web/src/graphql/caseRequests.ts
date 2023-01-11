@@ -23,7 +23,7 @@ query getCase($CaseId:Int!,$Skip:Int,$Take:Int){
       CaseDocuments{
       id,
       name,
-      caseid,
+      caseId,
       latestversion,
       creationdate,
       type,

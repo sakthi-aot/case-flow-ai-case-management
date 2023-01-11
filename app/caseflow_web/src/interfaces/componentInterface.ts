@@ -29,7 +29,8 @@ export interface SearchProps{
     dms_provider: number;
     desc:string,
     creationdate:string,
-    modificationdate:string
+    modificationdate:string,
+    type:string
   }
 
   export interface SortValue{
