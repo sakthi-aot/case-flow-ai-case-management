@@ -1,4 +1,0 @@
-configurationset:
-  - configuration:
-      name: postgresql_config
-      uri: postgresql://caseflowdev.ccizdidwz3tj.ca-central-1.rds.amazonaws.com/caseflow_core?user=postgres&password=0DhoxLWL5HlS27WjLkUL
