@@ -11,10 +11,9 @@ import {
     DELETE_CASE,
     UPDATE_CASE,
     FETCH_DOCUMENT_OF_CASES,
-    FETCH_CASE_DETAILS,
-    FETCH_CASEHISTORY,
+    FETCH_CASE_DETAILS,    
     SEARCH_CASE_LIST,
-    FETCH_RECENT_CASES
+    FETCH_RECENT_CASES,
     FETCH_CASEHISTORY,    
   } from "../graphql/caseRequests"
   import { Case } from "../dto/cases"
