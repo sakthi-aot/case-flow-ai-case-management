@@ -10,6 +10,8 @@ interface ENV{
   REACT_APP_CASEFLOW_GRAPHQL_API_URL : string
   CASEFLOW_DMS : string;
   REACT_APP_CASEFLOW_API_URL : string;
+  PAGINATION_TAKE:number;
+
 
 
 }
@@ -22,7 +24,7 @@ declare global {
 
 
 
-//keycloak
+//keycloak  
 export const KEYCLOAK_CLIENT =
   (window._env_ && window._env_.REACT_APP_KEYCLOAK_WEB_CLIENTID) ||
   process.env.REACT_APP_KEYCLOAK_WEB_CLIENTID ||
@@ -68,9 +70,15 @@ export const ROLES = [
 export  const CASEFLOW_DMS =  (window._env_ && window._env_.CASEFLOW_DMS) ||
 process.env.CASEFLOW_DMS ||
 "1";
+export  const PAGINATION_TAKE =  (window._env_ && window._env_.PAGINATION_TAKE) ||
+process.env.PAGINATION_TAKE || "" ;
+
 export  const CASEFLOW_API_URL =  (window._env_ && window._env_.REACT_APP_CASEFLOW_API_URL) ||
 process.env.REACT_APP_CASEFLOW_API_URL ||
 "";
 export  const CASEFLOW_GRAPHQL_API_URL =  (window._env_ && window._env_.REACT_APP_CASEFLOW_GRAPHQL_API_URL) ||
 process.env.REACT_APP_CASEFLOW_GRAPHQL_API_URL ||
+"";
+export  const REACT_APP_CASEFLOW_LOB_GRAPHQL_API_URL =  (window._env_ && window._env_.REACT_APP_CASEFLOW_LOB_GRAPHQL_API_URL) ||
+process.env.REACT_APP_CASEFLOW_LOB_GRAPHQL_API_URL ||
 "";

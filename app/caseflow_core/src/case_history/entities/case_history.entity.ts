@@ -30,7 +30,7 @@ export class CaseHistory {
   @Field()
   eventId: number;
 
-  
+
 
   @ManyToOne(() => CaseEvents, (event) => event.casehistory)
   @Field(() => CaseEvents, { nullable: true })

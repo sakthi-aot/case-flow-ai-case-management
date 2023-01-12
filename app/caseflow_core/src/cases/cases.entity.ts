@@ -70,6 +70,7 @@ export class Cases {
   @Field()
   isdeleted: boolean;
 
+
   // @OneToMany(()=>CaseHistory,casehistory =>casehistory.caseid)
   // @Field(type=>[CaseHistory],{nullable:true})
   // casehistory?:CaseHistory[];
@@ -77,4 +78,16 @@ export class Cases {
   @OneToMany(() => CaseHistory, (casehistory) => casehistory.case)
   @Field(() => [CaseHistory], { nullable: true })
   casehistory: CaseHistory[]
+
 }
+
+@ObjectType()
+export class casesResponse {
+  @Field(type => [Cases])
+  Cases: Cases[]
+
+  @Field(type => Int)
+  totalCount: number
+}
+
+

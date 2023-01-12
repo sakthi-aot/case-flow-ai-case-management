@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
 isShowLoader : false,
+progressBarStatus : 0,
 };
 
 const appSlice = createSlice({
@@ -10,6 +11,9 @@ const appSlice = createSlice({
     setLoader: (state, action) => {
       state.isShowLoader = action.payload;
     },
+    setProgress : (state, action) => {
+      state.progressBarStatus = action.payload;
+    },
 
 
   }
@@ -17,5 +21,6 @@ const appSlice = createSlice({
 
 export const {
     setLoader,
+    setProgress,
 } = appSlice.actions;
 export default appSlice.reducer;

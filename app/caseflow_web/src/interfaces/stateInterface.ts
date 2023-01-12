@@ -3,7 +3,7 @@ export interface State {
   auth: Auth
   app: Application
   documents: Document
-  Cases: Cases
+  cases: Cases
 }
 
 export type AuthState  = {
@@ -21,6 +21,7 @@ export type AuthState  = {
 
   export interface Application {
     isShowLoader: boolean;
+    progressBarStatus: number;
   };
 
   export interface Document {
@@ -33,6 +34,8 @@ export type AuthState  = {
     name: string;
     description: string;
     status: string;
+    lobDetails : any;
+    documents:any[];
   };
 
   export interface CaseList{

@@ -11,22 +11,20 @@ import {
     DELETE_CASE,
     UPDATE_CASE,
     FETCH_DOCUMENT_OF_CASES,
-    FETCH_CASE_DETAILS,
-    FETCH_CASEHISTORY,
+    FETCH_CASE_DETAILS,    
     SEARCH_CASE_LIST,
-    FETCH_RECENT_CASES
+    FETCH_RECENT_CASES,
+    FETCH_CASEHISTORY,    
   } from "../graphql/caseRequests"
   import { Case } from "../dto/cases"
   import { print } from "graphql";
-  
-
+  // import { PAGINATION_TAK}";
+  import { PAGINATION_TAKE } from "../apiManager/endpoints/config"; 
 
   
   export const addCases = async(newCase: Case) => {
-
-      console.log("data11",newCase)
       const url =  GRAPHQL;
-      httpPOSTRequest(url,{query: print(ADD_CASE),
+      return httpPOSTRequest(url,{query: print(ADD_CASE),
         variables: {
           createCaseInput: {
             name: newCase.name,
@@ -36,7 +34,7 @@ import {
         },
       },null)
         .then((res) => {
-          return {"success" : res};
+          return {"success" : res.data};
         })
         .catch((error) => {
           if (error?.response?.data) {
@@ -50,10 +48,8 @@ import {
 
 
   export const updateCases = async(newCase: Case) => {
-console.log("update");
-    console.log("data11",newCase)
     const url =  GRAPHQL;
-    httpPOSTRequest(url,{query: print(UPDATE_CASE),
+    return httpPOSTRequest(url,{query: print(UPDATE_CASE),
       variables: {
         updateCaseInput: {
           id:newCase.id,
@@ -63,7 +59,7 @@ console.log("update");
       },
     },null)
       .then((res) => {
-        return {"success" : res};
+        return {"success" : res.data};
       })
       .catch((error) => {
         if (error?.response?.data) {
@@ -74,11 +70,14 @@ console.log("update");
       });
  
 };
-  export const getCasesList = async () => {
-     
+  export const getCasesList = async (number) => {   
+   const  skip =(number-1)*10;   
     const url = GRAPHQL;
-    const  output =  await httpGETRequest(url,{query: print(FETCH_CASES),
-      variables: {
+    const  output =  await httpPOSTRequest(url,{query: print(FETCH_CASES),
+      variables: {       
+        Skip:skip,
+        Take:Number(PAGINATION_TAKE)
+        
       },
     },null)
       .then((res) => {return res.data.data.case})
@@ -89,15 +88,20 @@ console.log("update");
       return output
 
   };
-  export const getDocumentofCaseList = async (id) => {
+  
+  export const getDocumentofCaseList = async (id,number) => {
     console.log(parseInt(id))
-    const url = GRAPHQL;
+    const  skip =(number-1)*10; 
+    const url = GRAPHQL;    
     const  output =  await httpPOSTRequest(url,{query: print(FETCH_DOCUMENT_OF_CASES),
       variables: {
         CaseId : parseInt(id),
+        Skip:skip,
+        Take:Number(PAGINATION_TAKE)
       },
     },null)
-      .then((res) => {return res.data.data.getCase.documents})
+      .then((res) => {       
+        return res.data.data.getCase.documents})
       .catch((error) => {
         console.log({"error" : error})
         return []

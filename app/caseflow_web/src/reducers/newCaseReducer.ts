@@ -5,14 +5,16 @@ selectedCase : {
   name : "",
    description :  "" ,
    status : "",
-   isEdit: false
+   isEdit: false,
+   lobDetails:{},
+   documents:[],
 },
 caseList : [{
   id : 0,
   name : "",
    description :  "" ,
    status : ""
-}]
+}],
 };
 
 const caseSlice = createSlice({
@@ -29,6 +31,12 @@ const caseSlice = createSlice({
     resetSelectedCase: (state) => {
       state.selectedCase = initialState.selectedCase;
   },
+  setSelectedCaseLOBDetails: (state, action) => {
+    state.selectedCase.lobDetails = action.payload;
+},
+  setSelectedCaseDocuments: (state, action) => {
+    state.selectedCase.documents = action.payload;
+},
 
   }
 });
@@ -37,5 +45,7 @@ export const {
   setCaseList,
   setSelectedCase,
   resetSelectedCase,
+  setSelectedCaseDocuments,
+  setSelectedCaseLOBDetails,
 } = caseSlice.actions;
 export default caseSlice.reducer;

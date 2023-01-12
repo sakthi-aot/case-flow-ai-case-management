@@ -9,6 +9,7 @@ const caseListProps = {
   title: "Recent Cases",
   count: 5,
   isShowSort: false,
+  pagination:false
 };
 
 

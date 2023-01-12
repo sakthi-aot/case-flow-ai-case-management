@@ -6,8 +6,9 @@ query{
     id,
     name,
     desc,
-    caseid,
+    caseId,
     creationdate,
+    type
   }
 }`
 
@@ -17,7 +18,8 @@ query SearchcaseDocument($searchField:String!,$searchColumn:String!){
     id,
     name,
     desc,
-    caseid,
+    caseId,
     creationdate,
+    type
     }
   }`

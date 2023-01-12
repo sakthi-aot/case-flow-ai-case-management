@@ -4,13 +4,15 @@ import { Repository,Like } from 'typeorm';
 import { AuthGuard, RoleGuard, RoleMatchingMode, Roles, Unprotected } from 'nest-keycloak-connect';
 
 //_____________________Custom Imports_____________________//
-import { Cases } from './cases.entity';
+import { Cases, casesResponse } from './cases.entity';
 import { CreateCaseInput } from './dto/create-case.input';
 import { UpdateCaseInput } from './dto/update-case.input';
 import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
 import { CaseHistoryService } from 'src/case_history/case_history.service';
 import { CaseHistory } from 'src/case_history/entities/case_history.entity';
+import { FetchArgs } from './dto/fetch.input';
+
 
 @Injectable()
 export class CasesService {
@@ -18,10 +20,22 @@ export class CasesService {
     @InjectRepository(Cases) private caseRepository: Repository<Cases>
   ) {}
 
-  async findAll(): Promise<Cases[]> {
-     const data = await this.caseRepository.find({relations:["casehistory",,"casehistory.event","casehistory.event.eventtype"]});
-     return data;
+
+  async findAll({relations:["casehistory","casehistory.event","casehistory.event.eventtype"]},args: FetchArgs = { skip: 0, take: 5 }): Promise<casesResponse> {       
+    const [Cases,totalCount] =await Promise.all([
+      this.caseRepository.find(
+        {
+          take: args.take,
+          skip: args.skip,
+        }
+      ),
+      this.caseRepository.count()
+    ])    
+    return {Cases,totalCount}
+
   }
+
+  
   async findAllWithLimit(): Promise<Cases[]> {
     return this.caseRepository.find({
       take: 10,    order: {
@@ -47,6 +61,7 @@ export class CasesService {
           },
           relations:["casehistory","casehistory.event","casehistory.event.eventtype"]},);
         if(value)return value
+
         throw new NotFoundException(`Record cannot find by id ${id}`);
       }
       throw new BadRequestException("request doesn't have any id")
@@ -104,3 +119,4 @@ export class CasesService {
 
   }
 }
+

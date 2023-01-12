@@ -1,15 +1,21 @@
 .case-detail-reference-first-row{
     display: flex;
     text-align: left;
-    gap: 8rem;
-    h3{
-        margin-bottom: 0;
-        color:#0031FF
+    flex-direction : row;
+    flex-wrap: wrap;
+    gap: 4rem;
+    .item{
+         flex: 0 0 100%;
+        h3{
+            margin-bottom: 0;
+            color:#0031FF
+        }
+        p{
+            margin-top: 10px;
+            color: #0031FF;
+        }
     }
-    p{
-        margin-top: 10px;
-        color: #0031FF;
-    }
+   
 }
 .configurable-case-content-section{
     text-align: left;

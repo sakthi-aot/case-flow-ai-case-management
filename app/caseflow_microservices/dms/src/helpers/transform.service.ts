@@ -8,12 +8,13 @@ export class TransformService {
   // summery : Transform S3 object to schema specific format
   // Created By : Don C Varghese
   transformS3 = (type, document, data) => {
+
     console.log(type)
     switch (type) {
       case 'CREATE':
         try{
           return {
-            caseid: parseInt(data.caseid),
+            caseId: parseInt(data.caseId),
             documentref: document.key,
             name: data.name,
             desc: data.desc,
@@ -22,7 +23,7 @@ export class TransformService {
             dmsprovider: 1,
             latestversion: document.VersionId,
             isdeleted: false,
-            type : data.file.mimetype,
+            type : data?.file?.mimetype,
           };
         }
         catch(err){
@@ -57,7 +58,7 @@ export class TransformService {
           latestversion: document.entry.properties['cm:versionLabel'],
           isdeleted: false,
           type : data.file.mimetype,
-          caseid: data.caseid,
+          caseId: data.caseId,
 
         };
 
@@ -80,7 +81,7 @@ export class TransformService {
     switch (type) {
       case 'CREATE':       
           return {
-              caseid: data.caseid,
+              caseId: data.caseId,
               documentref: document.UniqueId,
               name: data.name,
               desc: data.desc,

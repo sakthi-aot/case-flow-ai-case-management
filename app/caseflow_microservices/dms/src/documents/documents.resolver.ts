@@ -53,7 +53,7 @@ export class DocumentsResolver {
 
   @ResolveField((of)=>CaseDocuments)
   cases(@Parent() document:CaseDocuments){
-    return {__typename:"Cases",id:document.caseid}
+    return {__typename:"Cases",id:document.caseId}
   }
 
 }

@@ -2,9 +2,10 @@ import { Args, Int, Mutation, Query, Resolver, ResolveReference } from '@nestjs/
 
 //_____________________Custom Imports_____________________//
 
-import { Cases } from './cases.entity';
+import { Cases, casesResponse, } from './cases.entity';
 import { CasesService } from './cases.service';
 import { CreateCaseInput } from './dto/create-case.input';
+import { FetchArgs, FetchCaseDocumentArgs } from './dto/fetch.input';
 import { UpdateCaseInput } from './dto/update-case.input';
 import { HttpException } from '@nestjs/common/exceptions';
 
@@ -16,12 +17,16 @@ export class CasesResolver {
   //_____________________Query_____________________//
 
   @Query((returns) => Cases)
-  getCase(@Args('id', { type: () => Int }) id: number): Promise<Cases> {
-    return this.casesService.findOne( id );
+  async getCase(@Args() args:FetchCaseDocumentArgs ): Promise<Cases> {
+    const res =await this.casesService.findOne(args.id )
+    return res;
   }
-  @Query((returns) => [Cases])
-  case(): Promise<Cases[]> {
-    return this.casesService.findAll();
+
+
+  @Query((returns) => casesResponse)
+  case(@Args() args: FetchArgs): Promise<casesResponse> { 
+    const output = this.casesService.findAll(args);     
+    return output
   }
 
   @Query((returns) => [Cases] )
