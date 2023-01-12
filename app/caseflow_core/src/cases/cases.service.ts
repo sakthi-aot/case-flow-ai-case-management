@@ -9,15 +9,19 @@ import { CreateCaseInput } from './dto/create-case.input';
 import { UpdateCaseInput } from './dto/update-case.input';
 import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
+import { CaseHistoryService } from 'src/case_history/case_history.service';
+import { CaseHistory } from 'src/case_history/entities/case_history.entity';
 import { FetchArgs } from './dto/fetch.input';
+
 
 @Injectable()
 export class CasesService {
   constructor(
-    @InjectRepository(Cases) private caseRepository: Repository<Cases>,
+    @InjectRepository(Cases) private caseRepository: Repository<Cases>
   ) {}
 
-  async findAll(args: FetchArgs = { skip: 0, take: 5 }): Promise<casesResponse> {       
+
+  async findAll({relations:["casehistory","casehistory.event","casehistory.event.eventtype"]},args: FetchArgs = { skip: 0, take: 5 }): Promise<casesResponse> {       
     const [Cases,totalCount] =await Promise.all([
       this.caseRepository.find(
         {
@@ -28,6 +32,7 @@ export class CasesService {
       this.caseRepository.count()
     ])    
     return {Cases,totalCount}
+
   }
 
   
@@ -50,14 +55,13 @@ export class CasesService {
 
   async findOne(id: number): Promise<Cases> {
       if(id){
-        const value = await 
-          this.caseRepository.findOne({
-            where: {
-              id: id,
-            },
-          })     
-        
-        if(value) return value       
+        const value = await this.caseRepository.findOne({
+          where: {
+            id: id,
+          },
+          relations:["casehistory","casehistory.event","casehistory.event.eventtype"]},);
+        if(value)return value
+
         throw new NotFoundException(`Record cannot find by id ${id}`);
       }
       throw new BadRequestException("request doesn't have any id")

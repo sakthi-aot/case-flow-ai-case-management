@@ -22,13 +22,30 @@ directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUM
 
 directive @override(from: String!) on FIELD_DEFINITION
 
+type EventTypes {
+  id: ID!
+  text: String
+  code: Float!
+  caseevent: [CaseEvents!]
+}
+
+type CaseEvents {
+  id: ID!
+  eventtypeId: Float
+  artifactId: Float!
+  casehistory: CaseHistory
+  eventtype: EventTypes
+}
+
 type CaseHistory {
   id: ID!
   datetime: Int!
   outcome: String!
   userid: Float!
-  caseid: Float!
-  cases: [Cases!]
+  eventId: Float!
+  event: CaseEvents
+  case: [Cases!]
+  caseId: Float
 }
 
 type Cases {
@@ -58,9 +75,18 @@ scalar DateTime
 
 type Query {
   getCase(id: Int!): Cases!
+
+  case: [Cases!]!
+  Searchcase(searchField: String!, searchColumn: String!): [Cases!]!
   case(skip: Int = 0, take: Int = 25): [Cases!]!
+
   fetchRecentCase: [Cases!]!
+  caseHistoryFindAll: [CaseHistory!]!
   caseHistory(id: Int!): CaseHistory!
+  caseEvents: [CaseEvents!]!
+  caseEvent(id: Int!): CaseEvents!
+  eventTypes: [EventTypes!]!
+  eventType(id: Int!): EventTypes!
 }
 
 type Mutation {
@@ -70,6 +96,12 @@ type Mutation {
   createCaseHistory(createCaseHistoryInput: CreateCaseHistoryInput!): CaseHistory!
   updateCaseHistory(updateCaseHistoryInput: UpdateCaseHistoryInput!): CaseHistory!
   removeCaseHistory(id: Int!): CaseHistory!
+  createCaseEvent(createCaseEventInput: CreateCaseEventInput!): CaseEvents!
+  updateCaseEvent(updateCaseEventInput: UpdateCaseEventInput!): CaseEvents!
+  removeCaseEvent(id: Int!): CaseEvents!
+  createEventType(createEventTypeInput: CreateEventTypeInput!): EventTypes!
+  updateEventType(updateEventTypeInput: UpdateEventTypeInput!): EventTypes!
+  removeEventType(id: Int!): EventTypes!
 }
 
 input CreateCaseInput {
@@ -79,7 +111,7 @@ input CreateCaseInput {
   statusid: Int!
   typeid: Float
   linkedcases: [Int!]
-  creationdate: DateTime = "2022-12-23T08:49:13.639Z"
+  creationdate: DateTime = "2023-01-11T05:19:30.575Z"
   completiondate: DateTime
   lastmodificationdate: DateTime
   penduntildate: DateTime
@@ -98,7 +130,7 @@ input UpdateCaseInput {
   statusid: Int!
   typeid: Float
   linkedcases: [Int!]
-  creationdate: DateTime = "2022-12-23T08:49:13.638Z"
+  creationdate: DateTime = "2023-01-11T05:19:30.571Z"
   completiondate: DateTime
   lastmodificationdate: DateTime
   penduntildate: DateTime
@@ -115,6 +147,28 @@ input CreateCaseHistoryInput {
 }
 
 input UpdateCaseHistoryInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateCaseEventInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateCaseEventInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateEventTypeInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateEventTypeInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!

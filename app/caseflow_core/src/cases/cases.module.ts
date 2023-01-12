@@ -12,5 +12,6 @@ import { CaseHistoryModule } from 'src/case_history/case_history.module';
   imports: [TypeOrmModule.forFeature([Cases]), HelpersModule],
   providers: [CasesService, CasesResolver],
   controllers: [CasesController],
+  exports: [CasesService]
 })
 export class CasesModule {}
