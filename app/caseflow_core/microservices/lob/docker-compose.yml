@@ -1,8 +1,8 @@
 version: "3.7"
 
 services:
-  case-flow-core:
-    container_name: case-flow-core
+  case-flow-lob:
+    container_name: case-flow-lob
     build:
       context: .
       dockerfile: Dockerfile
@@ -26,5 +26,5 @@ services:
 
 
     ports:
-      - "7001:7001"
+      - "8000:8000"
     tty: true
