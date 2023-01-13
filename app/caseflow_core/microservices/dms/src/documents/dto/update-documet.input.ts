@@ -1,5 +1,8 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
-
+/**
+ * Summary :  Create update DTO for documents
+ * Created By : Akhila U S
+ */
 @InputType()
 export class UpdateDocumentInput {
   @Field((type) => Int)

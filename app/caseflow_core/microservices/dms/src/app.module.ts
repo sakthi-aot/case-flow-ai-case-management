@@ -18,6 +18,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { DocumentsModule } from './documents/documents.module';
 import { HelpersModule } from './helpers/helpers.module';
 import {HttpModule} from  '@nestjs/axios'
+
+//keycloack settings
 const keyCloakOptionsProvider =  {
   provide: 'keyCloakDataProvider',
   useFactory: (config: ConfigService) => {
@@ -71,10 +73,10 @@ const keyCloakOptionsProvider =  {
   ],
   controllers: [],
   providers: [
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-     },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AuthGuard,
+    //  },
     // {
     //   provide: APP_GUARD,
     //   useClass: RoleGuard,

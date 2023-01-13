@@ -1,5 +1,8 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
-
+/**
+ * Summary :  DTO for updating Cases
+ * Created By : Akhila U S
+ */
 @InputType()
 export class UpdateCaseInput {
   @Field((type) => Int)

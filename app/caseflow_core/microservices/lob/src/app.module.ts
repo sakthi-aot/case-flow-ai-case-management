@@ -69,9 +69,11 @@ const keyCloakOptionsProvider =  {
     CaseflowLobModule,
   ],
   controllers: [AppController],
-  providers: [AppService,  {
-    provide: APP_GUARD,
-    useClass: AuthGuard,
-   },],
+  providers: [AppService, 
+  //    {
+  //   provide: APP_GUARD,
+  //   useClass: AuthGuard,
+  //  },
+  ],
 })
 export class AppModule {}

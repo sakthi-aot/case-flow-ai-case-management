@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 //_____________________Custom Imports_____________________//
-import { CasesService } from './cases.service';
+import { CasesService } from './services/cases.service';
 import { CasesController } from './cases.controller';
-import { Cases } from './cases.entity';
-import { CasesResolver } from './cases.resolver';
+import { Cases } from './entities/cases.entity';
+import { CasesResolver } from './resolvers/cases.resolver';
 import { HelpersModule } from 'src/helper/helpers.module';
-import { CaseHistoryModule } from 'src/case_history/case_history.module';
+
 @Module({
   imports: [TypeOrmModule.forFeature([Cases]), HelpersModule],
   providers: [CasesService, CasesResolver],

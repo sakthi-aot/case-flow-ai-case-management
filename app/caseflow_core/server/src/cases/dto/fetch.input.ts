@@ -1,6 +1,9 @@
 import { Field, Int, ArgsType } from '@nestjs/graphql'
 import { Max, Min } from 'class-validator'
-
+/**
+ * Summary :  fetch DTO for Cases
+ * Created By : Gokul
+ */
 @ArgsType()
 export class FetchArgs {
   @Field(() => Int)

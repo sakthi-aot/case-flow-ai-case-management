@@ -7,7 +7,7 @@ import { TransformService } from 'src/helpers/transform.service';
 import { FileService } from '../helpers/file.service';
 
 
-import { DocumentsService } from './documents.service';
+import { DocumentsService } from './services/documents.service';
 import { Express } from 'express';
 @Controller('documents')
 export class DocumentsController {

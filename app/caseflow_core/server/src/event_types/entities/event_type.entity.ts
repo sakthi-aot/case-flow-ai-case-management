@@ -3,6 +3,10 @@ import { CaseEvents } from 'src/case_events/entities/case_event.entity';
 import { CaseHistory } from 'src/case_history/entities/case_history.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 
+/**
+ * Summary :  Entity Class For eventtype
+ * Created By : Akhila U S
+ */
 @Entity()
 @ObjectType()
 @Directive('@key(fields:"id")')

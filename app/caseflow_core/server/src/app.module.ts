@@ -21,6 +21,10 @@ import { CaseHistoryModule } from './case_history/case_history.module';
 import { CaseEventsModule } from './case_events/case_events.module';
 import { EventTypesModule } from './event_types/event_types.module';
 
+/** 
+*  Summary :Keyclock settings
+*  Created By : Akhila U S
+*/
 const keyCloakOptionsProvider =  {
   provide: 'keyCloakDataProvider',
   useFactory: (config: ConfigService) => {
@@ -39,6 +43,10 @@ const keyCloakOptionsProvider =  {
   },
   inject: [ ConfigService],
 };
+/**
+ * Summary : App Module Wrapping All Functionality For Case Micro Service
+ * Created By : Akhila U S
+ */
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -57,8 +65,6 @@ const keyCloakOptionsProvider =  {
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
       type: 'postgres',
-
-
       host: config.get('POSTGRESQL_HOST') || 'caseflowdev.ccizdidwz3tj.ca-central-1.rds.amazonaws.com',
       port: parseInt(config.get('POSTGRESQL_PORT')) || 5432,
       database: config.get('POSTGRES_DATABASE') || 'caseflow_core',
@@ -83,12 +89,12 @@ const keyCloakOptionsProvider =  {
   ],
   controllers: [],
   providers: [
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-     },
     // {
-    //   provide: APP_GUARD,
+    //   provide: APP_GUARD, //For keyclock Auth Token
+    //   useClass: AuthGuard,
+    //  },
+    // {
+    //   provide: APP_GUARD, //For keyclock Role management
     //   useClass: RoleGuard,
     // },
   ],

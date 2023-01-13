@@ -10,12 +10,13 @@ import { Get, Patch } from '@nestjs/common/decorators';
 import { TransformService } from 'src/helper/transform.service';
 import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
-import { UpdateCaseInput } from './dto/update-case.input';
+
 
 
 //_____________________Custom Imports_____________________//
 
-import { CasesService } from './cases.service';
+import { CasesService } from  './services/cases.service'
+import { UpdateCaseInput } from './dto/update-case.input';
 
 @Controller('cases')
 export class CasesController {

@@ -1,8 +1,12 @@
 import { Field, ObjectType, Int ,Directive,ID } from '@nestjs/graphql';
-import { Cases } from 'src/cases/cases.entity';
+import { Cases } from 'src/cases/entities/cases.entity';
 import { CaseEvents } from 'src/case_events/entities/case_event.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 
+/**
+ * Summary :  Entity Class For Casehistory
+ * Created By : Akhila U S
+ */
 @Entity()
 @ObjectType()
 

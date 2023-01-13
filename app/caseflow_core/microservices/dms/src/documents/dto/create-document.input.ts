@@ -1,5 +1,9 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
 
+/**
+ * Summary :  Create input DTO for documents
+ * Created By : Akhila U S
+ */
 @InputType()
 export class CreateDocumentInput {
   @Field((type) => Int, { nullable: true })

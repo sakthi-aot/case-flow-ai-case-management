@@ -1,5 +1,9 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
 
+/**
+ * Summary :  Create input DTO for Cases
+ * Created By : Akhila U S
+ */
 @InputType()
 export class CreateCaseInput {
   @Field((type) => Int, { nullable: true })

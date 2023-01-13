@@ -2,17 +2,51 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+directive @key(fields: String!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
+
+directive @extends on OBJECT | INTERFACE
+
+directive @external on OBJECT | FIELD_DEFINITION
+
+directive @requires(fields: String!) on FIELD_DEFINITION
+
+directive @provides(fields: String!) on FIELD_DEFINITION
+
+directive @shareable on FIELD_DEFINITION | OBJECT
+
+directive @link(url: String!, import: [link__Import]) on SCHEMA
+
+directive @tag(name: String!) repeatable on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+directive @override(from: String!) on FIELD_DEFINITION
+
+type caseDocumentResponse {
+  CaseDocuments: [CaseDocuments!]!
+  totalCount: Int!
+}
+
+type Cases {
+  id: ID!
+  take: Int!
+  skip: Int!
+  documents(skip: Int! = 0, take: Int! = 25): caseDocumentResponse!
+}
+
 type CaseDocuments {
-  id: Int!
-  caseid: Float!
-  documentref: String!
+  id: ID!
+  caseId: Float!
+  documentref: String
   desc: String
-  addedbyuserid: Float!
-  creationdate: DateTime!
-  dmsprovider: Float!
-  name: String!
-  latestversion: String!
-  isdeleted: Boolean!
+  addedbyuserid: Float
+  creationdate: DateTime
+  dmsprovider: Float
+  name: String
+  latestversion: String
+  isdeleted: Boolean
+  type: String
+  cases: Cases!
 }
 
 """
@@ -22,36 +56,40 @@ scalar DateTime
 
 type Query {
   documents: [CaseDocuments!]!
-  getCase(id: Int!): [CaseDocuments!]!
+  getCaseDocument(id: Int!): [CaseDocuments!]!
+  SearchcaseDocument(searchField: String!, searchColumn: String!): [CaseDocuments!]!
 }
 
 type Mutation {
-  createCase(createCaseInput: CreateDocumentInput!): CaseDocuments!
-  updateCases(cases: UpdateDocumentInput!): CaseDocuments!
-  removeCases(id: Float!): CaseDocuments!
+  createDocument(createDocumentInput: CreateDocumentInput!): CaseDocuments!
+  updateDocument(updateDocumentInput: UpdateDocumentInput!): CaseDocuments!
+  removeDocument(id: Float!): CaseDocuments!
 }
 
 input CreateDocumentInput {
-  caseid: Int
+  caseId: Int
   documentref: String!
   desc: String
   addedbyuserid: Float
-  creationdate: DateTime = "2022-12-08T11:47:18.860Z"
+  creationdate: DateTime! = "2023-01-13T14:54:36.668Z"
   dmsprovider: Float!
   name: String!
   latestversion: String!
-  isdeleted: Boolean = false
+  isdeleted: Boolean! = false
+  type: String
 }
 
 input UpdateDocumentInput {
   id: Int!
-  caseid: Int
+  caseId: Int
   documentref: String!
   desc: String
   addedbyuserid: Float!
-  creationdate: DateTime = "2022-12-08T11:47:18.861Z"
+  creationdate: DateTime! = "2023-01-13T14:54:36.676Z"
   dmsprovider: Float!
   name: String!
   latestversion: String!
-  isdeleted: Boolean = false
+  isdeleted: Boolean! = false
 }
+
+scalar link__Import

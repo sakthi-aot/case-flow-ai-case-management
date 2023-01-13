@@ -33,7 +33,7 @@ type CaseEvents {
   id: ID!
   eventtypeId: Float
   artifactId: Float!
-  casehistory: CaseHistory
+  casehistory: [CaseHistory!]
   eventtype: EventTypes
 }
 
@@ -44,7 +44,7 @@ type CaseHistory {
   userid: Float!
   eventId: Float!
   event: CaseEvents
-  case: [Cases!]
+  case: Cases
   caseId: Float
 }
 
@@ -73,17 +73,19 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type casesResponse {
+  Cases: [Cases!]!
+  totalCount: Int!
+}
+
 type Query {
-  getCase(id: Int!): Cases!
-
-  case: [Cases!]!
+  getCase(skip: Int = 0, take: Int = 25, id: Int!): Cases!
+  case(skip: Int = 0, take: Int = 25): casesResponse!
   Searchcase(searchField: String!, searchColumn: String!): [Cases!]!
-  case(skip: Int = 0, take: Int = 25): [Cases!]!
-
   fetchRecentCase: [Cases!]!
-  caseHistoryFindAll: [CaseHistory!]!
+  getAllCaseHistory: [CaseHistory!]!
   caseHistory(id: Int!): CaseHistory!
-  caseEvents: [CaseEvents!]!
+  getAllCaseEvents: [CaseEvents!]!
   caseEvent(id: Int!): CaseEvents!
   eventTypes: [EventTypes!]!
   eventType(id: Int!): EventTypes!
@@ -111,7 +113,7 @@ input CreateCaseInput {
   statusid: Int!
   typeid: Float
   linkedcases: [Int!]
-  creationdate: DateTime = "2023-01-11T05:19:30.575Z"
+  creationdate: DateTime = "2023-01-13T14:53:33.104Z"
   completiondate: DateTime
   lastmodificationdate: DateTime
   penduntildate: DateTime
@@ -130,7 +132,7 @@ input UpdateCaseInput {
   statusid: Int!
   typeid: Float
   linkedcases: [Int!]
-  creationdate: DateTime = "2023-01-11T05:19:30.571Z"
+  creationdate: DateTime = "2023-01-13T14:53:33.100Z"
   completiondate: DateTime
   lastmodificationdate: DateTime
   penduntildate: DateTime
