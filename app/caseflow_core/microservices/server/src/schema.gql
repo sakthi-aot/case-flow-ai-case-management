@@ -81,7 +81,7 @@ type casesResponse {
 type Query {
   getCase(skip: Int = 0, take: Int = 25, id: Int!): Cases!
   case(skip: Int = 0, take: Int = 25): casesResponse!
-  Searchcase(searchField: String!, searchColumn: String!): [Cases!]!
+  Searchcase(searchField: String!, searchColumn: String!, skip: Int = 0, take: Int = 25): casesResponse!
   fetchRecentCase: [Cases!]!
   getAllCaseHistory: [CaseHistory!]!
   caseHistory(id: Int!): CaseHistory!
@@ -113,7 +113,7 @@ input CreateCaseInput {
   statusid: Int!
   typeid: Float
   linkedcases: [Int!]
-  creationdate: DateTime = "2023-01-13T14:53:33.104Z"
+  creationdate: DateTime = "2023-01-17T08:10:32.580Z"
   completiondate: DateTime
   lastmodificationdate: DateTime
   penduntildate: DateTime
@@ -132,7 +132,7 @@ input UpdateCaseInput {
   statusid: Int!
   typeid: Float
   linkedcases: [Int!]
-  creationdate: DateTime = "2023-01-13T14:53:33.100Z"
+  creationdate: DateTime = "2023-01-17T08:10:32.553Z"
   completiondate: DateTime
   lastmodificationdate: DateTime
   penduntildate: DateTime

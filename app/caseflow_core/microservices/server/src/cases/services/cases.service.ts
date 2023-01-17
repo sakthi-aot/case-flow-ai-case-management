@@ -29,13 +29,15 @@ export class CasesService {
    * @returns
    */
   async findAll(
-    args: FetchArgs = { skip: 0, take: 5 },
-  ): Promise<casesResponse> {
+    args: FetchArgs = { skip: 0, take: 5 }): Promise<casesResponse> {
     try {
     const [Cases, totalCount] = await Promise.all([
       this.caseRepository.find({
         take: args.take,
         skip: args.skip,
+        order: {
+          id: 'DESC',
+        }
       }),
       this.caseRepository.count(),
     ]);
@@ -152,35 +154,33 @@ export class CasesService {
    * @param searchColumn 
    * @returns 
    */
-  searchCase(searchField, searchColumn) {
-    try {
-      if (searchColumn) {
-        switch (searchColumn) {
-          case 'Description': {
-            return this.caseRepository
-              .createQueryBuilder('table')
-              .where('LOWER(table.desc) LIKE :title', {
-                title: `%${searchField.toLowerCase()}%`,
-              })
-              .getMany();
-          }
-          default:
-            return this.caseRepository
-              .createQueryBuilder('table')
-              .where('LOWER(table.name) LIKE :title', {
-                title: `%${searchField.toLowerCase()}%`,
-              })
-              .getMany();
+  
+   async searchCase(searchField,searchColumn,skip,take){
+    try{
+    if(searchColumn){
+      switch(searchColumn){ 
+        case 'Description': {
+          const [Cases,totalCount] =await this.caseRepository.createQueryBuilder("table")
+          .where("LOWER(table.desc) LIKE :title", { title: `%${ searchField.toLowerCase() }%` }).take(take).skip(skip)
+          .getManyAndCount()
+          return  {Cases,totalCount};
         }
-      } else {
-        return new HttpException('select a field', HttpStatus.BAD_REQUEST);
+        default :
+         const [Cases,totalCount] = await  (this.caseRepository.createQueryBuilder("table")
+        .where("LOWER(table.name) LIKE :title", { title: `%${ searchField.toLowerCase() }%` }).take(take).skip(skip)
+        .getManyAndCount())
+        return {Cases,totalCount}
       }
-    } catch {
-      throw new HttpException(
-        'something went wrong',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
     }
+    else{
+      return  new HttpException("select a field", HttpStatus.BAD_REQUEST)
+    }
+
+    }
+    catch{
+      throw new HttpException("something went wrong", HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+
   }
 }
 

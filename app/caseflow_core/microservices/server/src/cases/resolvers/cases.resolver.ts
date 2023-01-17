@@ -9,6 +9,7 @@ import { CreateCaseInput } from '../dto/create-case.input';
 import { FetchArgs, FetchCaseDocumentArgs } from '../dto/fetch.input';
 import { UpdateCaseInput } from '../dto/update-case.input';
 import { HttpException } from '@nestjs/common/exceptions';
+import { FetchSearchArgs } from '../dto/fetch-search.input';
 
 /**
  * Resolver for Cases
@@ -52,14 +53,13 @@ export class CasesResolver {
    * @param searchColumn 
    * @returns 
    */
-  @Query((returns) => [Cases] )
-  Searchcase(
-    @Args('searchField') searchField: string,
-    @Args('searchColumn') searchColumn : string,
-     ): Promise<Cases[]> | HttpException{
-
-    return this.casesService.searchCase(searchField,searchColumn);
-  }
+   @Query((returns) => casesResponse )
+   Searchcase(
+     @Args() args: FetchSearchArgs     
+      ): Promise<any> | HttpException{
+ 
+     return this.casesService.searchCase(args.searchField,args.searchColumn,args.skip,args.take);
+   }
 
 /**
  * Summary :   Query For find All with limit

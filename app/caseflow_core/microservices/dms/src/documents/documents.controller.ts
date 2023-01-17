@@ -3,12 +3,11 @@ import { MessagePattern } from '@nestjs/microservices';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 //_____________________Custom Imports_____________________//
-import { TransformService } from 'src/helpers/transform.service';
 import { FileService } from '../helpers/file.service';
-
 
 import { DocumentsService } from './services/documents.service';
 import { Express } from 'express';
+import { TransformService } from '../helpers/transform.service';
 @Controller('documents')
 export class DocumentsController {
   constructor(

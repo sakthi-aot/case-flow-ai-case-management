@@ -6,7 +6,7 @@ import { DocumentsService } from './services/documents.service';
 import { DocumentsResolver } from './resolvers/documents.resolver';
 import { CaseDocuments } from './entities/documents.entity';
 import { DocumentsController } from './documents.controller';
-import { HelpersModule } from 'src/helpers/helpers.module';
+import { HelpersModule } from '../helpers/helpers.module';
 import { CasesResolver } from './resolvers/cases.resolver';
 
 @Module({
