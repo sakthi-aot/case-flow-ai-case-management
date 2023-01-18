@@ -36,7 +36,7 @@ export class DmsController {
     @UploadedFile() file: Express.Multer.File, @Body() body,@Headers() headers,@Response() res: ExpressResponse
   ): Promise<any> {
     try{
-    const url = "http://localhost:7002/documents/uploadDocument"
+    const url = "http://35.182.42.147:7002/documents/uploadDocument"
     var FormData = require("form-data");
     const formData = new FormData();
     const headersRequest = {
