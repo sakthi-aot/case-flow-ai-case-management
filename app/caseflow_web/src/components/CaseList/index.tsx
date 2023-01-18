@@ -148,7 +148,7 @@ const caseListpagination = (e) =>{
         </ListItem>
         }
       </List>
-        {config.pagination && <Pagination count={totalPCount} shape="rounded" className="pagination-case-list" onClick={caseListpagination} />}
+        {(config.pagination && totalPCount >1) &&  <Pagination count={totalPCount} shape="rounded" className="pagination-case-list" onClick={caseListpagination} />}
       </div>
 
     </div>
