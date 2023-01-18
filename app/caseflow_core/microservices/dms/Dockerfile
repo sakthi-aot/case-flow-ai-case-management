@@ -24,4 +24,4 @@ COPY --from=builder /app/dist ./dist
 EXPOSE 7002 7003
 
 # Start up command, with max heap size as 50Megs
-ENTRYPOINT ["node", "--max-old-space-size=50","dist/main"]
+ENTRYPOINT ["node", "--max-old-space-size=250","dist/main"]
