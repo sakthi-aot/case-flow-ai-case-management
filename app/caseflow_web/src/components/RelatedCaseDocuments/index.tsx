@@ -170,7 +170,7 @@ useEffect(() => {
       </Table> :
       <p className="no-case-doc-found">No Case Documents Found !</p>
       }
-        <Pagination count={totalPageNo} shape="rounded" className="pagination-case-list" onClick={onChangePageNumber}  />
+      {totalPageNo>1 &&  <Pagination count={totalPageNo} shape="rounded" className="pagination-case-list" onClick={onChangePageNumber}  />}
     </TableContainer>    
   );
 }
