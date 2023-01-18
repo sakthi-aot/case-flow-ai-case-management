@@ -97,6 +97,7 @@ export class CasesService {
           'casehistory.event.eventtype',
         ],
       });
+      console.log(value);
       if (value) return value;
 
       throw new NotFoundException(`Record cannot find by id ${id}`);

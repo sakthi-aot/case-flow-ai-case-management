@@ -21,7 +21,7 @@ const NewCase = () => {
   const initialFieldValues = {
     id:0,
     name: '',
-    description:'',
+    desc:'',
     statusid: 1
 }
 
@@ -112,7 +112,7 @@ const resetCases=()=>{
         </Grid>
         <Grid item xs={8}>
         <Controller
-        name={"description"}
+        name={"desc"}
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextField
@@ -127,9 +127,9 @@ const resetCases=()=>{
               width: "100%",            
             }}    
             InputProps={{ disableUnderline: true }} 
-            placeholder="Enter the details of the Case"z
-            value={values.description}
-            onChange={(e)=>{setValues({...values,description:e.target.value})}}
+            placeholder="Enter the details of the Case"
+            value={values.desc}
+            onChange={(e)=>{setValues({...values,desc:e.target.value})}}
           />
         )}
       />          

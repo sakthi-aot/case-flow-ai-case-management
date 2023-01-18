@@ -16,8 +16,8 @@ export class CaseHistory {
   id: number;
 
   @Column({ nullable: true })
-  @Field((type) => Int)
-  datetime: number;
+  @Field()
+  datetime: Date;
 
   @Column()
   @Field()

@@ -39,7 +39,7 @@ type CaseEvents {
 
 type CaseHistory {
   id: ID!
-  datetime: Int!
+  datetime: DateTime!
   outcome: String!
   userid: Float!
   eventId: Float!
@@ -47,6 +47,11 @@ type CaseHistory {
   case: Cases
   caseId: Float
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type Cases {
   id: ID!
@@ -67,11 +72,6 @@ type Cases {
   isdeleted: Boolean!
   casehistory: [CaseHistory!]
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type casesResponse {
   Cases: [Cases!]!
@@ -113,7 +113,7 @@ input CreateCaseInput {
   statusid: Int!
   typeid: Float
   linkedcases: [Int!]
-  creationdate: DateTime = "2023-01-17T08:10:32.580Z"
+  creationdate: DateTime = "2023-01-18T04:56:27.032Z"
   completiondate: DateTime
   lastmodificationdate: DateTime
   penduntildate: DateTime
@@ -132,7 +132,7 @@ input UpdateCaseInput {
   statusid: Int!
   typeid: Float
   linkedcases: [Int!]
-  creationdate: DateTime = "2023-01-17T08:10:32.553Z"
+  creationdate: DateTime = "2023-01-18T04:56:27.028Z"
   completiondate: DateTime
   lastmodificationdate: DateTime
   penduntildate: DateTime
