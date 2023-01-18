@@ -136,7 +136,7 @@ setDocumentDetailsForEdit(data)
 
                 <Divider sx={{ borderBottomWidth: 3 }} />
                 <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                 {(filteredDocumentDetails &&filteredDocumentDetails.length!==0)? <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                       <TableRow
                         sx={{
@@ -146,7 +146,7 @@ setDocumentDetailsForEdit(data)
                         }}
                       >
                         <TableCell>Id</TableCell>
-                        <TableCell align="left">Case Id</TableCell>
+                        <TableCell align="left">Case ID</TableCell>
                         <TableCell align="left">Name</TableCell>
                         <TableCell align="left">Description</TableCell>
                         <TableCell align="left">Creation Date</TableCell>
@@ -221,7 +221,9 @@ setDocumentDetailsForEdit(data)
                           )
                         )}
                     </TableBody>
-                  </Table>
+                  </Table>:
+                  <p className="no-case-doc-found">No Case Documents Found !</p>
+                  }
                 </TableContainer>
               </div>
             </div>
