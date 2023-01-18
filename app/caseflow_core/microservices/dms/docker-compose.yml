@@ -10,20 +10,27 @@ services:
         - NODE_ENV=${NODE_ENV:-production}
         - KEYCLOCK_CLIENT_ID=${KEYCLOCK_CLIENT_ID:-case-flow-nest}
         - KEYCLOCK_REALM=${KEYCLOCK_REALM:-caseflow}
-        - KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET:-Qhvu0sBg15UsiplYL5msFVqjzyOVaxRr}
+        - KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}
         - KEYCLOCK_AUTH_URL=${KEYCLOCK_AUTH_URL:-https://caseflow-idm.aot-technologies.com:8443/auth}
-        - KEYCLOCK_SECRET=${KEYCLOCK_SECRET:-Qhvu0sBg15UsiplYL5msFVqjzyOVaxRr}
-
-        - POSTGRESQL_HOST=${POSTGRESQL_HOST:-caseflowdev.ccizdidwz3tj.ca-central-1.rds.amazonaws.com}
-        - POSTGRESQL_PORT=${POSTGRESQL_PORT:-5432}
-        - POSTGRES_DATABASE=${POSTGRES_DATABASE:-caseflow_core}
-        - POSTGRES_DB_USERNAME=${POSTGRES_DB_USERNAME:-postgres}
-        - POSTGRES_DB_PASSWORD=${POSTGRES_DB_PASSWORD:-0DhoxLWL5HlS27WjLkUL}
+        - KEYCLOCK_SECRET=${KEYCLOCK_SECRET}
 
 
-        
+        - POSTGRESQL_HOST=${POSTGRESQL_HOST}
+        - POSTGRESQL_PORT=${POSTGRESQL_PORT}
+        - POSTGRES_DATABASE=${POSTGRES_DATABASE}
+        - POSTGRES_DB_USERNAME=${POSTGRES_DB_USERNAME}
+        - POSTGRES_DB_PASSWORD=${POSTGRES_DB_PASSWORD}
 
-       
+        - AWS_REGION=${AWS_REGION}
+        - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+        - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+        - AWS_BUCKET_NAME=${AWS_BUCKET_NAME:-caseflow-dms}
+
+        - ALFRESCO_REPO_URL=${ALFRESCO_REPO_URL:-http://caseflow-alfresco.aot-technologies.com:8080/alfresco/api/-default-/public/alfresco/versions}
+
+        - SHAREPOINT_CLIENT_ID=${SHAREPOINT_CLIENT_ID}
+        - SHAREPOINT_CLIENT_SECRET=${SHAREPOINT_CLIENT_SECRET}
+        - SHAREPOINT_RESOURCE=${SHAREPOINT_RESOURCE}
 
 
     ports:
