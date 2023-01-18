@@ -61,6 +61,8 @@ export class CasesResolver {
      return this.casesService.searchCase(args.searchField,args.searchColumn,args.skip,args.take);
    }
 
+   
+
 /**
  * Summary :   Query For find All with limit
  * Created By : Akhila U S 

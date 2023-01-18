@@ -73,11 +73,14 @@ export const UPDATE_CASE = gql`
 
 
 export const SEARCH_CASE_LIST = gql`
-query Searchcase($searchField:String!,$searchColumn:String!){
-  Searchcase(searchField:$searchField,searchColumn:$searchColumn){
-    id,
-    name,
-    desc
+query Searchcase($searchField:String!,$searchColumn:String!,$Skip:Int,$Take:Int){
+  Searchcase(searchField:$searchField,searchColumn:$searchColumn,skip:$Skip,take:$Take){
+    totalCount,
+    Cases{
+      id,
+      name,
+      desc
+    }
     }
   }`
 

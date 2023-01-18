@@ -71,7 +71,7 @@ input CreateDocumentInput {
   documentref: String!
   desc: String
   addedbyuserid: Float
-  creationdate: DateTime! = "2023-01-18T04:40:31.979Z"
+  creationdate: DateTime! = "2023-01-18T05:46:40.276Z"
   dmsprovider: Float!
   name: String!
   latestversion: String!
@@ -85,7 +85,7 @@ input UpdateDocumentInput {
   documentref: String!
   desc: String
   addedbyuserid: Float!
-  creationdate: DateTime! = "2023-01-18T04:40:31.988Z"
+  creationdate: DateTime! = "2023-01-18T05:46:40.278Z"
   dmsprovider: Float!
   name: String!
   latestversion: String!

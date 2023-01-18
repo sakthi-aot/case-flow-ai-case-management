@@ -11,13 +11,14 @@ import { SortCasesByField } from "../../helper/SortCases";
 import "./caselist.scss"
 import { caseListprops,  PropsConfig, RecentCase, SortValue } from "../../interfaces/componentInterface";
 import {  getCasesList } from "../../services/CaseService";
-import { setCaseList } from "../../reducers/newCaseReducer";
-import {useDispatch} from "react-redux";
+import { setCaseList, setPageSelected } from "../../reducers/newCaseReducer";
+import {useDispatch, useSelector} from "react-redux";
 import { Case } from "../../interfaces/componentInterface";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
 import { Pagination } from "@mui/material";
+import { State } from "../../interfaces/stateInterface";
 
 
 
@@ -40,7 +41,7 @@ const CaseList =React.memo( ({config,allRecentCases}:any) => {
   const [pageNo,setPageNo]= useState(1);
   const dispatch = useDispatch();
   const [totalPCount,setTotalPCount] = useState(0);
-
+  const totalCount = useSelector((state:State)=>state.cases.totalCaseCount);
 
   // useEffect(()=>{ 
   //  const updatedSortedData = SortCasesByField(sortValue,recentCases)
@@ -64,30 +65,29 @@ const CaseList =React.memo( ({config,allRecentCases}:any) => {
 
 
  // to fetch the case list and set the state of cases 
-  useEffect(() => {
-    fetchCaseDetails(pageNo);   
-  }, [pageNo]);
-  
-  async function fetchCaseDetails(pageNo) {    
-    const getCaseResponse = await getCasesList(pageNo);
-    let output = getCaseResponse.Cases;
-    const totalCount = getCaseResponse.totalCount;
-    const TotalPage = Math.ceil(totalCount/10)   
-    setTotalPCount(TotalPage)
-    output = output.map((element) => {
-      return {
-        id :element.id,
-        name:element.name,
-        desc:element.desc,
-        status:'open'    //need to change in future
-      };
-    });
-    dispatch(setCaseList(output))
-  } 
+ useEffect(() => {
+  fetchCaseDetails();   
 
-  const caseListpagination = (e) =>{    
-    setPageNo(Number(e.target.innerText))      
-  }
+}, [totalCount]);
+  
+async function fetchCaseDetails() {       
+  let output = allRecentCases;    
+  const TotalPage = Math.ceil(totalCount/10) 
+  setTotalPCount(TotalPage)
+  output = output.map((element) => {
+    return {
+      id :element.id,
+      name:element.name,
+      description:element.desc,
+      status:'open'    //need to change in future
+    };
+  });   
+} 
+
+
+const caseListpagination = (e) =>{ 
+  dispatch(setPageSelected(Number(e.target.innerText)))
+}
   
   return (
     <div style={{ padding: "2rem 3rem 0rem 8rem" }}>
