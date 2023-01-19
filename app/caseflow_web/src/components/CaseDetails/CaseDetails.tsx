@@ -79,9 +79,13 @@ const [isOpenPopup,setOpenPopup] = useState(false);
   ) => {
    setOpenPopup(false);
    setSelected(0)
-   toast.success("Success")
-   
   };
+  const onSuccess = ()=>{
+    setOpenPopup(false);
+    setSelected(0)
+    // fetchCaseDocumentDetails()
+    toast.success("Success")
+  }
 
   const onActionChangehandler = (e: any) => {
 
@@ -164,7 +168,7 @@ const [isOpenPopup,setOpenPopup] = useState(false);
         <CaseHistory  caseId = {selectedCase.id}></CaseHistory>
       </section>
     </div>
-    <CustomizedDialog title="Upload File" isOpen={isOpenPopup} setIsOpen={setOpenPopup} handleClose={handleClose}><Upload onSuccess={handleClose} /></CustomizedDialog>
+    <CustomizedDialog title="Upload File" isOpen={isOpenPopup} setIsOpen={setOpenPopup} handleClose={handleClose}><Upload onSuccess={onSuccess} /></CustomizedDialog>
     <ToastContainer />
 
     </>
