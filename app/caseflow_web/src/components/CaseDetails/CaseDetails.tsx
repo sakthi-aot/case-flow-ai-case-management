@@ -21,6 +21,8 @@ import {useDispatch} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setCaseHistory } from '../../reducers/caseHistoryReducer';
 import { getCaseHistory } from '../../services/CaseService';
+import { ToastContainer, toast } from "react-toastify";
+
 
 
 const CaseDetails = () => {
@@ -77,6 +79,8 @@ const [isOpenPopup,setOpenPopup] = useState(false);
   ) => {
    setOpenPopup(false);
    setSelected(0)
+   toast.success("Success")
+   
   };
 
   const onActionChangehandler = (e: any) => {
@@ -161,6 +165,8 @@ const [isOpenPopup,setOpenPopup] = useState(false);
       </section>
     </div>
     <CustomizedDialog title="Upload File" isOpen={isOpenPopup} setIsOpen={setOpenPopup} handleClose={handleClose}><Upload onSuccess={handleClose} /></CustomizedDialog>
+    <ToastContainer />
+
     </>
   );
 };
