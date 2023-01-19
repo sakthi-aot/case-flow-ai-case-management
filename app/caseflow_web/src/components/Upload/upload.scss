@@ -51,9 +51,23 @@
 }
 .upload-button {
   padding: 2rem 0rem 3rem 0rem;
-  Button{
+  .upload-btn-abled{
+    background-color: $primary-theme-black-color;
+    color:white;
+    margin: auto;
+    height: 3.4375rem;
+    width: 100%;
+  }
+  .upload-btn-abled:hover{
+    background-color: $primary-theme-black-color-hover;
+    
+  }
+  .upload-btn-disabled{
     border-color: $primary-theme-black-color;
     color: $primary-theme-black-color;
+    margin: auto;
+    height: 3.4375rem;
+    width: 100%;
   }
 }
 .pg-viewer-wrapper{
