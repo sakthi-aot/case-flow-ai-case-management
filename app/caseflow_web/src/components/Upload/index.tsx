@@ -93,21 +93,22 @@ const Upload = (props) => {
   }, [recordForEdit]);
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    fetchDocumentDetails();
-  }, []);
+  // useEffect(() => {
+  //   fetchDocumentDetails();
+  // }, []);
 
-  async function fetchDocumentDetails() {
-    let output = await getAllDocuments();
-    output = output.map((element) => {
-      return {
-        ...element,
-        creationdate: element.creationdate.split("T")[0],
-        modificationdate: element.modificationdate.split("T")[0],
-      };
-    });
-    dispatch(setDocumentList(output));
-  }
+  // async function fetchDocumentDetails() {
+  //   let output = await getAllDocuments();
+  //   output = output.map((element) => {
+  //     return {
+  //       ...element,
+  //       creationdate: element.creationdate.split("T")[0],
+  //       modificationdate: element.modificationdate.split("T")[0],
+  //     };
+  //   });
+  //   dispatch(setDocumentList(output));
+  // }
+  
 
   // set and show  the uploaded file details
   const showPreview = (e) => {
@@ -139,7 +140,7 @@ const Upload = (props) => {
     if (values.documentID == 0) {
       // check with docid exist or not id documentID=0 insert opertaion work
       setSubmitted(true);
-      const response = await uploadCMISfile({
+      await uploadCMISfile({
        "file" :  values.file,
        "name" : values.fileName,
        "desc" : values.fileDescription,
@@ -147,20 +148,20 @@ const Upload = (props) => {
        "dmsprovider" : CASEFLOW_DMS,
        "metaData" :JSON.stringify(inputFields)
       }
-      );
+      )
+      .then((response)=>{
+        if (response && response.data && response.data.id) {
+          props.onSuccess(response.data)
+          setSubmitted(false);
+          refreshDocumentList();
+        } else {
+          setProgressBarColor("error")
+          toast.error("Error");}
+      });
       
      
-      
-      console.log(response.data);
-      if (response && response.data && response.data.id) {
-        props.onSuccess(response.data)
-        setSubmitted(false);
-        fetchDocumentDetails();
-        toast.success("Success");
-        refreshDocumentList();
-      } else {
-        setProgressBarColor("error")
-        toast.error("Error");}
+  
+
     } else {
       // for update
       setSubmitted(true);
@@ -172,7 +173,6 @@ const Upload = (props) => {
         values.dms_provider
       );
       
-      fetchDocumentDetails();
       toast.success("Success");
       refreshDocumentList();
     }

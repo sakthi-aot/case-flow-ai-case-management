@@ -133,9 +133,9 @@ useEffect(() => {
         <TableBody>
           {docDetail.map((row:any,index) => (
             <TableRow
-            
+            key={row.id}
             >
-              <TableCell   key={row.id}
+              <TableCell   
               sx={{  border: 0 }}
               onClick={()=>{
                 previewDocument(row.id,row.type)
