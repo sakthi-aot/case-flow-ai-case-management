@@ -132,7 +132,7 @@ const [isOpenPopup,setOpenPopup] = useState(false);
         <CaseDetailData
           name={selectedCase.name}
           date={caseDetail.date}
-          owner={caseDetail.status}
+          owner={caseDetail.owner}
           caseDescription={selectedCase.desc}
           tasks={caseDetail.tasks}
         />
