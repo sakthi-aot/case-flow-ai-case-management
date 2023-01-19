@@ -38,14 +38,18 @@ const Dashboard = () =>
       //   // });
       // });
     // });
+    const [filteredCaseDetails, setFilteredCaseDetails] = useState([]);
+    const [searchField, setSearchField] = useState("");
+    const [searchColumn, setSearchColumn] = useState("name");
+    const [dropDownArray, setdropDownArray] = useState(['Name', "Description"]);
     return (
       <div className="dashboard">
         <h1 className="title">CaseFlow</h1>
         <div className="search">
           <Search
-            setSearchField={() => {}}
-            dropDownArray={[]}
-            setSearchColumn={() => {}}
+            setSearchField={setSearchField}
+            dropDownArray={dropDownArray}
+            setSearchColumn={setSearchColumn}
           ></Search>
         </div>
         <div className="recent-cases">
