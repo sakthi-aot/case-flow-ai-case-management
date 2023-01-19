@@ -291,7 +291,7 @@ const Upload = (props) => {
                   />
                 </div>
               )}
-            ;
+            
           </div>
          
              
@@ -376,13 +376,10 @@ const Upload = (props) => {
                 
               )}
               <div className="upload-button">
-              {isSumbitted ? <LinearProgressWithLabel value={progress} color={progressBarColor} /> :""}
+              {(isSumbitted && values.file && values.fileName) ? <LinearProgressWithLabel value={progress} color={progressBarColor} /> :""}
               <Button
-                style={{
-                  margin: "auto",
-                  height: "3.4375rem",
-                  width: "100%",
-                }}
+                className={values.file && values.fileName?"upload-btn-abled":"upload-btn-disabled"}
+                disabled={values.file && values.fileName?false:true}
                 variant="outlined"
                 onClick={onSubmitHandler}
               >
