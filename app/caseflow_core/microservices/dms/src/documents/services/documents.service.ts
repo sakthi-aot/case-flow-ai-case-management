@@ -150,11 +150,13 @@ export class DocumentsService {
         case 'Description': {
           return this.documentRepository.createQueryBuilder("table")
           .where("LOWER(table.desc) LIKE :title", { title: `%${ searchField.toLowerCase() }%` })
+          .andWhere("table.isdeleted =:isDeleted",{isDeleted:false})
           .getMany();
         }
         default :
         return this.documentRepository.createQueryBuilder("table")
         .where("LOWER(table.name) LIKE :title", { title: `%${ searchField.toLowerCase() }%` })
+        .andWhere("table.isdeleted =:isDeleted",{isDeleted:false})
         .getMany();
       }
     }
