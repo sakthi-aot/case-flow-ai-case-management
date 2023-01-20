@@ -49,6 +49,7 @@ export class DmsController {
     formData.append('dmsprovider', body.dmsprovider);
     formData.append('metaData', body.metaData);
     formData.append('name', body.name);
+    formData.append('type', file.mimetype);
     await axios.post(url, formData,{headers:headersRequest}
      ).then(response => {
        return  res.send(response.data)});

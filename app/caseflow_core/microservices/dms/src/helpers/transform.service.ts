@@ -23,7 +23,7 @@ export class TransformService {
             dmsprovider: 1,
             latestversion: document.VersionId,
             isdeleted: false,
-            type : data?.file?.mimetype,
+            type : data?.type,
           };
         }
         catch(err){
