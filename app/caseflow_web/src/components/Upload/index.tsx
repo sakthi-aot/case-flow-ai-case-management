@@ -151,7 +151,7 @@ const Upload = (props) => {
       )
       .then((response)=>{
         if (response && response.data && response.data.id) {
-          props.onSuccess(response.data)
+          props.onSuccess()
           setSubmitted(false);
           refreshDocumentList();
         } else {
