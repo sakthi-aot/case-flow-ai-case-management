@@ -85,8 +85,8 @@ async function fetchCaseDetails() {
 } 
 
 
-const caseListpagination = (e) =>{ 
-  dispatch(setPageSelected(Number(e.target.innerText)))
+const caseListpagination = (e,p) =>{ 
+  dispatch(setPageSelected(p))
 }
   
   return (
@@ -148,7 +148,7 @@ const caseListpagination = (e) =>{
         </ListItem>
         }
       </List>
-        {(config.pagination && totalPCount >1) &&  <Pagination count={totalPCount} shape="rounded" className="pagination-case-list" onClick={caseListpagination} />}
+        {(config.pagination && totalPCount >1) &&  <Pagination count={totalPCount} shape="rounded" className="pagination-case-list" onChange={caseListpagination} />}
       </div>
 
     </div>

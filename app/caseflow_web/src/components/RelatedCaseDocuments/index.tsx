@@ -114,8 +114,8 @@ useEffect(() => {
 
   }
 
-  const onChangePageNumber = (e) =>{
-    setPageNo(Number(e.target.innerText)) 
+  const onChangePageNumber = (e,p) =>{
+    setPageNo(p) 
   }
   return (    
     <TableContainer component={Paper} sx={{ boxShadow : 0,}} >
@@ -170,7 +170,7 @@ useEffect(() => {
       </Table> :
       <p className="no-case-doc-found">No Case Documents Found !</p>
       }
-      {totalPageNo>1 &&  <Pagination count={totalPageNo} shape="rounded" className="pagination-case-list" onClick={onChangePageNumber}  />}
+      {totalPageNo>1 &&  <Pagination count={totalPageNo} shape="rounded" className="pagination-case-list" onChange={onChangePageNumber}  />}
     </TableContainer>    
   );
 }
