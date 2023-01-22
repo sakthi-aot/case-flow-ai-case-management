@@ -1,8 +1,16 @@
+@import "../../styles.scss";
+
 .recent-case-header{
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-right:2rem ;
+    .recent-case-header-font{
+        font-family: $primary-font;
+        font-size: 24px;
+        font-weight: bold;
+
+    }
 }
 
 .pagination-case-list{    

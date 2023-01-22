@@ -1,3 +1,5 @@
+@import "../../styles.scss";
+
 .dashboard {
     display: grid;
     grid-template-columns: 14vw auto auto auto;
@@ -7,7 +9,8 @@
         grid-column-start: 1;
         text-align: right;
         align-items: center;
-        font-family: 'poppins-bold',!important;
+        font-family: $primary-font;
+        font-size: 40px;
     }
 
     .search {

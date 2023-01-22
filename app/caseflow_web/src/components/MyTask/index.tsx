@@ -5,6 +5,7 @@ import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import MyTaskCard from "../MyTaskCard";
 import { EachTask } from "../../interfaces/componentInterface";
+import "./myTask.scss";
 
 const MyTask = () => {
   const allTasks : EachTask[] = [
@@ -19,10 +20,11 @@ const MyTask = () => {
     },
   ];
   return (
-    <div style={{ padding: "2rem 3rem 0rem 8rem" }}>
+    <div className="myTaskStyle" style={{ padding: "2rem 3rem 0rem 4rem" }}>
       <Typography
         sx={{ padding: "1rem 1rem 1rem 1rem" }}
         variant="h6"
+        className="myTaskStyle"
       >
         My Tasks
       </Typography>

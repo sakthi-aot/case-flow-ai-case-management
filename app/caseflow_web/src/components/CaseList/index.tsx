@@ -90,11 +90,12 @@ const caseListpagination = (e) =>{
 }
   
   return (
-    <div style={{ padding: "2rem 3rem 0rem 8rem" }}>
+    <div style={{ padding: "2rem 3rem 0rem 5rem" }}>
       <span className="recent-case-header">
       <Typography
         sx={{ padding: "1rem 1rem 1rem 1rem" }}
         variant="h6"
+        className="recent-case-header-font "
       >
         {config.title}
       </Typography>     

@@ -13,8 +13,8 @@ import { setSelectedCase } from "../../reducers/newCaseReducer";
 const RecentCaseCard = (props) => {
   const [CaseDetails, setcaseDetails] = useState(props.case);
   const dispatch = useDispatch()
-  const navigate = useNavigate();
-
+  const navigate = useNavigate();  
+ 
   const viewCaseDetails = async (CaseDetails)=>{    
     dispatch(setSelectedCase({
       id:CaseDetails.id,
@@ -31,7 +31,7 @@ const RecentCaseCard = (props) => {
     }, []);
 
  
-  return (
+  return (   
     <div className="caselist" >
       <Typography />
       <ListItem button>
@@ -40,8 +40,9 @@ const RecentCaseCard = (props) => {
             <ListItemText
               primary={
                 <Typography 
-                variant="body2"
-                style={{ "fontWeight": "700" }}>
+                variant="body2"                
+                className="recent-case-card-style"
+                >
                    ID
                 </Typography>
               }
@@ -91,7 +92,8 @@ const RecentCaseCard = (props) => {
       </ListItem>
       <Divider />
 
-    </div>
+    </div>      
+    
   );
 };
 
