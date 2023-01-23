@@ -5,12 +5,12 @@
     grid-template-columns: 14vw auto auto auto;
   
 
-    .title {
+    .title-c {
         grid-column-start: 1;
         text-align: right;
         align-items: center;
         font-family: $primary-font;
-        font-size: 40px;
+        font-size: 2.5rem;
     }
 
     .search {

@@ -14,7 +14,7 @@ const NewCaseComponent = () => {
   }
   return (
     <div className="dashboard">
-      <h1 className="title">CaseFlow</h1> 
+      <h1 className="title-t">CaseFlow</h1> 
       <div className="search">
       <Search setSearchField={serachField} dropDownArray={dropDownArrayItem} setSearchColumn={SearchColumn}/>
       </div>     

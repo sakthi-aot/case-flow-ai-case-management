@@ -46,7 +46,7 @@ const Cases = (
 
   return (
     <section className="dashboard">
-      <h1 className="title">CaseFlow</h1>
+      <h1 className="title-c">CaseFlow</h1>
       <div className="search">
       <Search
             setSearchField={setSearchField}
