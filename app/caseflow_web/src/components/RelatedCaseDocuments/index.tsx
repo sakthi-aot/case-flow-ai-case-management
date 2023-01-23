@@ -15,6 +15,8 @@ import { PAGINATION_TAKE } from "../../apiManager/endpoints/config";
 import { setSelectedCaseDocuments } from "../../reducers/newCaseReducer";
 import {useSelector,useDispatch} from "react-redux";
 import { store } from "../../interfaces/stateInterface";
+import PopUpDialogBox from "../PopUpDialogBox/PopUpDialogBox";
+import { setSelectedDocument } from "../../reducers/documentsReducer";
 
 
 
@@ -34,9 +36,11 @@ export default function RelatedCaseDocuments({id}) {
 // const [docDetail, setdocDetail] = useState([]);
 const [totalPageNo,setTotalPageNo] = useState(0);
 const [pageNo,setPageNo]= useState(1);
+const [isDeleteConfirmationUpOpen,setDeleteConfirmation] =useState(false);
 
 const dispatch = useDispatch()
 const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents);
+const SelectedDocId = useSelector((state:store) =>state.documents.seletedDocument)
 
 useEffect(() => {
   console.log("inside");
@@ -48,7 +52,7 @@ useEffect(() => {
     if(id){      
       let output = await getDocumentofCaseList(id,pageNo);
       const TotalDocCount = output.totalCount;
-      const TotalPage = Math.ceil(TotalDocCount/PAGINATION_TAKE) 
+      const TotalPage = Math.ceil(TotalDocCount/Number(PAGINATION_TAKE)) 
       setTotalPageNo(TotalPage);  
       dispatch(setSelectedCaseDocuments(output.CaseDocuments))      
     }
@@ -78,12 +82,9 @@ useEffect(() => {
         link.remove();
       
   }
-  const deleteDocuments = async (id)=>{
-  
-      let document = await deleteDocument(id)
-      fetchCaseDetails()
-
-  
+  const deleteDocuments = async (id)=>{  
+      setDeleteConfirmation(true)         
+      dispatch(setSelectedDocument(id))
   }
 
   const previewDocument = async (id,type) => {
@@ -117,7 +118,19 @@ useEffect(() => {
   const onChangePageNumber = (e,p) =>{
     setPageNo(p) 
   }
-  return (    
+
+  const onCloseDeletePopup= (id) =>{
+    setDeleteConfirmation(false)   
+  }
+
+  const onConfirmDeleteDoc = async ( ) =>{
+    let document = await deleteDocument(SelectedDocId)
+    fetchCaseDetails()
+    setDeleteConfirmation(false) 
+    
+  }
+  return (  
+    <>
     <TableContainer component={Paper} sx={{ boxShadow : 0,}} >
     {docDetail && docDetail.length!==0 ?  <Table sx={{ minWidth: 650 ,border : 0,}} aria-label="simple table" className="case-document-table" >
         <TableHead >
@@ -172,6 +185,18 @@ useEffect(() => {
       }
       {totalPageNo>1 &&  <Pagination count={totalPageNo} shape="rounded" className="pagination-case-list" onChange={onChangePageNumber}  />}
     </TableContainer>    
+      <PopUpDialogBox 
+      isOpen ={isDeleteConfirmationUpOpen}
+      onClose={onCloseDeletePopup}
+      dialogContentText ={" Do you want to delete Document?"}       
+      onConfirm={onConfirmDeleteDoc} 
+      btn1={"Cancel"}      
+      btn2={"Delete"}   
+      type="delete"    
+      
+      />
+    </>  
+
   );
 }
 
