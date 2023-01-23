@@ -98,7 +98,7 @@ export default function MiniDrawer(
   // { children }
   ) {
   const dispatch = useDispatch();
-  const [open, setOpen] = React.useState(false); 
+  const [open, setOpen] = React.useState(true); 
 
   const userInfo = useSelector((state:State)=>state.auth.userDetails)
 
@@ -170,7 +170,7 @@ export default function MiniDrawer(
 
         }} 
         onClick={()=>{dispatch(resetSelectedCase())}}
-        component={Link} to="/private/cases/create">Start New Cases</Button>}
+        component={Link} to="/private/cases/create">Start New Case</Button>}
         
         <List>
           {routes.map((route, index) => (
