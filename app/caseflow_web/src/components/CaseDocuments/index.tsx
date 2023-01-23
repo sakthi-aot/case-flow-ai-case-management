@@ -26,6 +26,10 @@ import { State, USerDetails } from "../../interfaces/stateInterface";
 import { DocumentList } from "../../interfaces/componentInterface";
 import { getAllDocuments,getDocument,searchCaseDocument } from "../../services/DocumentManagementService";
 import { setDocumentList } from "../../reducers/documentsReducer";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import List from "@mui/material/List";
+import moment from "moment";
 
 
 
@@ -135,96 +139,107 @@ setDocumentDetailsForEdit(data)
                 </Grid>
 
                 <Divider sx={{ borderBottomWidth: 3 }} />
-                <TableContainer component={Paper}>
-                 {(filteredDocumentDetails &&filteredDocumentDetails.length!==0)? <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                      <TableRow
-                        sx={{
-                          "& th": {
-                            fontWeight: "bold",
-                          },
-                        }}
-                      >
-                        <TableCell>Id</TableCell>
-                        <TableCell align="left">Case ID</TableCell>
-                        <TableCell align="left">Name</TableCell>
-                        <TableCell align="left">Description</TableCell>
-                        <TableCell align="left">Creation Date</TableCell>
-                        {/* <TableCell align="left">Last Modified Date </TableCell>
-              <TableCell align="left">Download </TableCell> */}
-                      </TableRow>
-                    </TableHead>
+               <List component="nav"
+        aria-label="mailbox folders">
 
-                    <TableBody>
-                      {filteredDocumentDetails &&
-                        filteredDocumentDetails.map(
-                          (documentDetail: DocumentList) => (
-                            <TableRow
-                              key={documentDetail.id}
-                              sx={{
-                                "&:last-child td, &:last-child th": {
-                                  border: 0,
-                                },
-                              }}
-                            >
-                              <TableCell component="th" scope="row">
-                                {documentDetail.id}
-                              </TableCell>
-                              <TableCell component="th" scope="row">
-                                {documentDetail.caseId}
-                              </TableCell>
-                              <TableCell align="left">
-                                {" "}
-                                <div className="name-field">
-                                  <img
-                                    className="pdf-file-img"
-                                    src={`${getFileIcon(documentDetail.name)}`}
-                                    alt="pdf"
-                                  />
-                                  <div className="case-document-name">
-                                    <a
-               onClick={()=>{
-                previewDocument(documentDetail.id,documentDetail.type)
-              }}
-                                    >
-                                      {documentDetail.name}
-                                    </a>
-                                  </div>
-                                </div>
-                              </TableCell>
-                              <TableCell align="left">
-                                {documentDetail.desc}
-                              </TableCell>
-                              <TableCell align="left">
-                                {documentDetail.creationdate}
-                              </TableCell>
-                              <TableCell align="left">
-                                {documentDetail.modificationdate}
-                              </TableCell>
-                              {/* <TableCell
-                    align="left"
-                    className="action-icon"
-                    onClick={fetchCMISfile(
-                      documentDetail.id,
-                      documentDetail.dms_provider,false
-                    )}
-                  >
-                    {<DownloadIcon />}
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    onClick={()=>{fetchDocumentDetails(documentDetail)}}
-                  >
-                    <span className="action-icon"> {<EditIcon />}</span>
-                  </TableCell> */}
-                            </TableRow>
-                          )
-                        )}
-                    </TableBody>
-                  </Table>:
-                  <p className="no-case-doc-found">No Case Documents Found !</p>
-                  }
-                </TableContainer>
+          { (filteredDocumentDetails &&filteredDocumentDetails.length!==0)?            
+            filteredDocumentDetails.map(document =>{
+              return<>
+               <ListItem key={document.id}>
+                <Grid container spacing={1}  onClick={()=>{
+                previewDocument(document.id,document.type)
+              }}>
+                <Grid item xs={1} >
+                    <ListItemText
+                        primary={
+                          <Typography 
+                          variant="body2"
+                          style={{ "fontWeight": "700" }}>
+                             ID
+                          </Typography>
+                        }
+                        secondary={document.id}
+                   />
+                  </Grid>
+                <Grid item xs={2} >
+                    <ListItemText
+                        primary={
+                          <Typography 
+                          variant="body2"
+                          style={{ "fontWeight": "700" }}>
+                            Case ID
+                          </Typography>
+                        }
+                        secondary={document.caseId}
+                   />
+                  </Grid>
+                   <Grid item xs={3} >
+            <ListItemText
+              primary={
+                <Typography 
+                variant="body2"
+                style={{ "fontWeight": "700" }}>
+                   Name
+                </Typography>
+              }
+              secondary={ 
+                document.name
+                }
+            />
+          </Grid>
+          <Grid item xs={4} >
+            <ListItemText
+              primary={
+                <Typography
+                variant="body2"
+                
+                style={{ "fontWeight": "700" }}>
+                   Description
+                </Typography>
+              }
+              secondary={document.desc}
+            />
+          </Grid> 
+          <Grid item xs={2} >
+            <ListItemText
+              primary={
+                <Typography
+                variant="body2"
+                
+                style={{ "fontWeight": "700" }}>
+                   Creation Date
+                </Typography>
+              }
+              secondary={moment(document.creationdate).format('MMMM Do YYYY')}
+            />
+          </Grid> 
+          
+
+                </Grid>
+              </ListItem>
+              <Divider />
+              </>
+              
+            }):
+             <ListItem >
+            <Grid container spacing={1}  >
+            <Grid item xs={12} >
+              <ListItemText
+                primary={
+                  <Typography 
+                  variant="body2"
+                  style={{ "fontWeight": "700" ,"textAlign":"center","color":"rgba(0, 0, 0, 0.6)"}}>
+                    No Case Document Found!
+                  </Typography>
+                }             
+              />
+            </Grid>
+            </Grid>
+          </ListItem>
+
+          }
+
+               </List>
               </div>
             </div>
           </div>
