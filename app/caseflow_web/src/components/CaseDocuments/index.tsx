@@ -29,6 +29,7 @@ import { setDocumentList } from "../../reducers/documentsReducer";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import List from "@mui/material/List";
+import moment from "moment";
 
 
 
@@ -172,7 +173,7 @@ setDocumentDetailsForEdit(data)
                         secondary={document.caseId}
                    />
                   </Grid>
-                   <Grid item xs={4} >
+                   <Grid item xs={3} >
             <ListItemText
               primary={
                 <Typography 
@@ -181,20 +182,12 @@ setDocumentDetailsForEdit(data)
                    Name
                 </Typography>
               }
-              secondary={
-                <div className="document-file-image">
-                  <img
-                  className="pdf-file-img"
-                  src={`${getFileIcon(document.name)}`}
-                  alt="pdf"
-                />
-                <span>{document.name}</span>
-                </div>
-              
+              secondary={ 
+                document.name
                 }
             />
           </Grid>
-          <Grid item xs={3} >
+          <Grid item xs={4} >
             <ListItemText
               primary={
                 <Typography
@@ -217,7 +210,7 @@ setDocumentDetailsForEdit(data)
                    Creation Date
                 </Typography>
               }
-              secondary={document.creationdate}
+              secondary={moment(document.creationdate).format('MMMM Do YYYY')}
             />
           </Grid> 
           
