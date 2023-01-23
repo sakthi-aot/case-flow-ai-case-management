@@ -1,3 +1,5 @@
+@import "../../styles.scss";
+
 .recent-case-card-status{
     position: relative; 
     right: 1rem; 
@@ -17,4 +19,8 @@ opacity: 1;
 text-align: center;
 }
 
+}
+.recent-case-card-style{
+font-family: $primary-font;
+font-weight: 700;
 }

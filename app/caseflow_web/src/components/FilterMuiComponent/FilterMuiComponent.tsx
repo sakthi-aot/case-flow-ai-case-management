@@ -4,6 +4,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select'
+import "./FilterMuiComponent.scss"
 
 interface FilterMuiComponentProps{
   label:any,
@@ -21,7 +22,8 @@ const FilterMuiComponent = ({label,options,onChnagehandler,selected}:FilterMuiCo
                   id="demo-simple-select"          
                   label="Age" 
                   value={selected}   
-                  onChange={onChnagehandler}      
+                  onChange={onChnagehandler}   
+                  className="dropDownStyle"   
                 >
                    {options.map((option,index) => <MenuItem key={index}  value={option.id}>{option.text}</MenuItem>)}                  
                 </Select>
