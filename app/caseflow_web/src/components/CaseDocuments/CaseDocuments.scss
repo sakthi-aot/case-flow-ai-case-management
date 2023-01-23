@@ -12,11 +12,7 @@
       cursor: pointer;
     }
   
-    .pdf-file-img {
-      margin-right: 4px;
-      width: 1rem;
-      height: 1rem;
-    }
+   
   }
   
 .background {
@@ -38,6 +34,7 @@
     width: 70%;
     margin: auto;
     padding: 5rem 0% 5rem 0%;
+    
 
   }
 }
@@ -50,4 +47,11 @@
 }
 }
 
-  
+  .document-file-image{
+
+    .pdf-file-img {
+      margin-right: 4px;
+      width: 1rem;
+      height: 1rem;
+    }
+  }
