@@ -1,0 +1,15 @@
+
+@import "../../styles.scss";
+.dialogActionCenter{
+    .btn2Style{
+      color:$primary-theme-black-color;
+      background-color:  $delete-confirm-btn;
+    }
+    .btn2Style:hover{
+      background-color: rgba(177, 19, 19, 0.741);
+      color: white;
+    }
+    .btn1Style{
+      color: $primary-theme-black-color;
+    }
+  }
