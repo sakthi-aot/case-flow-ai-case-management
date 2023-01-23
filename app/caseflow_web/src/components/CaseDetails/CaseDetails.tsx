@@ -19,7 +19,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { setSelectedCase } from "../../reducers/newCaseReducer";
 import {useDispatch} from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setCaseHistory } from '../../reducers/caseHistoryReducer';
+import { setCaseHistory, setFilteredCaseHistory } from '../../reducers/caseHistoryReducer';
 import { getCaseHistory } from '../../services/CaseService';
 import { ToastContainer, toast } from "react-toastify";
 
@@ -68,6 +68,7 @@ const CaseDetails = () => {
     });
 
     dispatch(setCaseHistory(output))
+    dispatch(setFilteredCaseHistory(output))
   } 
   
 const [selectedCase, setselectedCaseDetails]:any = useState({});
