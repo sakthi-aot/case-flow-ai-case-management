@@ -162,13 +162,13 @@ export class CasesService {
       switch(searchColumn){ 
         case 'Description': {
           const [Cases,totalCount] =await this.caseRepository.createQueryBuilder("table")
-          .where("LOWER(table.desc) LIKE :title", { title: `%${ searchField.toLowerCase() }%` }).take(take).skip(skip)
+          .where("LOWER(table.desc) LIKE :title", { title: `%${ searchField.toLowerCase() }%` }).orderBy({'table.id': 'DESC'}).take(take).skip(skip)
           .getManyAndCount()
           return  {Cases,totalCount};
         }
         default :
          const [Cases,totalCount] = await  (this.caseRepository.createQueryBuilder("table")
-        .where("LOWER(table.name) LIKE :title", { title: `%${ searchField.toLowerCase() }%` }).take(take).skip(skip)
+        .where("LOWER(table.name) LIKE :title", { title: `%${ searchField.toLowerCase() }%` }) .orderBy({'table.id': 'DESC'}).take(take).skip(skip)
         .getManyAndCount())
         return {Cases,totalCount}
       }
