@@ -5,7 +5,8 @@ import "./SingleCaseDetail.scss"
 
 
 
-const SingleCaseDetail = ({caseHisoryData}) => {
+const SingleCaseDetail = ({caseHisoryData,userInfo}) => {
+    
     // const docDate =  {
     //     id:1,
     //     description:"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
@@ -30,6 +31,7 @@ const SingleCaseDetail = ({caseHisoryData}) => {
             </h3>
             {expand && <div>
                 <p>{caseHisoryData.caseHistoryType}</p>
+                <p>User -   {userInfo.userName}</p>
                 {/* <h3>Notes</h3>
                 <p>{notes}</p>
                 <h3>Tasks</h3>
