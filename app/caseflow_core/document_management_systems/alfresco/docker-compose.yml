@@ -32,11 +32,11 @@ services:
                 -Dsolr.sharedSecret=secret
                 -Dsolr.base.url=/solr
                 -Dindex.subsystem.name=solr6
-                -Dshare.host=caseflow-alfresco.aot-technologies.com
+                -Dshare.host=localhost
                 -Dshare.port=8080
-                -Dalfresco.host=caseflow-alfresco.aot-technologies.com
+                -Dalfresco.host=localhost
                 -Dalfresco.port=8080
-                -Daos.baseUrlOverwrite=http://caseflow-alfresco.aot-technologies.com:8080/alfresco/aos
+                -Daos.baseUrlOverwrite=http:localhost:8080/alfresco/aos
                 -Dmessaging.broker.url=\"failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true\"
                 -Ddeployment.method=DOCKER_COMPOSE
                 -Dtransform.service.enabled=true
@@ -44,7 +44,7 @@ services:
                 -Dsfs.url=http://shared-file-store:8099/
                 -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
                 -Dcsrf.filter.enabled=false
-                -Ddsync.service.uris=http://caseflow-alfresco.aot-technologies.com:9090/alfresco
+                -Ddsync.service.uris=http:localhost:9090/alfresco
                 -DtrialUid=id19257772
                 -XX:MinRAMPercentage=50
                 -XX:MaxRAMPercentage=80
@@ -151,7 +151,7 @@ services:
         environment:
             APP_CONFIG_AUTH_TYPE: "BASIC"
             BASE_PATH: ./
-            APP_BASE_SHARE_URL: "http://caseflow-alfresco.aot-technologies.com:8080/workspace/#/preview/s"
+            APP_BASE_SHARE_URL: "http:localhost:8080/workspace/#/preview/s"
 
     control-center:
         image: quay.io/alfresco/alfresco-admin-app:7.2.0
