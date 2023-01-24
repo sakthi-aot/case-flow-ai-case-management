@@ -91,11 +91,18 @@ export class CasesService {
         where: {
           id: id,
         },
+        
         relations: [
           'casehistory',
           'casehistory.event',
           'casehistory.event.eventtype',
         ],
+        order:{
+          casehistory:{
+            id:"DESC"
+          }
+        },
+        
       });
       console.log(value);
       if (value) return value;
