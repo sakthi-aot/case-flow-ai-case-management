@@ -64,7 +64,8 @@ const CaseHistory = ({caseId}) => {
       {selectedFilteredCaseHistory.map(singleCaseHistory =>{
        return <SingleCaseDetail
         key={singleCaseHistory.id}
-        caseHisoryData = {singleCaseHistory} userInfo={userInfo}
+        caseHisoryData = {singleCaseHistory}
+        userInfo={userInfo}
          />
       })}
     </div>

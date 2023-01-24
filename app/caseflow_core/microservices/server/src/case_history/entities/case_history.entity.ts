@@ -17,7 +17,7 @@ export class CaseHistory {
 
   @Column({ nullable: true })
   @Field()
-  datetime: Date;
+  @CreateDateColumn({ type: 'timestamp' })
 
   @Column()
   @Field()
