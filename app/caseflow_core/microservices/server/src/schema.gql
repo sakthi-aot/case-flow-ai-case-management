@@ -113,7 +113,7 @@ input CreateCaseInput {
   statusid: Int!
   typeid: Float
   linkedcases: [Int!]
-  creationdate: DateTime = "2023-01-18T05:55:04.172Z"
+  creationdate: DateTime = "2023-01-24T05:20:39.734Z"
   completiondate: DateTime
   lastmodificationdate: DateTime
   penduntildate: DateTime
@@ -132,7 +132,7 @@ input UpdateCaseInput {
   statusid: Int!
   typeid: Float
   linkedcases: [Int!]
-  creationdate: DateTime = "2023-01-18T05:55:04.162Z"
+  creationdate: DateTime = "2023-01-24T05:20:39.726Z"
   completiondate: DateTime
   lastmodificationdate: DateTime
   penduntildate: DateTime

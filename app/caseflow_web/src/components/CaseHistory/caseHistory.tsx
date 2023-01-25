@@ -4,13 +4,14 @@ import "./caseHistory.scss"
 import FilterMuiComponent from '../FilterMuiComponent/FilterMuiComponent';
 import { setoptionsForFilter, setFilteredCaseHistory } from '../../reducers/caseHistoryReducer';
 import {useDispatch,useSelector} from "react-redux";
-
+import { State } from "../../interfaces/stateInterface";
 
 
 
 const CaseHistory = ({caseId}) => {
 
   const dispatch = useDispatch();
+  const userInfo = useSelector((state:State)=>state.auth.userDetails)
   const [selectedCaseHistoryFilterOption, setselectedCaseHistoryFilterOption]:any = useState("");
 
   const selectedCaseHistory = useSelector((state:any) => state.caseHistory.caseHistory);
@@ -64,6 +65,7 @@ const CaseHistory = ({caseId}) => {
        return <SingleCaseDetail
         key={singleCaseHistory.id}
         caseHisoryData = {singleCaseHistory}
+        userInfo={userInfo}
          />
       })}
     </div>

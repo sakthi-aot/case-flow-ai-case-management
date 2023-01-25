@@ -22,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 import { setCaseHistory, setFilteredCaseHistory } from '../../reducers/caseHistoryReducer';
 import { getCaseHistory } from '../../services/CaseService';
 import { ToastContainer, toast } from "react-toastify";
+import moment from "moment";
 
 
 
@@ -62,7 +63,7 @@ const CaseDetails = () => {
     const output = caseHistoryData.casehistory.map((element,index) => {
       return {  
         id :index,
-        date:element.datetime.split("T")[0],
+        date:moment(element.datetime).format('MMMM Do YYYY, h:mm:ss a'),
         caseHistoryType:element.event.eventtype.text,
       };
     });
