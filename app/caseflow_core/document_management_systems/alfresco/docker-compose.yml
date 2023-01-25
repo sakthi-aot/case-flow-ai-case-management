@@ -56,7 +56,8 @@ services:
                 "
         volumes:
         - ./acs/alfresco-global.properties:/usr/local/tomcat/shared/classes/alfresco-global.properties
-        - ./acs/log4j.properties:/usr/local/tomcat/webapps/alfresco/WEB-INF/classes/log4j.properties        
+        - ./acs/log4j.properties:/usr/local/tomcat/webapps/alfresco/WEB-INF/classes/log4j.properties   
+        - ./data/acs:/usr/local/tomcat/alf_data/     
 
     transform-router:
         mem_limit: 512m
@@ -116,6 +117,8 @@ services:
         command: postgres -c max_connections=300 -c log_min_messages=LOG
         ports:
             - "5432:5432"
+        volumes:
+            - ./data/postgres:/var/lib/postgresql/data    
 
     solr6:
         image: alfresco/alfresco-search-services:2.0.3
