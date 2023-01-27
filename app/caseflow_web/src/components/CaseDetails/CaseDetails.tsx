@@ -17,12 +17,18 @@ import CustomizedDialog from '../Dialog'
 import Upload from '../Upload'
 import EditIcon from '@mui/icons-material/Edit';
 import { setSelectedCase } from "../../reducers/newCaseReducer";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setCaseHistory, setFilteredCaseHistory } from '../../reducers/caseHistoryReducer';
 import { getCaseHistory } from '../../services/CaseService';
 import { ToastContainer, toast } from "react-toastify";
 import moment from "moment";
+import { store } from "../../interfaces/stateInterface";
+import { getDocumentofCaseList } from "../../services/CaseService";
+import { setSelectedCaseDocuments,setTotalDocCount } from "../../reducers/newCaseReducer";
+
+
+
 
 
 
@@ -75,6 +81,8 @@ const CaseDetails = () => {
 const [selectedCase, setselectedCaseDetails]:any = useState({});
 const [isOpenPopup,setOpenPopup] = useState(false);
   const [selected, setSelected] = useState(0);
+const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents);
+
   const handleClose = (
     event,
     reason
@@ -87,8 +95,14 @@ const [isOpenPopup,setOpenPopup] = useState(false);
     setSelected(0)
     // fetchCaseDocumentDetails()
     toast.success("Success")
+    fetchRelatedDocuments()
   }
 
+  const fetchRelatedDocuments = async ()=>{
+    let output = await getDocumentofCaseList(selectedCase.id,1);
+    dispatch(setSelectedCaseDocuments(output.CaseDocuments))  
+    dispatch(setTotalDocCount(output.totalCount))    
+  }
   const onActionChangehandler = (e: any) => {
 
     setSelected(e.target.value)
@@ -161,7 +175,7 @@ const [isOpenPopup,setOpenPopup] = useState(false);
          <h2 className="caseDocuments-headtag">Case Documents</h2>
         </AccordionSummary>
         <AccordionDetails sx={{paddingLeft:0}}>
-        <RelatedCaseDocuments id = {selectedCase.id} ></RelatedCaseDocuments>
+        <RelatedCaseDocuments id = {selectedCase.id} docDetail={docDetail}></RelatedCaseDocuments>
         </AccordionDetails>
       </Accordion>
       
