@@ -57,7 +57,7 @@ export class TransformService {
           dmsprovider: 3,
           latestversion: document.entry.properties['cm:versionLabel'],
           isdeleted: false,
-          type : data.file.mimetype,
+          type : data?.type,
           caseId: data.caseId,
 
         };
@@ -90,7 +90,7 @@ export class TransformService {
               dmsprovider: 2,
               latestversion: document.UIVersionLabel,
               isdeleted: false,
-              type : data.file.mimetype,
+              type : data?.type,
           };
       
       case 'UPDATE':
