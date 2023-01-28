@@ -72,7 +72,7 @@ import {
  
 };
   export const getCasesList = async (number) => {   
-   const  skip =(number-1)*10;   
+   const  skip =(number-1)*Number(PAGINATION_TAKE);   
     const url = GRAPHQL;
     const  output =  await httpPOSTRequest(url,{query: print(FETCH_CASES),
       variables: {       
@@ -92,7 +92,7 @@ import {
   
   export const getDocumentofCaseList = async (id,number) => {
     console.log(parseInt(id))
-    const  skip =(number-1)*10; 
+    const  skip =(number-1)*Number(PAGINATION_TAKE); 
     const url = GRAPHQL;    
     const  output =  await httpPOSTRequest(url,{query: print(FETCH_DOCUMENT_OF_CASES),
       variables: {

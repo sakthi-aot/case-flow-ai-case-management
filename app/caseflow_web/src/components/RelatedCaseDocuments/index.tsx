@@ -12,7 +12,7 @@ import { getDocument,deleteDocument } from "../../services/DocumentManagementSer
 import { MenuItem, Select } from "@mui/material";
 import { Pagination } from "@mui/material";
 import { PAGINATION_TAKE } from "../../apiManager/endpoints/config";
-import { setSelectedCaseDocuments } from "../../reducers/newCaseReducer";
+import { setSelectedCaseDocuments,setTotalDocCount } from "../../reducers/newCaseReducer";
 import {useSelector,useDispatch} from "react-redux";
 import { store } from "../../interfaces/stateInterface";
 import PopUpDialogBox from "../PopUpDialogBox/PopUpDialogBox";
@@ -31,7 +31,7 @@ import { setSelectedDocument } from "../../reducers/documentsReducer";
 // }
 
 
-export default function RelatedCaseDocuments({id}) {
+export default function RelatedCaseDocuments({id, docDetail}) {
   
 // const [docDetail, setdocDetail] = useState([]);
 const [totalPageNo,setTotalPageNo] = useState(0);
@@ -39,22 +39,33 @@ const [pageNo,setPageNo]= useState(1);
 const [isDeleteConfirmationUpOpen,setDeleteConfirmation] =useState(false);
 
 const dispatch = useDispatch()
-const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents);
 const SelectedDocId = useSelector((state:store) =>state.documents.seletedDocument)
+const totalDocCount = useSelector((state:store)=>state.cases.selectedCase.totalDocCount);
+
 
 useEffect(() => {
   console.log("inside");
   fetchCaseDetails();
 }, [id,pageNo]);
 
+useEffect(() => {
+  setPageNo(1)
+  if(docDetail && docDetail.length){
+    
+    const TotalPage = Math.ceil(totalDocCount/Number(PAGINATION_TAKE)) 
+    setTotalPageNo(TotalPage);  
+  }
+}, [totalDocCount]);
+
 
   async function fetchCaseDetails() {
     if(id){      
       let output = await getDocumentofCaseList(id,pageNo);
-      const TotalDocCount = output.totalCount;
-      const TotalPage = Math.ceil(TotalDocCount/Number(PAGINATION_TAKE)) 
+      dispatch(setTotalDocCount(output.totalCount))    
+      const TotalPage = Math.ceil(totalDocCount/Number(PAGINATION_TAKE)) 
       setTotalPageNo(TotalPage);  
       dispatch(setSelectedCaseDocuments(output.CaseDocuments))      
+      
     }
   }
   const options = [{id :0,text : '...'},
