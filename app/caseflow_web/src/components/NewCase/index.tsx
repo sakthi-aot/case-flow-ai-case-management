@@ -63,6 +63,15 @@ const resetCases=()=>{
   setValues(initialFieldValues);
 
 }
+const handleBack = ()=>{
+  if(caseList.isEdit){
+    navigate("/private/cases/" + values.id+'/details');
+  }
+  else{
+    navigate("/private/cases")
+  }
+
+}
 
   //set values when document input fiels changes
   // const handleDocumentInputChange = (e) => {
@@ -159,7 +168,7 @@ const resetCases=()=>{
               backgroundColor:"#404040"
             }}
             variant="contained"
-            onClick={() => navigate("/private/cases")} 
+            onClick={() =>handleBack()} 
           >
            Back
           </Button>
