@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
 import { setSelectedCase,resetSelectedCase } from "../../reducers/newCaseReducer";
+import "./NewCaseComponent.scss"
 
 const NewCase = () => {
   
@@ -79,14 +80,14 @@ const handleBack = ()=>{
   //   setValues({ ...values, [name]: value });
   // };
   return (
-    <div style={{ padding: "2rem 3rem 0rem 8rem" }}>
-      <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6">
+    <div style={{ padding: "2rem 3rem 0rem 8rem" }} className="newOrupdateCaseBlock">
+      <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6" className="case-heading">
       {caseList.isEdit?"Update Case":"New Case"}  
       </Typography>
       <Divider sx={{ borderBottomWidth: 3 }} />
       <Grid container spacing={3} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
         <Grid item xs={4}>
-          <Typography sx={{ padding: "1rem 1rem 0rem 0rem" }} variant="body2">
+          <Typography sx={{ padding: "1rem 1rem 0rem 0rem" }} variant="body2" className="case-name-tag">
             Case Name :
           </Typography>
           </Grid>
@@ -115,7 +116,7 @@ const handleBack = ()=>{
       </Grid>
       <Grid container spacing={1} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
         <Grid item xs={4}>
-          <Typography sx={{ padding: "1rem 1rem 0rem 0rem" }} variant="body2">
+          <Typography sx={{ padding: "1rem 1rem 0rem 0rem" }} variant="body2" className="case-desc-tag">
             Case Description :
           </Typography>
         </Grid>
