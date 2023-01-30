@@ -99,12 +99,13 @@ const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents)
    setOpenPopup(false);
    setSelected(0)
   };
-  const onSuccess = ()=>{
+  const onSuccess = async ()=>{
     setOpenPopup(false);
     setSelected(0)
     // fetchCaseDocumentDetails()
     toast.success("Success")
-    fetchRelatedDocuments()
+    await fetchRelatedDocuments()
+    await fetchCaseHistory(selectedCase.id)
   }
 
   const fetchRelatedDocuments = async ()=>{
