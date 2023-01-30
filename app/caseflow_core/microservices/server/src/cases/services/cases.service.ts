@@ -37,8 +37,9 @@ export class CasesService {
         skip: args.skip,
         order: {
           id: 'DESC',
-        }
-      }),
+        },
+        relations : ['casestatus','casestatus.casestype']
+    }),
       this.caseRepository.count(),
     ]);
     return { Cases, totalCount };
@@ -58,6 +59,7 @@ export class CasesService {
         order: {
           id: 'DESC',
         },
+        relations : ['casestatus','casestatus.casestype']
       });
     } catch (err) {
       console.log(err);
@@ -95,6 +97,8 @@ export class CasesService {
           'casehistory',
           'casehistory.event',
           'casehistory.event.eventtype',
+          'casestatus',
+          'casestatus.casestype',
         ],
       });
       console.log(value);
@@ -163,12 +167,14 @@ export class CasesService {
         case 'Description': {
           const [Cases,totalCount] =await this.caseRepository.createQueryBuilder("table")
           .where("LOWER(table.desc) LIKE :title", { title: `%${ searchField.toLowerCase() }%` }).orderBy({'table.id': 'DESC'}).take(take).skip(skip)
+          .leftJoinAndSelect('cases.statusid', 'status')
           .getManyAndCount()
           return  {Cases,totalCount};
         }
         default :
          const [Cases,totalCount] = await  (this.caseRepository.createQueryBuilder("table")
         .where("LOWER(table.name) LIKE :title", { title: `%${ searchField.toLowerCase() }%` }) .orderBy({'table.id': 'DESC'}).take(take).skip(skip)
+        .leftJoinAndSelect('table.casestatus', 'status')
         .getManyAndCount())
         return {Cases,totalCount}
       }
@@ -178,7 +184,7 @@ export class CasesService {
     }
 
     }
-    catch{
+    catch(err){
       throw new HttpException("something went wrong", HttpStatus.INTERNAL_SERVER_ERROR)
     }
 

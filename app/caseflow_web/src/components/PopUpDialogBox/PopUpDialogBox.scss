@@ -1,6 +1,7 @@
 
 @import "../../styles.scss";
-.dialogActionCenter{
+.popup{
+  .dialogActionCenter{
     .btn2Style{
       color:$primary-theme-black-color;
       background-color:  $delete-confirm-btn;
@@ -12,4 +13,15 @@
     .btn1Style{
       color: $primary-theme-black-color;
     }
+    
   }
+  .confirm{
+    .secondary{
+      color: $primary-theme-black-color;
+    }
+    .primary {
+      background:$primary-theme-black-color;
+    }
+  }
+  
+}

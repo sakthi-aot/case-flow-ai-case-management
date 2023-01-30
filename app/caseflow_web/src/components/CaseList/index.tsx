@@ -74,14 +74,14 @@ async function fetchCaseDetails() {
   let output = allRecentCases;    
   const TotalPage = Math.ceil(totalCount/10) 
   setTotalPCount(TotalPage)
-  output = output.map((element) => {
-    return {
-      id :element.id,
-      name:element.name,
-      description:element.desc,
-      status:'open'    //need to change in future
-    };
-  });   
+  // output = output.map((element) => {
+  //   return {
+  //     id :element.id,
+  //     name:element.name,
+  //     description:element.desc,
+  //     status:'open'    //need to change in future
+  //   };
+  // });   
 } 
 
 

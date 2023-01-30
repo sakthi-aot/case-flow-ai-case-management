@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux/es/exports";
 import { setSelectedCase } from "../../reducers/newCaseReducer";
 
 const RecentCaseCard = (props) => {
+  console.log(props.case)
   const [CaseDetails, setcaseDetails] = useState(props.case);
   const dispatch = useDispatch()
   const navigate = useNavigate();  
@@ -80,7 +81,7 @@ const RecentCaseCard = (props) => {
           <Box display="flex" justifyContent="flex-end">
           <div className="recent-case-card-status">
               <div className="recent-case-card-status-text">
-                {CaseDetails.status}
+                {CaseDetails?.casestatus?.displayname}
               </div>
             </div>
             </Box>

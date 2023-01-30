@@ -54,7 +54,7 @@ import {
         updateCaseInput: {
           id:parseInt(newCase.id.toString()),
           name: newCase.name,
-          statusid: 1,
+          statusid: newCase.statusid,
           desc:newCase.desc
         },
       },

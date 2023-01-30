@@ -5,7 +5,7 @@ import CaseDetailReference from "./CaseDetailReference/CaseDetailReference";
 import "./CaseDetails.scss";
 import Search from "../Search";
 import CaseHistory from "../CaseHistory/caseHistory";
-import { getCaseDetails } from "../../services/CaseService";
+import { getCaseDetails, updateCases } from "../../services/CaseService";
 import { useLocation } from 'react-router-dom'
 import RelatedCaseDocuments from "../RelatedCaseDocuments";
 import Accordion from '@mui/material/Accordion';
@@ -17,11 +17,17 @@ import CustomizedDialog from '../Dialog'
 import Upload from '../Upload'
 import EditIcon from '@mui/icons-material/Edit';
 import { setSelectedCase } from "../../reducers/newCaseReducer";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setCaseHistory, setFilteredCaseHistory } from '../../reducers/caseHistoryReducer';
 import { getCaseHistory } from '../../services/CaseService';
 import { ToastContainer, toast } from "react-toastify";
+import { findAllByAltText } from "@testing-library/react";
+import { fetchCaseStatuses } from "../../services/constantsService";
+import { setCaseTypes } from "../../reducers/constantsReducer";
+import { State } from "../../interfaces/stateInterface";
+import PopUpDialogBox from "../PopUpDialogBox/PopUpDialogBox";
+
 
 
 
@@ -29,7 +35,7 @@ const CaseDetails = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const statuses =   useSelector((state:State) => state.constants.caseTypes);
   const caseDetail = {
     status: "OPEN",
     date: "2022-11-01",
@@ -41,11 +47,12 @@ const CaseDetails = () => {
   const optionsForAction = [{id : 0, code :'1' ,text: "Select Action"},
   {id : 1, code :'1' ,text: "Start Workflow"},
   {id : 2, code :2 ,text: "Wake"},
-  {id : 3, code :3 ,text: "Complete"},
-  {id : 4, code :4 ,text: "Merge"},
-  {id : 5, code :5 ,text: "Archive"},
-  {id : 6, code :6 ,text: "Upload Document"},
-  {id : 7, code :7 ,text: "Delete"},
+  {id : 3, code :3 ,text: "Pending"},
+  {id : 4, code :4 ,text: "Complete"},
+  {id : 5, code :5 ,text: "Merge"},
+  {id : 6, code :6 ,text: "Archive"},
+  {id : 7, code :7 ,text: "Upload Document"},
+  {id : 8, code :8 ,text: "Delete"},
 ];
   async function fetchCaseDetails() {
     var matches = location.pathname.match(/(\d+)/);
@@ -73,6 +80,9 @@ const CaseDetails = () => {
   
 const [selectedCase, setselectedCaseDetails]:any = useState({});
 const [isOpenPopup,setOpenPopup] = useState(false);
+const [isOpenConfirmationPopup,setOpenConfirmationPopup] = useState(false);
+const [confirmationText,setConfirmationText] = useState("");
+const [newStatus,setNewStatus] = useState(0);
   const [selected, setSelected] = useState(0);
   const handleClose = (
     event,
@@ -88,16 +98,32 @@ const [isOpenPopup,setOpenPopup] = useState(false);
     toast.success("Success")
   }
 
-  const onActionChangehandler = (e: any) => {
+  const onActionChangehandler = async (e: any) => {
 
     setSelected(e.target.value)
     switch(e.target.value){
-
+      case 2:{
+        return changeStatus(1) // Wake
+      }
+      case 3:{
+        return changeStatus(2) // Pending
+      }
+      case 4:{
+        return changeStatus(3) // Complete
+      }
       case 6 : {
-        setOpenPopup(true);
+       return setOpenPopup(true);
       }
     }
   };
+
+  const changeStatus = async (status) =>{
+    setConfirmationText("Do you want to change the status of the case?")
+    setOpenConfirmationPopup(true);
+    setNewStatus(status);
+    
+   
+  }
   const editCaseDetails=(selectedCase)=> {
 
     dispatch(setSelectedCase({...selectedCase,isEdit:true}));
@@ -107,7 +133,38 @@ const [isOpenPopup,setOpenPopup] = useState(false);
 
   useEffect(() => {
     fetchCaseDetails();
+    fetchAllCaseStatuses();
+    
   }, []);
+
+  const fetchAllCaseStatuses = async () => {
+    const statusList =  await fetchCaseStatuses();
+    dispatch(setCaseTypes(statusList))
+  }
+
+  const onCloseConfirmationPopup =() =>{
+    setOpenConfirmationPopup(false);
+    setSelected(0)
+  }
+  const onConfirmation = async () =>{
+  
+    let newStatusDetails = statuses.find(stat=> stat.code == newStatus.toString());
+    if(newStatusDetails && newStatusDetails.id){
+    selectedCase.statusid = parseInt(newStatusDetails.id.toString()) ;
+    let responseDetails = await updateCases(selectedCase);
+    if(responseDetails && responseDetails["success"]){
+      setSelected(0)
+      setOpenConfirmationPopup(false);
+      fetchCaseDetails();
+      toast.success("Successfully updated the status")
+    }
+    else{
+      toast.error("Error updating the status")
+    }
+  }
+   
+   
+  }
 
   return (
     <>
@@ -125,7 +182,7 @@ const [isOpenPopup,setOpenPopup] = useState(false);
         <span className="case-detail-header">
           <div className="case-id-status">
             <p className="case-id">Case ID :{selectedCase.id}</p>
-            <p className="case-status">{caseDetail.status}</p>
+            <p className="case-status">{selectedCase?.casestatus?.displayname}</p>
           <div className="case-edit" onClick={()=>{editCaseDetails(selectedCase)}}>  
           <span className="action-icon"> {<EditIcon />}</span>
               </div>
@@ -171,7 +228,16 @@ const [isOpenPopup,setOpenPopup] = useState(false);
     </div>
     <CustomizedDialog title="Upload File" isOpen={isOpenPopup} setIsOpen={setOpenPopup} handleClose={handleClose}><Upload onSuccess={onSuccess} /></CustomizedDialog>
     <ToastContainer />
-
+    <PopUpDialogBox 
+      isOpen ={isOpenConfirmationPopup}
+      onClose={onCloseConfirmationPopup}
+      dialogContentText ={confirmationText}       
+      onConfirm={onConfirmation} 
+      btn1={"Cancel"}      
+      btn2={"Confirm"}   
+      type="confirm"    
+      
+      />
     </>
   );
 };

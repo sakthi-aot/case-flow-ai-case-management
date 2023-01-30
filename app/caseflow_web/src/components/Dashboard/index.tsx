@@ -20,7 +20,7 @@ const Dashboard = () =>
     const recentCaseList = async () => {
       let recentCases = await fetchRecentCaseList();
       recentCases = recentCases.map((element) => {
-        return {...element, status:'open'}
+        return {...element}
       });
       if(recentCases) setrecentCases(recentCases)
     };
