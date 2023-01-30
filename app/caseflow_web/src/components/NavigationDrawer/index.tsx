@@ -222,12 +222,12 @@ export default function MiniDrawer(
               <ChevronLeftIcon
                 style={{  
                   fontSize: "30px",
-                  position:"relative",
+                  position:"fixed",
                   borderRadius:"50%",
                   border:"1px solid grey",
                   zIndex:"1000",  
                   marginTop:"3vh",
-                 left:"93.5%",
+                 left:"14rem",
                   backgroundColor:"#ffff"   ,
                   cursor:"pointer",
                 }}
@@ -237,12 +237,12 @@ export default function MiniDrawer(
                 <ChevronRightIcon
                 style={{   
                   fontSize: "30px",
-                  position:"relative",
+                  position:"fixed",
                   borderRadius:"50%",
                   border:"1px solid grey",
                   zIndex:"1000",  
                  marginTop:"3vh",
-                 left:"75.5%",
+                 left:"3.1rem",
                   backgroundColor:"#ffff"   ,
                   cursor:"pointer",
                 }}
