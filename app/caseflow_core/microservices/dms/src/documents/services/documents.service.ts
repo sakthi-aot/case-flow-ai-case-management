@@ -27,16 +27,14 @@ export class DocumentsService {
   // Created By : Don C Varghese
   async findAll(): Promise<CaseDocuments[]> {
     try {
-    return this.documentRepository.find({relations:["versions"],
+    return this.documentRepository.find({
       where: {
         isdeleted: false,
       },
       
       order: {
         id: "DESC",
-        versions:{
-          id:"DESC"
-        }
+       
 },
     });
   } catch (err) {
@@ -77,16 +75,14 @@ export class DocumentsService {
   // Created By : Don C Varghese
   async findOne( id : number ): Promise<CaseDocuments> {
     try{
-      return await this.documentRepository.findOne({relations:["versions"],
+      return await this.documentRepository.findOne({
         where: {
           id: id,
         
         },
         order: {
           id: "DESC",
-          versions:{
-            id:"DESC"
-          }
+       
   }
       },
        );           
