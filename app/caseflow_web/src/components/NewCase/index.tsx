@@ -40,9 +40,8 @@ const { handleSubmit, control,register } = useForm();
     response = await addCases(values);
     navigate("/private/cases/"  + response.success.data.createCase.id+'/details');
     }
-    console.log(response);
-    // if(response)
-    if (response && response.data) {
+
+    if (response && response.success && response.success.data ) {
       toast.success("Success");
       }
      else{ toast.error("Error");}
