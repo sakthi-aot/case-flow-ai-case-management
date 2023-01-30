@@ -67,11 +67,11 @@ export const ROLES = [
   },
 ];
 
-export  const CASEFLOW_DMS =  (window._env_ && window._env_.CASEFLOW_DMS) ||
-process.env.CASEFLOW_DMS ||
+export  const CASEFLOW_DMS =  (window._env_ && window._env_.REACT_APP_CASEFLOW_DMS) ||
+process.env.REACT_APP_CASEFLOW_DMS ||
 "1";
-export  const PAGINATION_TAKE =  (window._env_ && window._env_.PAGINATION_TAKE) ||
-process.env.PAGINATION_TAKE || "" ;
+export  const PAGINATION_TAKE =  (window._env_ && window._env_.REACT_APP_PAGINATION_TAKE) ||
+process.env.REACT_APP_PAGINATION_TAKE || "" ;
 
 export  const CASEFLOW_API_URL =  (window._env_ && window._env_.REACT_APP_CASEFLOW_API_URL) ||
 process.env.REACT_APP_CASEFLOW_API_URL ||

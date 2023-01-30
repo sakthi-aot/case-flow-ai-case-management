@@ -17,6 +17,7 @@ import {useSelector,useDispatch} from "react-redux";
 import { store } from "../../interfaces/stateInterface";
 import PopUpDialogBox from "../PopUpDialogBox/PopUpDialogBox";
 import { setSelectedDocument } from "../../reducers/documentsReducer";
+import moment from "moment";
 
 
 
@@ -140,6 +141,9 @@ useEffect(() => {
     setDeleteConfirmation(false) 
     
   }
+ const  getLatestVersion=(version)=> { 
+   return (version)?version[0]?.versions:1;
+  }
   return (  
     <>
     <TableContainer component={Paper} sx={{ boxShadow : 0,}} >
@@ -166,9 +170,9 @@ useEffect(() => {
               }
               }  style={{borderBottom: "none"}} component="th" scope="row">{row.name}</TableCell>
               <TableCell style={{borderBottom: "none"}} align="right">{row.size ? row.size : "1kb"}</TableCell>
-              <TableCell style={{borderBottom: "none"}} align="right">{row.creationdate}</TableCell>
-              <TableCell style={{borderBottom: "none"}} align="right">{row.creationdate}</TableCell>
-              <TableCell  style={{borderBottom: "none"}} align="right">{row.latestversion}</TableCell>
+              <TableCell style={{borderBottom: "none"}} align="right">{moment(row.creationdate).format('MMMM Do YYYY , h:mm:ss a')}</TableCell>
+              <TableCell style={{borderBottom: "none"}} align="right">{moment(row.creationdate).format('MMMM Do YYYY , h:mm:ss a')}</TableCell>
+              <TableCell  style={{borderBottom: "none"}} align="right">{ getLatestVersion(row.versions)}</TableCell>
               <TableCell  style={{borderBottom: "none"}} align="right">
                 {/* <select className="caseDocumentAction-center" onChange={(e)=>{downloadDocument(row.id,e.target.value)}}>                
                 <option selected  >...</option>

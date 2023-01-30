@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UploadedFile, UseInterceptors,Delete, Get, Patch,NotFoundException, Put } from '@nestjs/common';
+import { Body,Headers , Controller, Post, UploadedFile, UseInterceptors,Delete, Get, Patch,NotFoundException, Put } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { FileInterceptor } from '@nestjs/platform-express';
 
@@ -19,9 +19,9 @@ export class DocumentsController {
   // @MessagePattern({ cmd: 'create_document' })
    @UseInterceptors(FileInterceptor('file'))
   async uploadDocument(
-    @UploadedFile() file: Express.Multer.File,@Body() body) {
+    @UploadedFile() file: Express.Multer.File,@Body() body,@Headers () auth) {
       try {
-    let documentDetails = await this.fileService.uploadFile(file, body.name, body.dmsprovider);
+    let documentDetails = await this.fileService.uploadFile(file, body, body.dmsprovider,auth.authorization);
     let formattedDocument: any = this.helper.transform(
       body.dmsprovider,
       'CREATE',
