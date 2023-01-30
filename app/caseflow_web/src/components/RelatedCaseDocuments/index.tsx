@@ -129,6 +129,9 @@ useEffect(() => {
     setDeleteConfirmation(false) 
     
   }
+ const  getLatestVersion=(version)=> { 
+   return (version)?version[0]?.versions:1;
+  }
   return (  
     <>
     <TableContainer component={Paper} sx={{ boxShadow : 0,}} >
@@ -157,7 +160,7 @@ useEffect(() => {
               <TableCell style={{borderBottom: "none"}} align="right">{row.size ? row.size : "1kb"}</TableCell>
               <TableCell style={{borderBottom: "none"}} align="right">{row.creationdate}</TableCell>
               <TableCell style={{borderBottom: "none"}} align="right">{row.creationdate}</TableCell>
-              <TableCell  style={{borderBottom: "none"}} align="right">{row.latestversion}</TableCell>
+              <TableCell  style={{borderBottom: "none"}} align="right">{ getLatestVersion(row.versions)}</TableCell>
               <TableCell  style={{borderBottom: "none"}} align="right">
                 {/* <select className="caseDocumentAction-center" onChange={(e)=>{downloadDocument(row.id,e.target.value)}}>                
                 <option selected  >...</option>

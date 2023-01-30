@@ -10,7 +10,8 @@ import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
 import { FetchArgs } from '../dto/fetch-args.input';
 import { caseDocumentResponse } from '../entities/case_document_response.entity';
-
+import {  Versions } from 'src/versions/entities/version.entity';
+import { VersionsService } from 'src/versions/services/versions.service';
 /**
  *  Service For documents
  */
@@ -19,20 +20,24 @@ import { caseDocumentResponse } from '../entities/case_document_response.entity'
 export class DocumentsService {
   constructor(
     @InjectRepository(CaseDocuments)
-    private documentRepository: Repository<CaseDocuments>,
+    private documentRepository: Repository<CaseDocuments>,private versionService: VersionsService
   ) {}
 
   // summery : Get all documents
   // Created By : Don C Varghese
   async findAll(): Promise<CaseDocuments[]> {
     try {
-    return this.documentRepository.find({
+    return this.documentRepository.find({relations:["versions"],
       where: {
         isdeleted: false,
       },
+      
       order: {
         id: "DESC",
-}
+        versions:{
+          id:"DESC"
+        }
+},
     });
   } catch (err) {
     console.log(err);
@@ -45,8 +50,24 @@ export class DocumentsService {
     createDocumentInput: CreateDocumentInput,
   ): Promise<CaseDocuments> {
     try {
-      const newCase = this.documentRepository.create(createDocumentInput);
-      return this.documentRepository.save(newCase);
+      const newCase =  this.documentRepository.create(createDocumentInput);
+      const docdata=await this.documentRepository.save(newCase);
+      const documentid=docdata?.id;
+      if(docdata && docdata?.id){
+      const versiondetails=await this.versionService.findDocument(documentid);
+      const versionNumber=(versiondetails && versiondetails?.versions)?versiondetails?.versions:0;
+      const versionData={
+        docid:docdata?.id,
+        documentid:docdata?.latestversion,
+        versions:versionNumber?(versionNumber+1):1,
+        creationdate:new Date(),
+        modificationdate:new Date()
+      }
+      const data=await this.versionService.create(versionData);
+    }else{
+      console.log("Error in doc upload");
+    }
+      return docdata;
     } catch (err) {
       console.log(err);
     }
@@ -56,13 +77,16 @@ export class DocumentsService {
   // Created By : Don C Varghese
   async findOne( id : number ): Promise<CaseDocuments> {
     try{
-      return await this.documentRepository.findOne({
+      return await this.documentRepository.findOne({relations:["versions"],
         where: {
           id: id,
         
         },
         order: {
           id: "DESC",
+          versions:{
+            id:"DESC"
+          }
   }
       },
        );           
@@ -111,13 +135,16 @@ export class DocumentsService {
   async forCases(args: FetchArgs,id:number):Promise<caseDocumentResponse>{
     try {
     const [CaseDocuments,totalCount] =await Promise.all([
-      this.documentRepository.find(
-        {
+      this.documentRepository.find({relations:["versions"],
+        
           take: args.take,
           skip: args.skip,
           where:{ "caseId":id,isdeleted: false},
           order: {
           id: "DESC",
+          versions:{
+            id:"DESC"
+          }
          }
         }
       ),

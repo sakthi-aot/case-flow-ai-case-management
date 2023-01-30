@@ -17,6 +17,7 @@ import { APP_GUARD } from '@nestjs/core';
 //_____________________Custom Imports_____________________//
 import { DocumentsModule } from './documents/documents.module';
 import { HelpersModule } from './helpers/helpers.module';
+import { VersionsModule } from './versions/versions.module';
 import {HttpModule} from  '@nestjs/axios'
 
 //keycloack settings
@@ -69,7 +70,8 @@ const keyCloakOptionsProvider =  {
       // synchronize: true,
       entities: ['dist/**/*.entity{.ts,.js}'],
       migrations: ['./src/migrations/*.ts'],
-    }), })
+    }), }),
+    VersionsModule
   ],
   controllers: [],
   providers: [
