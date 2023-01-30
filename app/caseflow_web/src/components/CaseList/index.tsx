@@ -66,6 +66,7 @@ const CaseList =React.memo( ({config,allRecentCases}:any) => {
 
  // to fetch the case list and set the state of cases 
  useEffect(() => {
+  dispatch(setPageSelected(1))
   fetchCaseDetails();   
 
 }, [totalCount]);
