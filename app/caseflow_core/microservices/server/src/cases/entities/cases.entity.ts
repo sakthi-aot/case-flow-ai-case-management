@@ -1,6 +1,7 @@
 import { Field, ObjectType, Int ,Directive,ID } from '@nestjs/graphql';
 import { CaseHistory } from 'src/case_history/entities/case_history.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
+import { CaseStatuses } from 'src/case_status/entities/case_status.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 
 /**
  * Summary :  Entity Class For External Cases 
@@ -83,6 +84,11 @@ export class Cases {
   @OneToMany(() => CaseHistory, (casehistory) => casehistory.case)
   @Field(() => [CaseHistory], { nullable: true })
   casehistory: CaseHistory[]
+
+  @ManyToOne(() => CaseStatuses, (casetype) => casetype.cases)
+  @Field(() => CaseStatuses, { nullable: true })
+  @JoinColumn({name: 'statusid'})
+  casestatus: CaseStatuses
 
 }
 

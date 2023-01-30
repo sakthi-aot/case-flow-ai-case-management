@@ -8,7 +8,7 @@ import "./PopUpDialogBox.scss"
 
 const PopUpDialogBox = (props) =>{
 
-     return  <Dialog
+     return  <Dialog className='popup'
        open={props.isOpen}
      onClose={props.onClose}
      aria-labelledby="alert-dialog-title"
@@ -19,12 +19,18 @@ const PopUpDialogBox = (props) =>{
        {props.dialogContentText}
        </DialogContentText>
      </DialogContent>
-     <DialogActions className={props.type=="delete"?"dialogActionCenter":""}>
+    { props.type == "delete" ?<DialogActions className={props.type=="delete"?"dialogActionCenter":""}>
        <Button onClick={props.onClose} className="btn1Style">{props.btn1}</Button>
        <Button onClick={props.onConfirm} autoFocus className="btn2Style" variant="contained">
          {props.btn2}
        </Button>
-     </DialogActions>
+     </DialogActions> : ""}
+     { props.type == "confirm" ?<DialogActions className='confirm'>
+       <Button onClick={props.onClose} className="secondary">{props.btn1}</Button>
+       <Button onClick={props.onConfirm} autoFocus className="primary" variant="contained">
+         {props.btn2}
+       </Button>
+     </DialogActions> : ""}
    </Dialog>
 
 

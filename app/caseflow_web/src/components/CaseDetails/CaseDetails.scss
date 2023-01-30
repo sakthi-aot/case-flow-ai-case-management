@@ -44,12 +44,13 @@
             align-items: center;
             grid-column-gap: 2rem;
             .case-status{
-                width: 5rem;
+                // width: 5rem;
                 background-color:  $primary-theme-black-color;
                 color: #FFFFFF;
                 padding: .5rem 1rem;
                 border-radius: 18px;
                 font-family:  $primary-font;
+                text-align: center;
             }
             .case-id{
                 font-size: 1.5rem;

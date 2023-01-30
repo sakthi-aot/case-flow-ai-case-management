@@ -39,6 +39,7 @@ query getCase($CaseId:Int!){
     id,
     name,
     desc,
+    statusid,casestatus{id,name,displayname,casestype{id,name,displayname}}
   }
   }`
 
@@ -79,7 +80,8 @@ query Searchcase($searchField:String!,$searchColumn:String!,$Skip:Int,$Take:Int)
     Cases{
       id,
       name,
-      desc
+      desc,
+      statusid,casestatus{id,name,displayname,casestype{id,name,displayname}}
     }
     }
   }`
@@ -90,6 +92,7 @@ query{
     id,
     name,
     desc,
+    statusid,casestatus{id,name,displayname,casestype{id,name,displayname}}
   }
 }`
 
