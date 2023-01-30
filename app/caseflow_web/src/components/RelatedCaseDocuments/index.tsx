@@ -18,6 +18,11 @@ import { store } from "../../interfaces/stateInterface";
 import PopUpDialogBox from "../PopUpDialogBox/PopUpDialogBox";
 import { setSelectedDocument } from "../../reducers/documentsReducer";
 import moment from "moment";
+import { getCaseHistory } from '../../services/CaseService';
+import { setCaseHistory, setFilteredCaseHistory } from '../../reducers/caseHistoryReducer';
+
+
+
 
 
 
@@ -94,9 +99,9 @@ useEffect(() => {
         link.remove();
       
   }
-  const deleteDocuments = async (id)=>{  
-      setDeleteConfirmation(true)         
-      dispatch(setSelectedDocument(id))
+  const deleteDocuments = async (selectedDocid)=>{  
+      setDeleteConfirmation(true)   
+      dispatch(setSelectedDocument(selectedDocid));
   }
 
   const previewDocument = async (id,type) => {
@@ -109,6 +114,21 @@ useEffect(() => {
           }
 
   }
+
+  const fetchCaseHistory = async  (id) =>{    
+    console.log("id",id)
+    const caseHistoryData = await getCaseHistory(id);
+    console.log(caseHistoryData,"caseHistoryData")
+    const output = caseHistoryData.casehistory.map((element,index) => {
+      return {  
+        id :index,
+        date:moment(element.datetime).format('MMMM Do YYYY, h:mm:ss a'),
+        caseHistoryType:element.event.eventtype.text,
+      };
+    });
+    dispatch(setCaseHistory(output))
+    dispatch(setFilteredCaseHistory(output))
+  } 
 
   
 
@@ -139,6 +159,8 @@ useEffect(() => {
     let document = await deleteDocument(SelectedDocId)
     fetchCaseDetails()
     setDeleteConfirmation(false) 
+    await fetchCaseHistory(id);
+
     
   }
  const  getLatestVersion=(version)=> { 
