@@ -125,7 +125,7 @@ const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents)
       case 4:{
         return changeStatus(3) // Complete
       }
-      case 6 : {
+      case 7 : {
        return setOpenPopup(true);
       }
     }
