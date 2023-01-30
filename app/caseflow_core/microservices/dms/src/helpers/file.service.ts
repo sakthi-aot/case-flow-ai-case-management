@@ -14,7 +14,7 @@ export class FileService {
   async uploadFile(file, data, dms,token=null) {
     switch (dms) {
       case '1': {
-        return await this.s3Service.uploadDocument(file, data);
+        return await this.s3Service.uploadDocument(file, data.name);
       }
       case '2': {
         return await this.spService.uploadDocument(file, data.name);

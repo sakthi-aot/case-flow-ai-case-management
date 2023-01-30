@@ -90,7 +90,7 @@ export class TransformService {
               dmsprovider: 2,
               latestversion: document.UIVersionLabel,
               isdeleted: false,
-              type : data.file.mimetype,
+              type : data.type,
           };
       
       case 'UPDATE':

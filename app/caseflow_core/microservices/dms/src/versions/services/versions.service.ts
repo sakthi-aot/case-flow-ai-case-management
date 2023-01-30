@@ -98,9 +98,9 @@ export class VersionsService {
         console.log(value);
         if (value) return value;
   
-        throw new NotFoundException(`Record cannot find by id ${id}`);
+        console.log(`Record cannot find by id ${id}`);
       }
-      throw new BadRequestException("request doesn't have any id");
+      console.log("request doesn't have any id");
     } catch (err) {
       console.log(err);
     }
