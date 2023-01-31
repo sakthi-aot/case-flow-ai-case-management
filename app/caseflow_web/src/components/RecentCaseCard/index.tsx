@@ -9,6 +9,7 @@ import "./recentCaseCard.scss"
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux/es/exports";
 import { setSelectedCase } from "../../reducers/newCaseReducer";
+import "../../styles.scss";
 
 const RecentCaseCard = (props) => {
   console.log(props.case)
@@ -43,15 +44,25 @@ const RecentCaseCard = (props) => {
                 <Typography 
                 variant="body2"                
                 className="recent-case-card-style"
+                style={{ "fontWeight": "700","fontSize":'1rem' }}
                 >
                    ID
                 </Typography>
               }
-              secondary={CaseDetails.id}
+              secondary={ <Typography              
+                color='#606060'
+                noWrap
+                style={{
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',                  
+                  
+                }}>{CaseDetails.id} </Typography>}
             />
           </Grid>
           <Grid item xs={3} >
             <ListItemText
+              className="caseName-case-list"
               primary={
                 <Typography 
                 variant="body2"
@@ -59,11 +70,20 @@ const RecentCaseCard = (props) => {
                    Name
                 </Typography>
               }
-              secondary={CaseDetails.name}
+              secondary={
+              <Typography                 
+                color='#606060'
+                noWrap
+                style={{
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',                  
+                  
+                }}>{ CaseDetails.name} </Typography>}
             />
           </Grid>
           <Grid item xs={4} >
-            <ListItemText
+            <ListItemText             
               primary={
                 <Typography
                 variant="body2"
@@ -72,13 +92,21 @@ const RecentCaseCard = (props) => {
                    Description
                 </Typography>
               }
-              secondary={CaseDetails.desc}
+              secondary={<Typography noWrap
+                color='#606060'
+                style={{
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  
+                }}>{ CaseDetails.desc} </Typography>
+               }
             />
           </Grid>          
 
 
-          <Grid  item xs={2}  >
-          <Box display="flex" justifyContent="flex-end">
+          <Grid  item xs={2} display="flex" alignItems='center' justifyContent="flex-end"  >
+          <Box >
           <div className="recent-case-card-status">
               <div className="recent-case-card-status-text">
                 {CaseDetails?.casestatus?.displayname}
