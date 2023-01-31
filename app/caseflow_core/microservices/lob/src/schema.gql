@@ -39,7 +39,34 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Query {
-  getLobByCaseId(caseId: Int!): CaseflowLob!
+  getLobById(id: Int!): CaseflowLob!
+}
+
+type Mutation {
+  createCaseflowLob(createCaseflowLobInput: CreateCaseflowLobInput!): CaseflowLob!
+  updateCaseflowLob(updateCaseflowLobInput: UpdateCaseflowLobInput!): CaseflowLob!
+  removeCaseflowLob(id: Float!): CaseflowLob!
+}
+
+input CreateCaseflowLobInput {
+  caseId: Int
+  policyNumber: Int
+  policyEffectiveDate: DateTime
+  policyExpiryDate: DateTime
+  isActive: Boolean
+  sumAssured: Int
+  createdDate: DateTime
+}
+
+input UpdateCaseflowLobInput {
+  id: Int!
+  caseId: Int
+  policyNumber: Int
+  policyEffectiveDate: DateTime
+  policyExpiryDate: DateTime
+  isActive: Boolean
+  sumAssured: Int
+  createdDate: DateTime
 }
 
 scalar link__Import
