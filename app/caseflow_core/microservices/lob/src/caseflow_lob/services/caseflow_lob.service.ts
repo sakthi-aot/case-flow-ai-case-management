@@ -11,6 +11,8 @@ import { CreateCaseflowLobInput } from '../dto/create-caseflow-lob.input';
 import { UpdateCaseflowLobInput } from '../dto/update-caseflow-lob.input';
 import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
+import { FetchArgs } from '../dto/fetch.input';
+import { CaseflowLobResponse } from '../entities/cases_response.entity';
 
 @Injectable()
 export class CaseflowLobService {
@@ -44,6 +46,67 @@ export class CaseflowLobService {
       throw new NotFoundException(`Record cannot find by id ${id}`);
     }
     throw new BadRequestException("request doesn't have any id");
+  }
+
+
+    /**
+   * Find All Method for Returning All lob with pagination
+   * @param args
+   * @returns
+   */
+    async findAll(
+      args: FetchArgs = { skip: 0, take: 5 }): Promise<CaseflowLobResponse> {
+      try {
+      const [CaseflowLob, totalCount] = await Promise.all([
+        this.caseLobRepository.find({
+          take: args.take,
+          skip: args.skip,
+          order: {
+            id: 'DESC',
+          },
+      }),
+        this.caseLobRepository.count(),
+      ]);
+      return { CaseflowLob, totalCount };
+    } catch (err) {
+      console.log(err);
+    }
+    }
+
+
+      /**
+   * method for serach cases
+   * @param searchField 
+   * @param searchColumn 
+   * @returns 
+   */
+  
+   async searchCaseflowLob(searchField,searchColumn,skip,take){
+    try{
+    if(searchColumn){
+      switch(searchColumn){ 
+        case 'id': {
+          const [CaseflowLob,totalCount] =await this.caseLobRepository.createQueryBuilder("table")
+          .where("table.id = :id", { id:searchField }).orderBy({'table.id': 'DESC'}).take(take).skip(skip)
+          .getManyAndCount()
+          return  {CaseflowLob,totalCount};
+        }
+        default :
+         const [CaseflowLob,totalCount] = await  (this.caseLobRepository.createQueryBuilder("table")
+        .where("table.policyNumber = :id", { id:searchField }) .orderBy({'table.id': 'DESC'}).take(take).skip(skip)
+        .getManyAndCount())
+        return {CaseflowLob,totalCount}
+      }
+    }
+    else{
+      return  new HttpException("select a field", HttpStatus.BAD_REQUEST)
+    }
+
+    }
+    catch(err){
+      throw new HttpException("something went wrong", HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+
   }
 
   /**

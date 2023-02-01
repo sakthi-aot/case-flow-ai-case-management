@@ -3,6 +3,10 @@ import { CaseflowLobService } from '../services/caseflow_lob.service';
 import { CaseflowLob } from '../entities/caseflow_lob.entity';
 import { CreateCaseflowLobInput } from '../dto/create-caseflow-lob.input';
 import { UpdateCaseflowLobInput } from '../dto/update-caseflow-lob.input';
+import { FetchArgs } from '../dto/fetch.input';
+import { CaseflowLobResponse } from '../entities/cases_response.entity';
+import { FetchSearchArgs } from '../dto/fetch-search.input';
+import { HttpException } from '@nestjs/common/exceptions';
 
 
 @Resolver(() => CaseflowLob)
@@ -13,6 +17,36 @@ export class CaseflowLobResolver {
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.caseflowLobService.findById(id);
   }
+
+    /**
+   * Summary :   Query For Fetching cases by passing arguments
+   * Created By : Akhila U S
+   * @param args 
+   * @returns 
+   */
+
+    @Query((returns) =>CaseflowLobResponse,  { name: 'getLobList' } )
+    getLobList(@Args() args: FetchArgs): Promise<CaseflowLobResponse> { 
+      const output = this.caseflowLobService.findAll(args);     
+      return output
+    }
+
+      /**
+   * Summary :   Query For serach lob
+   * Created By : Don basil Peter 
+   * @param searchField 
+   * @param searchColumn 
+   * @returns 
+   */
+   @Query((returns) => CaseflowLobResponse,  { name: 'searchCaseflowLob' } )
+   searchCaseflowLob(
+     @Args() args: FetchSearchArgs     
+      ): Promise<any> | HttpException{
+ 
+     return this.caseflowLobService.searchCaseflowLob(args.searchField,args.searchColumn,args.skip,args.take);
+   }
+
+   
 
   /**
    * Summary : Mutation for creating lob
@@ -55,4 +89,6 @@ export class CaseflowLobResolver {
   removeCaseflowLob(@Args('id') id: number) {
     return this.caseflowLobService.remove(id);
   }
+
+  
 }
