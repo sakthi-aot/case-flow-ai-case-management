@@ -38,7 +38,7 @@ export class CasesService {
         order: {
           id: 'DESC',
         },
-        relations : ['casestatus','casestatus.casestype']
+        relations : ['casestatus','casestatus.casestype','casestype',]
     }),
       this.caseRepository.count(),
     ]);
@@ -59,7 +59,7 @@ export class CasesService {
         order: {
           id: 'DESC',
         },
-        relations : ['casestatus','casestatus.casestype']
+        relations : ['casestatus','casestatus.casestype','casestype']
       });
     } catch (err) {
       console.log(err);
@@ -100,6 +100,7 @@ export class CasesService {
           'casehistory.event.eventtype',
           'casestatus',
           'casestatus.casestype',
+          'casestype',
         ],
         order:{
           casehistory:{
@@ -182,6 +183,7 @@ export class CasesService {
          const [Cases,totalCount] = await  (this.caseRepository.createQueryBuilder("table")
         .where("LOWER(table.name) LIKE :title", { title: `%${ searchField.toLowerCase() }%` }) .orderBy({'table.id': 'DESC'}).take(take).skip(skip)
         .leftJoinAndSelect('table.casestatus', 'status')
+        .leftJoinAndSelect('table.casestype', 'type')
         .getManyAndCount())
         return {Cases,totalCount}
       }

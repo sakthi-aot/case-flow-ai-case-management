@@ -3,6 +3,8 @@ export class Case {
     name:string = '';
     statusid:number=0;
     desc:string='';
+    typeid :number;
+    lobcaseid:number;
 }
 
 

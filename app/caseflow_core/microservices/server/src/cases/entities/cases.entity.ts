@@ -1,6 +1,7 @@
 import { Field, ObjectType, Int ,Directive,ID } from '@nestjs/graphql';
 import { CaseHistory } from 'src/case_history/entities/case_history.entity';
 import { CaseStatuses } from 'src/case_status/entities/case_status.entity';
+import { CaseTypes } from 'src/case_types/entities/case_type.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 
 /**
@@ -68,6 +69,10 @@ export class Cases {
   @Field()
   currentownerid: number;
 
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  lobcaseid: number;
+
   @Column('int', { array: true, nullable: true })
   @Field((type) => [Int], { nullable: true })
   involvedparties: number[];
@@ -85,10 +90,15 @@ export class Cases {
   @Field(() => [CaseHistory], { nullable: true })
   casehistory: CaseHistory[]
 
-  @ManyToOne(() => CaseStatuses, (casetype) => casetype.cases)
+  @ManyToOne(() => CaseStatuses, (casestatus) => casestatus.cases)
   @Field(() => CaseStatuses, { nullable: true })
   @JoinColumn({name: 'statusid'})
   casestatus: CaseStatuses
+
+  @ManyToOne(() => CaseTypes, (casetype) => casetype.cases)
+  @Field(() => CaseTypes, { nullable: true })
+  @JoinColumn({name: 'typeid'})
+  casestype: CaseTypes
 
 }
 

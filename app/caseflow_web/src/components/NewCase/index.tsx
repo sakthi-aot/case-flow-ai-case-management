@@ -13,7 +13,10 @@ import { ToastContainer, toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
 import { setSelectedCase,resetSelectedCase } from "../../reducers/newCaseReducer";
 import "./NewCaseComponent.scss"
-
+import { FormControl, MenuItem, Select } from "@mui/material";
+import { fetchCaseTypess } from "../../services/constantsService";
+import { setCaseTypes } from "../../reducers/constantsReducer";
+import { State } from "../../interfaces/stateInterface";
 const NewCase = () => {
   
   const dispatch = useDispatch();
@@ -23,10 +26,14 @@ const NewCase = () => {
     id:0,
     name: '',
     desc:'',
-    statusid: 1
+    statusid: 1,
+    typeid : 1,
+    lobcaseid:0,
 }
 
-const caseList =  useSelector(state=>state.cases.selectedCase);
+
+const caseList =  useSelector((state : State)=>state.cases.selectedCase);
+const caseTypes =  useSelector((state : State)=>state.constants.caseTypes);
 const [values, setValues] = useState(initialFieldValues)
 const { handleSubmit, control,register } = useForm();
 
@@ -51,6 +58,15 @@ const { handleSubmit, control,register } = useForm();
   if(caseList.isEdit)
   setValues(caseList);
 }, [caseList]);
+
+useEffect(() => {
+  getCaseTypes();
+}, []);
+
+const getCaseTypes = async () =>{
+  const caseTypes = await fetchCaseTypess();
+  dispatch(setCaseTypes(caseTypes))
+}
 
 const refreshCases=()=>{
   dispatch(resetSelectedCase());
@@ -145,6 +161,63 @@ const handleBack = ()=>{
         </Grid>
       </Grid>
 
+      <Grid container spacing={3} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
+        <Grid item xs={4}>
+          <Typography sx={{ padding: "1rem 1rem 0rem 0rem" }} variant="body2" className="case-name-tag">
+            LOB Id :
+          </Typography>
+          </Grid>
+          <Grid item xs={8}>
+            <Controller
+            name={"LOB Id"}
+            control={control}
+            render={({ field: { onChange, value } }) => (
+            <TextField
+              id="standard-basic"
+              label="LOB Id"
+              variant="standard"
+              rows={1}
+              sx={{
+
+                width: "100%",            
+              }} 
+              value={values.lobcaseid} 
+              onChange={(e)=>{setValues({...values,lobcaseid:parseInt((e && e.target && e.target.value)? e.target.value.toString() : '0')})}}
+              placeholder="LOB Id"
+              
+            />
+          )}
+        />          
+      </Grid>
+      </Grid>
+      <Grid container spacing={1} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
+        <Grid item xs={4}>
+          <Typography sx={{ padding: "1rem 1rem 0rem 0rem" }} variant="body2" className="case-desc-tag">
+            Case Type :
+          </Typography>
+        </Grid>
+        <Grid item xs={8}>
+        <Controller
+        name={"desc"}
+        control={control}
+        render={({ field: { onChange, value } }) => (
+          <FormControl sx={{ m: 1, minWidth: 90, }} size="small">
+                {/* <InputLabel id="demo-simple-select-label">{label}</InputLabel> */}
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"          
+                  label="Age" 
+                  value={values.typeid}   
+                  onChange={(e)=>{setValues({...values,typeid:parseInt(e.target.value.toString())})}}
+                  className="dropDownStyle"   
+                >
+                   {caseTypes.map((option,index) => <MenuItem key={index}  value={option.id}>{option.displayname}</MenuItem>)}                  
+                </Select>
+            </FormControl>
+        )}
+      />          
+        </Grid>
+      </Grid>
       <div style={{"display" : "flex", padding: "2rem 1rem 1rem 1rem", "justify-content": "center"}}>
           <Button
             style={{

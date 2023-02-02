@@ -38,7 +38,7 @@ const RecentCaseCard = (props) => {
       <Typography />
       <ListItem button>
         <Grid container spacing={1}  onClick={()=>{viewCaseDetails(CaseDetails)}}>
-          <Grid item xs={3} >
+          <Grid item xs={2} >
             <ListItemText
               primary={
                 <Typography 
@@ -60,7 +60,7 @@ const RecentCaseCard = (props) => {
                 }}>{CaseDetails.id} </Typography>}
             />
           </Grid>
-          <Grid item xs={3} >
+          <Grid item xs={2} >
             <ListItemText
               className="caseName-case-list"
               primary={
@@ -82,7 +82,29 @@ const RecentCaseCard = (props) => {
                 }}>{ CaseDetails.name} </Typography>}
             />
           </Grid>
-          <Grid item xs={4} >
+          <Grid item xs={2} >
+            <ListItemText             
+              primary={
+                <Typography
+                variant="body2"
+                
+                style={{ "fontWeight": "700" }}>
+                   Type
+                </Typography>
+              }
+              secondary={<Typography noWrap
+                color='#606060'
+                style={{
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  
+                }}>{ CaseDetails?.casestype?.displayname} </Typography>
+               }
+            />
+          </Grid>   
+
+                    <Grid item xs={3} >
             <ListItemText             
               primary={
                 <Typography
@@ -102,7 +124,7 @@ const RecentCaseCard = (props) => {
                 }}>{ CaseDetails.desc} </Typography>
                }
             />
-          </Grid>          
+          </Grid>       
 
 
           <Grid  item xs={2} display="flex" alignItems='center' justifyContent="flex-end"  >
