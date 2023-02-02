@@ -7,10 +7,11 @@ interface CaseDetailDataProps {
   owner:String,
   caseDescription:String,
   tasks:any,
-  caseType: any
+  caseType: any,
+  lobcaseid : number
 }
 
-const CaseDetailData = ({name,date,owner,caseDescription,tasks,caseType}:CaseDetailDataProps) => {
+const CaseDetailData = ({name,date,owner,caseDescription,tasks,caseType,lobcaseid}:CaseDetailDataProps) => {
   return (
     <>
       <div className="case-details">
@@ -33,6 +34,10 @@ const CaseDetailData = ({name,date,owner,caseDescription,tasks,caseType}:CaseDet
         <div>
           <h3>Case Type</h3>
           <p>{caseType?.displayname}</p>
+        </div>
+        <div>
+          <h3>LOB ID</h3>
+          <p>{lobcaseid}</p>
         </div>
       </div>
   
