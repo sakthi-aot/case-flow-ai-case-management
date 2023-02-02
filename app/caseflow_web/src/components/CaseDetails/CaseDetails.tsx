@@ -217,6 +217,7 @@ const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents)
           caseDescription={selectedCase.desc}
           tasks={caseDetail.tasks}
           caseType={selectedCase.casestype}
+          lobcaseid={selectedCase.lobcaseid}
         />
         {(selectedCase && selectedCase.id) ? <CaseDetailReference
           caseId={selectedCase.id}
