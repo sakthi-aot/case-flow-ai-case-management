@@ -38,6 +38,7 @@ export interface SelectedCase {
   lobDetails: any;
   documents: any[];
   totalDocCount:number;
+  typeid : number;
 }
 
 export interface CaseList {
@@ -68,13 +69,22 @@ export interface store {
 }
 
 export interface Constants {
+  caseStatuses: CaseStatuses[];
   caseTypes: CaseTypes[];
 }
 
-export interface CaseTypes {
+export interface CaseStatuses {
   id: number;
   casetypeid: number;
   name: string;
   displayname: string;
   code: string;
+  lobcaseid : number;
+}
+
+export interface CaseTypes {
+  id: number;
+  name: string;
+  displayname: string;
+  code: number;
 }

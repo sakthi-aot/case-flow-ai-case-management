@@ -27,6 +27,7 @@ export class TransformService {
         currentownerid: data?.currentownerid,
         involvedparties: data?.involvedparties,
         isdeleted: false,
+        lobcaseid : data?.lobcaseid,
       };
       return createCaseInput;
     } catch (err) {
@@ -56,6 +57,7 @@ export class TransformService {
         currentownerid: data?.currentownerid,
         involvedparties: data?.involvedparties,
         isdeleted: false,
+        lobcaseid : data?.lobcaseid,
       };
       return createCaseInput;
     } catch (err) {

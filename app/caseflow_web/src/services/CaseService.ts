@@ -29,7 +29,9 @@ import {
           createCaseInput: {
             name: newCase.name,
             statusid: newCase.statusid,
-            desc: newCase.desc
+            desc: newCase.desc,
+            typeid : newCase.typeid,
+            lobcaseid:newCase.lobcaseid,
           },
         },
       },null)
@@ -55,7 +57,9 @@ import {
           id:parseInt(newCase.id.toString()),
           name: newCase.name,
           statusid: newCase.statusid,
-          desc:newCase.desc
+          desc:newCase.desc,
+          typeid : newCase.typeid,
+          lobcaseid:newCase.lobcaseid,
         },
       },
     },null)

@@ -52,4 +52,7 @@ export class UpdateCaseInput {
 
   @Field({ defaultValue: false, nullable: true })
   isdeleted: boolean;
+
+  @Field({ nullable: true })
+  lobcaseid: number;
 }

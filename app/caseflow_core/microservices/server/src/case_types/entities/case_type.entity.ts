@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int,ID } from '@nestjs/graphql';
+import { Cases } from 'src/cases/entities/cases.entity';
 import { CaseStatuses } from 'src/case_status/entities/case_status.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -29,10 +30,18 @@ export class CaseTypes {
 
   @Column({ nullable: true })
   @Field()
+  code: number;
+
+  @Column({ nullable: true })
+  @Field()
   displaylocations: number;
 
   @OneToMany(() => CaseStatuses, (casestatuses) => casestatuses.casestype)
   @Field(() => [CaseStatuses], { nullable: true })
   casestatus: CaseStatuses[]
+
+  @OneToMany(() => Cases, (cases) => cases.typeid)
+  @Field(() => [Cases], { nullable: true })
+  cases: Cases[]
 
 }

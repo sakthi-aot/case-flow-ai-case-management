@@ -28,7 +28,7 @@ import { getDocumentofCaseList } from "../../services/CaseService";
 import { setSelectedCaseDocuments,setTotalDocCount } from "../../reducers/newCaseReducer";
 import { findAllByAltText } from "@testing-library/react";
 import { fetchCaseStatuses } from "../../services/constantsService";
-import { setCaseTypes } from "../../reducers/constantsReducer";
+import { setCaseStatuses } from "../../reducers/constantsReducer";
 import { State } from "../../interfaces/stateInterface";
 import PopUpDialogBox from "../PopUpDialogBox/PopUpDialogBox";
 
@@ -154,7 +154,7 @@ const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents)
 
   const fetchAllCaseStatuses = async () => {
     const statusList =  await fetchCaseStatuses();
-    dispatch(setCaseTypes(statusList))
+    dispatch(setCaseStatuses(statusList))
   }
 
   const onCloseConfirmationPopup =() =>{
@@ -163,7 +163,7 @@ const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents)
   }
   const onConfirmation = async () =>{
   
-    let newStatusDetails = statuses.find(stat=> stat.code == newStatus.toString());
+    let newStatusDetails = statuses.find(stat=> stat.code == newStatus);
     if(newStatusDetails && newStatusDetails.id){
     selectedCase.statusid = parseInt(newStatusDetails.id.toString()) ;
     let responseDetails = await updateCases(selectedCase);
@@ -216,6 +216,7 @@ const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents)
           owner={caseDetail.owner}
           caseDescription={selectedCase.desc}
           tasks={caseDetail.tasks}
+          caseType={selectedCase.casestype}
         />
         {(selectedCase && selectedCase.id) ? <CaseDetailReference
           caseId={selectedCase.id}

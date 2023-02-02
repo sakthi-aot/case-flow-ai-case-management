@@ -10,7 +10,9 @@ query case($Skip:Int,$Take:Int) {
          id,
          name,
          desc,
-
+         typeid,
+         lobcaseid,
+         casestype{id,name,displayname,code}
       }    
   }
 }`
@@ -42,7 +44,10 @@ query getCase($CaseId:Int!){
     id,
     name,
     desc,
-    statusid,casestatus{id,name,displayname,casestype{id,name,displayname}}
+    statusid,casestatus{id,name,displayname,casestype{id,name,displayname}},
+    typeid,
+    lobcaseid,
+    casestype{id,name,displayname,code}
   }
   }`
 
@@ -84,7 +89,10 @@ query Searchcase($searchField:String!,$searchColumn:String!,$Skip:Int,$Take:Int)
       id,
       name,
       desc,
-      statusid,casestatus{id,name,displayname,casestype{id,name,displayname}}
+      statusid,casestatus{id,name,displayname,casestype{id,name,displayname}},
+      typeid,
+      lobcaseid,
+      casestype{id,name,displayname,code}
     }
     }
   }`
@@ -95,7 +103,10 @@ query{
     id,
     name,
     desc,
-    statusid,casestatus{id,name,displayname,casestype{id,name,displayname}}
+    statusid,casestatus{id,name,displayname,casestype{id,name,displayname}},
+    typeid,
+    lobcaseid,
+    casestype{id,name,displayname,code}
   }
 }`
 
