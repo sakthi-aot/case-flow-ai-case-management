@@ -13,3 +13,17 @@ query getLobDetails($Id:Int!){
   createdDate
   }
   }`
+
+
+export const FETCH_ALL_LOB_DATA= gql`
+query getLobDetails($Skip:Int!,$Take:Int!){
+  getLobList(skip:$Skip,take:$Take){
+    totalCount,
+    CaseflowLob{
+      sumAssured,
+      policyNumber,
+      createdDate,
+      isActive
+    }
+  }
+  }`
