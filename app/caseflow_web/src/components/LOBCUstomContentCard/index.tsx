@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 
 import "./LOBCUstomContentCard.scss"
+import moment from "moment";
 
 interface LOBCUstomContentCardProps{
   caseCategory:any, district:any, link:any
@@ -39,7 +40,7 @@ const LOBCUstomContentCard = (
     navigate("/private/lob/"  + 111+'/details');
   }
   
-    // const caseDate = date.toJSON().slice(0,10).replace(/-/g,'/')
+const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
  
   return (
     <div onClick={()=>{viewCaseDetails()}}>

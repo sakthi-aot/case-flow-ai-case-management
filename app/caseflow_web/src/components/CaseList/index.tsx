@@ -13,6 +13,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
 import { Pagination } from "@mui/material";
 import { State } from "../../interfaces/stateInterface";
+import { PAGINATION_TAKE } from "../../apiManager/endpoints/config";
 
 
 
@@ -67,7 +68,7 @@ const CaseList =React.memo( ({config,allRecentCases}:any) => {
   
 async function fetchCaseDetails() {       
   let output = allRecentCases;    
-  const TotalPage = Math.ceil(totalCount/10) 
+  const TotalPage = Math.ceil(totalCount/ Number (PAGINATION_TAKE)) 
   setTotalPCount(TotalPage)
   // output = output.map((element) => {
   //   return {

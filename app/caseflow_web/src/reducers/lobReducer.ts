@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { PAGINATION_TAKE } from "../apiManager/endpoints/config";
 
 const initialState = {
     lobList : [{
@@ -23,8 +24,9 @@ const lobSlice = createSlice({
         setlobList:(state,action)=>{
             state.lobList = action.payload;
         },
-        setLobTotalCount:(state,action) =>{            
-             state.totalLobCount = action.payload;
+        setLobTotalCount:(state,action) =>{     
+            const TotalPage = Math.ceil(action.payload/Number (PAGINATION_TAKE))        
+             state.totalLobCount = TotalPage;
         },
         setSelectedLob:(state,action)=>{
             state.selectedLob = action.payload;

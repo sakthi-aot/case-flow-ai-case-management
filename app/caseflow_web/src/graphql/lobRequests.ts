@@ -16,14 +16,25 @@ query getLobDetails($Id:Int!){
 
 
 export const FETCH_ALL_LOB_DATA= gql`
-query getLobDetails($Skip:Int!,$Take:Int!){
-  getLobList(skip:$Skip,take:$Take){
+query getLobDetails($Skip:Int!,$Take:Int!,$SearchField:String!,$SearchColumn:String! ){
+  searchCaseflowLob(searchField:$SearchField,searchColumn:$SearchColumn,skip:$Skip,take:$Take){
     totalCount,
-    CaseflowLob{
-      sumAssured,
+    CaseflowLob{     
       policyNumber,
       createdDate,
-      isActive
+      isActive,
+      caseId,
+      sumAssured
     }
   }
+  
   }`
+
+
+export const CREATE_NEW_CASEFLOW_LOB = gql`
+mutation createCaseflowLob($createCaseflowLobInput:CreateCaseflowLobInput!){
+  createCaseflowLob(createCaseflowLobInput:$createCaseflowLobInput){
+    id
+  }
+}
+`

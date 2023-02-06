@@ -81,21 +81,29 @@ export class CaseflowLobService {
    * @returns 
    */
   
-   async searchCaseflowLob(searchField,searchColumn,skip,take){
+   async searchCaseflowLob(searchField,searchColumn,skip,take){   
     try{
-    if(searchColumn){
-      switch(searchColumn){ 
-        case 'id': {
-          const [CaseflowLob,totalCount] =await this.caseLobRepository.createQueryBuilder("table")
-          .where("table.id = :id", { id:searchField }).orderBy({'table.id': 'DESC'}).take(take).skip(skip)
-          .getManyAndCount()
-          return  {CaseflowLob,totalCount};
+    if(searchColumn ){
+      if(searchField.length !== 0){
+        switch(searchColumn){ 
+          case 'caseId': {
+            const [CaseflowLob,totalCount] =await this.caseLobRepository.createQueryBuilder("table")
+            .where("table.caseId = :caseId", { caseId:searchField }).orderBy({'table.id': 'DESC'}).take(take).skip(skip)
+            .getManyAndCount()
+            return  {CaseflowLob,totalCount};
+          }
+          default :
+           const [CaseflowLob,totalCount] = await  (this.caseLobRepository.createQueryBuilder("table")
+          .orderBy({'table.id': 'DESC'}).take(take).skip(skip)
+          .getManyAndCount())
+          return {CaseflowLob,totalCount}
         }
-        default :
-         const [CaseflowLob,totalCount] = await  (this.caseLobRepository.createQueryBuilder("table")
-        .where("table.policyNumber = :id", { id:searchField }) .orderBy({'table.id': 'DESC'}).take(take).skip(skip)
-        .getManyAndCount())
-        return {CaseflowLob,totalCount}
+
+      }else{
+        const [CaseflowLob,totalCount] = await  (this.caseLobRepository.createQueryBuilder("table")
+          .orderBy({'table.id': 'DESC'}).take(take).skip(skip)
+          .getManyAndCount())
+          return {CaseflowLob,totalCount}
       }
     }
     else{

@@ -20,6 +20,7 @@ import NewCaseComponent from "./NewCase/NewCaseComponent";
 import { State } from "../interfaces/stateInterface";
 import LOBCustomContent from "./LOBCustomContent";
 import LobDetail from "./LobDetails";
+import NewLobData from "./NewLob/NewLobData";
 
 const NotFound = lazy(() => import("./NotFound"));
 
@@ -61,6 +62,7 @@ const PrivateRoute = React.memo(({store}:any) => {
             <Route path="lob" >
             <Route index element={<LOBCustomContent />} />
             <Route path=":id/details" element={<LobDetail />} />
+            <Route path="create" element={<NewLobData/>} />
           </Route>
 
 
