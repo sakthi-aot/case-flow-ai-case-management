@@ -86,9 +86,9 @@ export class CaseflowLobService {
     if(searchColumn ){
       if(searchField.length !== 0){
         switch(searchColumn){ 
-          case 'caseId': {
+          case 'policyNumber': {
             const [CaseflowLob,totalCount] =await this.caseLobRepository.createQueryBuilder("table")
-            .where("table.caseId = :caseId", { caseId:searchField }).orderBy({'table.id': 'DESC'}).take(take).skip(skip)
+            .where("table.policyNumber = :policyNumber", { policyNumber:searchField }).orderBy({'table.id': 'DESC'}).take(take).skip(skip)
             .getManyAndCount()
             return  {CaseflowLob,totalCount};
           }

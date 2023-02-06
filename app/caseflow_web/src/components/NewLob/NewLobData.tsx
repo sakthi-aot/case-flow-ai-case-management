@@ -23,19 +23,20 @@ import dayjs, { Dayjs } from 'dayjs';
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import ReactDatePicker from "react-datepicker";
 import { createNewLob } from "../../services/LOBService";
+import { getValue } from "@testing-library/user-event/dist/utils";
 
 
 const defaultValues = {
     policyNumber:"",    
-    policyEffectiveDate:new Date(),
-    policyExpireDate:new Date(),
+    policyEffectiveDate:null,
+    policyExpireDate:null,
     policyStatus:"Active",
     sumAssured:""
 }
 
 const NewLobData = () =>{
 
-    const {handleSubmit,reset,setValue,control,formState:{errors}} = useForm({defaultValues});
+    const {handleSubmit,reset,getValues,control,formState:{errors}} = useForm({defaultValues});
     const navigate = useNavigate()
 
 
@@ -60,6 +61,10 @@ const NewLobData = () =>{
 
     const onLobBackBtnHandler = ( ) =>{
         navigate('/private/lob')
+    }
+
+    const onErrorDate = ( ) =>{
+
     }
 
 
@@ -105,6 +110,7 @@ const NewLobData = () =>{
               placeholder="Policy Number"
               inputRef={ref}
               error={!!errors.policyNumber}
+              
               
             />
           )}
@@ -164,13 +170,14 @@ const NewLobData = () =>{
             value={value} 
             onChange={onChange}
             inputRef={ref}
-            
+            maxDate={getValues("policyExpireDate")}
             renderInput={(params) => <TextField {...params}   />} 
                          />
 
         </LocalizationProvider>
           
           )}
+             
         />          
       </Grid>
 
@@ -183,16 +190,22 @@ const NewLobData = () =>{
             <Controller
             name="policyExpireDate"
             control={control}
-            render={({ field: { onChange, value } }) => (            
+            
+            render={({ field: { onChange, value,ref } }) => (            
             <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DesktopDatePicker
             label="Expire Date"
             inputFormat="DD/MM/YYYY"
             value={value} 
-            onChange={onChange}
-            renderInput={(params) => <TextField {...params} />}              />
+            onChange={onChange}            
+            renderInput={(params) => <TextField {...params} />}   
+            inputRef={ref}     
+           minDate={getValues("policyEffectiveDate")}
+           onError={onErrorDate}
+            />
 
         </LocalizationProvider>
+        
           )}
         />          
       </Grid>
