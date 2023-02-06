@@ -7,6 +7,12 @@ const initialState = {
         createdDate :  "" ,
         isActive : ""
       }],
+      selectedLob:{
+        sumAssured : 0,
+        policyNumber : "",
+        createdDate :  "" ,
+        isActive : ""
+      },
       totalLobCount:1,
       pageSelected:1,
 }
@@ -20,6 +26,9 @@ const lobSlice = createSlice({
         setLobTotalCount:(state,action) =>{            
              state.totalLobCount = action.payload;
         },
+        setSelectedLob:(state,action)=>{
+            state.selectedLob = action.payload;
+        },
     }
 });
 
@@ -27,6 +36,7 @@ const lobSlice = createSlice({
 export const {
     setlobList,
     setLobTotalCount,
+    setSelectedLob,
 
   } = lobSlice.actions;
   export default lobSlice.reducer;

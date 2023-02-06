@@ -1,5 +1,5 @@
 @import "../../styles.scss";
-.case-detail-header{
+.lob-detail-header{
 
     display: flex;
     justify-content: space-between;
@@ -7,13 +7,14 @@
     border-bottom: 1px solid grey;
     box-sizing: border-box;       
     font-family: $primary-font;
-    .case-id-status{
+    margin: 5rem 10rem auto 10rem;
+    .lob-id-status{
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;            
+        grid-template-columns: 5fr 1fr;            
         justify-content: space-between;
         align-items: center;
-        grid-column-gap: 2rem;
-        .case-status{
+        grid-column-gap: 5rem;
+        .lob-status{
             // width: 5rem;
             background-color:  $primary-theme-black-color;
             color: #FFFFFF;
@@ -22,14 +23,10 @@
             font-family:  $primary-font;
             text-align: center;
         }
-        .case-id{
+        .lob-id{
             font-size: 1.5rem;
             font-weight: bolder;
         }
-        .case-edit{
-            font-size: 1.5rem;
 
-
-        }
     }
 }

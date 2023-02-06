@@ -1,0 +1,47 @@
+@import "../../styles.scss";
+
+.lob-detail-first-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    font-family:  $primary-font;
+    margin:5rem 10rem 0rem 10rem;
+
+    h3{
+        margin-bottom: 0;        
+        font-size: 1rem;
+        font-weight: bolder;
+        color:black;
+    }
+    p{
+        margin-top: 10px;
+    }
+}
+.lob-detail-second-row{
+    font-family:  $primary-font;
+    text-align: left;
+    h3{
+        margin-bottom: 0;
+        font-size: 1rem;
+        font-weight: bolder;
+        color:black;
+        
+    }
+    p{
+        margin-top: 10px;
+    }
+}
+.lob-detail-third-row{
+    text-align: left;
+    font-family:  $primary-font;
+    h3{
+        margin-bottom: 0;        
+        font-size: 1rem;
+        font-weight: bolder;
+        color:black;
+    }
+    p{
+        margin-top: 10px;
+    }
+}

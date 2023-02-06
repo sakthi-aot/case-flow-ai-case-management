@@ -82,7 +82,8 @@ export interface CaseTypes {
 export interface Lob {
   lobList:LobList[],
   totalLobCount:number,
-  pageSelected:number
+  pageSelected:number,
+  selectedLob:LobList
 }
 export interface LobList {
   sumAssured : number,

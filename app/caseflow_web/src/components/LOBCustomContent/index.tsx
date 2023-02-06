@@ -70,10 +70,7 @@ const LOBCustomContent = () => {
         {(lobListData && lobListData.length !== 0)?lobListData.map((lobData,index ) => (
           <LOBCUstomContentCard
           key={index}
-          createdDate={lobData.createdDate}
-          isActive={lobData.isActive}
-          policyNumber={lobData.policyNumber}
-          sumAssured={lobData.sumAssured}
+          lobData = {lobData}
           />
         )):
         <ListItem >

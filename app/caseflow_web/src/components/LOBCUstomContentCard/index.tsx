@@ -4,6 +4,11 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import { Box, Card, createTheme, ThemeProvider, Typography } from "@mui/material";
+import { setSelectedLob } from "../../reducers/lobReducer";
+import {useDispatch} from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+
 
 import "./LOBCUstomContentCard.scss"
 
@@ -18,11 +23,26 @@ const theme = createTheme({
   }
 })
 
-const LOBCUstomContentCard = ({ createdDate, isActive, policyNumber,sumAssured }) => {
+const LOBCUstomContentCard = (
+  {lobData }
+  ) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const viewCaseDetails = async ()=>{    
+    dispatch(setSelectedLob({
+      sumAssured : 0,
+      policyNumber : "111",
+      createdDate :  "12" ,
+      isActive : "open"
+    }))
+    navigate("/private/lob/"  + 111+'/details');
+  }
   
     // const caseDate = date.toJSON().slice(0,10).replace(/-/g,'/')
  
   return (
+    <div onClick={()=>{viewCaseDetails()}}>
     <ThemeProvider theme={theme} >
       <Typography />
       <ListItem button>
@@ -37,7 +57,7 @@ const LOBCUstomContentCard = ({ createdDate, isActive, policyNumber,sumAssured }
                   Policy Number
                 </Typography>
               }
-              secondary={policyNumber}
+              secondary={lobData.policyNumber}
             />
           </Grid>
           <Grid item xs={3}>
@@ -50,7 +70,7 @@ const LOBCUstomContentCard = ({ createdDate, isActive, policyNumber,sumAssured }
                   Created date
                 </Typography>
               }
-              secondary={createdDate}
+              secondary={lobData.createdDate}
             />
           </Grid>          
           <Grid item xs={4}>
@@ -63,7 +83,7 @@ const LOBCUstomContentCard = ({ createdDate, isActive, policyNumber,sumAssured }
                   Sum Assured
                 </Typography>
               }
-              secondary={sumAssured}
+              secondary={lobData.sumAssured}
             />
           </Grid>          
        
@@ -71,7 +91,7 @@ const LOBCUstomContentCard = ({ createdDate, isActive, policyNumber,sumAssured }
           <Box >
           <div className="recent-case-card-status">
               <div className="recent-case-card-status-text">
-                {isActive==true ?"Active":"InActive"}
+                {lobData.isActive==true ?"Active":"InActive"}
               </div>
             </div>
             </Box>
@@ -82,6 +102,7 @@ const LOBCUstomContentCard = ({ createdDate, isActive, policyNumber,sumAssured }
       </ListItem>
       <Divider />
     </ThemeProvider>
+    </div>
   );
 };
 

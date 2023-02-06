@@ -49,21 +49,14 @@ const PolicyHeader = (props) => {
 
 
     return (
-        <div className="case-detail-header">
-          <div className="case-id-status">
-            <p className="case-id">Policy No:{props.policy}</p>
-            <p className="case-status">{props.status}</p>
-          <div className="case-edit" /*onClick={()=>{editCaseDetails(selectedCase)}}*/>  
-            <span className="action-icon"> {<EditIcon />}</span>
-          </div>
+        <div className="lob-detail-header">
+          <div className="lob-id-status">
+            <p className="lob-id">Policy No: {props.policy}</p>
+            <p className="lob-status">{props.status}</p>
+
            
           </div>
-          <FilterMuiComponent
-            label="Action"
-            options={optionsForAction}
-            onChnagehandler={onActionChangehandler}
-            selected ={selected}
-          />
+
     </div>
     )
 };
