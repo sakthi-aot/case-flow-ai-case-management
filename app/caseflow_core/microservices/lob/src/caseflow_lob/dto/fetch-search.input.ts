@@ -3,7 +3,7 @@ import { Max, Min } from 'class-validator'
 
 @ArgsType()
 export class FetchSearchArgs {
-  @Field(() => Int)  
+  @Field(() => String)  
   searchField 
 
   @Field(() => String)  

@@ -11,33 +11,39 @@ import { State } from "../../interfaces/stateInterface";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
-import { Box, Card } from "@mui/material";
+import { Box, Button, Card, Pagination } from "@mui/material";
 import Search from "../Search";
 import "./LOBCustomContent.scss"
+import { Link } from "react-router-dom";
 const LOBCustomContent = () => {
 
   const [searchField, setSearchField] = useState("");
-  const [searchColumn, setSearchColumn] = useState("name");
+  const [searchColumn, setSearchColumn] = useState("All");
   const [dropDownArray, setdropDownArray] = useState([""]);
+  const [ selectedPage,setSelectedPage] = useState(1);
+   
   
   const dispatch = useDispatch()
   
   const lobListData = useSelector((state:State)=>state.lob.lobList);
-  const lobTotalCount = useSelector((state:State) =>state.lob.totalLobCount) 
+  const lobTotalPageCount = useSelector((state:State) =>state.lob.totalLobCount) 
 
-  useEffect(()=>{
-    fetLobList(searchField,searchColumn)
-  },[searchField,searchColumn])
 
-  const fetLobList =async (searchField,searchColumn) =>{
-    const output = await getLobData(1);
-    dispatch(setlobList(output.getLobList.CaseflowLob))
-    dispatch(setLobTotalCount(output.getLobList.totalCount))
+  useEffect(()=>{    
+    fetchLobList()
+  },[searchField,searchColumn,selectedPage])
+
+  const fetchLobList =async () =>{
+    const output = await getLobData(selectedPage,searchField,searchColumn);
+    dispatch(setlobList(output.CaseflowLob))
+    dispatch(setLobTotalCount(output.totalCount))
    
-   let fields= Object.keys( output.getLobList.CaseflowLob[0])
-   setdropDownArray(fields)
+   let fields= Object.keys( output.CaseflowLob[0])
+   setdropDownArray(fields)    
+  }
 
-    console.log(fields)
+  const onLobPageCountChange =(e,p) =>{
+    setSelectedPage(p)
   }
   return (
     <section className="dashboard">
@@ -50,6 +56,7 @@ const LOBCustomContent = () => {
         ></Search>
     </div>     
     <div className="lobData-container" style={{ padding: "2rem 3rem 0rem 5rem" }}>
+      <div className="lobData-header">
       <Typography
         sx={{ padding: "1rem 1rem 1rem 1rem" }}
         variant="h6"
@@ -57,13 +64,31 @@ const LOBCustomContent = () => {
       >
        LOB
       </Typography>
+
+      <Button 
+       style={{
+        alignItems :"center",        
+        height: "2.4375rem",
+        width: "20%",
+        backgroundColor:"#404040",
+        borderRadius:"8px",
+        textTransform:"unset"
+        }}
+        variant="contained"
+        component={Link} to="/private/lob/create"
+        >Start New LOB</Button>
+
+      </div>
+
       <Divider sx={{ borderBottomWidth: 3 }} />
 
       <List
         sx={{
           width: "100%",
           bgcolor: "background.paper",
+          minHeight:"44rem"
         }}
+        className="lobDataList"
         component="nav"
         aria-label="mailbox folders"
       >
@@ -93,6 +118,7 @@ const LOBCustomContent = () => {
       </ListItem>
         }
       </List>
+        {(lobListData && lobListData.length !== 0 && lobTotalPageCount >1) && <Pagination count={lobTotalPageCount} shape="rounded" className="pagination-case-list" onChange={onLobPageCountChange} />}
     </div>
   </section>
 

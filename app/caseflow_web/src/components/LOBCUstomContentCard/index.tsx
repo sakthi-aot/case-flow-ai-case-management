@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import { Box, Card, createTheme, ThemeProvider, Typography } from "@mui/material";
 
 import "./LOBCUstomContentCard.scss"
+import moment from "moment";
 
 interface LOBCUstomContentCardProps{
   caseCategory:any, district:any, link:any
@@ -18,9 +19,9 @@ const theme = createTheme({
   }
 })
 
-const LOBCUstomContentCard = ({ createdDate, isActive, policyNumber,sumAssured }) => {
+const LOBCUstomContentCard = ({ createdDate, isActive, policyNumber ,sumAssured}) => {
   
-    // const caseDate = date.toJSON().slice(0,10).replace(/-/g,'/')
+const FormattedCreatedDate = moment(createdDate).format('MMMM Do YYYY');
  
   return (
     <ThemeProvider theme={theme} >
@@ -50,7 +51,7 @@ const LOBCUstomContentCard = ({ createdDate, isActive, policyNumber,sumAssured }
                   Created date
                 </Typography>
               }
-              secondary={createdDate}
+              secondary={FormattedCreatedDate}
             />
           </Grid>          
           <Grid item xs={4}>

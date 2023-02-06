@@ -29,11 +29,15 @@ const NewCase = () => {
 const caseList =  useSelector(state=>state.cases.selectedCase);
 const [values, setValues] = useState(initialFieldValues)
 const { handleSubmit, control,register } = useForm();
+const [isCaseEdit,setIsCaseEdit] = useState(Boolean);
+
+// console.log("caseList",caseList)
+// console.log("values",values)
 
   const onSubmit = async () => 
   {
     let response;
-    if(caseList.isEdit){
+    if(isCaseEdit){
      response = await updateCases(values);
      navigate("/private/cases/" + response.success.data.updateCase.id+'/details');
     }else{
@@ -48,8 +52,15 @@ const { handleSubmit, control,register } = useForm();
 
   }
   useEffect(() => {
-  if(caseList.isEdit)
-  setValues(caseList);
+    let caseIsEdit = localStorage.getItem("caseIsEdit")
+    console.log("caseIsEdit",caseIsEdit)
+    if(caseIsEdit){
+     const editvalue = caseIsEdit==="true"?true:false;
+     setIsCaseEdit(editvalue)  
+     if(editvalue){
+       setValues(caseList);
+     }
+    }
 }, [caseList]);
 
 const refreshCases=()=>{
@@ -64,7 +75,7 @@ const resetCases=()=>{
 
 }
 const handleBack = ()=>{
-  if(caseList.isEdit){
+  if(caseIsEdit){
     navigate("/private/cases/" + values.id+'/details');
   }
   else{
@@ -81,7 +92,7 @@ const handleBack = ()=>{
   return (
     <div style={{ padding: "2rem 3rem 0rem 8rem" }} className="newOrupdateCaseBlock">
       <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6" className="case-heading">
-      {caseList.isEdit?"Update Case":"New Case"}  
+      {isCaseEdit?"Update Case":"New Case"}  
       </Typography>
       <Divider sx={{ borderBottomWidth: 3 }} />
       <Grid container spacing={3} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
@@ -145,7 +156,7 @@ const handleBack = ()=>{
         </Grid>
       </Grid>
 
-      <div style={{"display" : "flex", padding: "2rem 1rem 1rem 1rem", "justify-content": "center"}}>
+      <div style={{"display" : "flex", padding: "2rem 1rem 1rem 1rem", "justifyContent": "center"}}>
           <Button
             style={{
               alignItems :"center",
@@ -157,7 +168,7 @@ const handleBack = ()=>{
             variant="contained"
             onClick={handleSubmit(onSubmit)}
           >
-           {caseList.isEdit?"Update":"Create"}  
+           {isCaseEdit?"Update":"Create"}  
           </Button>
           <Button
             style={{

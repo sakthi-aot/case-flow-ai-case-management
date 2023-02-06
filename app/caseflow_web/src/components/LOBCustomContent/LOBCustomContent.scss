@@ -26,10 +26,21 @@
         grid-column-end: 4;
         grid-row-start:2;    
         
-        .lob-heading{
-            font-family: $primary-font;
-            font-size: 1.5rem;
-            font-weight: bold;
+       
+        .lobDataList{
+            min-height: 44rem;
+        }
+        .lobData-header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+
+            .lob-heading{
+                font-family: $primary-font;
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
         }
         
     }
@@ -37,5 +48,9 @@
         grid-column-start: 1;
         grid-column-end: 4;
         grid-row-start:3
+    }
+    .pagination-case-list{    
+        display: flex;
+        justify-content: flex-end;   
     }
 }
