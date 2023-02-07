@@ -10,10 +10,10 @@
     margin: 5rem 10rem auto 10rem;
     .lob-id-status{
         display: grid;
-        grid-template-columns: 5fr 1fr;            
+        grid-template-columns: 1fr 1fr 1fr;            
         justify-content: space-between;
         align-items: center;
-        grid-column-gap: 5rem;
+        grid-column-gap: 10rem;
         .lob-status{
             // width: 5rem;
             background-color:  $primary-theme-black-color;
@@ -26,6 +26,11 @@
         .lob-id{
             font-size: 1.5rem;
             font-weight: bolder;
+        }
+        .lob-edit{
+            font-size: 1.5rem;
+
+
         }
 
     }

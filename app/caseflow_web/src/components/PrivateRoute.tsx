@@ -63,6 +63,8 @@ const PrivateRoute = React.memo(({store}:any) => {
             <Route index element={<LOBCustomContent />} />
             <Route path=":id/details" element={<LobDetail />} />
             <Route path="create" element={<NewLobData/>} />
+            <Route path=":id/edit" element={<NewLobData/>} />
+
           </Route>
 
 

@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
+
 import "./LOBCUstomContentCard.scss"
 import moment from "moment";
 
@@ -31,13 +32,8 @@ const LOBCUstomContentCard = (
   const navigate = useNavigate();
 
   const viewCaseDetails = async ()=>{    
-    dispatch(setSelectedLob({
-      sumAssured : 0,
-      policyNumber : "111",
-      createdDate :  "12" ,
-      isActive : "open"
-    }))
-    navigate("/private/lob/"  + 111+'/details');
+    dispatch(setSelectedLob(lobData))
+    navigate("/private/lob/"+ lobData.id+'/details');
   }
   
 const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');

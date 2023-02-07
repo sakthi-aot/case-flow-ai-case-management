@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, {useEffect} from "react";
 import Search from "../Search";
 
 import Typography from "@mui/material/Typography";
@@ -8,35 +8,55 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import { Controller, useForm } from "react-hook-form";
 import Divider from "@mui/material/Divider";
-import {Case} from "../../dto/cases"
-import { addCases, updateCases } from "../../services/CaseService";
-import {useDispatch, useSelector} from "react-redux";
-import { useNavigate, useParams } from "react-router";
+
+import { useSelector, useDispatch} from "react-redux";
+import { useNavigate } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
-import { setSelectedCase,resetSelectedCase } from "../../reducers/newCaseReducer";
 
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import "./NewLobData.scss"
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker/DesktopDatePicker";
-import dayjs, { Dayjs } from 'dayjs';
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
-import ReactDatePicker from "react-datepicker";
-import { createNewLob } from "../../services/LOBService";
+import { createNewLob, updateLob } from "../../services/LOBService";
+import { setEditLob } from "../../reducers/lobReducer";
+import { State } from "../../interfaces/stateInterface";
+import { setSelectedLob } from "../../reducers/lobReducer";
 
 
-const defaultValues = {
-    policyNumber:"",    
-    policyEffectiveDate:new Date(),
-    policyExpireDate:new Date(),
-    policyStatus:"Active",
-    sumAssured:""
-}
+
+let defaultValues ={}
+
 
 const NewLobData = () =>{
+  const dispatch = useDispatch();   
+   const selectedLob = useSelector((state: State) => state.lob.selectedLob);
+   const isEdit = useSelector((state: State) => state.lob.editLob);
+    if(isEdit){
+       defaultValues = {
+      policyNumber:selectedLob?.policyNumber,    
+      policyEffectiveDate:selectedLob?.policyEffectiveDate,
+      policyExpireDate:selectedLob?.policyExpiryDate,
+      policyStatus:selectedLob?.isActive,
+      sumAssured:selectedLob?.sumAssured
+  }
+}
+  else{
+     defaultValues = {
+      policyNumber:"",    
+      policyEffectiveDate:new Date(),
+      policyExpireDate:new Date(),
+      policyStatus:"Active",
+      sumAssured:0
+    }
+
+  }
+
 
     const {handleSubmit,reset,setValue,control,formState:{errors}} = useForm({defaultValues});
+    
     const navigate = useNavigate()
+
 
 
     let dropDownArrayItem:string[]=[];
@@ -49,19 +69,36 @@ const NewLobData = () =>{
 
 
 
-    const onSubmitHandler = async (data) =>{ 
-       const response = await createNewLob(data).catch((err)=>{
-              console.log(err);
-              toast.error("Error ")
-             })
-           reset()
-           toast.success("Successfully Created New Lob")  
+    const onSubmitHandler = async (data) => {
+      if (isEdit) {
+        data.id = Number(selectedLob.id)
+        const response = await updateLob(data).catch((err) => {
+          console.log(err);
+          toast.error("Error ");
+        });
+        reset();
+        toast.success("Successfully Updated the Lob");
+        navigate("/private/lob/"+ response.id+'/details');
+      } else {
+        const response = await createNewLob(data).catch((err) => {
+          console.log(err);
+          toast.error("Error ");
+        });
+        reset();
+        toast.success("Successfully Created New Lob");
+        dispatch(setSelectedLob(response))
+        navigate("/private/lob/"+ response.id+'/details');
+      }
     }
 
     const onLobBackBtnHandler = ( ) =>{
+      if(isEdit){
+        navigate("/private/lob/"+ selectedLob.id+'/details');
+      }
+      else{
         navigate('/private/lob')
     }
-
+  }
 
 
 
@@ -76,7 +113,7 @@ const NewLobData = () =>{
     <div className="lob-main-container">
         <div style={{ padding: "2rem 3rem 0rem 8rem" }} className="newOrupdateLobBlock">
       <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6" className="lob-heading">
-      Create New Lob  
+      {isEdit?"Update ":"Create " }New Lob  
       </Typography>
       <Divider sx={{ borderBottomWidth: 3 }} />
       <Grid container spacing={3} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
@@ -274,7 +311,7 @@ const NewLobData = () =>{
             variant="contained"
             type="submit"          
           >
-           Create  
+             {isEdit?"Update ":"Create " }  
           </Button>
           <Button
             style={{

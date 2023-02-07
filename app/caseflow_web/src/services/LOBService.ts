@@ -7,7 +7,8 @@ import {
 import {
   CREATE_NEW_CASEFLOW_LOB,
   FETCH_ALL_LOB_DATA,
-   FETCH_DATA
+   FETCH_DATA,
+   UPDATE_NEW_CASEFLOW_LOB
   } from "../graphql/lobRequests"
   import { Case } from "../dto/cases"
   import { print } from "graphql";
@@ -26,7 +27,7 @@ import { PAGINATION_TAKE } from "../apiManager/endpoints/config";
         Id : parseInt(id),
       },
     },null)
-      .then((res) => {return res.data.data.getLobByCaseId})
+      .then((res) => {return res.data.data.getLobById})
       .catch((error) => {
         console.log({"error" : error})
         return {}
@@ -72,7 +73,7 @@ import { PAGINATION_TAKE } from "../apiManager/endpoints/config";
       }
     },
   },null).then((res) => {
-        return {"success" : res.data};
+        return  res.data.data.createCaseflowLob
       })
       .catch((error) => {
         if (error?.response?.data) {
@@ -82,6 +83,34 @@ import { PAGINATION_TAKE } from "../apiManager/endpoints/config";
         }
       });
     }
+
+    export const updateLob = async (data) =>{
+      const url =LOBURL;
+      console.log(data)
+      return  httpPOSTRequest(url,{query:print(UPDATE_NEW_CASEFLOW_LOB),
+      variables:{
+        updateCaseflowLobInput:{      
+          id:data.id,  
+          policyNumber:Number(data.policyNumber),
+          policyEffectiveDate:new Date(data.policyEffectiveDate),
+          policyExpiryDate:new Date(data.policyExpireDate),
+          isActive:(data.policyStatus === "Active")?true:false,
+          sumAssured:Number(data.sumAssured),
+          createdDate:new Date()
+        }
+      },
+    },null).then((res) => {
+          return  res.data.data.updateCaseflowLob
+        })
+        .catch((error) => {
+          if (error?.response?.data) {
+            return({"error" : error})
+          } else {
+            return({"error" : "something went wrong"})
+          }
+        });
+      }
+    
   
 
  

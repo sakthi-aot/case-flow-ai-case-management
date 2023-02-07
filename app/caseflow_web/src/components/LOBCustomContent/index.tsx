@@ -15,6 +15,8 @@ import { Box, Button, Card, Pagination } from "@mui/material";
 import Search from "../Search";
 import "./LOBCustomContent.scss"
 import { Link } from "react-router-dom";
+import { setEditLob } from "../../reducers/lobReducer";
+
 const LOBCustomContent = () => {
 
   const [searchField, setSearchField] = useState("");
@@ -44,6 +46,9 @@ const LOBCustomContent = () => {
 
   const onLobPageCountChange =(e,p) =>{
     setSelectedPage(p)
+  }
+  const resetEdit = ()=>{
+    dispatch(setEditLob(false))
   }
   return (
     <section className="dashboard">
@@ -76,7 +81,9 @@ const LOBCustomContent = () => {
         }}
         variant="contained"
         component={Link} to="/private/lob/create"
+        onClick={resetEdit}
         >Start New LOB</Button>
+
 
       </div>
 

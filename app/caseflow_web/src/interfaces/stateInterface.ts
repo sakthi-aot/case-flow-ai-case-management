@@ -83,11 +83,16 @@ export interface Lob {
   lobList:LobList[],
   totalLobCount:number,
   pageSelected:number,
-  selectedLob:LobList
+  selectedLob:LobList,
+  editLob:boolean,
 }
 export interface LobList {
+  id:number,
   sumAssured : number,
   policyNumber : string,
-  createdDate :  string ,
-  isActive : string
+  createdDate :  Date ,
+  isActive : string,
+  policyExpiryDate:Date,
+  policyEffectiveDate:Date,
+  
 }
