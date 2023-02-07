@@ -29,7 +29,7 @@ const NewCase = () => {
 const caseList =  useSelector(state=>state.cases.selectedCase);
 const [values, setValues] = useState(initialFieldValues)
 const { handleSubmit, control,register } = useForm();
-const [isCaseEdit,setIsCaseEdit] = useState(Boolean);
+// const [caseList.isEdit,setIsCaseEdit] = useState(Boolean);
 
 // console.log("caseList",caseList)
 // console.log("values",values)
@@ -37,7 +37,7 @@ const [isCaseEdit,setIsCaseEdit] = useState(Boolean);
   const onSubmit = async () => 
   {
     let response;
-    if(isCaseEdit){
+    if(caseList.isEdit){
      response = await updateCases(values);
      navigate("/private/cases/" + response.success.data.updateCase.id+'/details');
     }else{
@@ -51,15 +51,9 @@ const [isCaseEdit,setIsCaseEdit] = useState(Boolean);
      else{ toast.error("Error");}
 
   }
-  useEffect(() => {
-    let caseIsEdit = localStorage.getItem("caseIsEdit")
-    console.log("caseIsEdit",caseIsEdit)
-    if(caseIsEdit){
-     const editvalue = caseIsEdit==="true"?true:false;
-     setIsCaseEdit(editvalue)  
-     if(editvalue){
-       setValues(caseList);
-     }
+  useEffect(() => {   
+    if(caseList.isEdit){
+       setValues(caseList);     
     }
 }, [caseList]);
 
@@ -75,7 +69,7 @@ const resetCases=()=>{
 
 }
 const handleBack = ()=>{
-  if(caseIsEdit){
+  if(caseList.isEdit){
     navigate("/private/cases/" + values.id+'/details');
   }
   else{
@@ -92,7 +86,7 @@ const handleBack = ()=>{
   return (
     <div style={{ padding: "2rem 3rem 0rem 8rem" }} className="newOrupdateCaseBlock">
       <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6" className="case-heading">
-      {isCaseEdit?"Update Case":"New Case"}  
+      {caseList.isEdit?"Update Case":"New Case"}  
       </Typography>
       <Divider sx={{ borderBottomWidth: 3 }} />
       <Grid container spacing={3} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
@@ -168,7 +162,7 @@ const handleBack = ()=>{
             variant="contained"
             onClick={handleSubmit(onSubmit)}
           >
-           {isCaseEdit?"Update":"Create"}  
+           {caseList.isEdit?"Update":"Create"}  
           </Button>
           <Button
             style={{

@@ -1,29 +1,20 @@
 
 import React, { useEffect, useState } from "react";
 import Search from "../Search";
-
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import { Controller, useForm } from "react-hook-form";
 import Divider from "@mui/material/Divider";
-import {Case} from "../../dto/cases"
-import { addCases, updateCases } from "../../services/CaseService";
-import {useDispatch, useSelector} from "react-redux";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
-import { setSelectedCase,resetSelectedCase } from "../../reducers/newCaseReducer";
-
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import "./NewLobData.scss"
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';import "./NewLobData.scss"
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker/DesktopDatePicker";
-import dayjs, { Dayjs } from 'dayjs';
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
-import ReactDatePicker from "react-datepicker";
 import { createNewLob } from "../../services/LOBService";
-import { getValue } from "@testing-library/user-event/dist/utils";
+
 
 
 const defaultValues = {
@@ -37,6 +28,8 @@ const defaultValues = {
 const NewLobData = () =>{
 
     const {handleSubmit,reset,getValues,control,formState:{errors}} = useForm({defaultValues});
+    const [errorOnDate,setOnErrorOnDate] = useState(false);
+    const [errorOnEFFDate,setOnErrorOEFFnDate] = useState(false);
     const navigate = useNavigate()
 
 
@@ -50,21 +43,40 @@ const NewLobData = () =>{
 
 
 
-    const onSubmitHandler = async (data) =>{ 
-       const response = await createNewLob(data).catch((err)=>{
-              console.log(err);
-              toast.error("Error ")
-             })
-           reset()
-           toast.success("Successfully Created New Lob")  
+    const onSubmitHandler = async (data) =>{      
+      if(!errorOnDate && !errorOnEFFDate ){
+        const response = await createNewLob(data)
+              if (response && response.success && response.success.data ) {
+                toast.success("Success");
+                reset()
+              }
+             else{ toast.error("Error");}
+      }
     }
 
     const onLobBackBtnHandler = ( ) =>{
         navigate('/private/lob')
     }
 
-    const onErrorDate = ( ) =>{
+    const onErrorDate = (EFF,EXP ) =>{
+     if(EFF>EXP){     
+      setOnErrorOnDate(true)
+     }
+    }
 
+    const onAcceptNew = () =>{     
+     setOnErrorOnDate(false)
+     setOnErrorOEFFnDate(false)
+    }
+    const onErrorEFFDate = (EXP,EFF ) =>{
+     if(EFF>EXP){     
+      setOnErrorOEFFnDate(true)
+     }
+    }
+
+    const onAccepEFFNew = () =>{    
+    setOnErrorOEFFnDate(false)
+    setOnErrorOnDate(false)
     }
 
 
@@ -81,7 +93,7 @@ const NewLobData = () =>{
     <div className="lob-main-container">
         <div style={{ padding: "2rem 3rem 0rem 8rem" }} className="newOrupdateLobBlock">
       <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6" className="lob-heading">
-      Create New Lob  
+      Create New Policy  
       </Typography>
       <Divider sx={{ borderBottomWidth: 3 }} />
       <Grid container spacing={3} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
@@ -94,7 +106,7 @@ const NewLobData = () =>{
             <Controller
             name="policyNumber"
             control={control}
-            rules={{required:true}}
+            rules={{required:true,min:0}}
             render={({ field: { onChange, value ,ref}  }) => (
             <TextField
               id="standard-basic"
@@ -107,10 +119,11 @@ const NewLobData = () =>{
               }} 
               value={value} 
               onChange={onChange}
+              
               placeholder="Policy Number"
               inputRef={ref}
               error={!!errors.policyNumber}
-              
+                        
               
             />
           )}
@@ -160,7 +173,7 @@ const NewLobData = () =>{
           <Grid item xs={3}>
             <Controller
             name="policyEffectiveDate"
-            control={control}
+            control={control}            
             render={({ field: { onChange, value ,ref}}) => (         
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -168,13 +181,16 @@ const NewLobData = () =>{
             label="Effective Date"
             inputFormat="DD/MM/YYYY"
             value={value} 
-            onChange={onChange}
-            inputRef={ref}
+            onChange={onChange}  
             maxDate={getValues("policyExpireDate")}
             renderInput={(params) => <TextField {...params}   />} 
-                         />
+            inputRef={ref}       
+            onError={ ()=>onErrorEFFDate(getValues("policyExpireDate"),value)}
+            onAccept={onAccepEFFNew}
+            />
 
         </LocalizationProvider>
+        
           
           )}
              
@@ -189,19 +205,21 @@ const NewLobData = () =>{
           <Grid item xs={3}>
             <Controller
             name="policyExpireDate"
-            control={control}
-            
+            control={control}   
+                  
             render={({ field: { onChange, value,ref } }) => (            
             <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DesktopDatePicker
             label="Expire Date"
             inputFormat="DD/MM/YYYY"
-            value={value} 
+            value={value}
+            
             onChange={onChange}            
-            renderInput={(params) => <TextField {...params} />}   
-            inputRef={ref}     
+            renderInput={(params) => <TextField {...params}   value={value} />}   
+            inputRef={ref}
            minDate={getValues("policyEffectiveDate")}
-           onError={onErrorDate}
+           onError={()=>onErrorDate(getValues("policyEffectiveDate"),value)}
+           onAccept={onAcceptNew}
             />
 
         </LocalizationProvider>
@@ -251,7 +269,8 @@ const NewLobData = () =>{
         <Controller
         name="sumAssured"
         control={control}
-        render={({ field: { onChange, value } }) => (
+        rules={{required:true,min:0}}
+        render={({ field: { onChange, value ,ref} }) => (
           <TextField
             id="standard-basic"
             label="Sum Assured"
@@ -259,14 +278,16 @@ const NewLobData = () =>{
             rows={1}
             variant="standard"
             sx={{
-              "& .MuiInputLabel-root": { color: "#404040" },
-              borderBottom: "1px solid #404040",  
+              // "& .MuiInputLabel-root": { color: "#404040" },               
               width: "100%",            
             }}    
-            InputProps={{ disableUnderline: true }} 
+            // InputProps={{ disableUnderline: true }} 
             placeholder="Sum Assured"
             value={value} 
             onChange={onChange}
+            error={!!errors.sumAssured}
+            inputRef={ref}
+
           />
         )}
       />          

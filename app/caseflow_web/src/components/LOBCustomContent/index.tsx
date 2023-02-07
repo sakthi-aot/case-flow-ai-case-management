@@ -62,7 +62,7 @@ const LOBCustomContent = () => {
         variant="h6"
         className="lob-heading"
       >
-       LOB
+       Policy
       </Typography>
 
       <Button 
@@ -76,7 +76,7 @@ const LOBCustomContent = () => {
         }}
         variant="contained"
         component={Link} to="/private/lob/create"
-        >Start New LOB</Button>
+        >Start New Policy</Button>
 
       </div>
 
