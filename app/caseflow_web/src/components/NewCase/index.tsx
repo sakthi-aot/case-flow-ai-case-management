@@ -36,6 +36,10 @@ const caseList =  useSelector((state : State)=>state.cases.selectedCase);
 const caseTypes =  useSelector((state : State)=>state.constants.caseTypes);
 const [values, setValues] = useState(initialFieldValues)
 const { handleSubmit, control,register } = useForm();
+// const [caseList.isEdit,setIsCaseEdit] = useState(Boolean);
+
+// console.log("caseList",caseList)
+// console.log("values",values)
 
   const onSubmit = async () => 
   {
@@ -54,9 +58,10 @@ const { handleSubmit, control,register } = useForm();
      else{ toast.error("Error");}
 
   }
-  useEffect(() => {
-  if(caseList.isEdit)
-  setValues(caseList);
+  useEffect(() => {   
+    if(caseList.isEdit){
+       setValues(caseList);     
+    }
 }, [caseList]);
 
 useEffect(() => {

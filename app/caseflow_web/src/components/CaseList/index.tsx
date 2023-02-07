@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import Divider from "@mui/material/Divider";
 import RecentCasecard from "../RecentCaseCard";
 import { SortCasesByField } from "../../helper/SortCases";
 import "./caselist.scss"
-import { caseListprops,  PropsConfig, RecentCase, SortValue } from "../../interfaces/componentInterface";
-import {  getCasesList } from "../../services/CaseService";
 import { setCaseList, setPageSelected } from "../../reducers/newCaseReducer";
 import {useDispatch, useSelector} from "react-redux";
 import { Case } from "../../interfaces/componentInterface";
@@ -19,6 +13,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
 import { Pagination } from "@mui/material";
 import { State } from "../../interfaces/stateInterface";
+import { PAGINATION_TAKE } from "../../apiManager/endpoints/config";
 
 
 
@@ -73,7 +68,7 @@ const CaseList =React.memo( ({config,allRecentCases}:any) => {
   
 async function fetchCaseDetails() {       
   let output = allRecentCases;    
-  const TotalPage = Math.ceil(totalCount/10) 
+  const TotalPage = Math.ceil(totalCount/ Number (PAGINATION_TAKE)) 
   setTotalPCount(TotalPage)
   // output = output.map((element) => {
   //   return {

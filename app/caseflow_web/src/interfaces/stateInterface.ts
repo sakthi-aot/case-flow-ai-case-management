@@ -5,6 +5,7 @@ export interface State {
   documents: Document;
   cases: Cases;
   constants: Constants;
+  lob:Lob
 }
 
 export type AuthState = {
@@ -87,4 +88,21 @@ export interface CaseTypes {
   name: string;
   displayname: string;
   code: number;
+}
+export interface Lob {
+  lobList:LobList[],
+  totalLobCount:number,
+  pageSelected:number,
+  selectedLob:LobList,
+  editLob:boolean,
+}
+export interface LobList {
+  id:number,
+  sumAssured : number,
+  policyNumber : string,
+  createdDate :  Date ,
+  isActive : string,
+  policyExpiryDate:Date,
+  policyEffectiveDate:Date,
+  
 }

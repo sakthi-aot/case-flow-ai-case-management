@@ -15,6 +15,11 @@ import { SearchProps } from "../../interfaces/componentInterface";
 
 
 const Search = ({ setSearchField, dropDownArray, setSearchColumn } :SearchProps) => {
+  
+  if(!dropDownArray.includes("All")){
+    dropDownArray.unshift("All")
+  } 
+  
   return (
     <>
       <FormControl fullWidth sx={{ m: 1 }} variant="standard">
@@ -50,7 +55,7 @@ const Search = ({ setSearchField, dropDownArray, setSearchColumn } :SearchProps)
                     id="demo-simple-select-standard"
                     label="Age"
                     disableUnderline
-                    defaultValue={dropDownArray ? dropDownArray[0] : "All"}
+                    defaultValue={dropDownArray[0]}
                     IconComponent={KeyboardArrowDownIcon}
                     onChange={(e) => {
                       setSearchColumn(e.target.value);

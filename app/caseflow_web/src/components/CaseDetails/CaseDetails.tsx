@@ -142,6 +142,7 @@ const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents)
   const editCaseDetails=(selectedCase)=> {
 
     dispatch(setSelectedCase({...selectedCase,isEdit:true}));
+    localStorage.setItem('setSelectedCase',JSON.stringify({...selectedCase,isEdit:true}))    
     navigate("/private/cases/create");
 
     }

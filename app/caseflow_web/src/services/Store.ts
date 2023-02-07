@@ -8,6 +8,7 @@ import applicationReducer from "../reducers/applicationReducer";
 import caseReducer from "../reducers/newCaseReducer";
 import caseHistoryReducer from "../reducers/caseHistoryReducer";
 import constantsReducer from "../reducers/constantsReducer";
+import lobReducer from "../reducers/lobReducer";
 
 
 const { createReduxHistory, routerMiddleware, routerReducer } =
@@ -21,7 +22,8 @@ export const store = configureStore({
     app: applicationReducer,
     cases:caseReducer,
     caseHistory:caseHistoryReducer,
-    constants: constantsReducer
+    constants: constantsReducer,
+    lob:lobReducer,
   }),
   middleware: [routerMiddleware],
 });
