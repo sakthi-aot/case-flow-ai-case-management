@@ -96,7 +96,7 @@ const NewLobData = () =>{
         if (isEdit) {
           data.id = Number(selectedLob.id)
           const response = await updateLob(data)
-          if (response && response.id  ) {           
+          if (response && response.id ) {           
             toast.success("Successfully Updated the Lob");
             navigate("/private/lob/"+ response.id+'/details');
             reset();
