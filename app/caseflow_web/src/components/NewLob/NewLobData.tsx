@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import Search from "../Search";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -7,30 +7,78 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import { Controller, useForm } from "react-hook-form";
 import Divider from "@mui/material/Divider";
+
+import { useSelector, useDispatch} from "react-redux";
 import { useNavigate } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
+
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';import "./NewLobData.scss"
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker/DesktopDatePicker";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { createNewLob } from "../../services/LOBService";
+
+import { createNewLob, getLobDetails, updateLob } from "../../services/LOBService";
+import { setEditLob } from "../../reducers/lobReducer";
+import { State } from "../../interfaces/stateInterface";
+import { setSelectedLob } from "../../reducers/lobReducer";
+import { useLocation } from 'react-router-dom'
 
 
 
-const defaultValues = {
-    policyNumber:"",    
-    policyEffectiveDate:null,
-    policyExpireDate:null,
-    policyStatus:"Active",
-    sumAssured:""
-}
+let defaultValues ={}
+
 
 const NewLobData = () =>{
+  const dispatch = useDispatch();   
+   const selectedLob = useSelector((state: State) => state.lob.selectedLob);
+   const isEdit = useSelector((state: State) => state.lob.editLob);
+   const location = useLocation();
+   
+   const SetDefaultValue = ( ) =>{
+     if(isEdit){
+        defaultValues = {
+       policyNumber:selectedLob.policyNumber,    
+       policyEffectiveDate:selectedLob.policyEffectiveDate,
+       policyExpireDate:selectedLob.policyExpiryDate,
+       policyStatus:selectedLob.isActive?"Active":"Inactive",
+       sumAssured:selectedLob.sumAssured
+   }
+ }
+   else{
+      defaultValues = {
+       policyNumber:"",    
+       policyEffectiveDate:null,
+       policyExpireDate:null,
+       policyStatus:"Active",
+       sumAssured:0
+     }
+ 
+   }
+   }
+    SetDefaultValue()
+
 
     const {handleSubmit,reset,getValues,control,formState:{errors}} = useForm({defaultValues});
     const [errorOnDate,setOnErrorOnDate] = useState(false);
     const [errorOnEFFDate,setOnErrorOEFFnDate] = useState(false);
     const navigate = useNavigate()
+
+    async function fetchLobDetails() {
+      var matches = location.pathname.match(/(\d+)/);
+      if(matches && matches[0]){
+        let output = await getLobDetails(matches[0]);
+        dispatch(setSelectedLob(output))
+        dispatch(setEditLob(true))
+        SetDefaultValue()
+        reset()
+      }
+    }
+  
+    useEffect(() => {
+      fetchLobDetails()
+     
+      
+    },[]);
 
 
     let dropDownArrayItem:string[]=[];
@@ -43,20 +91,41 @@ const NewLobData = () =>{
 
 
 
-    const onSubmitHandler = async (data) =>{      
+    const onSubmitHandler = async (data) => {
       if(!errorOnDate && !errorOnEFFDate ){
-        const response = await createNewLob(data)
-              if (response && response.success && response.success.data ) {
-                toast.success("Success");
-                reset()
-              }
-             else{ toast.error("Error");}
+        if (isEdit) {
+          data.id = Number(selectedLob.id)
+          const response = await updateLob(data)
+          if (response && response.id  ) {           
+            toast.success("Successfully Updated the Lob");
+            navigate("/private/lob/"+ response.id+'/details');
+            reset();
+            }
+           else{ toast.error("Error");}
+
+         
+        } else {
+          const response = await createNewLob(data)
+          if (response && response.id  ) {           
+            reset();
+          toast.success("Successfully Created New Lob");
+          dispatch(setSelectedLob(response))
+          navigate("/private/lob/"+ response.id+'/details');
+            }
+           else{ toast.error("Error");}        
+        }
+
       }
     }
 
     const onLobBackBtnHandler = ( ) =>{
+      if(isEdit){
+        navigate("/private/lob/"+ selectedLob.id+'/details');
+      }
+      else{
         navigate('/private/lob')
     }
+  }
 
     const onErrorDate = (EFF,EXP ) =>{
      if(EFF>EXP){     
@@ -79,6 +148,7 @@ const NewLobData = () =>{
     setOnErrorOnDate(false)
     }
 
+ 
 
 
 
@@ -93,7 +163,7 @@ const NewLobData = () =>{
     <div className="lob-main-container">
         <div style={{ padding: "2rem 3rem 0rem 8rem" }} className="newOrupdateLobBlock">
       <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6" className="lob-heading">
-      Create New Policy  
+      {isEdit?"Update ":"Create " }New Policy  
       </Typography>
       <Divider sx={{ borderBottomWidth: 3 }} />
       <Grid container spacing={3} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
@@ -308,7 +378,7 @@ const NewLobData = () =>{
             variant="contained"
             type="submit"          
           >
-           Create  
+             {isEdit?"Update ":"Create " }  
           </Button>
           <Button
             style={{

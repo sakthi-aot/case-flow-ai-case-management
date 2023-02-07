@@ -15,6 +15,8 @@ import { Box, Button, Card, Pagination } from "@mui/material";
 import Search from "../Search";
 import "./LOBCustomContent.scss"
 import { Link } from "react-router-dom";
+import { setEditLob } from "../../reducers/lobReducer";
+
 const LOBCustomContent = () => {
 
   const [searchField, setSearchField] = useState("");
@@ -38,12 +40,15 @@ const LOBCustomContent = () => {
     dispatch(setlobList(output.CaseflowLob))
     dispatch(setLobTotalCount(output.totalCount))
    
-   let fields= Object.keys( output.CaseflowLob[0])
-   setdropDownArray(fields)    
+  //  let fields= Object.keys( output.CaseflowLob[0])
+   setdropDownArray(["policyNumber"])    
   }
 
   const onLobPageCountChange =(e,p) =>{
     setSelectedPage(p)
+  }
+  const resetEdit = ()=>{
+    dispatch(setEditLob(false))
   }
   return (
     <section className="dashboard">
@@ -76,7 +81,9 @@ const LOBCustomContent = () => {
         }}
         variant="contained"
         component={Link} to="/private/lob/create"
+        onClick={resetEdit}
         >Start New Policy</Button>
+
 
       </div>
 
@@ -95,10 +102,7 @@ const LOBCustomContent = () => {
         {(lobListData && lobListData.length !== 0)?lobListData.map((lobData,index ) => (
           <LOBCUstomContentCard
           key={index}
-          createdDate={lobData.createdDate}
-          isActive={lobData.isActive}
-          policyNumber={lobData.policyNumber}
-          sumAssured={lobData.sumAssured}
+          lobData = {lobData}
           />
         )):
         <ListItem >

@@ -8,8 +8,18 @@ const initialState = {
         createdDate :  "" ,
         isActive : ""
       }],
+      selectedLob:{
+        id:0,
+        sumAssured : 0,
+        policyNumber : "",
+        createdDate :  "" ,
+        isActive : "",
+        policyExpiryDate:"Date",
+        policyEffectiveDate:"Date",
+      },
       totalLobCount:1,
       pageSelected:1,
+      editLob:false,
 }
 const lobSlice = createSlice({
     name:"lob",
@@ -22,6 +32,13 @@ const lobSlice = createSlice({
             const TotalPage = Math.ceil(action.payload/Number (PAGINATION_TAKE))        
              state.totalLobCount = TotalPage;
         },
+        setSelectedLob:(state,action)=>{
+            state.selectedLob = action.payload;
+        },
+        setEditLob:(state,action)=>{
+            state.editLob = action.payload;
+        },
+  
     }
 });
 
@@ -29,6 +46,7 @@ const lobSlice = createSlice({
 export const {
     setlobList,
     setLobTotalCount,
-
+    setSelectedLob,
+    setEditLob,
   } = lobSlice.actions;
   export default lobSlice.reducer;

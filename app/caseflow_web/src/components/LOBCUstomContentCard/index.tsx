@@ -4,6 +4,12 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import { Box, Card, createTheme, ThemeProvider, Typography } from "@mui/material";
+import { setSelectedLob } from "../../reducers/lobReducer";
+import {useDispatch} from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+
+
 
 import "./LOBCUstomContentCard.scss"
 import moment from "moment";
@@ -19,11 +25,21 @@ const theme = createTheme({
   }
 })
 
-const LOBCUstomContentCard = ({ createdDate, isActive, policyNumber ,sumAssured}) => {
+const LOBCUstomContentCard = (
+  {lobData }
+  ) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const viewCaseDetails = async ()=>{    
+    dispatch(setSelectedLob(lobData))
+    navigate("/private/lob/"+ lobData.id+'/details');
+  }
   
-const FormattedCreatedDate = moment(createdDate).format('MMMM Do YYYY');
+const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
  
   return (
+    <div onClick={()=>{viewCaseDetails()}}>
     <ThemeProvider theme={theme} >
       <Typography />
       <ListItem button>
@@ -38,7 +54,7 @@ const FormattedCreatedDate = moment(createdDate).format('MMMM Do YYYY');
                   Policy Number
                 </Typography>
               }
-              secondary={policyNumber}
+              secondary={lobData.policyNumber}
             />
           </Grid>
           <Grid item xs={3}>
@@ -51,7 +67,7 @@ const FormattedCreatedDate = moment(createdDate).format('MMMM Do YYYY');
                   Created date
                 </Typography>
               }
-              secondary={FormattedCreatedDate}
+              secondary={lobData.createdDate}
             />
           </Grid>          
           <Grid item xs={4}>
@@ -64,7 +80,7 @@ const FormattedCreatedDate = moment(createdDate).format('MMMM Do YYYY');
                   Sum Assured
                 </Typography>
               }
-              secondary={sumAssured}
+              secondary={lobData.sumAssured}
             />
           </Grid>          
        
@@ -72,7 +88,7 @@ const FormattedCreatedDate = moment(createdDate).format('MMMM Do YYYY');
           <Box >
           <div className="recent-case-card-status">
               <div className="recent-case-card-status-text">
-                {isActive==true ?"Active":"InActive"}
+                {lobData.isActive==true ?"Active":"InActive"}
               </div>
             </div>
             </Box>
@@ -83,6 +99,7 @@ const FormattedCreatedDate = moment(createdDate).format('MMMM Do YYYY');
       </ListItem>
       <Divider />
     </ThemeProvider>
+    </div>
   );
 };
 

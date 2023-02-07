@@ -38,8 +38,15 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type CaseflowLobResponse {
+  CaseflowLob: [CaseflowLob!]!
+  totalCount: Int!
+}
+
 type Query {
   getLobById(id: Int!): CaseflowLob!
+  getLobList(skip: Int! = 0, take: Int! = 25): CaseflowLobResponse!
+  searchCaseflowLob(searchField: Int!, searchColumn: String!, skip: Int! = 0, take: Int! = 25): CaseflowLobResponse!
 }
 
 type Mutation {
