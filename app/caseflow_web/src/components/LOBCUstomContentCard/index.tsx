@@ -67,7 +67,7 @@ const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
                   Created date
                 </Typography>
               }
-              secondary={lobData.createdDate}
+              secondary={FormattedCreatedDate}
             />
           </Grid>          
           <Grid item xs={4}>

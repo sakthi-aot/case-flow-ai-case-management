@@ -43,6 +43,7 @@ const NewLobData = () =>{
        policyStatus:selectedLob.isActive?"Active":"Inactive",
        sumAssured:selectedLob.sumAssured
    }
+   
  }
    else{
       defaultValues = {
@@ -96,7 +97,7 @@ const NewLobData = () =>{
         if (isEdit) {
           data.id = Number(selectedLob.id)
           const response = await updateLob(data)
-          if (response && response.id ) {           
+          if (response && response.id ) {         
             toast.success("Successfully Updated the Lob");
             navigate("/private/lob/"+ response.id+'/details');
             reset();
@@ -128,12 +129,12 @@ const NewLobData = () =>{
   }
 
     const onErrorDate = (EFF,EXP ) =>{
-     if(EFF>EXP){     
+     if(EFF>EXP){   
       setOnErrorOnDate(true)
-     }
+     } 
     }
 
-    const onAcceptNew = () =>{     
+    const onAcceptNew = () =>{   
      setOnErrorOnDate(false)
      setOnErrorOEFFnDate(false)
     }
@@ -176,7 +177,7 @@ const NewLobData = () =>{
             <Controller
             name="policyNumber"
             control={control}
-            rules={{required:true,min:0}}
+            rules={{required:true,min:0,pattern:/^[0-9]+$/}}
             render={({ field: { onChange, value ,ref}  }) => (
             <TextField
               id="standard-basic"
@@ -243,7 +244,8 @@ const NewLobData = () =>{
           <Grid item xs={3}>
             <Controller
             name="policyEffectiveDate"
-            control={control}            
+            control={control}       
+            rules={{required:true}}     
             render={({ field: { onChange, value ,ref}}) => (         
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -276,14 +278,13 @@ const NewLobData = () =>{
             <Controller
             name="policyExpireDate"
             control={control}   
-                  
+            rules={{required:true}}
             render={({ field: { onChange, value,ref } }) => (            
             <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DesktopDatePicker
             label="Expire Date"
             inputFormat="DD/MM/YYYY"
-            value={value}
-            
+            value={value}   
             onChange={onChange}            
             renderInput={(params) => <TextField {...params}   value={value} />}   
             inputRef={ref}
@@ -383,7 +384,7 @@ const NewLobData = () =>{
           <Button
             style={{
               alignItems :"center",
-               marginLeft: "2rem",
+              marginLeft: "2rem",
               height: "2.4375rem",
               width: "20%",
               backgroundColor:"#404040"
