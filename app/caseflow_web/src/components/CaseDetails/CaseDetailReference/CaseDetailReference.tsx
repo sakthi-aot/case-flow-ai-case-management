@@ -27,20 +27,19 @@ const CaseDetailReference = ({caseId} :CaseDetailReferenceProps ) => {
   const lobData = selectedCase.lobDetails;
   // let  lobData = {}
   useEffect( () => {
-    if(selectedCase.id > 0){
+    if(selectedCase.lobcaseid > 0){
 
-    getCaseLobDetails(selectedCase.id)
+    getCaseLobDetails(selectedCase.lobcaseid)
     // lobData = selectedCase.lobDetails;
           
   }
-  }, [selectedCase.id]);
+  }, [selectedCase.lobcaseid]);
   const getCaseLobDetails = async (id) =>{
     let lobDetails = await getLobDetails(id);
     if(lobDetails && lobDetails.id){
       dispatch(setSelectedCaseLOBDetails(lobDetails))
     }
   }
-  console.log(lobData);
   return (
     <>
     <div className='case-detail-reference-first-row'>
