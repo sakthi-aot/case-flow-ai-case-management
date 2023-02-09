@@ -46,7 +46,8 @@ const RecentCaseCard = (props) => {
                    ID
                 </Typography>
               }
-              secondary={ <Typography              
+              secondary={ <Typography 
+                variant="body1"             
                 color='#606060'
                 noWrap
                 style={{
@@ -62,13 +63,14 @@ const RecentCaseCard = (props) => {
               className="caseName-case-list"
               primary={
                 <Typography 
-                variant="body2"
+                variant="subtitle1"
           >
                    Name
                 </Typography>
               }
               secondary={
-              <Typography                 
+              <Typography 
+                variant="body1"                
                 color='#606060'
                 noWrap
                 style={{
@@ -83,13 +85,14 @@ const RecentCaseCard = (props) => {
             <ListItemText             
               primary={
                 <Typography
-                variant="body2"
-                
+                variant="subtitle1"
             >
                    Type
                 </Typography>
               }
-              secondary={<Typography noWrap
+              secondary={<Typography
+                variant="body1"
+                noWrap
                 color='#606060'
                 style={{
                   overflow: 'hidden',
@@ -105,13 +108,14 @@ const RecentCaseCard = (props) => {
             <ListItemText             
               primary={
                 <Typography
-                variant="body2"
-                
+                variant="subtitle1"
                >
                    Description
                 </Typography>
               }
-              secondary={<Typography noWrap
+              secondary={<Typography
+                variant="body1"
+                noWrap
                 color='#606060'
                 style={{
                   overflow: 'hidden',
