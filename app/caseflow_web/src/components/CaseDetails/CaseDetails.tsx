@@ -31,6 +31,9 @@ import { fetchCaseStatuses } from "../../services/constantsService";
 import { setCaseStatuses } from "../../reducers/constantsReducer";
 import { State } from "../../interfaces/stateInterface";
 import PopUpDialogBox from "../PopUpDialogBox/PopUpDialogBox";
+import Typography from '@mui/material/Typography';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
 
 
 
@@ -193,8 +196,22 @@ const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents)
           setSearchColumn={() => {}}
         ></Search>
       </div>
+      
 
       <section className="case-detail-container">
+      <Breadcrumbs aria-label="breadcrumb">
+  <Link underline="hover" color="inherit" href="/private">
+    Home
+  </Link>
+  <Link
+    underline="hover"
+    color="inherit"
+    href="/private/cases"
+  >
+    Cases
+  </Link>
+  <Typography>Case ID :{selectedCase.id}</Typography>
+</Breadcrumbs>
         <span className="case-detail-header">
           <div className="case-id-status">
             <p className="case-id">Case ID :{selectedCase.id}</p>
@@ -211,6 +228,7 @@ const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents)
             selected ={selected}
           />
         </span>
+
         <CaseDetailData
           name={selectedCase.name}
           date={caseDetail.date}

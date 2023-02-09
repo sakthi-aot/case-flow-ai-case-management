@@ -44,7 +44,20 @@ const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
       <Typography />
       <ListItem button>
         <Grid container spacing={1}>
-          <Grid item xs={4}>
+        <Grid item xs={2}>
+            <ListItemText
+              primary={
+                <Typography 
+                variant="body2"
+                className="lob-card-style"
+                style={{ "fontWeight": "700" }}>
+                  ID
+                </Typography>
+              }
+              secondary={lobData.policyNumber}
+            />
+          </Grid>
+          <Grid item xs={3}>
             <ListItemText
               primary={
                 <Typography 
@@ -70,7 +83,7 @@ const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
               secondary={lobData.createdDate}
             />
           </Grid>          
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <ListItemText
               primary={
                 <Typography
