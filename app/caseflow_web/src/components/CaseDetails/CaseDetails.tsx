@@ -16,7 +16,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CustomizedDialog from '../Dialog'
 import Upload from '../Upload'
 import EditIcon from '@mui/icons-material/Edit';
-import { setSelectedCase } from "../../reducers/newCaseReducer";
+import { setCaseTasks, setSelectedCase } from "../../reducers/newCaseReducer";
 import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setCaseHistory, setFilteredCaseHistory } from '../../reducers/caseHistoryReducer';
@@ -34,6 +34,8 @@ import PopUpDialogBox from "../PopUpDialogBox/PopUpDialogBox";
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
+import { getTaksByCaseId, getWorkflowList, startNewWorkflow } from "../../services/workflowService";
+import { Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 
 
@@ -45,6 +47,8 @@ const CaseDetails = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const statuses =   useSelector((state:State) => state.constants.caseTypes);
+  const tasks =   useSelector((state:State) => state.cases.selectedCase.tasks);
+  const selectedCase =   useSelector((state:State) => state.cases.selectedCase);
   const caseDetail = {
     status: "OPEN",
     date: "2022-11-01",
@@ -68,7 +72,7 @@ const CaseDetails = () => {
     if(matches && matches[0]){
       let output = await getCaseDetails(matches[0]);
       dispatch(setSelectedCase({...output,isEdit:false}));
-      setselectedCaseDetails(output)
+      // setselectedCaseDetails(output)
       await fetchCaseHistory(matches[0])
     }
   }
@@ -87,19 +91,33 @@ const CaseDetails = () => {
     dispatch(setFilteredCaseHistory(output))
   } 
   
-const [selectedCase, setselectedCaseDetails]:any = useState({});
+// const [selectedCase, setselectedCaseDetails]:any = useState({});
 const [isOpenPopup,setOpenPopup] = useState(false);
 const [isOpenConfirmationPopup,setOpenConfirmationPopup] = useState(false);
 const [confirmationText,setConfirmationText] = useState("");
 const [newStatus,setNewStatus] = useState(0);
-  const [selected, setSelected] = useState(0);
+const [selected, setSelected] = useState(0);
 const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents);
+const [isOpenWorkflowPopup,setOpenWorkflowPopup] = useState(false);
+const [selectedWorkflow, setselectedWorkflow]:any = useState("");
+const [workflows, setworkflows]:any = useState([]);
 
   const handleClose = (
     event,
     reason
   ) => {
    setOpenPopup(false);
+   setSelected(0)
+  };
+
+  const onChnagehandler =(event) =>{
+    setselectedWorkflow(event.target.value)
+  }
+  const handleWorkflowPopUpClose = (
+    event,
+    reason
+  ) => {
+    setOpenWorkflowPopup(false);
    setSelected(0)
   };
   const onSuccess = async ()=>{
@@ -120,6 +138,9 @@ const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents)
 
     setSelected(e.target.value)
     switch(e.target.value){
+      case 1:{
+        return getWorkflows() // Wake
+      }
       case 2:{
         return changeStatus(1) // Wake
       }
@@ -134,6 +155,13 @@ const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents)
       }
     }
   };
+
+  const getWorkflows = async () =>{
+    const workflowsList = await getWorkflowList(1);
+    console.log(workflowsList);
+    setworkflows(workflowsList);
+    setOpenWorkflowPopup(true);
+  }
 
   const changeStatus = async (status) =>{
     setConfirmationText("Do you want to change the status of the case?")
@@ -155,6 +183,12 @@ const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents)
     fetchAllCaseStatuses();
     
   }, []);
+
+  useEffect(() => {
+    if(selectedCase && selectedCase.id)
+    fetchRealtedTasks();
+    
+  }, [selectedCase.id]);
 
   const fetchAllCaseStatuses = async () => {
     const statusList =  await fetchCaseStatuses();
@@ -185,6 +219,35 @@ const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents)
    
   }
 
+  const startWorkflow = async () =>{
+
+    if(selectedWorkflow){
+    const wordFlowDetails = {
+      variables: {
+        caseId: {
+          value: selectedCase.id,
+        },
+        submissionDate: {
+          value: new Date(),
+        },
+        submitterName: {
+          value: "caseflow-reviewer",
+        },
+      },
+      caseInstanceId: selectedCase.id,
+    };
+
+    
+  const workflow = await startNewWorkflow(selectedWorkflow, wordFlowDetails)
+}else{
+  toast.error("Please select a workflow");
+}
+
+  }
+const fetchRealtedTasks = async() =>{
+  const taskList = await getTaksByCaseId(selectedCase.id)
+  dispatch(setCaseTasks(taskList))
+}
   return (
     <>
     <div className="details-container">
@@ -234,7 +297,7 @@ const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents)
           date={caseDetail.date}
           owner={caseDetail.owner}
           caseDescription={selectedCase.desc}
-          tasks={caseDetail.tasks}
+          tasks={tasks}
           caseType={selectedCase.casestype}
           lobcaseid={selectedCase.lobcaseid}
         />
@@ -263,6 +326,31 @@ const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents)
       </section>
     </div>
     <CustomizedDialog title="Upload File" isOpen={isOpenPopup} setIsOpen={setOpenPopup} handleClose={handleClose}><Upload onSuccess={onSuccess} /></CustomizedDialog>
+    <CustomizedDialog title="Select Workflow" isOpen={isOpenWorkflowPopup} setIsOpen={setOpenWorkflowPopup} handleClose={handleWorkflowPopUpClose}>
+      <div className="workflow">
+    <FormControl sx={{ m: 1, minWidth: 90, }} size="small">
+                <InputLabel id="demo-simple-select-label">Workflow</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"          
+                  label="Age" 
+                  value={selectedWorkflow}   
+                  onChange={onChnagehandler}   
+                  className="dropDownStyle"   
+                >
+                   {workflows.map((option,index) => <MenuItem key={index}  value={option.key}>{option.name}</MenuItem>)}                  
+                </Select>
+            </FormControl>
+            <FormControl>
+            <Button
+                variant="outlined"
+                onClick={startWorkflow}
+              >
+               Start Workflow
+              </Button>
+            </FormControl>
+            </div>
+    </CustomizedDialog>
     <ToastContainer />
     <PopUpDialogBox 
       isOpen ={isOpenConfirmationPopup}

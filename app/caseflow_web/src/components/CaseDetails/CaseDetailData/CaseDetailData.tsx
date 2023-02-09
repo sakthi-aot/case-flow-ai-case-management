@@ -43,9 +43,9 @@ const CaseDetailData = ({name,date,owner,caseDescription,tasks,caseType,lobcasei
   
       <div className="case-tasks">
         <h3>Current Task(s)</h3>
-        {tasks.map((task: any, index: any) => (
-          <p key={index}>{task}</p>
-        ))}
+        {tasks ? tasks.map((task: any, index: any) => (
+          <p key={index}>{task.name}</p>
+        )) : ""}
       </div>
     </>
   );

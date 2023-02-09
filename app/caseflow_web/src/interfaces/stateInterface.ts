@@ -41,6 +41,7 @@ export interface SelectedCase {
   totalDocCount:number;
   typeid : number;
   lobcaseid:number;
+  tasks : any[];
 }
 
 export interface CaseList {
