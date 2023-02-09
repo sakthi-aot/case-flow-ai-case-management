@@ -18,7 +18,7 @@ import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import CasesOutlinedIcon from "@mui/icons-material/CasesOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import UserService from "../../services/UserService";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useSelector,useDispatch } from "react-redux";
@@ -173,6 +173,7 @@ export default function MiniDrawer(
         component={Link} to="/private/cases/create">Start New Case</Button>}
         
         <List>
+          <Typography variant="body2">
           {routes.map((route, index) => (
             <Link
               to={route.path}
@@ -215,6 +216,7 @@ export default function MiniDrawer(
               </ListItem>
             </Link>
           ))}
+          </Typography>
         </List>
       </Drawer>
       <div className="Chevron-parent-container">

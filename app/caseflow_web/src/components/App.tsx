@@ -33,6 +33,9 @@ let theme = createTheme({
     },
     body1:{
       fontWeight: 500,
+    },
+    subtitle1:{
+      fontWeight: 700,
     }
   },
 })

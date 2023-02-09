@@ -40,7 +40,7 @@ const RecentCaseCard = (props) => {
             <ListItemText
               primary={
                 <Typography 
-                variant="body2"                
+                variant="subtitle1"                
                 className="recent-case-card-style"
                 >
                    ID
