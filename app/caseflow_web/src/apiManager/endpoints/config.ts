@@ -24,3 +24,8 @@ export const PAGINATION_TAKE :string=
 (window._env_ && window._env_.REACT_APP_PAGINATION_TAKE) ||
 process.env.REACT_APP_PAGINATION_TAKE;
 
+export const FORMSFLOW_URL :string=
+(window._env_ && window._env_.REACT_APP_FORMSFLOW_URL) ||
+process.env.REACT_APP_FORMSFLOW_URL;
+
+

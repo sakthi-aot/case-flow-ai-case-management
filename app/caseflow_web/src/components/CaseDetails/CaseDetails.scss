@@ -87,4 +87,18 @@
     }
 }
 
+
+
+}
+
+.workflow{
+
+    display: grid;
+    font-family: $primary-font;
+    button{
+        font-family: $primary-font;
+        background-color: $primary-theme-black-color;
+        // width: 80&;
+        color:white;
+    }
 }

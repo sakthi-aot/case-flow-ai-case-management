@@ -82,3 +82,7 @@ process.env.REACT_APP_CASEFLOW_GRAPHQL_API_URL ||
 export  const REACT_APP_CASEFLOW_LOB_GRAPHQL_API_URL =  (window._env_ && window._env_.REACT_APP_CASEFLOW_LOB_GRAPHQL_API_URL) ||
 process.env.REACT_APP_CASEFLOW_LOB_GRAPHQL_API_URL ||
 "";
+
+export  const REACT_APP_FORMSFLOW_URL =  (window._env_ && window._env_.REACT_APP_FORMSFLOW_URL) ||
+process.env.REACT_APP_FORMSFLOW_URL ||
+"";

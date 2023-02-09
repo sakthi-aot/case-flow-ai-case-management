@@ -39,6 +39,7 @@ export interface SelectedCase {
   documents: any[];
   totalDocCount:number;
   typeid : number;
+  tasks : any[];
 }
 
 export interface CaseList {
