@@ -33,7 +33,7 @@ import { State } from "../../interfaces/stateInterface";
 import PopUpDialogBox from "../PopUpDialogBox/PopUpDialogBox";
 import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
 import { getTaksByCaseId, getWorkflowList, startNewWorkflow } from "../../services/workflowService";
-import { Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 
 
 
@@ -315,7 +315,7 @@ const fetchRealtedTasks = async() =>{
           className="case-documents-head-section"
           sx={{marginBottom:0}}
         >
-         <h2 className="caseDocuments-headtag">Case Documents</h2>
+         <Typography variant = 'subtitle1' className="caseDocuments-headtag">Case Documents</Typography>
         </AccordionSummary>
         <AccordionDetails sx={{paddingLeft:0}}>
         <RelatedCaseDocuments id = {selectedCase.id} docDetail={docDetail}></RelatedCaseDocuments>

@@ -47,7 +47,7 @@ const RecentCaseCard = (props) => {
                 </Typography>
               }
               secondary={ <Typography 
-                variant="body1"             
+                variant="body2"             
                 color='#606060'
                 noWrap
                 style={{
@@ -70,7 +70,7 @@ const RecentCaseCard = (props) => {
               }
               secondary={
               <Typography 
-                variant="body1"                
+                variant="body2"                
                 color='#606060'
                 noWrap
                 style={{
@@ -91,7 +91,7 @@ const RecentCaseCard = (props) => {
                 </Typography>
               }
               secondary={<Typography
-                variant="body1"
+                variant="body2"
                 noWrap
                 color='#606060'
                 style={{
@@ -114,7 +114,7 @@ const RecentCaseCard = (props) => {
                 </Typography>
               }
               secondary={<Typography
-                variant="body1"
+                variant="body2"
                 noWrap
                 color='#606060'
                 style={{

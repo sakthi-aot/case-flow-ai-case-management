@@ -20,7 +20,7 @@ const CaseDetailData = ({name,date,owner,caseDescription,tasks,caseType,lobcasei
           <Typography variant='subtitle1'>
           Case name
           </Typography>
-          <Typography variant='body1'
+          <Typography variant='body2'
           color='#606060'
           >
           {name}
@@ -29,7 +29,7 @@ const CaseDetailData = ({name,date,owner,caseDescription,tasks,caseType,lobcasei
         </div>
         <div className="case-detail-date">
           <Typography variant='subtitle1'>Start Date</Typography >
-          <Typography variant='body1'
+          <Typography variant='body2'
           color='#606060'
           >
             {date}
@@ -37,7 +37,7 @@ const CaseDetailData = ({name,date,owner,caseDescription,tasks,caseType,lobcasei
         </div>
         <div className="case-detail-owner">
           <Typography variant='subtitle1'>Owner</Typography >
-          <Typography variant='body1'
+          <Typography variant='body2'
           color='#606060'
           >
             {owner}
@@ -45,7 +45,7 @@ const CaseDetailData = ({name,date,owner,caseDescription,tasks,caseType,lobcasei
         </div>
         <div>
           <Typography variant='subtitle1'>Case Description</Typography >
-          <Typography variant='body1'
+          <Typography variant='body2'
           color='#606060'
           >
             {caseDescription}
@@ -53,7 +53,7 @@ const CaseDetailData = ({name,date,owner,caseDescription,tasks,caseType,lobcasei
         </div>
         <div>
           <Typography variant='subtitle1'>Case Type</Typography >
-          <Typography variant='body1'
+          <Typography variant='body2'
           color='#606060'
           >
             {caseType?.displayname}
@@ -61,7 +61,7 @@ const CaseDetailData = ({name,date,owner,caseDescription,tasks,caseType,lobcasei
         </div>
         <div>
           <Typography variant='subtitle1'>LOB ID</Typography >
-          <Typography variant='body1'
+          <Typography variant='body2'
           color='#606060'
           >
             {lobcaseid}
@@ -72,7 +72,7 @@ const CaseDetailData = ({name,date,owner,caseDescription,tasks,caseType,lobcasei
       <div className="case-tasks">
         <Typography variant='subtitle1'>Current Task(s)</Typography >
         { (tasks && tasks.length) ? tasks.map((task: any, index: any) => (
-          <Typography variant='body1'
+          <Typography variant='body2'
           color='#606060'
           key={index}>
             {task.name}
