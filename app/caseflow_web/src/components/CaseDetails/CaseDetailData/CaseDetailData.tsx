@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material'
 import React from 'react'
 import "./CaseDetailData.scss"
 
@@ -16,8 +17,14 @@ const CaseDetailData = ({name,date,owner,caseDescription,tasks,caseType,lobcasei
     <>
       <div className="case-details">
         <div className="case-detail-name">
-          <h3>Case name</h3>
-          <p>{name}</p>
+          <Typography variant='body1'>
+          Case name
+          </Typography>
+          <Typography variant='body2'>
+
+          {name}
+          </Typography>
+
         </div>
         <div className="case-detail-date">
           <h3>Start Date</h3>

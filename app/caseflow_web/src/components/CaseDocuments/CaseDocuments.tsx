@@ -153,7 +153,7 @@ setDocumentDetailsForEdit(data)
                         primary={
                           <Typography 
                           variant="body2"
-                          style={{ "fontWeight": "700" }}>
+                        >
                              ID
                           </Typography>
                         }
@@ -165,7 +165,7 @@ setDocumentDetailsForEdit(data)
                         primary={
                           <Typography 
                           variant="body2"
-                          style={{ "fontWeight": "700" }}>
+                        >
                             Case ID
                           </Typography>
                         }
@@ -177,7 +177,7 @@ setDocumentDetailsForEdit(data)
               primary={
                 <Typography 
                 variant="body2"
-                style={{ "fontWeight": "700" }}>
+              >
                    Name
                 </Typography>
               }
@@ -192,7 +192,7 @@ setDocumentDetailsForEdit(data)
                 <Typography
                 variant="body2"
                 
-                style={{ "fontWeight": "700" }}>
+              >
                    Description
                 </Typography>
               }
@@ -205,7 +205,7 @@ setDocumentDetailsForEdit(data)
                 <Typography
                 variant="body2"
                 
-                style={{ "fontWeight": "700" }}>
+            >
                    Creation Date
                 </Typography>
               }
@@ -227,7 +227,7 @@ setDocumentDetailsForEdit(data)
                 primary={
                   <Typography 
                   variant="body2"
-                  style={{ "fontWeight": "700" ,"textAlign":"center","color":"rgba(0, 0, 0, 0.6)"}}>
+                  style={{"textAlign":"center","color":"rgba(0, 0, 0, 0.6)"}}>
                     No Case Document Found!
                   </Typography>
                 }             

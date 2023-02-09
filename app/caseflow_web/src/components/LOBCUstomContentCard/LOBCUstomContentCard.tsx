@@ -50,7 +50,7 @@ const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
                 <Typography 
                 variant="body2"
                 className="lob-card-style"
-                style={{ "fontWeight": "700" }}>
+                >
                   ID
                 </Typography>
               }
@@ -63,7 +63,7 @@ const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
                 <Typography 
                 variant="body2"
                 className="lob-card-style"
-                style={{ "fontWeight": "700" }}>
+           >
                   Policy Number
                 </Typography>
               }
@@ -76,7 +76,7 @@ const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
                 <Typography
                 variant="body2"
                 className="lob-card-style"
-                style={{ "fontWeight": "700" }}>
+              >
                   Created date
                 </Typography>
               }
@@ -89,7 +89,7 @@ const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
                 <Typography
                 variant="body2"
                 className="lob-card-style"
-                style={{ "fontWeight": "700" }}>
+               >
                   Sum Assured
                 </Typography>
               }

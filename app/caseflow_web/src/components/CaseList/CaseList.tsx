@@ -143,7 +143,7 @@ const caseListpagination = (e,p) =>{
               primary={
                 <Typography 
                 variant="body2"
-                style={{ "fontWeight": "700" ,"textAlign":"center","color":"rgba(0, 0, 0, 0.6)"}}>
+                style={{"textAlign":"center","color":"rgba(0, 0, 0, 0.6)"}}>
                   No Recent Cases Found!
                 </Typography>
               }             

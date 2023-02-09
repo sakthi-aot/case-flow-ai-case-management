@@ -42,7 +42,6 @@ const RecentCaseCard = (props) => {
                 <Typography 
                 variant="body2"                
                 className="recent-case-card-style"
-                style={{ "fontWeight": "700","fontSize":'1rem' }}
                 >
                    ID
                 </Typography>
@@ -64,7 +63,7 @@ const RecentCaseCard = (props) => {
               primary={
                 <Typography 
                 variant="body2"
-                style={{ "fontWeight": "700" }}>
+          >
                    Name
                 </Typography>
               }
@@ -86,7 +85,7 @@ const RecentCaseCard = (props) => {
                 <Typography
                 variant="body2"
                 
-                style={{ "fontWeight": "700" }}>
+            >
                    Type
                 </Typography>
               }
@@ -108,7 +107,7 @@ const RecentCaseCard = (props) => {
                 <Typography
                 variant="body2"
                 
-                style={{ "fontWeight": "700" }}>
+               >
                    Description
                 </Typography>
               }

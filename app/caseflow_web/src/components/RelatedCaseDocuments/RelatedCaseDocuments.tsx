@@ -169,12 +169,12 @@ useEffect(() => {
     {docDetail && docDetail.length!==0 ?  <Table sx={{ minWidth: 650 ,border : 0,}} aria-label="simple table" className="case-document-table" >
         <TableHead >
           <TableRow>
-            <TableCell  sx={{ color: '#606060',fontWeight: 'bold',fontSize: 16,border:0}} >Name</TableCell>
-            <TableCell align="right" sx={{ color: '#606060',fontWeight: 'bold',fontSize: 16,border:0}} >Size</TableCell>
-            <TableCell align="right" sx={{ color: '#606060',fontWeight: 'bold',fontSize: 16,border:0}} >Creation Date</TableCell>
-            <TableCell align="right" sx={{ color: '#606060',fontWeight: 'bold',fontSize: 16,border:0}} >Last Updated</TableCell>
-            <TableCell align="right" sx={{ color: '#606060',fontWeight: 'bold',fontSize: 16,border:0}} >version ##</TableCell>
-            <TableCell align="right" sx={{ color: '#606060',fontWeight: 'bold',fontSize: 16,border:0}} ></TableCell>
+            <TableCell  sx={{ color: '#606060',fontSize: 16,border:0}} >Name</TableCell>
+            <TableCell align="right" sx={{ color: '#606060',fontSize: 16,border:0}} >Size</TableCell>
+            <TableCell align="right" sx={{ color: '#606060',fontSize: 16,border:0}} >Creation Date</TableCell>
+            <TableCell align="right" sx={{ color: '#606060',fontSize: 16,border:0}} >Last Updated</TableCell>
+            <TableCell align="right" sx={{ color: '#606060',fontSize: 16,border:0}} >version ##</TableCell>
+            <TableCell align="right" sx={{ color: '#606060',fontSize: 16,border:0}} ></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
