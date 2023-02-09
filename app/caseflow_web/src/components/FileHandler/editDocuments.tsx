@@ -9,8 +9,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 
 import "./fileHandler.scss";
-import Upload from "../Upload";
-import CaseDocuments from "../CaseDocuments";
+import Upload from "../Upload/Upload";
+import CaseDocuments from "../CaseDocuments/CaseDocuments";
 import { useHistory, useParams } from "react-router-dom";
 
 
@@ -40,7 +40,6 @@ const EditDocuments = (props) => {
   const documents =  useSelector(state=>state.documents.documentsList);
   console.warn(documents)
   const existingDocuments= documents.filter(doc => doc.id == params.id);
-  console.log(existingDocuments);
   const {dms_provider,content,description,docname,name,documentid,downloadurl}=existingDocuments[0]
   const [values, setValues] = useState({
     dms:dms_provider,
@@ -108,9 +107,7 @@ const EditDocuments = (props) => {
       ? setDocumentID(1)
       : setDocumentID(parseInt(event.target.value));
   };
-  const onPreviewErrorhandler = (e) =>{
-    console.log(e);
-  }
+ 
   return (
     <div className="background">
       <div className="file-card">  
@@ -234,7 +231,7 @@ const EditDocuments = (props) => {
           key={Math.random()}      
           fileType={filetypeUploaded}
           filePath={previewURL}
-          onError={onPreviewErrorhandler}
+       
         >
         </FileViewer>
          </div>} 

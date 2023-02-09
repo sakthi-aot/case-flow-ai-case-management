@@ -50,7 +50,6 @@ const totalDocCount = useSelector((state:store)=>state.cases.selectedCase.totalD
 
 
 useEffect(() => {
-  console.log("inside");
   fetchCaseDetails();
 }, [id,pageNo]);
 
@@ -116,9 +115,7 @@ useEffect(() => {
   }
 
   const fetchCaseHistory = async  (id) =>{    
-    console.log("id",id)
     const caseHistoryData = await getCaseHistory(id);
-    console.log(caseHistoryData,"caseHistoryData")
     const output = caseHistoryData.casehistory.map((element,index) => {
       return {  
         id :index,

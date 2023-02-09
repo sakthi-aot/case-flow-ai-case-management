@@ -4,7 +4,7 @@ import BaseRouting from "./BaseRouting";
 import PrivateRoute from "./PrivateRoute";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./app.css";
-import NotFound from "./NotFound";
+import NotFound from "./NotFound/NotFound";
 import { AppProps } from "../interfaces/appInterface";
 
 

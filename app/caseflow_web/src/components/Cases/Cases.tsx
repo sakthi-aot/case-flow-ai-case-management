@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Search from "../Search";
+import Search from "../Search/Search";
 import "./cases.scss"
-import CaseList from "../CaseList";
+import CaseList from "../CaseList/CaseList";
 import {useSelector,useDispatch} from "react-redux";
 import { State,store } from "../../interfaces/stateInterface";
 import { searchCases } from "../../services/CaseService";

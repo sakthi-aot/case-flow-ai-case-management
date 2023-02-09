@@ -1,6 +1,6 @@
 
 import React, {useEffect,  useState} from "react";
-import Search from "../Search";
+import Search from "../Search/Search";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
@@ -96,10 +96,8 @@ const NewLobData = () =>{
 
     let dropDownArrayItem:string[]=[];
     const serachField =(e:any) =>{
-      console.log("serachField")
     }
     const SearchColumn = (e:any) =>{
-      console.log("setSearchColumn")
     }
 
 

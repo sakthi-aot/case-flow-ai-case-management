@@ -1,8 +1,8 @@
 import React, { useEffect,useState } from "react";
-import Search from "../Search";
+import Search from "../Search/Search";
 import "./dashboard.scss";
-import CaseList from "../CaseList";
-import MyTask from "../MyTask";
+import CaseList from "../CaseList/CaseList";
+import MyTask from "../MyTask/MyTask";
 import { fetchRecentCaseList } from "../../services/CaseService";
 
 const caseListProps = {

@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 
 import Divider from "@mui/material/Divider";
-import MyTaskCard from "../MyTaskCard";
+import MyTaskCard from "../MyTaskCard/MyTaskCard";
 import { EachTask } from "../../interfaces/componentInterface";
 import "./myTask.scss";
 

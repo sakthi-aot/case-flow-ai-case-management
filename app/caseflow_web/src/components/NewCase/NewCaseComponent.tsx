@@ -1,6 +1,6 @@
 import React from 'react'
-import NewCase from '.'
-import Search from '../Search'
+import NewCase from './NewCase'
+import Search from '../Search/Search'
 import "./NewCaseComponent.scss"
 
 const NewCaseComponent = () => {

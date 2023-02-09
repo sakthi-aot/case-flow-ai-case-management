@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 // import CaseDocumentCard from "../CaseDocumentCard";
 import { useEffect, useState } from "react";
-import Search from "../Search";
+import Search from "../Search/Search";
 import Grid from "@mui/material/Grid";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -20,7 +20,7 @@ import png from "../../assets/png.png";
 import pdf from "../../assets/pdf.png";
 import txt from "../../assets/txt.png";
 import {useSelector,useDispatch} from "react-redux";
-import Upload from "../Upload";
+import Upload from "../Upload/Upload";
 import EditIcon from '@mui/icons-material/Edit';
 import { State, USerDetails } from "../../interfaces/stateInterface";
 import { DocumentList } from "../../interfaces/componentInterface";
@@ -59,7 +59,6 @@ const CaseDocuments = () => {
   const filterDocumentDetails = async () => {
     let searchResult = await searchCaseDocument(searchField,searchColumn)
     // searchResult = searchResult.map((element) => {
-      console.log(searchResult)
 
     // });
     if(searchResult)
