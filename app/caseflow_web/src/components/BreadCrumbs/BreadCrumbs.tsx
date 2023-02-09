@@ -8,7 +8,7 @@ import { BreadCrumbsprops } from "../../interfaces/componentInterface";
 
 const BreadCrumbs = ({dataForBreadCrumbs}:BreadCrumbsprops)=>{
     return(
-        <Breadcrumbs aria-label="breadcrumb">
+        <Breadcrumbs separator="›" aria-label="breadcrumb">
                {dataForBreadCrumbs.map((eachItem) => (
                 <Link underline="hover" color="inherit" href={eachItem.link}>
                 {eachItem.text}
