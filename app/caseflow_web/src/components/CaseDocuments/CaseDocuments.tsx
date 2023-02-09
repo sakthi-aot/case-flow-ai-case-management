@@ -183,7 +183,7 @@ const CaseDocuments = () => {
                    Description
                 </Typography>
               }
-              secondary={document.desc}
+              secondary={document.desc == "null" ? "" : document.desc}
             />
           </Grid> 
           <Grid item xs={2} >
