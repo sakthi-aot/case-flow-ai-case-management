@@ -11,8 +11,8 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 import "./fileHandler.scss";
-import Upload from "../Upload";
-import CaseDocuments from "../CaseDocuments";
+import Upload from "../Upload/Upload";
+import CaseDocuments from "../CaseDocuments/CaseDocuments";
 
 const FileHandler = () => {
   const [DMS, setDMS] = useState("DMS1");

@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import MiniDrawer from "../NavigationDrawer";
+import MiniDrawer from "../NavigationDrawer/NavigationDrawer";
 import Loader from "../Loader/Loader";
 import "./home.scss"
 const Home = (

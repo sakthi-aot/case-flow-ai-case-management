@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
-import LandingPage from "./LandingPage";
+import LandingPage from "./LandingPage/LandingPage";
 
 const BaseRouting = React.memo(() => {
 

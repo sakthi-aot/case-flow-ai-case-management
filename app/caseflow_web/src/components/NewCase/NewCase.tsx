@@ -38,8 +38,7 @@ const [values, setValues] = useState(initialFieldValues)
 const { handleSubmit, control,register } = useForm();
 // const [caseList.isEdit,setIsCaseEdit] = useState(Boolean);
 
-// console.log("caseList",caseList)
-// console.log("values",values)
+
 
   const onSubmit = async () => 
   {

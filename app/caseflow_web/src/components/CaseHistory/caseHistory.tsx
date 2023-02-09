@@ -52,13 +52,12 @@ const CaseHistory = ({caseId}) => {
 
     useEffect(() => {
       Filteroptions();
-      console.log(optionsForFilter)
     }, [selectedCaseHistory]);
 
   return (
     <div className='case-history-container'>
       <header className='case-history-header'>
-        <div className='case-history-header-name' onClick={()=>console.log(selectedCaseHistory)}>Case History</div>       
+        <div className='case-history-header-name'>Case History</div>       
         <FilterMuiComponent label="Filter" selected = {selectedCaseHistoryFilterOption} options={optionsForFilter} onChnagehandler={onFilterChangehandler} />
       </header>
       {selectedFilteredCaseHistory.map(singleCaseHistory =>{

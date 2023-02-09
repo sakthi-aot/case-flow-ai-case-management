@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
-import LOBCUstomContentCard from "../LOBCUstomContentCard";
+import LOBCUstomContentCard from "../LOBCUstomContentCard/LOBCUstomContentCard";
 import { CustomContent } from "../../interfaces/componentInterface";
 import { getLobData } from "../../services/LOBService";
 import {useSelector,useDispatch} from "react-redux";
@@ -12,7 +12,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
 import { Box, Button, Card, Pagination } from "@mui/material";
-import Search from "../Search";
+import Search from "../Search/Search";
 import "./LOBCustomContent.scss"
 import { Link } from "react-router-dom";
 import { setEditLob } from "../../reducers/lobReducer";

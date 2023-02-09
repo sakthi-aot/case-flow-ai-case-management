@@ -1,9 +1,9 @@
 import React,{useEffect,useState} from "react";
-import Search from "../Search";
+import Search from "../Search/Search";
 import { useLocation } from 'react-router-dom'
 import { useSelector, } from "react-redux";
 import { State } from "../../interfaces/stateInterface";
-import PolicyHeader from "../PolicyHeader";
+import PolicyHeader from "../PolicyHeader/PolicyHeader";
 import "./LobDetails.scss";
 import moment from "moment";
 import { getLobDetails } from "../../services/LOBService";

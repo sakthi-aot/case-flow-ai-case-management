@@ -3,18 +3,18 @@ import FilterMuiComponent from "../FilterMuiComponent/FilterMuiComponent";
 import CaseDetailData from "./CaseDetailData/CaseDetailData";
 import CaseDetailReference from "./CaseDetailReference/CaseDetailReference";
 import "./CaseDetails.scss";
-import Search from "../Search";
+import Search from "../Search/Search";
 import CaseHistory from "../CaseHistory/caseHistory";
 import { getCaseDetails, updateCases } from "../../services/CaseService";
 import { useLocation } from 'react-router-dom'
-import RelatedCaseDocuments from "../RelatedCaseDocuments";
+import RelatedCaseDocuments from "../RelatedCaseDocuments/RelatedCaseDocuments";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 // import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import CustomizedDialog from '../Dialog'
-import Upload from '../Upload'
+import CustomizedDialog from '../Dialog/Dialog'
+import Upload from '../Upload/Upload'
 import EditIcon from '@mui/icons-material/Edit';
 import { setCaseTasks, setSelectedCase } from "../../reducers/newCaseReducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -78,7 +78,6 @@ const CaseDetails = () => {
   }
     async function fetchCaseHistory(id) {    
     const caseHistoryData = await getCaseHistory(id);
-    console.log(caseHistoryData,"caseHistoryData")
     const output = caseHistoryData.casehistory.map((element,index) => {
       return {  
         id :index,
@@ -158,7 +157,6 @@ const [workflows, setworkflows]:any = useState([]);
 
   const getWorkflows = async () =>{
     const workflowsList = await getWorkflowList(1);
-    console.log(workflowsList);
     setworkflows(workflowsList);
     setOpenWorkflowPopup(true);
   }

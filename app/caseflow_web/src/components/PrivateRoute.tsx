@@ -6,35 +6,32 @@ import { setAuthToken, setAuthenticated, setUserDetails } from "../reducers/auth
 import Loading from "../containers/Loading";
 // import Upload from "./Upload";
 // import Download from "./Download";
-import Home from "./Home";
-import FileHandler from "./FileHandler";
-import CaseDocuments from "./CaseDocuments";
+import Home from "./Home/Home";
+import FileHandler from "./FileHandler/FileHandler";
+import CaseDocuments from "./CaseDocuments/CaseDocuments";
 
 import EditDocuments from "./FileHandler/editDocuments";
-import Lob from './Lob'
-import Tasks from './Tasks'
-import Cases from './Cases'
-import Dashboard from './Dashboard'
+import Lob from './Lob/Lob'
+import Tasks from './Tasks/Tasks'
+import Cases from './Cases/Cases'
+import Dashboard from './Dashboard/Dashboard'
 import CaseDetails from './CaseDetails/CaseDetails'
 import NewCaseComponent from "./NewCase/NewCaseComponent";
 import { State } from "../interfaces/stateInterface";
-import LOBCustomContent from "./LOBCustomContent";
-import LobDetail from "./LobDetails";
+import LOBCustomContent from "./LOBCustomContent/LOBCustomContent";
+import LobDetail from "./LobDetails/LobDetails";
 import NewLobData from "./NewLob/NewLobData";
 
-const NotFound = lazy(() => import("./NotFound"));
+const NotFound = lazy(() => import("./NotFound/NotFound"));
 
 const PrivateRoute = React.memo(({store}:any) => {
   const dispatch = useDispatch();
   const isAuth = useSelector((state:State) => state.auth.isAuthenticated);
   useEffect(() => {
     if (store) {
-      console.log(store);
     }
     // UserService.setKeycloakJson(null, (clientId) => {
     UserService.initKeycloak(store, (res:any) => {    
-      console.log("inside");
-      console.log("res",res); 
       const {token ,userInfo} = res|| {};
       userInfo.then((res:any)=> res  && dispatch(setUserDetails(res)))
       dispatch(setAuthToken(token));

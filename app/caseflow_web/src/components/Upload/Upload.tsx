@@ -136,7 +136,6 @@ const Upload = (props) => {
 
   //upload file action
   const onSubmitHandler = async () => {
-    console.log(values.documentID);
     if (values.documentID == 0) {
       // check with docid exist or not id documentID=0 insert opertaion work
       setSubmitted(true);
@@ -178,7 +177,6 @@ const Upload = (props) => {
     }
   };
   const onPreviewErrorhandler = (e) => {
-    console.log(e);
   };
 
   //set the matadata fields

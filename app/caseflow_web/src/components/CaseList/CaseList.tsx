@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
-import RecentCasecard from "../RecentCaseCard";
+import RecentCasecard from "../RecentCaseCard/RecentCaseCard";
 import { SortCasesByField } from "../../helper/SortCases";
 import "./caselist.scss"
 import { setCaseList, setPageSelected } from "../../reducers/newCaseReducer";
