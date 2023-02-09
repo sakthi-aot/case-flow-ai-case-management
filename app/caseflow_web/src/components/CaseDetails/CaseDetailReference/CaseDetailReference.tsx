@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import "./CaseDetailReference.scss"
 import  lobConfig from "../../../config/lob_data.json";
 import { getLobDetails } from '../../../services/LOBService';
-import { setSelectedCase, setSelectedCaseLOBDetails } from '../../../reducers/newCaseReducer';
+import { setSelectedCaseLOBDetails } from '../../../reducers/newCaseReducer';
 import { useSelector } from 'react-redux';
 import { State } from "../../../interfaces/stateInterface";
 import {useDispatch} from "react-redux";

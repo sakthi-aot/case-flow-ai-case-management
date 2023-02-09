@@ -1,13 +1,9 @@
-import FilterMuiComponent from "../FilterMuiComponent/FilterMuiComponent";
 import EditIcon from '@mui/icons-material/Edit';
-import React,{ useState } from "react";
+import React from "react";
 import "./PolicyHeader.scss";
 import { useNavigate } from "react-router-dom";
 import {useDispatch} from "react-redux";
 import { setEditLob } from "../../reducers/lobReducer";
-
-
-
 
 const PolicyHeader = (props) => {
 const dispatch = useDispatch();

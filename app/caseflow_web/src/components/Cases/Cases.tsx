@@ -3,7 +3,7 @@ import Search from "../Search/Search";
 import "./cases.scss"
 import CaseList from "../CaseList/CaseList";
 import {useSelector,useDispatch} from "react-redux";
-import { State,store } from "../../interfaces/stateInterface";
+import { State } from "../../interfaces/stateInterface";
 import { searchCases } from "../../services/CaseService";
 import { setTotalCaseCount } from "../../reducers/newCaseReducer";
 

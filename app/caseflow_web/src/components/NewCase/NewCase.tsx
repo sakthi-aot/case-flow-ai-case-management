@@ -5,13 +5,12 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import { Controller, useForm } from "react-hook-form";
 import Divider from "@mui/material/Divider";
-import {Case} from "../../dto/cases"
 import { addCases, updateCases } from "../../services/CaseService";
 import {useDispatch, useSelector} from "react-redux";
-import { useNavigate, useParams } from "react-router";
-import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
-import { setSelectedCase,resetSelectedCase } from "../../reducers/newCaseReducer";
+import {resetSelectedCase } from "../../reducers/newCaseReducer";
 import "./NewCaseComponent.scss"
 import { FormControl, MenuItem, Select } from "@mui/material";
 import { fetchCaseTypess } from "../../services/constantsService";

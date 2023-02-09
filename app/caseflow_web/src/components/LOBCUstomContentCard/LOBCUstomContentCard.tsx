@@ -3,7 +3,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import { Box, Card, createTheme, ThemeProvider, Typography } from "@mui/material";
+import { Box, createTheme, ThemeProvider, Typography } from "@mui/material";
 import { setSelectedLob } from "../../reducers/lobReducer";
 import {useDispatch} from "react-redux";
 import { useNavigate } from "react-router-dom";

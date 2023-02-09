@@ -1,29 +1,16 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
-// import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 // import CaseDocumentCard from "../CaseDocumentCard";
 import { useEffect, useState } from "react";
 import Search from "../Search/Search";
 import Grid from "@mui/material/Grid";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import DownloadIcon from "@mui/icons-material/Download";
 import "./CaseDocuments.scss";
 import jpeg from "../../assets/jpeg.png";
 import png from "../../assets/png.png";
 import pdf from "../../assets/pdf.png";
 import txt from "../../assets/txt.png";
-import {useSelector,useDispatch} from "react-redux";
-import Upload from "../Upload/Upload";
-import EditIcon from '@mui/icons-material/Edit';
-import { State, USerDetails } from "../../interfaces/stateInterface";
-import { DocumentList } from "../../interfaces/componentInterface";
+import {useDispatch} from "react-redux";
 import { getAllDocuments,getDocument,searchCaseDocument } from "../../services/DocumentManagementService";
 import { setDocumentList } from "../../reducers/documentsReducer";
 import ListItem from "@mui/material/ListItem";
@@ -35,7 +22,7 @@ import moment from "moment";
 
 const CaseDocuments = () => {
   const [filteredDocumentDetails, setFilteredDocumentDetails] = useState([]);
-  const [documentDetailsForEdit, setDocumentDetailsForEdit] = useState(null);
+  // const [documentDetailsForEdit, setDocumentDetailsForEdit] = useState(null);
   const [searchField, setSearchField] = useState("");
   const [searchColumn, setSearchColumn] = useState("Name");
   const dropDownArray = ["Name","Description"];
@@ -86,9 +73,9 @@ const CaseDocuments = () => {
     dispatch(setDocumentList(output));
   }
 
- const  fetchDocumentDetails=(data:any)=>{
-setDocumentDetailsForEdit(data)
-  }
+//  const  fetchDocumentDetails=(data:any)=>{
+// setDocumentDetailsForEdit(data)
+//   }
   
   const previewDocument = async (id,type) => {
     let response = await getDocument(id)
