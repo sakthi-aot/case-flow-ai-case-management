@@ -238,7 +238,16 @@ const [workflows, setworkflows]:any = useState([]);
     };
 
     
-  const workflow = await startNewWorkflow(selectedWorkflow, wordFlowDetails)
+  const workflow = await startNewWorkflow(selectedWorkflow, wordFlowDetails);
+  if(workflow.id){
+    toast.success("New workflow started successfully");
+    setSelected(0);
+    setOpenWorkflowPopup(false);
+    fetchRealtedTasks();
+  }
+  else{
+    toast.success("Failed to start the selected workflow");
+  }
 }else{
   toast.error("Please select a workflow");
 }
