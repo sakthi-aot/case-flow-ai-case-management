@@ -37,7 +37,6 @@ const LOBCUstomContentCard = (
   }
   
 const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
- 
   return (
     <div onClick={()=>{viewCaseDetails()}}>
     <ThemeProvider theme={theme} >
@@ -54,7 +53,7 @@ const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
                   ID
                 </Typography>
               }
-              secondary={lobData.policyNumber}
+              secondary={lobData.id}
             />
           </Grid>
           <Grid item xs={3}>

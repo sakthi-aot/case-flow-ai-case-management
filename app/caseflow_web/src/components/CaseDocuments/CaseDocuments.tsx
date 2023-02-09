@@ -152,7 +152,7 @@ setDocumentDetailsForEdit(data)
                     <ListItemText
                         primary={
                           <Typography 
-                          variant="body2"
+                          variant="body1"
                         >
                              ID
                           </Typography>
@@ -164,7 +164,7 @@ setDocumentDetailsForEdit(data)
                     <ListItemText
                         primary={
                           <Typography 
-                          variant="body2"
+                          variant="body1"
                         >
                             Case ID
                           </Typography>
@@ -176,7 +176,7 @@ setDocumentDetailsForEdit(data)
             <ListItemText
               primary={
                 <Typography 
-                variant="body2"
+                variant="body1"
               >
                    Name
                 </Typography>
@@ -186,11 +186,11 @@ setDocumentDetailsForEdit(data)
                 }
             />
           </Grid>
-          <Grid item xs={4} >
+          <Grid item xs={3} >
             <ListItemText
               primary={
                 <Typography
-                variant="body2"
+                variant="body1"
                 
               >
                    Description
@@ -199,12 +199,12 @@ setDocumentDetailsForEdit(data)
               secondary={document.desc}
             />
           </Grid> 
-          <Grid item xs={2} >
+          <Grid item xs={3} >
             <ListItemText
               primary={
                 <Typography
-                variant="body2"
-                
+                variant="body1"
+                noWrap
             >
                    Creation Date
                 </Typography>
@@ -226,7 +226,7 @@ setDocumentDetailsForEdit(data)
               <ListItemText
                 primary={
                   <Typography 
-                  variant="body2"
+                  variant="body1"
                   style={{"textAlign":"center","color":"rgba(0, 0, 0, 0.6)"}}>
                     No Case Document Found!
                   </Typography>
