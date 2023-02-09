@@ -1,4 +1,4 @@
-import { Field, ObjectType, Int ,Directive,ID } from '@nestjs/graphql';
+import { Field, ObjectType, Int  } from '@nestjs/graphql';
 import { Cases } from './cases.entity';
 
 

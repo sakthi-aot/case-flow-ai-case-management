@@ -1,8 +1,7 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException, Version } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateVersionInput } from '../dto/create-version.input';
-import { UpdateVersionInput } from '../dto/update-version.input';
 import { Versions } from '../entities/version.entity';
 
 @Injectable()
@@ -63,8 +62,7 @@ export class VersionsService {
           id: "DESC",
          }
         
-      });
-      console.log(value);
+      });      
       if (value) return value;
 
       throw new NotFoundException(`Record cannot find by id ${id}`);
@@ -94,8 +92,7 @@ export class VersionsService {
             id: "DESC",
            }
           
-        });
-        console.log(value);
+        });        
         if (value) return value;
   
         console.log(`Record cannot find by id ${id}`);

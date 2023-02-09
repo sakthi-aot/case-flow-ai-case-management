@@ -6,18 +6,15 @@ import {
   UseInterceptors,
   UploadedFile,
   Body,
-  Patch,
   Query,
   Delete,
   Put,
   Response,
   Headers
 } from '@nestjs/common';
-import { HttpStatus } from '@nestjs/common/enums';
-import { HttpException } from '@nestjs/common/exceptions';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express, Response as ExpressResponse } from 'express';
-import axios, {AxiosResponse} from 'axios'
+import axios from 'axios'
 
 //_____________________Custom Imports_____________________//
 import { DmsService } from './dms.service';

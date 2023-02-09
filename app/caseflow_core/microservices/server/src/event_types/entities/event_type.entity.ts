@@ -1,7 +1,6 @@
-import { Field, ObjectType, Int ,Directive,ID } from '@nestjs/graphql';
+import { Field, ObjectType ,Directive,ID } from '@nestjs/graphql';
 import { CaseEvents } from 'src/case_events/entities/case_event.entity';
-import { CaseHistory } from 'src/case_history/entities/case_history.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column,  OneToMany } from 'typeorm';
 
 /**
  * Summary :  Entity Class For eventtype

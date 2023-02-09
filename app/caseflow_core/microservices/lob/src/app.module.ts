@@ -7,14 +7,7 @@ import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CaseflowLobModule } from './caseflow_lob/caseflow_lob.module';
 import { ConfigModule,ConfigService } from '@nestjs/config';
-import {
-  AuthGuard,
-  KeycloakConnectModule,
-  PolicyEnforcementMode,
-  ResourceGuard,
-  RoleGuard,
-} from 'nest-keycloak-connect';
-import { APP_GUARD } from '@nestjs/core';
+import {  KeycloakConnectModule } from 'nest-keycloak-connect';
 
 const keyCloakOptionsProvider =  {
   provide: 'keyCloakDataProvider',

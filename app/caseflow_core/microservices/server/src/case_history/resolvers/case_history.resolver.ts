@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int} from '@nestjs/graphql';
 import { CaseHistoryService } from '../services/case_history.service';
 import { CaseHistory } from '../entities/case_history.entity';
 import { CreateCaseHistoryInput } from '../dto/create-case_history.input';
@@ -21,9 +21,8 @@ export class CaseHistoryResolver {
  */
   @Query(() => [CaseHistory], { name: 'getAllCaseHistory' })
   async findAll() {
-    const data=await this.caseHistoryService.findAll();
-    console.log(data);
-    return data;
+    return await this.caseHistoryService.findAll();   
+   
   }
 
 /**

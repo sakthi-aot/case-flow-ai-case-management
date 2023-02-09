@@ -1,4 +1,4 @@
-import { Args, Int, Mutation, Query, Resolver, ResolveReference } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver, ResolveReference } from '@nestjs/graphql';
 
 //_____________________Custom Imports_____________________//
 

@@ -1,8 +1,8 @@
 
 
-import { Field, ObjectType, Int ,Directive,ID } from '@nestjs/graphql';
+import { Field, ObjectType, Int ,ID } from '@nestjs/graphql';
 import { CaseDocuments } from 'src/documents/entities/documents.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column,  ManyToOne,  JoinColumn } from 'typeorm';
 
 /**
  * Summary :  Entity Class For versions
