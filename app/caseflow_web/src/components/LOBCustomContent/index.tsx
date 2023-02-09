@@ -16,6 +16,8 @@ import Search from "../Search";
 import "./LOBCustomContent.scss"
 import { Link } from "react-router-dom";
 import { setEditLob } from "../../reducers/lobReducer";
+import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
+
 
 const LOBCustomContent = () => {
 
@@ -29,6 +31,8 @@ const LOBCustomContent = () => {
   
   const lobListData = useSelector((state:State)=>state.lob.lobList);
   const lobTotalPageCount = useSelector((state:State) =>state.lob.totalLobCount) 
+const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/private"},{text:"Lob",link:"/private/lob"}]);
+
 
 
   useEffect(()=>{    
@@ -61,6 +65,8 @@ const LOBCustomContent = () => {
         ></Search>
     </div>     
     <div className="lobData-container" style={{ padding: "2rem 3rem 0rem 5rem" }}>
+    <BreadCrumbs dataForBreadCrumbs={dataForBreadCrumbs}/>
+      
       <div className="lobData-header">
       <Typography
         sx={{ padding: "1rem 1rem 1rem 1rem" }}

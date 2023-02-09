@@ -1,20 +1,21 @@
-import React,{useEffect} from "react";
+import React,{useEffect,useState} from "react";
 import Search from "../Search";
 import { useLocation } from 'react-router-dom'
 import { useSelector, } from "react-redux";
-
 import { State } from "../../interfaces/stateInterface";
-
 import PolicyHeader from "../PolicyHeader";
 import "./LobDetails.scss";
 import moment from "moment";
 import { getLobDetails } from "../../services/LOBService";
 import {useDispatch} from "react-redux";
 import { setSelectedLob } from "../../reducers/lobReducer";
+import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
+
 
 
 
 const LobDetail = () => {
+  const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/private"}]);
   const lobData = useSelector((state: State) => state.lob.selectedLob);
   const location = useLocation();
   const dispatch = useDispatch();
@@ -30,6 +31,13 @@ const LobDetail = () => {
     fetchLobDetails()
   },[]);
 
+  useEffect(() => {
+    setDataForBreadCrumbs([
+      {text:"Home",link:"/private"},
+      {text:"Lob",link:"/private/lob"},
+      {text:"LOB ID : " + lobData.id,link:"/private/lob/"+lobData.id+"details"},
+    ])
+  }, [lobData]);
   return (
     <>
       <div className="lob-details-container">
@@ -43,6 +51,8 @@ const LobDetail = () => {
         </div>
       </div>
       <section className="lob-detail-container">
+      <BreadCrumbs dataForBreadCrumbs={dataForBreadCrumbs}/>
+
         <PolicyHeader policy={lobData.policyNumber} lobId={lobData.id} status={lobData.isActive ? "Active" : "Inctive"} />
       </section>
       <div className="lob-detail-first-row">
