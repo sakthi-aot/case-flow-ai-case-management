@@ -14,6 +14,9 @@ import Grid from "@mui/material/Grid";
 import { Pagination } from "@mui/material";
 import { State } from "../../interfaces/stateInterface";
 import { PAGINATION_TAKE } from "../../apiManager/endpoints/config";
+import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
+
+
 
 
 
@@ -37,6 +40,8 @@ const CaseList =React.memo( ({config,allRecentCases}:any) => {
   const dispatch = useDispatch();
   const [totalPCount,setTotalPCount] = useState(0);
   const totalCount = useSelector((state:State)=>state.cases.totalCaseCount);
+const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/private"},{text:"Cases",link:"/private/cases"}]);
+
 
   // useEffect(()=>{ 
   //  const updatedSortedData = SortCasesByField(sortValue,recentCases)
@@ -65,6 +70,7 @@ const CaseList =React.memo( ({config,allRecentCases}:any) => {
   fetchCaseDetails();   
 
 }, [totalCount]);
+
   
 async function fetchCaseDetails() {       
   let output = allRecentCases;    
@@ -87,6 +93,8 @@ const caseListpagination = (e,p) =>{
   
   return (
     <div style={{ padding: "2rem 3rem 0rem 5rem" }}>
+      <BreadCrumbs dataForBreadCrumbs={dataForBreadCrumbs}/>
+
       <span className="recent-case-header">
       <Typography
         sx={{ padding: "1rem 1rem 1rem 1rem" }}

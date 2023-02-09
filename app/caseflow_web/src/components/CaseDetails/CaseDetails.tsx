@@ -31,9 +31,7 @@ import { fetchCaseStatuses } from "../../services/constantsService";
 import { setCaseStatuses } from "../../reducers/constantsReducer";
 import { State } from "../../interfaces/stateInterface";
 import PopUpDialogBox from "../PopUpDialogBox/PopUpDialogBox";
-import Typography from '@mui/material/Typography';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Link from '@mui/material/Link';
+import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
 import { getTaksByCaseId, getWorkflowList, startNewWorkflow } from "../../services/workflowService";
 import { Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
@@ -49,6 +47,8 @@ const CaseDetails = () => {
   const statuses =   useSelector((state:State) => state.constants.caseTypes);
   const tasks =   useSelector((state:State) => state.cases.selectedCase.tasks);
   const selectedCase =   useSelector((state:State) => state.cases.selectedCase);
+  const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/private"}]);
+
   const caseDetail = {
     status: "OPEN",
     date: "2022-11-01",
@@ -218,6 +218,13 @@ const [workflows, setworkflows]:any = useState([]);
    
    
   }
+  useEffect(() => {
+    setDataForBreadCrumbs([
+      {text:"Home",link:"/private"},
+      {text:"Cases",link:"/private/cases"},
+      {text:"Case ID : " + selectedCase.id,link:"/private/cases/"+selectedCase.id+"details"},
+    ])
+  }, [selectedCase]);
 
   const startWorkflow = async () =>{
 
@@ -268,22 +275,10 @@ const fetchRealtedTasks = async() =>{
           setSearchColumn={() => {}}
         ></Search>
       </div>
-      
 
       <section className="case-detail-container">
-      <Breadcrumbs aria-label="breadcrumb">
-  <Link underline="hover" color="inherit" href="/private">
-    Home
-  </Link>
-  <Link
-    underline="hover"
-    color="inherit"
-    href="/private/cases"
-  >
-    Cases
-  </Link>
-  <Typography>Case ID :{selectedCase.id}</Typography>
-</Breadcrumbs>
+      <BreadCrumbs dataForBreadCrumbs={dataForBreadCrumbs}/>
+
         <span className="case-detail-header">
           <div className="case-id-status">
             <p className="case-id">Case ID :{selectedCase.id}</p>

@@ -53,3 +53,12 @@ export interface SearchProps{
     description: string;
     status: string;
   };
+
+
+  export interface BreadCrumbs{
+    link:string;
+    text:string;
+  }
+  export interface BreadCrumbsprops{
+    dataForBreadCrumbs:BreadCrumbs[]
+  }
