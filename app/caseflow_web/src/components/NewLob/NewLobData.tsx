@@ -1,5 +1,5 @@
 
-import React, {useEffect, useState} from "react";
+import React, {useEffect,  useState} from "react";
 import Search from "../Search";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -22,10 +22,22 @@ import { setEditLob } from "../../reducers/lobReducer";
 import { State } from "../../interfaces/stateInterface";
 import { setSelectedLob } from "../../reducers/lobReducer";
 import { useLocation } from 'react-router-dom'
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 
 
 let defaultValues ={}
+
+const schema = Yup.object().shape({
+  policyNumber:  Yup.number().positive().required() ,
+  policyEffectiveDate: Yup.date().required(),
+  policyExpireDate: Yup.date().min(Yup.ref('policyEffectiveDate')).required(),
+  sumAssured: Yup.number().positive().required()
+  
+  
+});
 
 
 const NewLobData = () =>{
@@ -33,7 +45,7 @@ const NewLobData = () =>{
    const selectedLob = useSelector((state: State) => state.lob.selectedLob);
    const isEdit = useSelector((state: State) => state.lob.editLob);
    const location = useLocation();
-   
+
    const SetDefaultValue = ( ) =>{
      if(isEdit){
         defaultValues = {
@@ -43,6 +55,8 @@ const NewLobData = () =>{
        policyStatus:selectedLob.isActive?"Active":"Inactive",
        sumAssured:selectedLob.sumAssured
    }
+ 
+   
  }
    else{
       defaultValues = {
@@ -56,11 +70,10 @@ const NewLobData = () =>{
    }
    }
     SetDefaultValue()
-
-
-    const {handleSubmit,reset,getValues,control,formState:{errors}} = useForm({defaultValues});
-    const [errorOnDate,setOnErrorOnDate] = useState(false);
-    const [errorOnEFFDate,setOnErrorOEFFnDate] = useState(false);
+    
+    
+    const {handleSubmit,reset,control,formState:{errors}} = useForm({defaultValues,resolver:yupResolver(schema)});   
+  
     const navigate = useNavigate()
 
     async function fetchLobDetails() {
@@ -92,11 +105,11 @@ const NewLobData = () =>{
 
 
     const onSubmitHandler = async (data) => {
-      if(!errorOnDate && !errorOnEFFDate ){
+     
         if (isEdit) {
           data.id = Number(selectedLob.id)
           const response = await updateLob(data)
-          if (response && response.id ) {           
+          if (response && response.id ) {         
             toast.success("Successfully Updated the Lob");
             navigate("/private/lob/"+ response.id+'/details');
             reset();
@@ -115,7 +128,7 @@ const NewLobData = () =>{
            else{ toast.error("Error");}        
         }
 
-      }
+    
     }
 
     const onLobBackBtnHandler = ( ) =>{
@@ -126,29 +139,6 @@ const NewLobData = () =>{
         navigate('/private/lob')
     }
   }
-
-    const onErrorDate = (EFF,EXP ) =>{
-     if(EFF>EXP){     
-      setOnErrorOnDate(true)
-     }
-    }
-
-    const onAcceptNew = () =>{     
-     setOnErrorOnDate(false)
-     setOnErrorOEFFnDate(false)
-    }
-    const onErrorEFFDate = (EXP,EFF ) =>{
-     if(EFF>EXP){     
-      setOnErrorOEFFnDate(true)
-     }
-    }
-
-    const onAccepEFFNew = () =>{    
-    setOnErrorOEFFnDate(false)
-    setOnErrorOnDate(false)
-    }
-
- 
 
 
 
@@ -175,25 +165,22 @@ const NewLobData = () =>{
           <Grid item xs={9}>
             <Controller
             name="policyNumber"
-            control={control}
-            rules={{required:true,min:0}}
+            control={control}            
             render={({ field: { onChange, value ,ref}  }) => (
             <TextField
               id="standard-basic"
-              label="Policy Number"
               variant="standard"             
+              label="Policy Number"
               rows={1}
               sx={{
 
                 width: "100%",            
               }} 
               value={value} 
-              onChange={onChange}
-              
+              onChange={onChange}             
               placeholder="Policy Number"
               inputRef={ref}
-              error={!!errors.policyNumber}
-                        
+              error={!!errors.policyNumber}                        
               
             />
           )}
@@ -234,7 +221,7 @@ const NewLobData = () =>{
 
       </Grid>
 
-      <Grid container spacing={3} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
+     <Grid container spacing={3} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
         <Grid item xs={3}>
           <Typography sx={{ padding: "1rem 1rem 0rem 0rem" }} variant="body2" className="case-name-tag">
            Policy Effective Date
@@ -243,26 +230,28 @@ const NewLobData = () =>{
           <Grid item xs={3}>
             <Controller
             name="policyEffectiveDate"
-            control={control}            
-            render={({ field: { onChange, value ,ref}}) => (         
-
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DesktopDatePicker
-            label="Effective Date"
-            inputFormat="DD/MM/YYYY"
-            value={value} 
-            onChange={onChange}  
-            maxDate={getValues("policyExpireDate")}
-            renderInput={(params) => <TextField {...params}   />} 
-            inputRef={ref}       
-            onError={ ()=>onErrorEFFDate(getValues("policyExpireDate"),value)}
-            onAccept={onAccepEFFNew}
-            />
-
-        </LocalizationProvider>
+            control={control} 
+            render={({ field: { onChange, value ,ref}}) => (  
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DesktopDatePicker
+                label={"Policy Effective Date"}
+                inputFormat="DD/MM/YYYY"
+                value={value}
+                onChange={onChange}
+                inputRef={ref}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}   
+                    fullWidth                   
+                  />
+                )}
+              />
+          </LocalizationProvider>
         
           
           )}
+
+        
              
         />          
       </Grid>
@@ -275,31 +264,28 @@ const NewLobData = () =>{
           <Grid item xs={3}>
             <Controller
             name="policyExpireDate"
-            control={control}   
-                  
-            render={({ field: { onChange, value,ref } }) => (            
+            control={control}  
+            render={({ field: { onChange, value,ref,name, ...field } }) => (            
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DesktopDatePicker
-            label="Expire Date"
+            <DatePicker
+            label="Policy Expire Date"
             inputFormat="DD/MM/YYYY"
-            value={value}
-            
-            onChange={onChange}            
-            renderInput={(params) => <TextField {...params}   value={value} />}   
-            inputRef={ref}
-           minDate={getValues("policyEffectiveDate")}
-           onError={()=>onErrorDate(getValues("policyEffectiveDate"),value)}
-           onAccept={onAcceptNew}
+            value={value}   
+            onChange={onChange}   
+            inputRef={ref}        
+            renderInput={(params) => <TextField {...params}  
+             />}    
             />
 
         </LocalizationProvider>
         
           )}
-        />          
+        />     
+      <p className="policyExpDateError">{errors.policyExpireDate && '* Policy Expire Date Cannot Be Before Policy Effective Date'}  </p>    
       </Grid>
 
 
-      </Grid>
+      </Grid> 
 
 
       <Grid container spacing={3} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
@@ -339,7 +325,7 @@ const NewLobData = () =>{
         <Controller
         name="sumAssured"
         control={control}
-        rules={{required:true,min:0}}
+        rules={{required:true,min:0,pattern:/^[0-9]+$/}}
         render={({ field: { onChange, value ,ref} }) => (
           <TextField
             id="standard-basic"
@@ -383,7 +369,7 @@ const NewLobData = () =>{
           <Button
             style={{
               alignItems :"center",
-               marginLeft: "2rem",
+              marginLeft: "2rem",
               height: "2.4375rem",
               width: "20%",
               backgroundColor:"#404040"
