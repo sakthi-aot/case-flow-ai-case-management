@@ -1,35 +1,18 @@
 
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-
 import "./fileHandler.scss";
-import Upload from "../Upload/Upload";
-import CaseDocuments from "../CaseDocuments/CaseDocuments";
-import { useHistory, useParams } from "react-router-dom";
-
-
-
+import {  useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import {
-  uploadCMISfile,
   updateCMISdocument,
 } from "../../apiManager/services/cmisService";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 import Typography from "@mui/material/Typography";
 import FileViewer from 'react-file-viewer';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { setDocumentList } from "../../reducers/documentsReducer";
 import { getAllDocuments } from "../../services/DocumentManagementService";

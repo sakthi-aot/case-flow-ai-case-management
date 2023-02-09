@@ -6,14 +6,11 @@ import {
 } from "../../apiManager/services/cmisService";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
 import Typography from "@mui/material/Typography";
 import FileViewer from "react-file-viewer";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
-import { setDocumentList } from "../../reducers/documentsReducer";
-import { getAllDocuments } from "../../services/DocumentManagementService";
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
 import Box from '@mui/material/Box';
 import { v4 as uuidv4 } from "uuid";

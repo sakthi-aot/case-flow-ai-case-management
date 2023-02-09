@@ -1,5 +1,5 @@
 
-import React, {useEffect,  useState} from "react";
+import React, {useEffect} from "react";
 import Search from "../Search/Search";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -7,16 +7,13 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import { Controller, useForm } from "react-hook-form";
 import Divider from "@mui/material/Divider";
-
 import { useSelector, useDispatch} from "react-redux";
 import { useNavigate } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
-
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';import "./NewLobData.scss"
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker/DesktopDatePicker";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
-
 import { createNewLob, getLobDetails, updateLob } from "../../services/LOBService";
 import { setEditLob } from "../../reducers/lobReducer";
 import { State } from "../../interfaces/stateInterface";

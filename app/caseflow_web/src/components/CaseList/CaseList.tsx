@@ -3,9 +3,8 @@ import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import RecentCasecard from "../RecentCaseCard/RecentCaseCard";
-import { SortCasesByField } from "../../helper/SortCases";
 import "./caselist.scss"
-import { setCaseList, setPageSelected } from "../../reducers/newCaseReducer";
+import {setPageSelected } from "../../reducers/newCaseReducer";
 import {useDispatch, useSelector} from "react-redux";
 import { Case } from "../../interfaces/componentInterface";
 import ListItem from "@mui/material/ListItem";
@@ -36,7 +35,7 @@ const CaseList =React.memo( ({config,allRecentCases}:any) => {
   // const [sortValue,setSortValue] = useState({value:"",sortOrder:null})
   // const [recentCases,setRecentCases] = useState([...allRecentCases])
   // const [sortSelectValue,setSortSelectValues] = useState(sortingkeysOfAllRecentCases)
-  const [pageNo,setPageNo]= useState(1);
+  // const [pageNo,setPageNo]= useState(1);
   const dispatch = useDispatch();
   const [totalPCount,setTotalPCount] = useState(0);
   const totalCount = useSelector((state:State)=>state.cases.totalCaseCount);
@@ -73,7 +72,7 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
 
   
 async function fetchCaseDetails() {       
-  let output = allRecentCases;    
+  // let output = allRecentCases;    
   const TotalPage = Math.ceil(totalCount/ Number (PAGINATION_TAKE)) 
   setTotalPCount(TotalPage)
   // output = output.map((element) => {

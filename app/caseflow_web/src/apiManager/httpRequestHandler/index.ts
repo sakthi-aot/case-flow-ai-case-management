@@ -1,5 +1,4 @@
 import axios from "axios";
-
 import UserService from "../../services/UserService";
 import {store} from "../../services/Store";
 import {setLoader, setProgress} from "../../reducers/applicationReducer";
