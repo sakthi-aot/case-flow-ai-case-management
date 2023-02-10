@@ -1,9 +1,8 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { ConfigService} from '@nestjs/config';
-import axios, {AxiosResponse} from 'axios'
-import { createReadStream } from 'fs';
-import { firstValueFrom, map, Observable } from 'rxjs';
+import axios from 'axios';
+import { firstValueFrom } from 'rxjs';
 
 const FormData = require('form-data');
 @Injectable()

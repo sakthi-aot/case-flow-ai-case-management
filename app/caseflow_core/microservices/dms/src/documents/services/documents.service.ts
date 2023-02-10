@@ -10,7 +10,6 @@ import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
 import { FetchArgs } from '../dto/fetch-args.input';
 import { caseDocumentResponse } from '../entities/case_document_response.entity';
-import {  Versions } from 'src/versions/entities/version.entity';
 import { VersionsService } from 'src/versions/services/versions.service';
 /**
  *  Service For documents
@@ -131,8 +130,7 @@ export class DocumentsService {
   async forCases(args: FetchArgs,id:number):Promise<caseDocumentResponse>{
     try {
     const [CaseDocuments,totalCount] =await Promise.all([
-      this.documentRepository.find({relations:["versions"],
-        
+      this.documentRepository.find({relations:["versions"],        
           take: args.take,
           skip: args.skip,
           where:{ "caseId":id,isdeleted: false},

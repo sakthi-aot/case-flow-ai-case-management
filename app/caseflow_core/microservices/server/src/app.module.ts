@@ -1,18 +1,11 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig, ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
+import {  ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 
-import {
-  AuthGuard,
-  KeycloakConnectModule,
-  PolicyEnforcementMode,
-  ResourceGuard,
-  RoleGuard,
-} from 'nest-keycloak-connect';
+import { KeycloakConnectModule} from 'nest-keycloak-connect';
 import { ConfigModule,ConfigService } from '@nestjs/config';
-import { APP_GUARD } from '@nestjs/core';
 
 //_____________________Custom Imports_____________________//
 import { DmsModule } from './dms/dms.module';

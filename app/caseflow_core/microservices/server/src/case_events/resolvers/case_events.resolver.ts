@@ -1,9 +1,9 @@
-import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { CaseEventsService } from '../services/case_events.service';
 import { CaseEvents } from '../entities/case_event.entity';
 import { CreateCaseEventInput } from '../dto/create-case_event.input';
 import { UpdateCaseEventInput } from '../dto/update-case_event.input';
-import { EventTypes } from 'src/event_types/entities/event_type.entity';
+
 
 /**
  *  Resolvers For Cases

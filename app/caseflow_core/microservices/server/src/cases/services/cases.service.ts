@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException,BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository,Like } from 'typeorm';
-import { AuthGuard, RoleGuard, RoleMatchingMode, Roles, Unprotected } from 'nest-keycloak-connect';
+import { Repository } from 'typeorm';
 import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
 
@@ -10,8 +9,6 @@ import { Cases } from '../entities/cases.entity';
 import {casesResponse} from '../entities/cases_response.entity';
 import { CreateCaseInput } from '../dto/create-case.input';
 import { UpdateCaseInput } from '../dto/update-case.input';
-import { CaseHistoryService } from 'src/case_history/services/case_history.service';
-import { CaseHistory } from 'src/case_history/entities/case_history.entity';
 import { FetchArgs } from '../dto/fetch.input';
 
 /**
@@ -108,8 +105,7 @@ export class CasesService {
           }
         },
         
-      });
-      console.log(value);
+      });     
       if (value) return value;
 
       throw new NotFoundException(`Record cannot find by id ${id}`);

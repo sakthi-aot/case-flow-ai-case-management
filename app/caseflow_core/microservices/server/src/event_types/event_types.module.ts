@@ -3,7 +3,6 @@ import { EventTypesService } from './services/event_types.service';
 import { EventTypesResolver } from './resolvers/event_types.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EventTypes } from './entities/event_type.entity';
-import { CaseEventsModule } from 'src/case_events/case_events.module';
 
 
 @Module({

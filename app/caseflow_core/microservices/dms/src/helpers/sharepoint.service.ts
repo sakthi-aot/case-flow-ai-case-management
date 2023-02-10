@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { v4 as uuid } from 'uuid';
 // import queryString from 'query-string';
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import  {  AxiosResponse } from 'axios';
 import { HttpService } from '@nestjs/axios/dist';
-import { firstValueFrom, lastValueFrom, observable, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { firstValueFrom } from 'rxjs';
+
 
 //Created By:Gokul VG
 //Summary: Sharepoint Rest API services Upload,Update,Delete,Download
@@ -17,12 +16,9 @@ export class SharepointServices{
    async uploadDocument(file,fileName):Promise<any>{  
             const spURL = `https://aottech.sharepoint.com/sites/Caseflow/_api/web/GetFolderByServerRelativeUrl('/sites/Caseflow/Caseflow')/Files/Add(url='${fileName}', overwrite=true)`
            
-            try {     
-
-             
+            try {  
                 const accessToken =await this.getAccessToken(); 
                 const FormDigestValue= await this.getFormDigestValue()  
-
                 const responseUpload = await firstValueFrom(this.httpService.post(spURL,file,{
                     maxBodyLength:Infinity,
                     maxContentLength:Infinity,                    
@@ -31,8 +27,6 @@ export class SharepointServices{
                         'X-RequestDigest': `${FormDigestValue}`
                     }
                 }))
-
-                console.log(responseUpload)
                 
               return responseUpload.data    
             } catch (e) {
@@ -66,8 +60,7 @@ export class SharepointServices{
 
                 const responseUpload = await firstValueFrom(this.httpService.delete(spURL,{ 
                     headers:{
-                        "Authorization":`Bearer ${accessToken}`,
-                        // 'X-RequestDigest': `${FormDigestValue}`,
+                        "Authorization":`Bearer ${accessToken}`,                       
                         "X-HTTP-Method":"DELETE",
                         "Accept": "application/json;odata=verbose",
                         "IF-MATCH": "*"                        
