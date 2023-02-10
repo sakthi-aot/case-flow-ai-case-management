@@ -6,7 +6,7 @@ import {useSelector,useDispatch} from "react-redux";
 import { State,store } from "../../interfaces/stateInterface";
 import { searchCases } from "../../services/CaseService";
 import { setTotalCaseCount } from "../../reducers/newCaseReducer";
-
+import { Typography } from "@mui/material";
 const caseListProps = {
   title : "Cases",
   count : 5,
@@ -46,7 +46,7 @@ const Cases = (
 
   return (
     <section className="dashboard">
-      <h1 className="title-c">CaseFlow</h1>
+         <Typography variant="body1" className="title">CaseFlow</Typography>
       <div className="search">
       <Search
             setSearchField={setSearchField}

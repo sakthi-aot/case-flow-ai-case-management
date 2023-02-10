@@ -10,6 +10,7 @@ import { getLobDetails } from "../../services/LOBService";
 import {useDispatch} from "react-redux";
 import { setSelectedLob } from "../../reducers/lobReducer";
 import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
+import { Typography } from "@mui/material";
 
 
 
@@ -41,7 +42,7 @@ const LobDetail = () => {
   return (
     <>
       <div className="lob-details-container">
-        <h1 className="title">CaseFlow</h1>
+      <Typography variant="body1" className="title">CaseFlow</Typography>
         <div className="search">
           <Search
             setSearchField={() => {}}

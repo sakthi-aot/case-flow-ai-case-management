@@ -7,6 +7,7 @@ import {
   Divider,
   Select,
   MenuItem,
+  Typography,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import SearchIcon from "@mui/icons-material/Search";
@@ -23,6 +24,7 @@ const Search = ({ setSearchField, dropDownArray, setSearchColumn } :SearchProps)
   return (
     <>
       <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+        
         <Input
           id="standard-adornment-amount"
           placeholder="Search"
@@ -61,15 +63,21 @@ const Search = ({ setSearchField, dropDownArray, setSearchColumn } :SearchProps)
                       setSearchColumn(e.target.value);
                     }}
                   >
+
                     {dropDownArray ? (
                       dropDownArray.map((dropDownValue) => (
                         <MenuItem key={dropDownValue} value={dropDownValue}>
+    <Typography variant="body2">
+
                           {dropDownValue}
+        </Typography>
+
                         </MenuItem>
                       ))
                     ) : (
                       <MenuItem value="All">All</MenuItem>
                     )}
+
                   </Select>
                 </FormControl>
               </Box>

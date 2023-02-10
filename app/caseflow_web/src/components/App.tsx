@@ -29,7 +29,8 @@ let theme = createTheme({
   typography: {
     fontFamily: ["Poppins", "sans-serif"].join(","),
     body2:{
-      fontWeight: 300,
+      fontWeight: 400,
+      color:"#606060"
     },
     body1:{
       fontWeight: 500,

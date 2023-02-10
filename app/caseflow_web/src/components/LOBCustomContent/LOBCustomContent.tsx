@@ -56,7 +56,7 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
   }
   return (
     <section className="dashboard">
-    <h1 className="title-c">CaseFlow</h1>
+    <Typography variant="body1" className="title">CaseFlow</Typography>
     <div className="search">
     <Search
           setSearchField={setSearchField}

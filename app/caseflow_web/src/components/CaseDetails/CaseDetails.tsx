@@ -265,7 +265,7 @@ const fetchRealtedTasks = async() =>{
   return (
     <>
     <div className="details-container">
-      <h1 className="title">CaseFlow</h1>
+    <Typography variant="body1" className="title">CaseFlow</Typography>
       <div className="search">
         <Search
           setSearchField={() => {}}

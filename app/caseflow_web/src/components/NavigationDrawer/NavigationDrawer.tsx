@@ -209,7 +209,7 @@ export default function MiniDrawer(
                     {getLogo(index)}
                   </ListItemIcon>
                   <ListItemText
-                    primary={route.text}
+                    primary={<Typography variant="body2" >{route.text}</Typography>}
                     sx={{ opacity: open ? 1 : 0 }}
                   />
                 </ListItemButton>

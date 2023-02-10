@@ -4,6 +4,7 @@ import "./dashboard.scss";
 import CaseList from "../CaseList/CaseList";
 import MyTask from "../MyTask/MyTask";
 import { fetchRecentCaseList } from "../../services/CaseService";
+import { Typography } from "@mui/material";
 
 const caseListProps = {
   title: "Recent Cases",
@@ -44,7 +45,7 @@ const Dashboard = () =>
     const [dropDownArray, setdropDownArray] = useState(['Name', "Description"]);
     return (
       <div className="dashboard">
-        <h1 className="title">CaseFlow</h1>
+     <Typography variant="body1" className="title">CaseFlow</Typography>
         <div className="search">
           <Search
             setSearchField={setSearchField}

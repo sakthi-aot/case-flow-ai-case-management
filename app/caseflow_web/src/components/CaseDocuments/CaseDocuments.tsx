@@ -104,7 +104,7 @@ setDocumentDetailsForEdit(data)
 
   return (
     <section className="dashboard">
-      <h1 className="title">CaseFlow</h1>
+      <Typography variant="body1" className="title">CaseFlow</Typography>
       <div className="search">
         <Search
           setSearchField={setSearchField}
@@ -152,7 +152,7 @@ setDocumentDetailsForEdit(data)
                     <ListItemText
                         primary={
                           <Typography 
-                          variant="body1"
+                          variant="subtitle1"
                         >
                              ID
                           </Typography>
@@ -164,7 +164,7 @@ setDocumentDetailsForEdit(data)
                     <ListItemText
                         primary={
                           <Typography 
-                          variant="body1"
+                          variant="subtitle1"
                         >
                             Case ID
                           </Typography>
@@ -176,7 +176,7 @@ setDocumentDetailsForEdit(data)
             <ListItemText
               primary={
                 <Typography 
-                variant="body1"
+                variant="subtitle1"
               >
                    Name
                 </Typography>
@@ -190,7 +190,7 @@ setDocumentDetailsForEdit(data)
             <ListItemText
               primary={
                 <Typography
-                variant="body1"
+                variant="subtitle1"
                 
               >
                    Description
@@ -203,7 +203,7 @@ setDocumentDetailsForEdit(data)
             <ListItemText
               primary={
                 <Typography
-                variant="body1"
+                variant="subtitle1"
                 noWrap
             >
                    Creation Date

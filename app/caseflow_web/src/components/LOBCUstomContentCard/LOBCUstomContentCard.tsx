@@ -47,8 +47,7 @@ const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
             <ListItemText
               primary={
                 <Typography 
-                variant="body2"
-                className="lob-card-style"
+                variant="subtitle1"
                 >
                   ID
                 </Typography>
@@ -60,7 +59,7 @@ const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
             <ListItemText
               primary={
                 <Typography 
-                variant="body2"
+                variant="subtitle1"
                 className="lob-card-style"
            >
                   Policy Number
@@ -73,7 +72,7 @@ const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
             <ListItemText
               primary={
                 <Typography
-                variant="body2"
+                variant="subtitle1"
                 className="lob-card-style"
               >
                   Created date
@@ -86,7 +85,7 @@ const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
             <ListItemText
               primary={
                 <Typography
-                variant="body2"
+                variant="subtitle1"
                 className="lob-card-style"
                >
                   Sum Assured

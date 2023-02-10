@@ -142,7 +142,7 @@ const NewLobData = () =>{
 
     return <>
     <form className="dashboard" onSubmit={handleSubmit(onSubmitHandler)}>
-      <h1 className="title-t">CaseFlow</h1> 
+    <Typography variant="body1" className="title">CaseFlow</Typography>
       <div className="search">
       <Search setSearchField={serachField} dropDownArray={dropDownArrayItem} setSearchColumn={SearchColumn}/>
       </div>    
