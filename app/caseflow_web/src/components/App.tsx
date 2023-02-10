@@ -30,13 +30,16 @@ let theme = createTheme({
     fontFamily: ["Poppins", "sans-serif"].join(","),
     body2:{
       fontWeight: 400,
-      color:"#606060"
+      color:"#606060",
+      margin:"0rem 0 0rem 0"
     },
     body1:{
       fontWeight: 500,
     },
     subtitle1:{
       fontWeight: 700,
+      margin:"1rem 0 0rem 0"
+
     }
   },
 })
