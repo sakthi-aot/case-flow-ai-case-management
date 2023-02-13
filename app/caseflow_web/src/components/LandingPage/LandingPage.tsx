@@ -17,14 +17,16 @@ const LandingPage = () => {
             />
             <div className="inner_text">
               <h1 className="title">
-                An open-source generic Case Managment application built on top
+                An open-source generic Case Management application built on top
                 of formsflow.ai
               </h1>
               <p className="text">
-                caseflow.ai is a completely free and open source framework
-                explicitly designed to be hightly generic and configurable that
+                caseflow.ai is a completely free and open-source framework
+                explicitly designed to be highly generic and configurable that
                 assesses, plans, implements, coordinates, monitors, and
-                evaluates to improve outcomes, experiences, and value.
+                evaluates to improve outcomes, experiences, and value. An
+                open-source generic Case Management application built on top of
+                formsflow.ai
               </p>
               <div className="buttons">
                 <Button
@@ -49,7 +51,8 @@ const LandingPage = () => {
           </div>
 
           <div className="grid-right">
-            <img alt="landing page"
+            <img
+              alt="landing page"
               className="landingImage"
               src="./components/Home/landingImage.jpeg"
             ></img>
