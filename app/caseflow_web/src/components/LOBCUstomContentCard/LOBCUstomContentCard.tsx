@@ -54,7 +54,7 @@ const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
                   ID
                 </Typography>
               }
-              secondary={lobData.policyNumber}
+              secondary={lobData.id}
             />
           </Grid>
           <Grid item xs={3}>
