@@ -20,8 +20,8 @@ const App = React.memo(({ store }:AppProps ) => {
 let theme = createTheme({
   palette: {
     primary: {
-      // main: "#404040",
-      main: "#ff5349",
+      main: "#404040",
+      // main: "#ff5349",
 
       
     },
