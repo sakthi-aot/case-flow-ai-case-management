@@ -230,7 +230,6 @@ const handleBack = ()=>{
               height: "2.4375rem",
               width: "20%",             
             }}
-            sx={{backgroundColor:"primary.main"}}
             variant="contained"
             onClick={handleSubmit(onSubmit)}
           >
@@ -243,8 +242,7 @@ const handleBack = ()=>{
               height: "2.4375rem",
               width: "20%",             
             }}
-            sx={{backgroundColor:"primary.main"}}
-            variant="contained"
+            variant="outlined"
             onClick={() =>handleBack()} 
           >
            Back
