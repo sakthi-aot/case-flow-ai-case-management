@@ -228,9 +228,9 @@ const handleBack = ()=>{
               alignItems :"center",
               // margin: "auto",
               height: "2.4375rem",
-              width: "20%",
-              backgroundColor:"#404040"
+              width: "20%",             
             }}
+            sx={{backgroundColor:"primary.main"}}
             variant="contained"
             onClick={handleSubmit(onSubmit)}
           >
@@ -241,9 +241,9 @@ const handleBack = ()=>{
               alignItems :"center",
                marginLeft: "2rem",
               height: "2.4375rem",
-              width: "20%",
-              backgroundColor:"#404040"
+              width: "20%",             
             }}
+            sx={{backgroundColor:"primary.main"}}
             variant="contained"
             onClick={() =>handleBack()} 
           >

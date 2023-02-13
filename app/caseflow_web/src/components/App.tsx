@@ -21,10 +21,15 @@ let theme = createTheme({
   palette: {
     primary: {
       main: "#404040",
+      // main: "#ff5349",
+
+      
     },
     secondary: {
       main: "#171616",
     },
+   
+
   },
   typography: {
     fontFamily: ["Poppins", "sans-serif"].join(","),

@@ -42,9 +42,7 @@
             justify-content: space-between;
             align-items: center;
             grid-column-gap: 2rem;
-            .case-status{
-                // width: 5rem;
-                background-color:  $primary-theme-black-color;
+            .case-status{               
                 color: #FFFFFF;
                 padding: .5rem 1rem;
                 border-radius: 18px;
@@ -95,11 +93,11 @@
     font-family: $primary-font;
     button{
         font-family: $primary-font;
-        background-color: $primary-theme-black-color;
+        // background-color: $primary-theme-black-color;
         // width: 80&;
-        color:white;
+        // color:white;
     }
-    button:hover{
-        color:$primary-theme-black-color;
-    }
+    // button:hover{
+    //     // color:$primary-theme-black-color;
+    // }
 }

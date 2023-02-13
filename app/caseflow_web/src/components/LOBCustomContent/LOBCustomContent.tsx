@@ -74,17 +74,17 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
         className="lob-heading"
       >
        Policy
-      </Typography>
+    </Typography>
 
       <Button 
        style={{
         alignItems :"center",        
         height: "2.4375rem",
-        width: "20%",
-        backgroundColor:"#404040",
+        width: "20%",       
         borderRadius:"8px",
         textTransform:"unset"
         }}
+        sx={{backgroundColor:'primary.main'}}
         variant="contained"
         component={Link} to="/private/lob/create"
         onClick={resetEdit}

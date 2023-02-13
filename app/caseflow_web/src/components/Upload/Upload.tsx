@@ -237,7 +237,7 @@ const Upload = (props) => {
                 onChange={showPreview}
                 hidden
               />
-              <Button className="choose-file-btn-upload" variant="contained">
+              <Button className="choose-file-btn-upload" variant="contained" sx={{backgroundColor:'primary.main'}}>
                 <label
                   htmlFor="actual-btn"
                   className="choose-file-btn-label-upload"
@@ -378,7 +378,8 @@ const Upload = (props) => {
               <Button
                 className={values.file && values.fileName?"upload-btn-abled":"upload-btn-disabled"}
                 disabled={values.file && values.fileName?false:true}
-                variant="outlined"
+                variant="contained" sx={{backgroundColor:'primary.main'}}
+                
                 onClick={onSubmitHandler}
               >
                 {values.documentID == 0 ? "Upload file" : "Update File"}

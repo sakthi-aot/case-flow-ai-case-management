@@ -299,7 +299,7 @@ const NewLobData = () =>{
         render={({ field: { onChange, value } }) => (     
 
         <ToggleButtonGroup
-              color="error"
+              sx={{color:'primary.main'}}
               exclusive
               value={value} 
               onChange={onChange}
@@ -357,7 +357,7 @@ const NewLobData = () =>{
               // margin: "auto",
               height: "2.4375rem",
               width: "20%",
-              backgroundColor:"#404040"
+              backgroundColor:'primary.main'            
             }}
             variant="contained"
             type="submit"          
@@ -369,10 +369,10 @@ const NewLobData = () =>{
               alignItems :"center",
               marginLeft: "2rem",
               height: "2.4375rem",
-              width: "20%",
-              backgroundColor:"#404040"
+              width: "20%",  
+              backgroundColor:'primary.main'             
             }}
-            variant="contained"     
+            variant="outlined"     
             onClick={onLobBackBtnHandler}      
           >
            Back

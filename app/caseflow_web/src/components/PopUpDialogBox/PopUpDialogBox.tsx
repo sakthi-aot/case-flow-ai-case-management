@@ -20,14 +20,17 @@ const PopUpDialogBox = (props) =>{
        </DialogContentText>
      </DialogContent>
     { props.type == "delete" ?<DialogActions className={props.type=="delete"?"dialogActionCenter":""}>
-       <Button onClick={props.onClose} className="btn1Style">{props.btn1}</Button>
-       <Button onClick={props.onConfirm} autoFocus className="btn2Style" variant="contained">
+       <Button onClick={props.onClose} className="btn1Style" variant="outlined">{props.btn1}</Button>
+       <Button onClick={props.onConfirm} autoFocus className="btn2Style" variant="contained"
+                sx={{backgroundColor:
+                'primary.main'}}>
          {props.btn2}
        </Button>
      </DialogActions> : ""}
      { props.type == "confirm" ?<DialogActions className='confirm'>
-       <Button onClick={props.onClose} className="secondary">{props.btn1}</Button>
-       <Button onClick={props.onConfirm} autoFocus className="primary" variant="contained">
+       <Button onClick={props.onClose} className="secondary" variant="outlined">{props.btn1}</Button>
+       <Button onClick={props.onConfirm} autoFocus className="primary" variant="contained"
+                sx={{backgroundColor:'primary.main'}}>
          {props.btn2}
        </Button>
      </DialogActions> : ""}

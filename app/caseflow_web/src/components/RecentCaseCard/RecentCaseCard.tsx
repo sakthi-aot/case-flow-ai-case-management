@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux/es/exports";
 import { setSelectedCase } from "../../reducers/newCaseReducer";
 import "../../styles.scss";
+import { DirectiveLocation } from "graphql";
 
 const RecentCaseCard = (props) => {
   console.log(props.case)
@@ -130,11 +131,11 @@ const RecentCaseCard = (props) => {
 
           <Grid  item xs={2} display="flex" alignItems='center' justifyContent="flex-end"  >
           <Box >
-          <div className="recent-case-card-status">
+          <Typography sx={{backgroundColor:'primary.main'}} className="recent-case-card-status">
               <div className="recent-case-card-status-text">
                 {CaseDetails?.casestatus?.displayname}
               </div>
-            </div>
+            </Typography>
             </Box>
 
           </Grid>

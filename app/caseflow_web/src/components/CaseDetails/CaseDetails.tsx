@@ -26,7 +26,6 @@ import moment from "moment";
 import { store } from "../../interfaces/stateInterface";
 import { getDocumentofCaseList } from "../../services/CaseService";
 import { setSelectedCaseDocuments,setTotalDocCount } from "../../reducers/newCaseReducer";
-import { findAllByAltText } from "@testing-library/react";
 import { fetchCaseStatuses } from "../../services/constantsService";
 import { setCaseStatuses } from "../../reducers/constantsReducer";
 import { State } from "../../interfaces/stateInterface";
@@ -280,10 +279,10 @@ const fetchRealtedTasks = async() =>{
         <span className="case-detail-header">
           <div className="case-id-status">
             <p className="case-id">Case ID :{selectedCase.id}</p>
-            <p className="case-status">{selectedCase?.casestatus?.displayname}</p>
+            <Typography sx={{backgroundColor:'primary.main'}} className="case-status">{selectedCase?.casestatus?.displayname}</Typography>
           <div className="case-edit" onClick={()=>{editCaseDetails(selectedCase)}}>  
-          <span className="action-icon"> {<EditIcon />}</span>
-              </div>
+          <span  className="action-icon"> {<EditIcon sx={{color:'primary.main'}}/>}</span>
+          </div>
            
           </div>
           <FilterMuiComponent
@@ -345,8 +344,10 @@ const fetchRealtedTasks = async() =>{
             </FormControl>
             <FormControl>
             <Button
-                variant="outlined"
+                variant="contained"
+                sx={{backgroundColor:'primary.main'}}
                 onClick={startWorkflow}
+                
               >
                Start Workflow
               </Button>

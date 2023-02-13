@@ -25,6 +25,7 @@ import { useSelector,useDispatch } from "react-redux";
 import { State } from "../../interfaces/stateInterface";
 import "./navigation.scss"
 import { resetSelectedCase } from "../../reducers/newCaseReducer";
+import { useTheme } from "@mui/material/styles";
 
 
 const drawerWidth = 240;
@@ -102,6 +103,8 @@ export default function MiniDrawer(
 
   const userInfo = useSelector((state:State)=>state.auth.userDetails)
 
+  const theme = useTheme();
+
 
   const routes = [
     {
@@ -164,11 +167,12 @@ export default function MiniDrawer(
        style={{
           width:"206px",
           margin:".7rem auto 0",
-          backgroundColor:"#404040",
+         
           borderRadius:"8px",
           transition:"all 1s ease",  
 
         }} 
+        sx={{backgroundColor:'primary.main'}}
         onClick={()=>{dispatch(resetSelectedCase())}}
         component={Link} to="/private/cases/create">Start New Case</Button>}
         
