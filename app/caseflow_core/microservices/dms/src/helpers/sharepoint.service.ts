@@ -56,7 +56,7 @@ export class SharepointServices{
             const spURL = `https://aottech.sharepoint.com/sites/Caseflow/_api/web/GetFileByServerRelativeUrl('/sites/Caseflow/Caseflow/${fileName}')`           
             try {   
                 const accessToken = await this.getAccessToken();
-                const FormDigestValue =await this.getFormDigestValue()               
+                // const FormDigestValue =await this.getFormDigestValue()               
 
                 const responseUpload = await firstValueFrom(this.httpService.delete(spURL,{ 
                     headers:{

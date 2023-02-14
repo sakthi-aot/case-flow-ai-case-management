@@ -80,7 +80,7 @@ export const searchCaseDocument= async (searchField,searchColumn) => {
       searchColumn : searchColumn
     },
   },null)
-    .then((res) => {return (res.data.data.SearchcaseDocument) })
+    .then((res) => {return (res.data.data.SearchCaseDocument) })
     .catch((error) => {
       console.log({"error" : "error loading data"})
       return []

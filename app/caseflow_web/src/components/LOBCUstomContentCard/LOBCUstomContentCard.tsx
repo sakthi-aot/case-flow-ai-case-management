@@ -30,7 +30,7 @@ const LOBCUstomContentCard = (
     navigate("/private/lob/"+ lobData.id+'/details');
   }
   
-const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
+const formattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
   return (
     <div onClick={()=>{viewCaseDetails()}}>    
       <Typography />
@@ -71,7 +71,7 @@ const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
                   Created date
                 </Typography>
               }
-              secondary={FormattedCreatedDate}
+              secondary={formattedCreatedDate}
             />
           </Grid>          
           <Grid item xs={3}>

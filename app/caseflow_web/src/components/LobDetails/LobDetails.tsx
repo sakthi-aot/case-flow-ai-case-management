@@ -39,6 +39,7 @@ const LobDetail = () => {
       {text:"LOB ID : " + lobData.id,link:"/private/lob/"+lobData.id+"details"},
     ])
   }, [lobData]);
+  
   return (
     <>
       <div className="lob-details-container">

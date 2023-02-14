@@ -48,14 +48,14 @@ export class DocumentsService {
   ): Promise<CaseDocuments> {
     try {
       const newCase =  this.documentRepository.create(createDocumentInput);
-      const docdata=await this.documentRepository.save(newCase);
-      const documentid=docdata?.id;
-      if(docdata && docdata?.id){
+      const docData=await this.documentRepository.save(newCase);
+      const documentid=docData?.id;
+      if(docData && docData?.id){
       const versiondetails=await this.versionService.findDocument(documentid);
       const versionNumber=(versiondetails && versiondetails?.versions)?versiondetails?.versions:0;
       const versionData={
-        docid:docdata?.id,
-        documentid:docdata?.latestversion,
+        docid:docData?.id,
+        documentid:docData?.latestversion,
         versions:versionNumber?(versionNumber+1):1,
         creationdate:new Date(),
         modificationdate:new Date()
@@ -64,7 +64,7 @@ export class DocumentsService {
     }else{
       console.log("Error in doc upload");
     }
-      return docdata;
+      return docData;
     } catch (err) {
       console.log(err);
     }

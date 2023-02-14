@@ -8,7 +8,7 @@ import { State } from "../../interfaces/stateInterface";
 
 
 
-const CaseHistory = ({caseId}) => {
+const CaseHistory = () => {
 
   const dispatch = useDispatch();
   const userInfo = useSelector((state:State)=>state.auth.userDetails)

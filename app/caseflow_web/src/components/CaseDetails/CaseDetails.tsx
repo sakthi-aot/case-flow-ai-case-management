@@ -299,7 +299,7 @@ const fetchRealtedTasks = async() =>{
           caseDescription={selectedCase.desc}
           tasks={tasks}
           caseType={selectedCase.casestype}
-          lobcaseid={selectedCase.lobcaseid}
+          lobCaseId={selectedCase.lobcaseid}
         />
         {(selectedCase && selectedCase.id) ? <CaseDetailReference
           caseId={selectedCase.id}

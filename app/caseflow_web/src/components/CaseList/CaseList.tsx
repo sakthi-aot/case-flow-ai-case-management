@@ -73,8 +73,8 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
   
 async function fetchCaseDetails() {       
   // let output = allRecentCases;    
-  const TotalPage = Math.ceil(totalCount/ Number (PAGINATION_TAKE)) 
-  setTotalPCount(TotalPage)
+  const totalPage = Math.ceil(totalCount/ Number (PAGINATION_TAKE)) 
+  setTotalPCount(totalPage)
   // output = output.map((element) => {
   //   return {
   //     id :element.id,
