@@ -90,7 +90,7 @@ const formattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
        
           <Grid  item xs={1} display="flex" alignItems='center' justifyContent="flex-end"  >
           <Box >
-          <Typography sx={{backgroundColor:'primary.main'}} className="recent-case-card-status">
+          <Typography className="recent-case-card-status">
               <div className="recent-case-card-status-text">
                 {lobData.isActive==true ?"Active":"InActive"}
               </div>

@@ -44,7 +44,7 @@ const RecentCaseCard = (props) => {
                 variant="subtitle1"                
                 className="recent-case-card-style"
                 >
-                   ID
+                   Case ID
                 </Typography>
               }
               secondary={ <Typography 
@@ -131,11 +131,11 @@ const RecentCaseCard = (props) => {
 
           <Grid  item xs={2} display="flex" alignItems='center' justifyContent="flex-end"  >
           <Box >
-          <Typography sx={{backgroundColor:'primary.main'}} className="recent-case-card-status">
+          <Typography className="recent-case-card-status">
               <div className="recent-case-card-status-text">
                 {CaseDetails?.casestatus?.displayname}
               </div>
-            </Typography>
+          </Typography>
             </Box>
 
           </Grid>

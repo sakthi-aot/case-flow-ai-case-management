@@ -4,8 +4,9 @@
     position: relative; 
     right: 1rem; 
     display: inline-block;
-    height: 36px;   
-    border-radius: 18px;
+    height: 36px;
+    background-color: #EBEBEB;   
+    border-radius: 4px;
     opacity: 1;
     padding: 0 1rem 0 1rem;
 .recent-case-card-status-text{
@@ -13,7 +14,7 @@
     padding-top: 6px;
 font: normal normal normal 14px/21px Poppins;
 letter-spacing: 0px;
-color: #FFFFFF;
+color: #404040;
 opacity: 1;
 text-align: center;
 }

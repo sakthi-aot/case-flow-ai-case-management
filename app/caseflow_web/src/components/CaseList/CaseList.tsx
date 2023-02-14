@@ -118,6 +118,68 @@ const caseListpagination = (e,p) =>{
          </Select>
         </FormControl> : "" } */}
       </span>
+      <Grid container spacing={1} >
+          <Grid item xs={2} >
+            <ListItemText
+              primary={
+                <Typography 
+                variant="subtitle1"                
+                className="recent-case-card-style"
+                >
+                   Case ID
+                </Typography>
+              }
+            />
+          </Grid>
+          <Grid item xs={2} >
+            <ListItemText
+              primary={
+                <Typography 
+                variant="subtitle1"                
+                className="recent-case-card-style"
+                >
+                   Name
+                </Typography>
+              }
+            />
+          </Grid>
+          <Grid item xs={2} >
+            <ListItemText
+              primary={
+                <Typography 
+                variant="subtitle1"                
+                className="recent-case-card-style"
+                >
+                   Type
+                </Typography>
+              }
+            />
+          </Grid>
+          <Grid item xs={3} >
+            <ListItemText
+              primary={
+                <Typography 
+                variant="subtitle1"                
+                className="recent-case-card-style"
+                >
+                   Description
+                </Typography>
+              }
+            />
+          </Grid>
+          <Grid item xs={2} >
+            <ListItemText
+              primary={
+                <Typography 
+                variant="subtitle1"                
+                className="recent-case-card-style"
+                >
+                  status
+                </Typography>
+              }
+            />
+          </Grid>
+      </Grid>
       <Divider sx={{ borderBottomWidth: 3 }} />
       <div >
 
