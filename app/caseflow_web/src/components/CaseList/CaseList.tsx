@@ -118,7 +118,18 @@ const caseListpagination = (e,p) =>{
          </Select>
         </FormControl> : "" } */}
       </span>
-      <Grid container spacing={1} >
+      
+      <div >
+
+      <List
+       
+        className="superbassClass"
+        component="nav"
+        aria-label="mailbox folders"
+
+         >
+          <ListItem >
+        <Grid container spacing={1} >
           <Grid item xs={2} >
             <ListItemText
               primary={
@@ -155,7 +166,7 @@ const caseListpagination = (e,p) =>{
               }
             />
           </Grid>
-          <Grid item xs={3} >
+          <Grid item xs={4} >
             <ListItemText
               primary={
                 <Typography 
@@ -167,7 +178,7 @@ const caseListpagination = (e,p) =>{
               }
             />
           </Grid>
-          <Grid item xs={2} >
+          <Grid  item xs={2} style={{"padding-left":"2rem"}}>
             <ListItemText
               primary={
                 <Typography 
@@ -180,17 +191,9 @@ const caseListpagination = (e,p) =>{
             />
           </Grid>
       </Grid>
+      
+      </ListItem>
       <Divider sx={{ borderBottomWidth: 3 }} />
-      <div >
-
-      <List
-       
-        className="superbassClass"
-        component="nav"
-        aria-label="mailbox folders"
-
-         >
-
         {allRecentCases.length!=0 ? allRecentCases.map((eachcases:Case) => (
           <RecentCasecard
             case = {eachcases}
