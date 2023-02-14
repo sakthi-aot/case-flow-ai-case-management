@@ -12,14 +12,13 @@ export class AlfrescoService {
   // Summary : Upload File to S3
   // Created By : Don C Varghese
   async uploadDocument(file: any, data: any,token:string):  Promise<any>  {
-   console.log(file,data);
+  //  console.log(file,data);
    let body = this.mapAlfrescoForm(file,data)
    const headersRequest = {
     'Content-Type': 'multipart/form-data',
     "Authorization": token ,
 };
-
-   console.log(body);
+ 
    const auth = {
     username: 'admin',
     password: 'admin'
@@ -30,7 +29,7 @@ export class AlfrescoService {
         headers : headersRequest
       
       }));
-      console.log("response",response)
+      
       return response.data;
     }
     catch(err){
@@ -43,13 +42,12 @@ export class AlfrescoService {
   // Summary : Upload File to S3
   // Created By : Don C Varghese
   async updateDocument(file: any,documnet : any,data: any,token:string):  Promise<any>  {
-   console.log(file,data);
+  
    let body = new Buffer(file.buffer ? file.buffer : file);
    const headersRequest = {
     "Authorization": token ,
 };
-
-   console.log(body);
+ 
    const auth = {
     username: 'admin',
     password: 'admin'
@@ -66,7 +64,7 @@ export class AlfrescoService {
         params: params,
       
       }));
-      console.log("response",response)
+     
       return response;
     }
     catch(err){
@@ -106,7 +104,7 @@ export class AlfrescoService {
         headers : headersRequest
       
       }));
-      console.log("response",response)
+    
       return response;
     }
     catch(err){

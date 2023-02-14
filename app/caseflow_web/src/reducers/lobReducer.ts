@@ -25,7 +25,7 @@ const lobSlice = createSlice({
     name:"lob",
     initialState,
     reducers:{
-        setlobList:(state,action)=>{
+        setLobList:(state,action)=>{
             state.lobList = action.payload;
         },
         setLobTotalCount:(state,action) =>{     
@@ -44,7 +44,7 @@ const lobSlice = createSlice({
 
 
 export const {
-    setlobList,
+    setLobList,
     setLobTotalCount,
     setSelectedLob,
     setEditLob,

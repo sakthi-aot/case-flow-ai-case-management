@@ -5,7 +5,7 @@ import Divider from "@mui/material/Divider";
 import LOBCUstomContentCard from "../LOBCUstomContentCard/LOBCUstomContentCard";
 import { getLobData } from "../../services/LOBService";
 import {useSelector,useDispatch} from "react-redux";
-import { setlobList, setLobTotalCount } from "../../reducers/lobReducer";
+import { setLobList, setLobTotalCount } from "../../reducers/lobReducer";
 import { State } from "../../interfaces/stateInterface";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -22,7 +22,7 @@ const LOBCustomContent = () => {
 
   const [searchField, setSearchField] = useState("");
   const [searchColumn, setSearchColumn] = useState("All");
-  const [dropDownArray, setdropDownArray] = useState([""]);
+  const [dropDownArray, setDropDownArray] = useState([""]);
   const [ selectedPage,setSelectedPage] = useState(1);
    
   
@@ -40,11 +40,11 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
 
   const fetchLobList =async () =>{
     const output = await getLobData(selectedPage,searchField,searchColumn);
-    dispatch(setlobList(output.CaseflowLob))
+    dispatch(setLobList(output.CaseflowLob))
     dispatch(setLobTotalCount(output.totalCount))
    
   //  let fields= Object.keys( output.CaseflowLob[0])
-   setdropDownArray(["policyNumber"])    
+   setDropDownArray(["policyNumber"])    
   }
 
   const onLobPageCountChange =(e,p) =>{

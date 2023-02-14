@@ -45,7 +45,7 @@ export class DocumentsResolver {
    * @returns 
    */
   @Query((returns) => [CaseDocuments] )
-  SearchcaseDocument(
+  SearchCaseDocument(
     @Args('searchField') searchField: string,
     @Args('searchColumn') searchColumn : string,
      ): Promise<CaseDocuments[]> | HttpException{
