@@ -25,14 +25,13 @@ import moment from "moment";
 import { store } from "../../interfaces/stateInterface";
 import { getDocumentofCaseList } from "../../services/CaseService";
 import { setSelectedCaseDocuments,setTotalDocCount } from "../../reducers/newCaseReducer";
-import { findAllByAltText } from "@testing-library/react";
 import { fetchCaseStatuses } from "../../services/constantsService";
 import { setCaseStatuses } from "../../reducers/constantsReducer";
 import { State } from "../../interfaces/stateInterface";
 import PopUpDialogBox from "../PopUpDialogBox/PopUpDialogBox";
 import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
 import { getTaksByCaseId, getWorkflowList, startNewWorkflow } from "../../services/workflowService";
-import { Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 
 
 
@@ -264,7 +263,7 @@ const fetchRealtedTasks = async() =>{
   return (
     <>
     <div className="details-container">
-      <h1 className="title">CaseFlow</h1>
+    <Typography variant="body1" className="title">CaseFlow</Typography>
       <div className="search">
         <Search
           setSearchField={() => {}}
@@ -279,10 +278,10 @@ const fetchRealtedTasks = async() =>{
         <span className="case-detail-header">
           <div className="case-id-status">
             <p className="case-id">Case ID :{selectedCase.id}</p>
-            <p className="case-status">{selectedCase?.casestatus?.displayname}</p>
+            <Typography sx={{backgroundColor:'primary.main'}} className="case-status">{selectedCase?.casestatus?.displayname}</Typography>
           <div className="case-edit" onClick={()=>{editCaseDetails(selectedCase)}}>  
-          <span className="action-icon"> {<EditIcon />}</span>
-              </div>
+          <span  className="action-icon"> {<EditIcon sx={{color:'primary.main'}}/>}</span>
+          </div>
            
           </div>
           <FilterMuiComponent
@@ -314,7 +313,7 @@ const fetchRealtedTasks = async() =>{
           className="case-documents-head-section"
           sx={{marginBottom:0}}
         >
-         <h2 className="caseDocuments-headtag">Case Documents</h2>
+         <Typography variant = 'subtitle1' className="caseDocuments-headtag">Case Documents</Typography>
         </AccordionSummary>
         <AccordionDetails sx={{paddingLeft:0}}>
         <RelatedCaseDocuments id = {selectedCase.id} docDetail={docDetail}></RelatedCaseDocuments>
@@ -344,8 +343,10 @@ const fetchRealtedTasks = async() =>{
             </FormControl>
             <FormControl>
             <Button
-                variant="outlined"
+                variant="contained"
+                sx={{backgroundColor:'primary.main'}}
                 onClick={startWorkflow}
+                
               >
                Start Workflow
               </Button>

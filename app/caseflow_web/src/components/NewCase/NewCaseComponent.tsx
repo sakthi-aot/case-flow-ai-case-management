@@ -2,6 +2,7 @@ import React from 'react'
 import NewCase from './NewCase'
 import Search from '../Search/Search'
 import "./NewCaseComponent.scss"
+import { Typography } from '@mui/material'
 
 const NewCaseComponent = () => {
  
@@ -14,7 +15,7 @@ const NewCaseComponent = () => {
   }
   return (
     <div className="dashboard">
-      <h1 className="title-t">CaseFlow</h1> 
+      <Typography variant="body1" className="title">CaseFlow</Typography>
       <div className="search">
       <Search setSearchField={serachField} dropDownArray={dropDownArrayItem} setSearchColumn={SearchColumn}/>
       </div>     

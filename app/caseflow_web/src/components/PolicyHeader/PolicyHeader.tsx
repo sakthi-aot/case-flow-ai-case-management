@@ -4,6 +4,7 @@ import "./PolicyHeader.scss";
 import { useNavigate } from "react-router-dom";
 import {useDispatch} from "react-redux";
 import { setEditLob } from "../../reducers/lobReducer";
+import { Typography } from "@mui/material";
 
 const PolicyHeader = (props) => {
 const dispatch = useDispatch();
@@ -19,11 +20,11 @@ const editCaseDetails = (id)=>{
         <div className="lob-detail-header">
           <div className="lob-id-status">
             <p className="lob-id">Policy No: {props.policy}</p>
-            <p className="lob-status">{props.status}</p>
+            <Typography sx={{backgroundColor:'primary.main'}} className="lob-status">{props.status}</Typography>
             <div className="lob-edit" 
             onClick={()=>{editCaseDetails(props.lobId)}}
             >  
-          <span className="action-icon"> {<EditIcon />}</span>
+          <span className="action-icon"> {<EditIcon sx={{color:'primary.main'}}  />}</span>
               </div>
           </div>
     </div>

@@ -55,7 +55,7 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
   }
   return (
     <section className="dashboard">
-    <h1 className="title-c">CaseFlow</h1>
+    <Typography variant="body1" className="title">CaseFlow</Typography>
     <div className="search">
     <Search
           setSearchField={setSearchField}
@@ -73,17 +73,17 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
         className="lob-heading"
       >
        Policy
-      </Typography>
+    </Typography>
 
       <Button 
        style={{
         alignItems :"center",        
         height: "2.4375rem",
-        width: "20%",
-        backgroundColor:"#404040",
+        width: "20%",       
         borderRadius:"8px",
         textTransform:"unset"
         }}
+        sx={{backgroundColor:'primary.main'}}
         variant="contained"
         component={Link} to="/private/lob/create"
         onClick={resetEdit}
@@ -117,7 +117,7 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
             primary={
               <Typography 
               variant="body2"
-              style={{ "fontWeight": "700" ,"textAlign":"center","color":"rgba(0, 0, 0, 0.6)"}}>
+              style={{"textAlign":"center","color":"rgba(0, 0, 0, 0.6)"}}>
                 No LOB Found!
               </Typography>
             }             

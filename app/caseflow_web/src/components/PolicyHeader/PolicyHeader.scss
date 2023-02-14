@@ -6,7 +6,6 @@
     align-items: center;    
     border-bottom: 1px solid grey;
     box-sizing: border-box;       
-    font-family: $primary-font;
     .lob-id-status{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;            
@@ -14,17 +13,14 @@
         align-items: center;
         grid-column-gap: 2rem;
         .lob-status{
-            // width: 5rem;
-            background-color:  $primary-theme-black-color;
+            // width: 5rem;           
             color: #FFFFFF;
             padding: .5rem 1rem;
             border-radius: 18px;
-            font-family:  $primary-font;
             text-align: center;
         }
         .lob-id{
             font-size: 1.5rem;
-            font-weight: bolder;
         }
         .lob-edit{
             font-size: 1.5rem;

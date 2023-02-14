@@ -3,7 +3,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import { Box, createTheme, ThemeProvider, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { setSelectedLob } from "../../reducers/lobReducer";
 import {useDispatch} from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -18,12 +18,6 @@ interface LOBCUstomContentCardProps{
   caseCategory:any, district:any, link:any
 }
 
-const theme = createTheme({
-  typography:{
-    fontFamily: "Poppins, sans-serif",
-    
-  }
-})
 
 const LOBCUstomContentCard = (
   {lobData }
@@ -37,10 +31,8 @@ const LOBCUstomContentCard = (
   }
   
 const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
- 
   return (
-    <div onClick={()=>{viewCaseDetails()}}>
-    <ThemeProvider theme={theme} >
+    <div onClick={()=>{viewCaseDetails()}}>    
       <Typography />
       <ListItem button>
         <Grid container spacing={1}>
@@ -48,9 +40,8 @@ const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
             <ListItemText
               primary={
                 <Typography 
-                variant="body2"
-                className="lob-card-style"
-                style={{ "fontWeight": "700" }}>
+                variant="subtitle1"
+                >
                   ID
                 </Typography>
               }
@@ -61,9 +52,9 @@ const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
             <ListItemText
               primary={
                 <Typography 
-                variant="body2"
+                variant="subtitle1"
                 className="lob-card-style"
-                style={{ "fontWeight": "700" }}>
+           >
                   Policy Number
                 </Typography>
               }
@@ -74,9 +65,9 @@ const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
             <ListItemText
               primary={
                 <Typography
-                variant="body2"
+                variant="subtitle1"
                 className="lob-card-style"
-                style={{ "fontWeight": "700" }}>
+              >
                   Created date
                 </Typography>
               }
@@ -87,9 +78,9 @@ const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
             <ListItemText
               primary={
                 <Typography
-                variant="body2"
+                variant="subtitle1"
                 className="lob-card-style"
-                style={{ "fontWeight": "700" }}>
+               >
                   Sum Assured
                 </Typography>
               }
@@ -99,11 +90,11 @@ const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
        
           <Grid  item xs={1} display="flex" alignItems='center' justifyContent="flex-end"  >
           <Box >
-          <div className="recent-case-card-status">
+          <Typography sx={{backgroundColor:'primary.main'}} className="recent-case-card-status">
               <div className="recent-case-card-status-text">
                 {lobData.isActive==true ?"Active":"InActive"}
               </div>
-            </div>
+            </Typography>
             </Box>
 
           </Grid>          
@@ -111,7 +102,7 @@ const FormattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
         </Grid>
       </ListItem>
       <Divider />
-    </ThemeProvider>
+   
     </div>
   );
 };

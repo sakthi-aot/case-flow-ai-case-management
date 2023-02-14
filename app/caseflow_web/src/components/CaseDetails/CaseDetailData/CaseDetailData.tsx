@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material'
 import React from 'react'
 import "./CaseDetailData.scss"
 
@@ -16,35 +17,66 @@ const CaseDetailData = ({name,date,owner,caseDescription,tasks,caseType,lobcasei
     <>
       <div className="case-details">
         <div className="case-detail-name">
-          <h3>Case name</h3>
-          <p>{name}</p>
+          <Typography variant='subtitle1'>
+          Case name
+          </Typography>
+          <Typography variant='body2'
+          color='#606060'
+          >
+          {name}
+          </Typography>
+
         </div>
         <div className="case-detail-date">
-          <h3>Start Date</h3>
-          <p>{date}</p>
+          <Typography variant='subtitle1'>Start Date</Typography >
+          <Typography variant='body2'
+          color='#606060'
+          >
+            {date}
+          </Typography>
         </div>
         <div className="case-detail-owner">
-          <h3>Owner</h3>
-          <p>{owner}</p>
+          <Typography variant='subtitle1'>Owner</Typography >
+          <Typography variant='body2'
+          color='#606060'
+          >
+            {owner}
+          </Typography>
         </div>
         <div>
-          <h3>Case Description</h3>
-          <p>{caseDescription}</p>
+          <Typography variant='subtitle1'>Case Description</Typography >
+          <Typography variant='body2'
+          color='#606060'
+          >
+            {caseDescription}
+          </Typography>
         </div>
         <div>
-          <h3>Case Type</h3>
-          <p>{caseType?.displayname}</p>
+          <Typography variant='subtitle1'>Case Type</Typography >
+          <Typography variant='body2'
+          color='#606060'
+          >
+            {caseType?.displayname}
+          </Typography>
         </div>
         <div>
-          <h3>LOB ID</h3>
-          <p>{lobcaseid}</p>
+          <Typography variant='subtitle1'>LOB ID</Typography >
+          <Typography variant='body2'
+          color='#606060'
+          >
+            {lobcaseid}
+          </Typography>
         </div>
       </div>
   
       <div className="case-tasks">
-        <h3>Current Task(s)</h3>
+        <Typography variant='subtitle1'>Current Task(s)</Typography >
         { (tasks && tasks.length) ? tasks.map((task: any, index: any) => (
-          <p key={index}>{task.name}</p>
+          <Typography variant='body2'
+          color='#606060'
+          key={index}>
+            {task.name}
+          </Typography>
         )) : ""}
       </div>
     </>

@@ -5,11 +5,15 @@
     grid-template-columns: 14vw auto 25vw auto;
     
     .title {
+        padding-left: 4vw;
+        padding-left: 3vw;
+        margin-top: 1rem;  
+        margin-bottom: 1rem;   
         grid-column-start: 1;
         text-align: right;
         align-items: center;
-        font-family: $primary-font;
-        font-size: 2.5rem;        
+        font-size: 2.5rem; 
+    
     }
 
     .search {
@@ -43,9 +47,7 @@
             justify-content: space-between;
             align-items: center;
             grid-column-gap: 2rem;
-            .case-status{
-                // width: 5rem;
-                background-color:  $primary-theme-black-color;
+            .case-status{               
                 color: #FFFFFF;
                 padding: .5rem 1rem;
                 border-radius: 18px;
@@ -54,7 +56,6 @@
             }
             .case-id{
                 font-size: 1.5rem;
-                font-weight: bolder;
             }
             .case-edit{
                 font-size: 1.5rem;
@@ -97,11 +98,11 @@
     font-family: $primary-font;
     button{
         font-family: $primary-font;
-        background-color: $primary-theme-black-color;
+        // background-color: $primary-theme-black-color;
         // width: 80&;
-        color:white;
+        // color:white;
     }
-    button:hover{
-        color:$primary-theme-black-color;
-    }
+    // button:hover{
+    //     // color:$primary-theme-black-color;
+    // }
 }

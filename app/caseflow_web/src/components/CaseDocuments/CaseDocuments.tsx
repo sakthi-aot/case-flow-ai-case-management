@@ -91,7 +91,7 @@ const CaseDocuments = () => {
 
   return (
     <section className="dashboard">
-      <h1 className="title">CaseFlow</h1>
+      <Typography variant="body1" className="title">CaseFlow</Typography>
       <div className="search">
         <Search
           setSearchField={setSearchField}
@@ -130,81 +130,83 @@ const CaseDocuments = () => {
 
           { (filteredDocumentDetails &&filteredDocumentDetails.length!==0)?            
             filteredDocumentDetails.map(document =>{
-              return<>
-               <ListItem key={document.id}>
-                <Grid container spacing={1}  onClick={()=>{
-                previewDocument(document.id,document.type)
-              }}>
-                <Grid item xs={1} >
-                    <ListItemText
-                        primary={
-                          <Typography 
-                          variant="body2"
-                          style={{ "fontWeight": "700" }}>
-                             ID
-                          </Typography>
-                        }
-                        secondary={document.id}
-                   />
-                  </Grid>
-                <Grid item xs={2} >
-                    <ListItemText
-                        primary={
-                          <Typography 
-                          variant="body2"
-                          style={{ "fontWeight": "700" }}>
-                            Case ID
-                          </Typography>
-                        }
-                        secondary={document.caseId}
-                   />
-                  </Grid>
-                   <Grid item xs={3} >
-            <ListItemText
-              primary={
-                <Typography 
-                variant="body2"
-                style={{ "fontWeight": "700" }}>
-                   Name
-                </Typography>
-              }
-              secondary={ 
-                document.name
-                }
-            />
-          </Grid>
-          <Grid item xs={4} >
-            <ListItemText
-              primary={
-                <Typography
-                variant="body2"
-                
-                style={{ "fontWeight": "700" }}>
-                   Description
-                </Typography>
-              }
-              secondary={document.desc == "null" ? "" : document.desc}
-            />
-          </Grid> 
-          <Grid item xs={2} >
-            <ListItemText
-              primary={
-                <Typography
-                variant="body2"
-                
-                style={{ "fontWeight": "700" }}>
-                   Creation Date
-                </Typography>
-              }
-              secondary={moment(document.creationdate).format('MMMM Do YYYY')}
-            />
-          </Grid> 
-          
-
-                </Grid>
-              </ListItem>
-              <Divider />
-              </>
+              return (
+                <>
+                  <ListItem key={document.id}>
+                    <Grid
+                      container
+                      spacing={1}
+                      onClick={() => {
+                        previewDocument(document.id, document.type);
+                      }}
+                    >
+                      <Grid item xs={1}>
+                        <ListItemText
+                          primary={<Typography variant="subtitle1">ID</Typography>}
+                          secondary={
+                            <Typography variant="body2">
+                              {document.id}
+                            </Typography>
+                          }
+                        />
+                      </Grid>
+                      <Grid item xs={2}>
+                        <ListItemText
+                          primary={
+                            <Typography variant="subtitle1">Case ID</Typography>
+                          }
+                          secondary={
+                            <Typography variant="body2">
+                              {document.caseId}
+                            </Typography>
+                          }
+                        />
+                      </Grid>
+                      <Grid item xs={3}>
+                        <ListItemText
+                          primary={
+                            <Typography variant="subtitle1">Name</Typography>
+                          }
+                          secondary={
+                            <Typography variant="body2">
+                              {document.name}
+                            </Typography>
+                          }
+                        />
+                      </Grid>
+                      <Grid item xs={3}>
+                        <ListItemText
+                          primary={
+                            <Typography variant="subtitle1">Description</Typography>
+                          }
+                          secondary={
+                            <Typography variant="body2">
+                              {document.desc}
+                            </Typography>
+                          }
+                        />
+                      </Grid>
+                      <Grid item xs={3}>
+                        <ListItemText
+                          primary={
+                            <Typography variant="subtitle1" noWrap>
+                              Creation Date
+                            </Typography>
+                          }
+                          secondary={
+                            <Typography variant="body2">
+                              {moment(document.creationdate).format(
+                                "MMMM Do YYYY"
+                              )}
+                            </Typography>
+                          }
+                        />
+                      </Grid>
+                    </Grid>
+                  </ListItem>
+                  <Divider />
+                </>
+              );
               
             }):
              <ListItem >
@@ -213,8 +215,8 @@ const CaseDocuments = () => {
               <ListItemText
                 primary={
                   <Typography 
-                  variant="body2"
-                  style={{ "fontWeight": "700" ,"textAlign":"center","color":"rgba(0, 0, 0, 0.6)"}}>
+                  variant="subtitle1"
+                  style={{"textAlign":"center","color":"rgba(0, 0, 0, 0.6)"}}>
                     No Case Document Found!
                   </Typography>
                 }             

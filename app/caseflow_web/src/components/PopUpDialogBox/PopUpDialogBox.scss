@@ -3,16 +3,12 @@
 .popup{
   .dialogActionCenter{
     .btn2Style{
-      color:$primary-theme-black-color;
-      background-color:  $delete-confirm-btn;
+      color:$primary-theme-black-color;   
     }
-    .btn2Style:hover{
-      background-color: rgba(177, 19, 19, 0.741);
+    .btn2Style:hover{      
       color: white;
     }
-    .btn1Style{
-      color: $primary-theme-black-color;
-    }
+   
     
   }
   .confirm{
@@ -20,7 +16,7 @@
       color: $primary-theme-black-color;
     }
     .primary {
-      background:$primary-theme-black-color;
+     
     }
   }
   

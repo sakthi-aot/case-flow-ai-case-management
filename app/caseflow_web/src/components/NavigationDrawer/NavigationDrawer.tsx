@@ -17,13 +17,14 @@ import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import CasesOutlinedIcon from "@mui/icons-material/CasesOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import UserService from "../../services/UserService";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useSelector,useDispatch } from "react-redux";
 import { State } from "../../interfaces/stateInterface";
 import "./navigation.scss"
 import { resetSelectedCase } from "../../reducers/newCaseReducer";
+import { useTheme } from "@mui/material/styles";
 
 
 const drawerWidth = 240;
@@ -101,6 +102,8 @@ export default function MiniDrawer(
 
   const userInfo = useSelector((state:State)=>state.auth.userDetails)
 
+  const theme = useTheme();
+
 
   const routes = [
     {
@@ -163,15 +166,17 @@ export default function MiniDrawer(
        style={{
           width:"206px",
           margin:".7rem auto 0",
-          backgroundColor:"#404040",
+         
           borderRadius:"8px",
           transition:"all 1s ease",  
 
         }} 
+        sx={{backgroundColor:'primary.main'}}
         onClick={()=>{dispatch(resetSelectedCase())}}
         component={Link} to="/private/cases/create">Start New Case</Button>}
         
         <List>
+          <Typography variant="body2">
           {routes.map((route, index) => (
             <Link
               to={route.path}
@@ -207,13 +212,14 @@ export default function MiniDrawer(
                     {getLogo(index)}
                   </ListItemIcon>
                   <ListItemText
-                    primary={route.text}
+                    primary={<Typography variant="body2" >{route.text}</Typography>}
                     sx={{ opacity: open ? 1 : 0 }}
                   />
                 </ListItemButton>
               </ListItem>
             </Link>
           ))}
+          </Typography>
         </List>
       </Drawer>
       <div className="Chevron-parent-container">

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import "./SingleCaseDetail.scss"
+import Typography from '@mui/material/Typography';
 
 
 
@@ -24,7 +25,7 @@ const SingleCaseDetail = ({caseHisoryData,userInfo}) => {
   return (
     <div className='case-grid-container'>
         <span className='case-grid-date'>{caseHisoryData.date}</span>
-        <span className='case-grid-line'><span className="case-grid-line-ball"></span></span>
+        <span className='case-grid-line'><Typography sx={{backgroundColor:'primary.main'}} className="case-grid-line-ball"></Typography></span>
         <div className='case-gird-details'>
             <h3 onClick={expandDetailhandler} className="case-gird-details-header"><span>{caseHisoryData.caseHistoryType}</span>
            {expand ? <KeyboardArrowUpRoundedIcon/>:<KeyboardArrowDownRoundedIcon/>}

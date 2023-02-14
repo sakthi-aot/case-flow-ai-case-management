@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux/es/exports";
 import { setSelectedCase } from "../../reducers/newCaseReducer";
 import "../../styles.scss";
+import { DirectiveLocation } from "graphql";
 
 const RecentCaseCard = (props) => {
   console.log(props.case)
@@ -40,14 +41,14 @@ const RecentCaseCard = (props) => {
             <ListItemText
               primary={
                 <Typography 
-                variant="body2"                
+                variant="subtitle1"                
                 className="recent-case-card-style"
-                style={{ "fontWeight": "700","fontSize":'1rem' }}
                 >
                    ID
                 </Typography>
               }
-              secondary={ <Typography              
+              secondary={ <Typography 
+                variant="body2"             
                 color='#606060'
                 noWrap
                 style={{
@@ -63,13 +64,14 @@ const RecentCaseCard = (props) => {
               className="caseName-case-list"
               primary={
                 <Typography 
-                variant="body2"
-                style={{ "fontWeight": "700" }}>
+                variant="subtitle1"
+          >
                    Name
                 </Typography>
               }
               secondary={
-              <Typography                 
+              <Typography 
+                variant="body2"                
                 color='#606060'
                 noWrap
                 style={{
@@ -84,13 +86,14 @@ const RecentCaseCard = (props) => {
             <ListItemText             
               primary={
                 <Typography
-                variant="body2"
-                
-                style={{ "fontWeight": "700" }}>
+                variant="subtitle1"
+            >
                    Type
                 </Typography>
               }
-              secondary={<Typography noWrap
+              secondary={<Typography
+                variant="body2"
+                noWrap
                 color='#606060'
                 style={{
                   overflow: 'hidden',
@@ -106,13 +109,14 @@ const RecentCaseCard = (props) => {
             <ListItemText             
               primary={
                 <Typography
-                variant="body2"
-                
-                style={{ "fontWeight": "700" }}>
+                variant="subtitle1"
+               >
                    Description
                 </Typography>
               }
-              secondary={<Typography noWrap
+              secondary={<Typography
+                variant="body2"
+                noWrap
                 color='#606060'
                 style={{
                   overflow: 'hidden',
@@ -127,11 +131,11 @@ const RecentCaseCard = (props) => {
 
           <Grid  item xs={2} display="flex" alignItems='center' justifyContent="flex-end"  >
           <Box >
-          <div className="recent-case-card-status">
+          <Typography sx={{backgroundColor:'primary.main'}} className="recent-case-card-status">
               <div className="recent-case-card-status-text">
                 {CaseDetails?.casestatus?.displayname}
               </div>
-            </div>
+            </Typography>
             </Box>
 
           </Grid>
