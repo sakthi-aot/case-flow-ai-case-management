@@ -98,9 +98,9 @@ useEffect(() => {
         link.remove();
       
   }
-  const deleteDocuments = async (selectedDocid)=>{  
+  const deleteDocuments = async (selectedDocId)=>{  
       setDeleteConfirmation(true)   
-      dispatch(setSelectedDocument(selectedDocid));
+      dispatch(setSelectedDocument(selectedDocId));
   }
 
   const previewDocument = async (id,type) => {
