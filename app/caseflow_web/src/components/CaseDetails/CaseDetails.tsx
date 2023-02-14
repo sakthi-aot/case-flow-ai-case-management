@@ -282,7 +282,7 @@ const fetchRealtedTasks = async() =>{
             <p className="case-status">{selectedCase?.casestatus?.displayname}</p>
           <div className="case-edit" onClick={()=>{editCaseDetails(selectedCase)}}>  
           <span className="action-icon"> {<EditIcon />}</span>
-              </div>
+          </div>
            
           </div>
           <FilterMuiComponent
@@ -300,7 +300,7 @@ const fetchRealtedTasks = async() =>{
           caseDescription={selectedCase.desc}
           tasks={tasks}
           caseType={selectedCase.casestype}
-          lobcaseid={selectedCase.lobcaseid}
+          lobCaseId={selectedCase.lobcaseid}
         />
         {(selectedCase && selectedCase.id) ? <CaseDetailReference
           caseId={selectedCase.id}
