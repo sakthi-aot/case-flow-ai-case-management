@@ -25,9 +25,9 @@ const NewCase = () => {
     id:0,
     name: '',
     desc:'',
-    statusId: 1,
-    typeId : 1,
-    lobCaseId:0,
+    statusid: 1,
+    typeid : 1,
+    lobcaseid:0,
 }
 
 
