@@ -55,7 +55,9 @@ const CaseDetails = () => {
     docketNum: "1234",
     courtRef: "2022-11-01",
   }
-  const optionsForAction = [{id : 0, code :'1' ,text: "Select Action"},
+  const optionsForAction = [
+  {id : 0, code :'1' ,text: "Select Action"},
+  {id : 9, code :9 ,text: "Edit"},
   {id : 1, code :'1' ,text: "Start Workflow"},
   {id : 2, code :2 ,text: "Wake"},
   {id : 3, code :3 ,text: "Pending"},
@@ -63,7 +65,7 @@ const CaseDetails = () => {
   {id : 5, code :5 ,text: "Merge"},
   {id : 6, code :6 ,text: "Archive"},
   {id : 7, code :7 ,text: "Upload Document"},
-  {id : 8, code :8 ,text: "Delete"},
+  {id : 8, code :8 ,text: "Delete"}, 
 ];
   async function fetchCaseDetails() {
     var matches = location.pathname.match(/(\d+)/);
@@ -149,6 +151,9 @@ const [workflows, setworkflows]:any = useState([]);
       }
       case 7 : {
        return setOpenPopup(true);
+      }
+      case 9 : {
+       return editCaseDetails(selectedCase);
       }
     }
   };
@@ -278,11 +283,7 @@ const fetchRealtedTasks = async() =>{
         <span className="case-detail-header">
           <div className="case-id-status">
             <p className="case-id">Case ID :{selectedCase.id}</p>
-            <Typography sx={{backgroundColor:'primary.main'}} className="case-status">{selectedCase?.casestatus?.displayname}</Typography>
-          <div className="case-edit" onClick={()=>{editCaseDetails(selectedCase)}}>  
-          <span  className="action-icon"> {<EditIcon sx={{color:'primary.main'}}/>}</span>
-          </div>
-           
+            <Typography sx={{backgroundColor:'primary.main'}} className="case-status">{selectedCase?.casestatus?.displayname}</Typography>   
           </div>
           <FilterMuiComponent
             label="Action"
