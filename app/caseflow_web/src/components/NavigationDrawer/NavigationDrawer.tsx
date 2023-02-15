@@ -13,6 +13,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import CasesOutlinedIcon from "@mui/icons-material/CasesOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
@@ -124,17 +125,35 @@ export default function MiniDrawer(
   const getLogo = (index:Number) => {
     switch (index) {
       case 0:
-        return <HomeOutlinedIcon />;
+        return <img
+          alt="Homeicon"
+          src={require("../../assets/HomeIcon.png")}
+          ></img>;
       case 1:
-        return <AssignmentOutlinedIcon />;
+        return <img
+          alt="Tasksicon"
+          src={require("../../assets/TasksIcon.png")}
+          ></img>;
       case 2:
-        return <CasesOutlinedIcon />;
+        return <img
+          alt="Casesicon"
+          src={require("../../assets/CasesIcon.png")}
+          ></img>;
       case 3:
-        return <ArticleOutlinedIcon />;
+        return <img
+          alt="documentsicon"
+          src={require("../../assets/DocumentsIcon.png")}
+          ></img>;
       case 4:
-        return <BusinessOutlinedIcon />;
+        return <img
+          alt="LOBicon"
+          src={require("../../assets/LOBIcon.png")}
+          ></img>;
       default:
-        return <HomeOutlinedIcon />;
+        return <img
+          alt="Home"
+          src={require("../../assets/HomeIcon.png")}
+          ></img>;
     }
   };
 
@@ -166,14 +185,13 @@ export default function MiniDrawer(
        style={{
           width:"206px",
           margin:".7rem auto 0",
-         
           borderRadius:"8px",
           transition:"all 1s ease",  
 
         }} 
         sx={{backgroundColor:'primary.main'}}
         onClick={()=>{dispatch(resetSelectedCase())}}
-        component={Link} to="/private/cases/create">Start New Case</Button>}
+        component={Link} to="/private/cases/create"><AddCircleIcon/>Start New Case</Button>}
         
         <List>
           <Typography variant="body2">
@@ -195,24 +213,24 @@ export default function MiniDrawer(
               >
                 <ListItemButton
                   sx={{
-                    minHeight: 55,
+                    minHeight: 48,
                     justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                    borderRadius:"10%",
-                margin:"0 1rem"
+                    px: 4.5,
+                    borderRadius:"8%",
+                    margin:"1rem 1rem"
                   }}
                 >
                   <ListItemIcon
                     sx={{
                       minWidth: 0,
-                      mr: open ? 3 : "auto",
+                      mr: open ? 1.5 : "auto",
                       justifyContent: "center",
                     }}
                   >
                     {getLogo(index)}
                   </ListItemIcon>
                   <ListItemText
-                    primary={<Typography variant="body2" >{route.text}</Typography>}
+                    primary={<Typography variant="body1" >{route.text}</Typography>}
                     sx={{ opacity: open ? 1 : 0 }}
                   />
                 </ListItemButton>
