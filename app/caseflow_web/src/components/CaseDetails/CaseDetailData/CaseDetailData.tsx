@@ -64,7 +64,7 @@ const CaseDetailData = ({name,date,owner,caseDescription,tasks,caseType,lobCaseI
           <Typography variant='body2'
           color='#606060'
           >
-            {lobcaseid}
+            {lobCaseId}
           </Typography>
         </div>
       </div>

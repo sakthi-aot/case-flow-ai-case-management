@@ -263,7 +263,8 @@ const fetchRealtedTasks = async() =>{
   return (
     <>
     <div className="details-container">
-    <Typography variant="body1" className="title">CaseFlow</Typography>
+      <div className="header-search">
+      <Typography variant="body1" className="title">CaseFlow</Typography>
       <div className="search">
         <Search
           setSearchField={() => {}}
@@ -271,6 +272,8 @@ const fetchRealtedTasks = async() =>{
           setSearchColumn={() => {}}
         ></Search>
       </div>
+      </div>
+
 
       <section className="case-detail-container">
       <BreadCrumbs dataForBreadCrumbs={dataForBreadCrumbs}/>

@@ -43,14 +43,16 @@ const LobDetail = () => {
   return (
     <>
       <div className="lob-details-container">
+      <div className="header-search">
       <Typography variant="body1" className="title">CaseFlow</Typography>
-        <div className="search">
-          <Search
-            setSearchField={() => {}}
-            dropDownArray={[]}
-            setSearchColumn={() => {}}
-          ></Search>
-        </div>
+      <div className="search">
+        <Search
+          setSearchField={() => {}}
+          dropDownArray={[]}
+          setSearchColumn={() => {}}
+        ></Search>
+      </div>
+      </div>
       </div>
       <section className="lob-detail-container">
       <BreadCrumbs dataForBreadCrumbs={dataForBreadCrumbs}/>

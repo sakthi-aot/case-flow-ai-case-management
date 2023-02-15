@@ -15,10 +15,16 @@ const NewCaseComponent = () => {
   }
   return (
     <div className="dashboard">
+      <div className="header-search">
       <Typography variant="body1" className="title">CaseFlow</Typography>
       <div className="search">
-      <Search setSearchField={serachField} dropDownArray={dropDownArrayItem} setSearchColumn={SearchColumn}/>
-      </div>     
+        <Search
+      setSearchField={serachField} 
+      dropDownArray={dropDownArrayItem} 
+      setSearchColumn={SearchColumn}
+        ></Search>
+      </div>
+      </div>  
         <div className="recent-cases"><NewCase/></div>
     </div>
   )

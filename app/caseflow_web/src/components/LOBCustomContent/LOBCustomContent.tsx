@@ -55,14 +55,16 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
   }
   return (
     <section className="dashboard">
-    <Typography variant="body1" className="title">CaseFlow</Typography>
-    <div className="search">
-    <Search
-          setSearchField={setSearchField}
-          dropDownArray={dropDownArray}
-          setSearchColumn={setSearchColumn}
+      <div className="header-search">
+      <Typography variant="body1" className="title">CaseFlow</Typography>
+      <div className="search">
+        <Search
+            setSearchField={setSearchField}
+            dropDownArray={dropDownArray}
+            setSearchColumn={setSearchColumn}
         ></Search>
-    </div>     
+      </div>
+      </div>   
     <div className="lobData-container" style={{ padding: "2rem 3rem 0rem 5rem" }}>
     <BreadCrumbs dataForBreadCrumbs={dataForBreadCrumbs}/>
       

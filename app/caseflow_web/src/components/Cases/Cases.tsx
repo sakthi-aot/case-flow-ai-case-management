@@ -46,14 +46,16 @@ const Cases = (
 
   return (
     <section className="dashboard">
-         <Typography variant="body1" className="title">CaseFlow</Typography>
+      <div className="header-search">
+      <Typography variant="body1" className="title">CaseFlow</Typography>
       <div className="search">
-      <Search
-            setSearchField={setSearchField}
-            dropDownArray={dropDownArray}
-            setSearchColumn={setSearchColumn}
-          ></Search>
-      </div>     
+        <Search
+         setSearchField={setSearchField}
+         dropDownArray={dropDownArray}
+         setSearchColumn={setSearchColumn}
+        ></Search>
+      </div>
+      </div>  
         <div className="recent-cases"><CaseList  config={caseListProps}    allRecentCases = {filteredCaseDetails}></CaseList></div>
         {/* <div className="my-task"><MyTask></MyTask></div> */} 
     </section>
