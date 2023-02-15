@@ -37,8 +37,7 @@
 
         display: flex;
         justify-content: space-between;
-        align-items: center;    
-        border-bottom: 1px solid grey;
+        align-items: center;  
         box-sizing: border-box;       
         font-family: $primary-font;
         .case-id-status{
@@ -74,8 +73,7 @@
 }
 .case-documents{
     box-shadow: none;
-    .caseDocuments-headtag{
-        font-family: $primary-font;
+    .caseDocuments-headtag{    
         padding: 0;
     }
     .case-documents-head-section{
@@ -97,12 +95,9 @@
     display: grid;
     font-family: $primary-font;
     button{
-        font-family: $primary-font;
-        // background-color: $primary-theme-black-color;
-        // width: 80&;
-        // color:white;
-    }
-    // button:hover{
-    //     // color:$primary-theme-black-color;
-    // }
+        font-family: $primary-font;       
+    }   
 }
+
+
+

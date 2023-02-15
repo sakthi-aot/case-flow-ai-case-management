@@ -31,7 +31,8 @@ import { State } from "../../interfaces/stateInterface";
 import PopUpDialogBox from "../PopUpDialogBox/PopUpDialogBox";
 import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
 import { getTaksByCaseId, getWorkflowList, startNewWorkflow } from "../../services/workflowService";
-import { Button, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
+import { Button, Divider, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
+import LobCustom from "./LobCustom/LobCustom";
 
 
 
@@ -292,6 +293,7 @@ const fetchRealtedTasks = async() =>{
             selected ={selected}
           />
         </span>
+        <Divider sx={{borderWidth:3}} />
 
         <CaseDetailData
           name={selectedCase.name}
@@ -320,6 +322,8 @@ const fetchRealtedTasks = async() =>{
         <RelatedCaseDocuments id = {selectedCase.id} docDetail={docDetail}></RelatedCaseDocuments>
         </AccordionDetails>
       </Accordion>
+
+     <LobCustom/>
       
       </section>
       <section className="case-history-container">
