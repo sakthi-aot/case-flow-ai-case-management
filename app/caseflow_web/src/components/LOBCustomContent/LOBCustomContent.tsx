@@ -92,7 +92,7 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
 
       </div>
 
-      <Divider sx={{ borderBottomWidth: 3 }} />
+      
 
       <List
         sx={{
@@ -104,6 +104,71 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
         component="nav"
         aria-label="mailbox folders"
       >
+        
+        <ListItem >
+          <Grid container spacing={1}>
+            <Grid item xs={2}>
+              <ListItemText
+                primary={
+                  <Typography 
+                  variant="subtitle1"
+                  >
+                    ID
+                  </Typography>
+                }
+                />
+            </Grid>
+            <Grid item xs={3}>
+              <ListItemText
+                primary={
+                  <Typography 
+                  variant="subtitle1"
+                  className="lob-card-style"
+            >
+                    Policy Number
+                  </Typography>
+                }
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <ListItemText
+                primary={
+                  <Typography
+                  variant="subtitle1"
+                  className="lob-card-style"
+                >
+                    Created date
+                  </Typography>
+                }
+              />
+            </Grid>          
+            <Grid item xs={3}>
+              <ListItemText
+                primary={
+                  <Typography
+                  variant="subtitle1"
+                  className="lob-card-style"
+                >
+                    Sum Assured
+                  </Typography>
+                }
+              />
+            </Grid>
+            <Grid item xs={1}>
+              <ListItemText
+                primary={
+                  <Typography
+                  variant="subtitle1"
+                  className="lob-card-style"
+                >
+                    Status
+                  </Typography>
+                }
+              />
+            </Grid>
+          </Grid> 
+        </ListItem>
+        <Divider sx={{ borderBottomWidth: 3 }} />
         {(lobListData && lobListData.length !== 0)?lobListData.map((lobData,index ) => (
           <LOBCUstomContentCard
           key={index}
