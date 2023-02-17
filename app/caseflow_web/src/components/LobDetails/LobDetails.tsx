@@ -62,7 +62,7 @@ const LobDetail = () => {
       <div className="lob-detail-first-row">
         <div className="lob-detail-name">
           <h3>Created Date</h3>
-          <p>{moment(lobData.createdDate).format("MMMM Do YYYY")}</p>
+          <p>{moment(lobData.createdDate).format("MMMM Do, YYYY")}</p>
         </div>
         <div className="lob-detail-date">
           <h3>Sum Assured</h3>
@@ -71,11 +71,11 @@ const LobDetail = () => {
      
         <div className="lob-detail-name">
           <h3>Policy Effective Date</h3>
-          <p>{moment(lobData.policyEffectiveDate).format("MMMM Do YYYY")}</p>
+          <p>{moment(lobData.policyEffectiveDate).format("MMMM Do, YYYY")}</p>
         </div>
         <div className="lob-detail-date">
           <h3>policy Expiry Date</h3>
-          <p>{moment(lobData.policyExpiryDate).format("MMMM Do YYYY")}</p>
+          <p>{moment(lobData.policyExpiryDate).format("MMMM Do, YYYY")}</p>
         </div>
       </div>
 

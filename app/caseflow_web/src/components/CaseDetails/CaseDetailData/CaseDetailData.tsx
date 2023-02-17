@@ -2,6 +2,7 @@ import { Link, Typography } from '@mui/material'
 import React from 'react'
 import "./CaseDetailData.scss"
 import { FORMSFLOW_APP_URL} from "../../../apiManager/endpoints/config";
+import moment from 'moment';
 interface CaseDetailDataProps {
   name:String,
   date:any,
@@ -27,8 +28,10 @@ const CaseDetailData = ({name,date,owner,caseDescription,tasks,caseType,lobCaseI
         </div>
         <div className="case-detail-date">
           <Typography variant='subtitle1'>Start Date</Typography >
+
           <Typography variant='body2'>
-            {date}
+            {moment(date).format('MMMM Do, YYYY')}
+
           </Typography>
         </div>
         <div className="case-detail-owner">

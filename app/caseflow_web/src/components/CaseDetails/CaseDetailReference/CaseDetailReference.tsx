@@ -46,7 +46,7 @@ const CaseDetailReference = ({caseId} :CaseDetailReferenceProps ) => {
     {lobData ? Object.keys(lobData).map((key) => <>{getDisplayData(key) ? <div key={key}>
       <div className='item'>
         <h3>{getDisplayData(key)["displayName"]}</h3>
-        <p>{getDisplayData(key)["type"]=="boolean" ? (lobData[key] == true ? getDisplayData(key)["trueValueDisplayText"] : getDisplayData(key)["falseValueDisplayText"]) : (getDisplayData(key)["type"]=="Date" ? moment(lobData[key]).format('L') :lobData[key])  }</p>
+        <p>{getDisplayData(key)["type"]=="boolean" ? (lobData[key] == true ? getDisplayData(key)["trueValueDisplayText"] : getDisplayData(key)["falseValueDisplayText"]) : (getDisplayData(key)["type"]=="Date" ? moment(lobData[key]).format('MMMM Do, YYYY') :lobData[key])  }</p>
       </div>
       </div> : ""}</>) : ""}
     </div>

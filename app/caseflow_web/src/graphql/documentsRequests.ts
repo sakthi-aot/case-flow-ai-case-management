@@ -14,7 +14,7 @@ query{
 
 export const SEARCH_DOCUMENT_LIST = gql`
 query SearchCaseDocument($searchField:String!,$searchColumn:String!){
-  SearchCaseDocument(searchField:$searchField,searchColumn:$searchColumn){
+  SearchcaseDocument(searchField:$searchField,searchColumn:$searchColumn){
     id,
     name,
     desc,
