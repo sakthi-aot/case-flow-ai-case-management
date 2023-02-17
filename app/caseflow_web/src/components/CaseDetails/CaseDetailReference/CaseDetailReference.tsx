@@ -43,7 +43,7 @@ const CaseDetailReference = ({caseId} :CaseDetailReferenceProps ) => {
   return (
     <>
     <div className='case-detail-reference-first-row'>
-    {lobData ? Object.keys(lobData).map((key) => <>{getDisplayData(key) ? <div>
+    {lobData ? Object.keys(lobData).map((key) => <>{getDisplayData(key) ? <div key={key}>
       <div className='item'>
         <h3>{getDisplayData(key)["displayName"]}</h3>
         <p>{getDisplayData(key)["type"]=="boolean" ? (lobData[key] == true ? getDisplayData(key)["trueValueDisplayText"] : getDisplayData(key)["falseValueDisplayText"]) : (getDisplayData(key)["type"]=="Date" ? moment(lobData[key]).format('L') :lobData[key])  }</p>

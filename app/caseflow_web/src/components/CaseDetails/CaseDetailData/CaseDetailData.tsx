@@ -1,7 +1,7 @@
-import { Typography } from '@mui/material'
+import { Link, Typography } from '@mui/material'
 import React from 'react'
 import "./CaseDetailData.scss"
-
+import { FORMSFLOW_APP_URL} from "../../../apiManager/endpoints/config";
 interface CaseDetailDataProps {
   name:String,
   date:any,
@@ -51,6 +51,7 @@ const CaseDetailData = ({name,date,owner,caseDescription,tasks,caseType,lobCaseI
         </div>
         <div>
           <Typography variant='subtitle1'>LOB ID</Typography >
+
           <Typography variant='body2'>
             {lobCaseId}
           </Typography>
@@ -58,12 +59,15 @@ const CaseDetailData = ({name,date,owner,caseDescription,tasks,caseType,lobCaseI
       </div>
   
       <div className="case-tasks">
-        <Typography variant='subtitle1'>Current Task(s)</Typography >
+        <Typography variant='subtitle1'>Current Task{tasks?.length > 1 ? 's' :'' }</Typography >
         { (tasks && tasks.length) ? tasks.map((task: any, index: any) => (
-          <Typography variant='body2' key={index}>
-            {task.name}
-          </Typography>
-        )) : ""}
+
+           <Link target="_blank" href={FORMSFLOW_APP_URL +`/task/${task.id}`} > <Typography variant='body2'
+          key={index}>
+       {task.name} 
+          </Typography></Link>  
+        )) : <Typography variant='body2' style={{"padding-bottom":"1rem"}}>No Tasks</Typography>}
+
       </div>
     </>
   );

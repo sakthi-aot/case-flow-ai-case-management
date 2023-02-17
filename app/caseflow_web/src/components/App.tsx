@@ -45,6 +45,9 @@ let theme = createTheme({
       fontWeight: 700,
       margin:"1rem 0 0rem 0"
 
+    },
+    caption:{
+      color: "#606060",
     }
   },
 })

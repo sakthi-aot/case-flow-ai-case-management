@@ -40,51 +40,44 @@ const formattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
             <ListItemText
               primary={
                 <Typography 
-                variant="subtitle1"
+                variant="body2"
                 >
-                  ID
+                 {lobData.id}
                 </Typography>
               }
-              secondary={lobData.id}
             />
           </Grid>
           <Grid item xs={3}>
             <ListItemText
               primary={
                 <Typography 
-                variant="subtitle1"
-                className="lob-card-style"
-           >
-                  Policy Number
+                variant="body2"
+                >
+                {lobData.policyNumber}
                 </Typography>
               }
-              secondary={lobData.policyNumber}
             />
           </Grid>
           <Grid item xs={3}>
             <ListItemText
               primary={
-                <Typography
-                variant="subtitle1"
-                className="lob-card-style"
-              >
-                  Created date
+                <Typography 
+                variant="body2"
+                >
+                {formattedCreatedDate}
                 </Typography>
               }
-              secondary={formattedCreatedDate}
             />
           </Grid>          
           <Grid item xs={3}>
             <ListItemText
               primary={
-                <Typography
-                variant="subtitle1"
-                className="lob-card-style"
-               >
-                  Sum Assured
+                <Typography 
+                variant="body2"
+                >
+                {formattedCreatedDate}
                 </Typography>
               }
-              secondary={lobData.sumAssured}
             />
           </Grid>          
        
