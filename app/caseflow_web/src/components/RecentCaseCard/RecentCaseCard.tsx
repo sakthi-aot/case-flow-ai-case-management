@@ -39,23 +39,13 @@ const RecentCaseCard = (props) => {
         <Grid container spacing={1}  onClick={()=>{viewCaseDetails(CaseDetails)}}>
           <Grid item xs={2} >
             <ListItemText
-              primary={
-                <Typography 
-                variant="subtitle1"                
-                className="recent-case-card-style"
-                >
-                   ID
-                </Typography>
-              }
-              secondary={ <Typography 
-                variant="body2"             
-                color='#606060'
+              primary={<Typography 
+                variant="body2"  
                 noWrap
                 style={{
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',                  
-                  
+                  whiteSpace: 'nowrap',
                 }}>{CaseDetails.id} </Typography>}
             />
           </Grid>
@@ -63,79 +53,52 @@ const RecentCaseCard = (props) => {
             <ListItemText
               className="caseName-case-list"
               primary={
-                <Typography 
-                variant="subtitle1"
-          >
-                   Name
-                </Typography>
-              }
-              secondary={
               <Typography 
-                variant="body2"                
-                color='#606060'
+                variant="body2"
                 noWrap
                 style={{
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',                  
-                  
+                  whiteSpace: 'nowrap', 
                 }}>{ CaseDetails.name} </Typography>}
             />
           </Grid>
           <Grid item xs={2} >
             <ListItemText             
-              primary={
-                <Typography
-                variant="subtitle1"
-            >
-                   Type
-                </Typography>
-              }
-              secondary={<Typography
+              primary={<Typography
                 variant="body2"
                 noWrap
-                color='#606060'
                 style={{
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
-                  
                 }}>{ CaseDetails?.casestype?.displayname} </Typography>
                }
             />
           </Grid>   
 
-                    <Grid item xs={3} >
+          <Grid item xs={4} >
             <ListItemText             
-              primary={
-                <Typography
-                variant="subtitle1"
-               >
-                   Description
-                </Typography>
-              }
-              secondary={<Typography
+              primary={<Typography
                 variant="body2"
                 noWrap
-                color='#606060'
                 style={{
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
-                  
                 }}>{ CaseDetails.desc} </Typography>
                }
             />
           </Grid>       
 
 
-          <Grid  item xs={2} display="flex" alignItems='center' justifyContent="flex-end"  >
+          <Grid  item xs={2} display="flex" alignItems='center' justifyContent="flex-start" >
           <Box >
-          <Typography sx={{backgroundColor:'primary.main'}} className="recent-case-card-status">
+          <Typography className="recent-case-card-status">
               <div className="recent-case-card-status-text">
                 {CaseDetails?.casestatus?.displayname}
               </div>
-            </Typography>
+          </Typography>
             </Box>
 
           </Grid>
