@@ -118,7 +118,7 @@ const caseListpagination = (e,p) =>{
          </Select>
         </FormControl> : "" } */}
       </span>
-      <Divider sx={{ borderBottomWidth: 3 }} />
+      
       <div >
 
       <List
@@ -128,7 +128,72 @@ const caseListpagination = (e,p) =>{
         aria-label="mailbox folders"
 
          >
-
+          <ListItem >
+        <Grid container spacing={1} >
+          <Grid item xs={2} >
+            <ListItemText
+              primary={
+                <Typography 
+                variant="subtitle1"                
+                className="recent-case-card-style"
+                >
+                   Case ID
+                </Typography>
+              }
+            />
+          </Grid>
+          <Grid item xs={2} >
+            <ListItemText
+              primary={
+                <Typography 
+                variant="subtitle1"                
+                className="recent-case-card-style"
+                >
+                   Name
+                </Typography>
+              }
+            />
+          </Grid>
+          <Grid item xs={2} >
+            <ListItemText
+              primary={
+                <Typography 
+                variant="subtitle1"                
+                className="recent-case-card-style"
+                >
+                   Type
+                </Typography>
+              }
+            />
+          </Grid>
+          <Grid item xs={4} >
+            <ListItemText
+              primary={
+                <Typography 
+                variant="subtitle1"                
+                className="recent-case-card-style"
+                >
+                   Description
+                </Typography>
+              }
+            />
+          </Grid>
+          <Grid  item xs={2} style={{"padding-left":"2rem"}}>
+            <ListItemText
+              primary={
+                <Typography 
+                variant="subtitle1"                
+                className="recent-case-card-style"
+                >
+                  status
+                </Typography>
+              }
+            />
+          </Grid>
+      </Grid>
+      
+      </ListItem>
+      <Divider sx={{ borderBottomWidth: 3 }} />
         {allRecentCases.length!=0 ? allRecentCases.map((eachcases:Case) => (
           <RecentCasecard
             case = {eachcases}
