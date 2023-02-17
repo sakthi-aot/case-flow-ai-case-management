@@ -30,7 +30,7 @@ const LOBCUstomContentCard = (
     navigate("/private/lob/"+ lobData.id+'/details');
   }
   
-const formattedCreatedDate = moment(lobData.createdDate).format('MMMM Do YYYY');
+const formattedCreatedDate = moment(lobData.createdDate).format('MMMM Do, YYYY');
   return (
     <div onClick={()=>{viewCaseDetails()}}>    
       <Typography />

@@ -198,7 +198,7 @@ const CaseDocuments = () => {
                           secondary={
                             <Typography variant="body2">
                               {moment(document.creationdate).format(
-                                "MMMM Do YYYY"
+                                "MMMM Do, YYYY"
                               )}
                             </Typography>
                           }
