@@ -91,13 +91,15 @@ const CaseDocuments = () => {
 
   return (
     <section className="dashboard">
+      <div className="header-search">
       <Typography variant="body1" className="title">CaseFlow</Typography>
       <div className="search">
         <Search
-          setSearchField={setSearchField}
-          dropDownArray={dropDownArray}
-          setSearchColumn={setSearchColumn}
+        setSearchField={setSearchField}
+        dropDownArray={dropDownArray}
+        setSearchColumn={setSearchColumn}
         ></Search>
+      </div>
       </div>
       <div className="recent-cases">
         {" "}

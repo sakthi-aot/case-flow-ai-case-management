@@ -45,14 +45,16 @@ const Dashboard = () =>
     const [dropDownArray, setdropDownArray] = useState(['Name', "Description"]);
     return (
       <div className="dashboard">
-     <Typography variant="body1" className="title">CaseFlow</Typography>
-        <div className="search">
-          <Search
-            setSearchField={setSearchField}
-            dropDownArray={dropDownArray}
-            setSearchColumn={setSearchColumn}
-          ></Search>
-        </div>
+      <div className="header-search">
+      <Typography variant="body1" className="title">CaseFlow</Typography>
+      <div className="search">
+        <Search
+         setSearchField={setSearchField}
+         dropDownArray={dropDownArray}
+         setSearchColumn={setSearchColumn}
+        ></Search>
+      </div>
+      </div>
         <div className="recent-cases">
           <CaseList config={caseListProps} allRecentCases ={recentCases} ></CaseList>
         </div>
