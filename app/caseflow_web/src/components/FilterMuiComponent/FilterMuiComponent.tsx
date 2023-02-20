@@ -15,21 +15,32 @@ interface FilterMuiComponentProps{
 const FilterMuiComponent = ({label,options,onChnagehandler,selected}:FilterMuiComponentProps) => {
   return (
     <Box sx={{ minWidth: 120 }}>
-            <FormControl sx={{ m: 1, minWidth: 90, }} size="small">
-                <InputLabel id="demo-simple-select-label">{label}</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"          
-                  label="Age" 
-                  value={selected}   
-                  onChange={onChnagehandler}   
-                  className="dropDownStyle"   
-                >
-                   {options.map((option,index) => <MenuItem key={index}  value={option.id}>{option.text}</MenuItem>)}                  
-                </Select>
-            </FormControl>
-        </Box>
-  )
+      <FormControl sx={{ m: 1, minWidth: 100 }} size="small">
+        <InputLabel id="demo-multiple-chip-label">{label}</InputLabel>
+
+        <Select
+          label="Age"
+          value={selected}
+          onChange={onChnagehandler}
+          className="dropDownStyle"
+        >
+          {options.map((option, index) => (
+            <MenuItem
+              key={index}
+              value={option.id}
+              sx={{
+                borderTop: 1,
+                borderColor: "#E2E2E2",
+                paddingBlock: "1rem",
+              }}
+            >
+              {option.text}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Box>
+  );
 }
 
 export default FilterMuiComponent
