@@ -66,7 +66,7 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
       </div>
       </div>   
     <div className="lobData-container" style={{ padding: "2rem 3rem 0rem 5rem" }}>
-    <BreadCrumbs dataForBreadCrumbs={dataForBreadCrumbs}/>
+    {/* <BreadCrumbs dataForBreadCrumbs={dataForBreadCrumbs}/> */}
       
       <div className="lobData-header">
       <Typography

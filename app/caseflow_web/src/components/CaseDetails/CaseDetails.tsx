@@ -282,7 +282,7 @@ const fetchRealtedTasks = async() =>{
 
 
       <section className="case-detail-container">
-      <BreadCrumbs dataForBreadCrumbs={dataForBreadCrumbs}/>
+      {/* <BreadCrumbs dataForBreadCrumbs={dataForBreadCrumbs}/> */}
 
         <span className="case-detail-header">
           <div className="case-id-status">
