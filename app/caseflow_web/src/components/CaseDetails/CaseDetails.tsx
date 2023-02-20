@@ -287,7 +287,7 @@ const fetchRealtedTasks = async() =>{
         <span className="case-detail-header">
           <div className="case-id-status">
             <p className="case-id">Case ID :{selectedCase.id}</p>
-            <Typography sx={{backgroundColor:'primary.main'}} className="case-status">{selectedCase?.casestatus?.displayname}</Typography>   
+            <Typography className="case-status">{selectedCase?.casestatus?.displayname}</Typography>   
           </div>
           <FilterMuiComponent
             label="Action"
