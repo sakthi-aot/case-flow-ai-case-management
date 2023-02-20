@@ -33,6 +33,10 @@ let theme = createTheme({
   },
   typography: {
     fontFamily: ["Poppins", "sans-serif"].join(","),
+    h5:{
+      fontWeight: 500,
+
+    },
     body2:{
       fontWeight: 400,
       color:"#606060",
