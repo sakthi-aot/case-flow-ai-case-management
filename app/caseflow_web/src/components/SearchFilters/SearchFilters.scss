@@ -1,0 +1,11 @@
+@import "../../styles.scss";
+
+.filters {
+    display : flex;
+    background: #EEEEEE;
+    border-radius: 4px;
+    .filter-text {
+        display: flex;
+        column-gap: 1rem;
+    }
+}
