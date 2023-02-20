@@ -72,15 +72,17 @@ export const  deleteDocument = async (id) => {
   return data;
 }
 
-export const searchCaseDocument= async (searchField,searchColumn) => {
+export const searchCaseDocument= async (searchField,searchColumn,orderBy ="id",orderType =true) => {
   const url = GRAPHQL;
   const  output =  await httpGETRequest(url,{query: print(SEARCH_DOCUMENT_LIST),
     variables: {
       searchField : searchField,
-      searchColumn : searchColumn
+      searchColumn : searchColumn,
+      orderBy:orderBy,
+      orderType:  orderType ? "DESC" : "ASC"
     },
   },null)
-    .then((res) => {return (res.data.data.SearchcaseDocument) })
+    .then((res) => {return (res.data.data.SearchCaseDocument) })
     .catch((error) => {
       console.log({"error" : "error loading data"})
       return []

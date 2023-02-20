@@ -48,9 +48,11 @@ export class DocumentsResolver {
   SearchCaseDocument(
     @Args('searchField') searchField: string,
     @Args('searchColumn') searchColumn : string,
+    @Args('orderBy') orderBy: string,
+    @Args('orderType') orderType : "DESC" | "ASC",
      ): Promise<CaseDocuments[]> | HttpException{
 
-    return this.documentService.searchCaseDocument(searchField,searchColumn);
+    return this.documentService.searchCaseDocument(searchField,searchColumn,orderBy,orderType);
   }
 
   //_____________________Mutation_____________________//
