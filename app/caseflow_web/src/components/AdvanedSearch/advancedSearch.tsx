@@ -9,32 +9,32 @@ const searchValues = [{
   title:"NRO1 - One on One conversations",
   subtitle:"Application Maintenance Services for ISSS Feb 02, 2023",
   content:"Mines Digital Services (MDS) / … / User Research / One-on-Ones Nov 18, 2019 NRO - Vince Metcalf, Kathryn Gregory, Kevin Edquist Action Produced yes/noONotesOSystem of SourceDOAdministrative",
-  imgIcon:"../../assets/TasksIcon.png"
+  imgIcon:require("../../assets/CasesIcon.png")
 },
 {
   title:"NRO2 - One on One conversations",
   subtitle:"Application Maintenance Services for ISSS Feb 02, 2023",
   content:"Mines Digital Services (MDS) / … / User Research / One-on-Ones Nov 18, 2019 NRO - Vince Metcalf, Kathryn Gregory, Kevin Edquist Action Produced yes/noONotesOSystem of SourceDOAdministrative",
-  imgIcon:"../../assets/TasksIcon.png"
+  imgIcon:require("../../assets/CasesIcon.png")
 
 },
 {
   title:"NRO2 - One on One conversations",
   subtitle:"Application Maintenance Services for ISSS Feb 02, 2023",
   content:"Mines Digital Services (MDS) / … / User Research / One-on-Ones Nov 18, 2019 NRO - Vince Metcalf, Kathryn Gregory, Kevin Edquist Action Produced yes/noONotesOSystem of SourceDOAdministrative",
-  imgIcon:"../../assets/TasksIcon.png"
+  imgIcon:require("../../assets/CasesIcon.png")
 
 },{
   title:"NRO2 - One on One conversations",
   subtitle:"Application Maintenance Services for ISSS Feb 02, 2023",
   content:"Mines Digital Services (MDS) / … / User Research / One-on-Ones Nov 18, 2019 NRO - Vince Metcalf, Kathryn Gregory, Kevin Edquist Action Produced yes/noONotesOSystem of SourceDOAdministrative",
-  imgIcon:"../../assets/TasksIcon.png"
+  imgIcon:require("../../assets/CasesIcon.png")
 
 },{
   title:"NRO2 - One on One conversations",
   subtitle:"Application Maintenance Services for ISSS Feb 02, 2023",
   content:"Mines Digital Services (MDS) / … / User Research / One-on-Ones Nov 18, 2019 NRO - Vince Metcalf, Kathryn Gregory, Kevin Edquist Action Produced yes/noONotesOSystem of SourceDOAdministrative",
-  imgIcon:"../../assets/TasksIcon.png"
+  imgIcon:require("../../assets/CasesIcon.png")
 
 }
 ]
@@ -82,7 +82,7 @@ export default function AdvancedSearch({setSearchField}) {
            <Grid item xs={0.5} sx={{pt:"5vh"}}>
            <img
             alt="Tasksicon"
-            src={require("../../assets/CasesIcon.png")}
+            src={eachValue.imgIcon}
             style={{"height":"1rem"}}
             ></img>
         </Grid>
