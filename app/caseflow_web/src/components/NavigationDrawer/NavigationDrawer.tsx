@@ -216,8 +216,7 @@ export default function MiniDrawer(
                     minHeight: 48,
                     justifyContent: open ? "initial" : "center",
                     px: 4.5,
-                    borderRadius:"8%",
-                    margin:"1rem 1rem"
+                    borderRadius:"8%"
                   }}
                 >
                   <ListItemIcon
@@ -225,6 +224,7 @@ export default function MiniDrawer(
                       minWidth: 0,
                       mr: open ? 1.5 : "auto",
                       justifyContent: "center",
+                      margin:"1rem"
                     }}
                   >
                     {getLogo(index)}
