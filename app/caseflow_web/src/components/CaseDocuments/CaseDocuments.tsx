@@ -26,6 +26,7 @@ const CaseDocuments = () => {
   const [searchField, setSearchField] = useState("");
   const [searchColumn, setSearchColumn] = useState("Name");
   const dropDownArray = ["Name","Description"];
+  const [sortSetting, setSortSetting] = useState({orderBy :"name",orderType :false});
    const dispatch = useDispatch();
   const getFileIcon = (fileName:any) => {
     let ext = fileName.split(".").pop();
@@ -44,7 +45,7 @@ const CaseDocuments = () => {
 
 
   const filterDocumentDetails = async () => {
-    let searchResult = await searchCaseDocument(searchField,searchColumn)
+    let searchResult = await searchCaseDocument(searchField,searchColumn,sortSetting.orderBy,sortSetting.orderType)
     // searchResult = searchResult.map((element) => {
 
     // });
@@ -164,7 +165,7 @@ const CaseDocuments = () => {
                           }
                         />
                       </Grid>
-                      <Grid item xs={3}>
+                      <Grid item xs={3} >
                         <ListItemText
                           primary={
                             <Typography variant="subtitle1">Name</Typography>

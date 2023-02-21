@@ -20,13 +20,15 @@ const Cases = (
   const [searchField, setSearchField] = useState("");
   const [searchColumn, setSearchColumn] = useState("name");
   const [dropDownArray, setdropDownArray] = useState(['Name', "Description"]);
+  const [sortSetting, setSortSetting] = useState({orderBy :"id",orderType :true});
+
 
 
   const dispatch = useDispatch()
   const selectedPage = useSelector((state:State)=>state.cases.pageSelected)
   
   const filterDocumentDetails = async () => {    
-    let searchResult = await searchCases(searchField,searchColumn,selectedPage)    
+    let searchResult = await searchCases(searchField,searchColumn,selectedPage,sortSetting.orderBy,sortSetting.orderType)    
    let searchResultCases = searchResult.Cases.map((element) => {
       return {...element,status:"Open"};
     });
@@ -40,7 +42,7 @@ const Cases = (
 
   useEffect(() => {
     filterDocumentDetails();
-  }, [searchField,searchColumn,selectedPage]);
+  }, [searchField,searchColumn,selectedPage,sortSetting]);
 
 
 
@@ -56,7 +58,7 @@ const Cases = (
         ></Search>
       </div>
       </div>  
-        <div className="recent-cases"><CaseList  config={caseListProps}    allRecentCases = {filteredCaseDetails}></CaseList></div>
+        <div className="recent-cases"><CaseList sortSetting={sortSetting} setSortSetting ={setSortSetting} config={caseListProps}    allRecentCases = {filteredCaseDetails}></CaseList></div>
         {/* <div className="my-task"><MyTask></MyTask></div> */} 
     </section>
   );

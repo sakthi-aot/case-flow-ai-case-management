@@ -29,7 +29,7 @@ import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
 // }
 
 
-const CaseList =React.memo( ({config,allRecentCases}:any) => {
+const CaseList =React.memo( ({config,allRecentCases,setSortSetting,sortSetting}:any) => {
  
 
   // const [sortValue,setSortValue] = useState({value:"",sortOrder:null})
@@ -130,19 +130,19 @@ const caseListpagination = (e,p) =>{
          >
           <ListItem >
         <Grid container spacing={1} >
-          <Grid item xs={2} >
+          <Grid item xs={2} onClick={()=>setSortSetting({orderBy:"id",orderType:!sortSetting.orderType})} >
             <ListItemText
               primary={
                 <Typography 
                 variant="subtitle1"                
                 className="recent-case-card-style"
                 >
-                   Case ID
+                   Case ID 
                 </Typography>
               }
             />
           </Grid>
-          <Grid item xs={2} >
+          <Grid item xs={2} onClick={()=>setSortSetting({orderBy:"name",orderType:!sortSetting.orderType})}>
             <ListItemText
               primary={
                 <Typography 
@@ -154,7 +154,7 @@ const caseListpagination = (e,p) =>{
               }
             />
           </Grid>
-          <Grid item xs={2} >
+          <Grid item xs={2}>
             <ListItemText
               primary={
                 <Typography 

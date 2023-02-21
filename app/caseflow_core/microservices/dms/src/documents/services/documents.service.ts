@@ -164,19 +164,22 @@ export class DocumentsService {
  * @param searchColumn 
  * @returns 
  */
-  searchCaseDocument(searchField,searchColumn){
+  searchCaseDocument(searchField,searchColumn,orderBy ='id',orderType: 'ASC' |'DESC' = 'DESC'){
+    orderBy = 'table.' + orderBy;
     try{
     if(searchColumn){
       switch(searchColumn){
         case 'Description': {
           return this.documentRepository.createQueryBuilder("table")
           .where("LOWER(table.desc) LIKE :title", { title: `%${ searchField.toLowerCase() }%` })
+          .orderBy({[orderBy]: orderType})
           .andWhere("table.isdeleted =:isDeleted",{isDeleted:false})
           .getMany();
         }
         default :
         return this.documentRepository.createQueryBuilder("table")
         .where("LOWER(table.name) LIKE :title", { title: `%${ searchField.toLowerCase() }%` })
+        .orderBy({[orderBy]: orderType})
         .andWhere("table.isdeleted =:isDeleted",{isDeleted:false})
         .getMany();
       }

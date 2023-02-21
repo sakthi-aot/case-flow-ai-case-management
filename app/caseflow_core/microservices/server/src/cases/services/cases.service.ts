@@ -164,20 +164,21 @@ export class CasesService {
    * @returns 
    */
   
-   async searchCase(searchField,searchColumn,skip,take){
+   async searchCase(searchField,searchColumn,skip,take,orderBy ='id',orderType: 'ASC' |'DESC' = 'DESC'){
+    orderBy = 'table.' + orderBy;
     try{
     if(searchColumn){
       switch(searchColumn){ 
         case 'Description': {
           const [Cases,totalCount] =await this.caseRepository.createQueryBuilder("table")
-          .where("LOWER(table.desc) LIKE :title", { title: `%${ searchField.toLowerCase() }%` }).orderBy({'table.id': 'DESC'}).take(take).skip(skip)
+          .where("LOWER(table.desc) LIKE :title", { title: `%${ searchField.toLowerCase() }%` }).orderBy({[orderBy]: orderType}).take(take).skip(skip)
           .leftJoinAndSelect('cases.statusid', 'status')
           .getManyAndCount()
           return  {Cases,totalCount};
         }
         default :
          const [Cases,totalCount] = await  (this.caseRepository.createQueryBuilder("table")
-        .where("LOWER(table.name) LIKE :title", { title: `%${ searchField.toLowerCase() }%` }) .orderBy({'table.id': 'DESC'}).take(take).skip(skip)
+        .where("LOWER(table.name) LIKE :title", { title: `%${ searchField.toLowerCase() }%` }) .orderBy({[orderBy]: orderType}).take(take).skip(skip)
         .leftJoinAndSelect('table.casestatus', 'status')
         .leftJoinAndSelect('table.casestype', 'type')
         .getManyAndCount())

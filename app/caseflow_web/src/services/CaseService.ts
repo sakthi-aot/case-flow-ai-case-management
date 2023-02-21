@@ -147,7 +147,7 @@ import {
   }
 
   
-  export const searchCases = async (searchField,searchColumn,pno) => {    
+  export const searchCases = async (searchField,searchColumn,pno,orderBy ="id",orderType =true) => {    
     const  skip =(pno-1)*10;     
     const url = GRAPHQL;
     const  output =  await httpPOSTRequest(url,{query: print(SEARCH_CASE_LIST),
@@ -156,6 +156,8 @@ import {
         searchColumn : searchColumn,
         Skip:skip,
         Take:Number(PAGINATION_TAKE),
+        orderBy:orderBy,
+        orderType:  orderType ? "DESC" : "ASC"
       },
     },null)
       .then((res) => {        

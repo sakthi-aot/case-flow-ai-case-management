@@ -9,6 +9,12 @@ export class FetchSearchArgs {
   @Field(() => String)  
   searchColumn 
 
+  @Field(() => String)  
+  orderBy 
+
+  @Field(() => String)  
+  orderType 
+
   @Field(() => Int)
   @Min(0)
   skip = 0
