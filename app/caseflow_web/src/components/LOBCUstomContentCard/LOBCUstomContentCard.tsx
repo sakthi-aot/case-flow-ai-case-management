@@ -81,7 +81,7 @@ const formattedCreatedDate = moment(lobData.createdDate).format('MMMM Do, YYYY')
             />
           </Grid>          
        
-          <Grid  item xs={1} display="flex" alignItems='center' justifyContent="flex-end"  >
+          <Grid  item xs={1} display="flex" alignItems='center' justifyContent="flex-start"  >
           <Box >
           <Typography className="recent-case-card-status">
               <div className="recent-case-card-status-text">

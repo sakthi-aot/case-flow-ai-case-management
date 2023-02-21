@@ -178,14 +178,14 @@ const caseListpagination = (e,p) =>{
               }
             />
           </Grid>
-          <Grid  item xs={2} style={{"padding-left":"2rem"}}>
+          <Grid  item xs={2} style={{"padding-left":"1.5rem"}}>
             <ListItemText
               primary={
                 <Typography 
                 variant="subtitle1"                
                 className="recent-case-card-style"
                 >
-                  status
+                  Status
                 </Typography>
               }
             />

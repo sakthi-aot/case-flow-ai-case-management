@@ -156,7 +156,7 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
                 }
               />
             </Grid>
-            <Grid item xs={1}>
+            <Grid item xs={1} style={{"padding-left":"1.5rem"}}>
               <ListItemText
                 primary={
                   <Typography

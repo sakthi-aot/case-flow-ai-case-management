@@ -57,7 +57,7 @@ const CaseDetails = () => {
     courtRef: "2022-11-01",
   }
   const optionsForAction = [
-  {id : 0, code :'1' ,text: "Select Action"},
+  {id : 0, code :'1' ,text: "Action"},
   {id : 9, code :9 ,text: "Edit"},
   {id : 1, code :'1' ,text: "Start Workflow"},
   {id : 2, code :2 ,text: "Wake"},
@@ -286,7 +286,7 @@ const fetchRealtedTasks = async() =>{
 
         <span className="case-detail-header">
           <div className="case-id-status">
-            <p className="case-id">Case ID :{selectedCase.id}</p>
+            <p className="case-id">Case ID : {selectedCase.id}</p>
             <Typography className="case-status">{selectedCase?.casestatus?.displayname}</Typography>   
           </div>
           <FilterMuiComponent
