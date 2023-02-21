@@ -55,7 +55,7 @@ const LobDetail = () => {
       </div>
       </div>
       <section className="lob-detail-container">
-      <BreadCrumbs dataForBreadCrumbs={dataForBreadCrumbs}/>
+      {/* <BreadCrumbs dataForBreadCrumbs={dataForBreadCrumbs}/> */}
 
         <PolicyHeader policy={lobData.policyNumber} lobId={lobData.id} status={lobData.isActive ? "Active" : "Inctive"} />
       </section>
