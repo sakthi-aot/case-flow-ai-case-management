@@ -70,7 +70,7 @@ const CaseDetailData = ({name,date,owner,caseDescription,tasks,caseType,lobCaseI
       </div>
   
       <div className="case-tasks">
-        <Typography variant='subtitle1'>Current Task{tasks.length > 1 ? 's' :'' }</Typography >
+        <Typography variant='subtitle1'>Current Task{tasks?.length > 1 ? 's' :'' }</Typography >
         { (tasks && tasks.length) ? tasks.map((task: any, index: any) => (
            <Link target="_blank" href={FORMSFLOW_APP_URL +`/task/${task.id}`} > <Typography variant='body2'
           color='#606060'

@@ -70,8 +70,9 @@ const CaseDetails = () => {
 ];
   async function fetchCaseDetails() {
     var matches = location.pathname.match(/(\d+)/);
-    if(matches && matches[0]){
-      let output = await getCaseDetails(matches[0]);
+    if(matches && matches[0]){    
+      
+      let output = await getCaseDetails(matches[0]);     
       dispatch(setSelectedCase({...output,isEdit:false}));
       // setselectedCaseDetails(output)
       await fetchCaseHistory(matches[0])

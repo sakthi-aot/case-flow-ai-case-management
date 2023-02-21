@@ -1,12 +1,14 @@
 import {
   httpGETBolbRequest,
   httpGETRequest,
-  httpDELETERequest
+  httpDELETERequest,
+  httpPOSTRequest
 
 } from "../apiManager/httpRequestHandler";
 import {API, GRAPHQL} from "../apiManager/endpoints";
 import { FETCH_DOCUMENTS,SEARCH_DOCUMENT_LIST } from "../graphql/documentsRequests";
 import { print } from "graphql";
+import { PAGINATION_TAKE } from "../apiManager/endpoints/config";
 // export const getDocumetById = (documentId) => {
 //   return (dispatch) => {
 //     const url = API.DMS_API + "download?id=" + documentId;
@@ -72,12 +74,17 @@ export const  deleteDocument = async (id) => {
   return data;
 }
 
-export const searchCaseDocument= async (searchField,searchColumn) => {
+export const searchCaseDocument= async (searchField,searchColumn,selectedPage) => {
   const url = GRAPHQL;
-  const  output =  await httpGETRequest(url,{query: print(SEARCH_DOCUMENT_LIST),
+  const  skip =(selectedPage-1)*Number(PAGINATION_TAKE)
+  const  output =  await httpPOSTRequest(url,{query: print(SEARCH_DOCUMENT_LIST),
     variables: {
       searchField : searchField,
-      searchColumn : searchColumn
+      searchColumn : searchColumn,
+      skip:skip,
+      take:Number(PAGINATION_TAKE)
+     
+
     },
   },null)
     .then((res) => {return (res.data.data.SearchCaseDocument) })

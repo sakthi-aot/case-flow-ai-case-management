@@ -29,8 +29,10 @@ export class DocumentsService {
     return this.documentRepository.find({
       where: {
         isdeleted: false,
-      },
-      
+      },      
+      relations: [
+        'versions',
+      ],      
       order: {
         id: "DESC",
        
@@ -164,21 +166,32 @@ export class DocumentsService {
  * @param searchColumn 
  * @returns 
  */
-  searchCaseDocument(searchField,searchColumn){
+ async searchCaseDocument(searchField,searchColumn,skip,take){
     try{
     if(searchColumn){
       switch(searchColumn){
         case 'Description': {
-          return this.documentRepository.createQueryBuilder("table")
+          const [CaseDocuments,totalCount]  = await this.documentRepository.createQueryBuilder("table")
           .where("LOWER(table.desc) LIKE :title", { title: `%${ searchField.toLowerCase() }%` })
           .andWhere("table.isdeleted =:isDeleted",{isDeleted:false})
-          .getMany();
+          .leftJoinAndSelect("table.versions", "versions")
+          .orderBy("table.id", "DESC")
+          .addOrderBy("versions.id", "DESC")
+          .take(take).skip(skip)
+          .getManyAndCount();
+
+          return {CaseDocuments,totalCount}
         }
         default :
-        return this.documentRepository.createQueryBuilder("table")
+        const [CaseDocuments,totalCount]  = await this.documentRepository.createQueryBuilder("table")
         .where("LOWER(table.name) LIKE :title", { title: `%${ searchField.toLowerCase() }%` })
-        .andWhere("table.isdeleted =:isDeleted",{isDeleted:false})
-        .getMany();
+        .andWhere("table.isdeleted =:isDeleted",{isDeleted:false})       
+        .leftJoinAndSelect("table.versions", "versions")
+        .orderBy("table.id", "DESC")
+        .addOrderBy("versions.id", "DESC")
+        .take(take).skip(skip)
+        .getManyAndCount();
+        return {CaseDocuments,totalCount }
       }
     }
     else{
@@ -186,7 +199,8 @@ export class DocumentsService {
     }
 
     }
-    catch{
+    catch(err){
+      console.log(err)
       throw new HttpException("something went wrong", HttpStatus.INTERNAL_SERVER_ERROR)
     }
 

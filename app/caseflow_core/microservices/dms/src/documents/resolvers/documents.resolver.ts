@@ -6,6 +6,8 @@ import { DocumentsService } from '../services/documents.service';
 import { CreateDocumentInput } from '../dto/create-document.input';
 import { UpdateDocumentInput } from '../dto/update-documet.input';
 import { HttpException } from '@nestjs/common/exceptions';
+import { caseDocumentResponse } from '../entities/case_document_response.entity';
+import { FetchDocumentSearchInput } from '../dto/fetch-document-search.input';
 
 /**
  *  Resolvers For documents
@@ -44,13 +46,16 @@ export class DocumentsResolver {
    * @param searchColumn 
    * @returns 
    */
-  @Query((returns) => [CaseDocuments] )
+  @Query((returns) => caseDocumentResponse )
   SearchCaseDocument(
-    @Args('searchField') searchField: string,
-    @Args('searchColumn') searchColumn : string,
-     ): Promise<CaseDocuments[]> | HttpException{
+    // @Args('searchField') searchField: string,
+    // @Args('searchColumn') searchColumn : string,
+    // @Args('skip') skip:Int,
+    // @Args('take') take:Int
+    @Args ()args:FetchDocumentSearchInput
+     ): Promise<any> | HttpException{
 
-    return this.documentService.searchCaseDocument(searchField,searchColumn);
+    return this.documentService.searchCaseDocument(args.searchField,args.searchColumn,args.skip,args.take);
   }
 
   //_____________________Mutation_____________________//
