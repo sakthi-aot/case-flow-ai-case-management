@@ -36,7 +36,7 @@ const formattedCreatedDate = moment(lobData.createdDate).format('MMMM Do, YYYY')
       <Typography />
       <ListItem button>
         <Grid container spacing={1}>
-        <Grid item xs={2}>
+        <Grid item xs={1}>
             <ListItemText
               primary={
                 <Typography 

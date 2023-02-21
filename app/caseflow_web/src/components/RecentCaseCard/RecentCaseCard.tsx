@@ -46,7 +46,7 @@ const RecentCaseCard = (props) => {
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
-                }}>{CaseDetails.id} </Typography>}
+                }}><u>{CaseDetails.id}</u></Typography>}
             />
           </Grid>
           <Grid item xs={2} >

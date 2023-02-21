@@ -91,7 +91,7 @@ const caseListpagination = (e,p) =>{
 }
   
   return (
-    <div style={{ padding: "2rem 3rem 0rem 5rem" }}>
+    <div style={{ padding: "1rem 4rem 0rem 4rem" }}>
       {/* <BreadCrumbs dataForBreadCrumbs={dataForBreadCrumbs}/> */}
 
       <span className="recent-case-header">
