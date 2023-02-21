@@ -1,13 +1,10 @@
 @import "../../styles.scss";
 
-.dashboard {
-    display: grid;
-    grid-template-columns: 14vw auto auto auto;
+
   
 
     .header-search{
-        grid-column-start: 1;
-        grid-column-end: 5;
+
         display: flex;
         background-color: #ECECEC;
         padding-top: 0.5rem;
@@ -16,7 +13,7 @@
         
         .title {
             padding-left: 4vw;
-            padding-left: 3vw;
+            padding-left: 5rem;
             margin-top: 1rem;  
             margin-bottom: 1rem;   
             text-align: right;
@@ -34,14 +31,3 @@
         }
     }
       
-    .recent-cases{
-        grid-column-start: 1;
-        grid-column-end: 4;
-        grid-row-start:2
-    }
-    .my-task{
-        grid-column-start: 1;
-        grid-column-end: 4;
-        grid-row-start:3
-    }
-}
