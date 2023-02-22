@@ -203,11 +203,11 @@ const [workflows, setworkflows]:any = useState([]);
     setSelected(0)
   }
   const onConfirmation = async () =>{
-  
-    let newStatusDetails = statuses.find(stat=> stat.code == newStatus);
-    if(newStatusDetails && newStatusDetails.id){
-    selectedCase.statusid = parseInt(newStatusDetails.id.toString()) ;
-    let responseDetails = await updateCases(selectedCase);
+    let newStatusDetails = statuses.find(stat=> stat.code == newStatus);  
+    if(newStatusDetails && newStatusDetails.id){  
+    const newStatus = parseInt(newStatusDetails.id.toString()) ;
+    const updatedSelectedCase = {...selectedCase,statusid:newStatus}    
+    let responseDetails = await updateCases(updatedSelectedCase);
     if(responseDetails && responseDetails["success"]){
       setSelected(0)
       setOpenConfirmationPopup(false);
