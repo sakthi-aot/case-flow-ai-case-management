@@ -65,7 +65,7 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
         ></Search>
       </div>
       </div>   
-    <div className="lobData-container" style={{ padding: "2rem 3rem 0rem 5rem" }}>
+    <div className="lobData-container" style={{ padding: "2rem 4rem 0rem 4rem" }}>
     {/* <BreadCrumbs dataForBreadCrumbs={dataForBreadCrumbs}/> */}
       
       <div className="lobData-header">
@@ -109,7 +109,7 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
         
         <ListItem >
           <Grid container spacing={1}>
-            <Grid item xs={2}>
+            <Grid item xs={1}>
               <ListItemText
                 primary={
                   <Typography 
@@ -156,7 +156,7 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
                 }
               />
             </Grid>
-            <Grid item xs={1} style={{"padding-left":"1.5rem"}}>
+            <Grid item xs={2} style={{"padding-left":"1.5rem"}}>
               <ListItemText
                 primary={
                   <Typography

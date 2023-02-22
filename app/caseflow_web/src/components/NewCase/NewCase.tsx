@@ -98,7 +98,7 @@ const handleBack = ()=>{
   //   setValues({ ...values, [name]: value });
   // };
   return (
-    <div style={{ padding: "2rem 3rem 0rem 8rem" }} className="newOrupdateCaseBlock">
+    <div style={{ padding: "2rem 4rem 0rem 4rem" }} className="newOrupdateCaseBlock">
       <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6" className="case-heading">
       {caseList.isEdit?"Update Case":"New Case"}  
       </Typography>
