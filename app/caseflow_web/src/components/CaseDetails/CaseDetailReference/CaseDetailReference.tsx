@@ -33,10 +33,10 @@ const CaseDetailReference = ({caseId} :CaseDetailReferenceProps ) => {
     // additionalCaseDetails = selectedCase.lobDetails;
           
   }
-  }, [selectedCase.lobcaseid]);
+  }, [selectedCase.id]);
   const getCaseExtraDetails = async (id) =>{
     let output = await getCaseAdditionalDetails(id); 
-    if(output && output.id){
+    if(output){
       dispatch(setAdditionalCaseDetails(output))
     }
   }
