@@ -15,7 +15,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CustomizedDialog from '../Dialog/Dialog'
 import Upload from '../Upload/Upload'
 import EditIcon from '@mui/icons-material/Edit';
-import { setCaseTasks, setSelectedCase } from "../../reducers/newCaseReducer";
+import { resetSelectedCase, setCaseTasks, setSelectedCase } from "../../reducers/newCaseReducer";
 import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setCaseHistory, setFilteredCaseHistory } from '../../reducers/caseHistoryReducer';
@@ -193,6 +193,12 @@ const [workflows, setworkflows]:any = useState([]);
     
   }, [selectedCase.id]);
 
+  useEffect(() => {
+    return () => {
+      dispatch(resetSelectedCase())
+    }
+}, [])
+
   const fetchAllCaseStatuses = async () => {
     const statusList =  await fetchCaseStatuses();
     dispatch(setCaseStatuses(statusList))
@@ -298,7 +304,7 @@ const fetchRealtedTasks = async() =>{
           />
         </span>
         <Divider sx={{borderWidth:3}} />
-
+        {(selectedCase && selectedCase.id) ? <>
         <CaseDetailData
           name={selectedCase.name}
           date={caseDetail.date}
@@ -308,10 +314,10 @@ const fetchRealtedTasks = async() =>{
           caseType={selectedCase.casestype}
           lobCaseId={selectedCase.lobcaseid}
         />
-        {(selectedCase && selectedCase.id) ? <CaseDetailReference
+       <CaseDetailReference
           caseId={selectedCase.id}
         
-        />: ""}
+        /></>: ""}
          <Accordion className="case-documents">
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
