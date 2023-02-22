@@ -10,21 +10,38 @@ import jpeg from "../../assets/jpeg.png";
 import png from "../../assets/png.png";
 import pdf from "../../assets/pdf.png";
 import txt from "../../assets/txt.png";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { getAllDocuments,getDocument,searchCaseDocument } from "../../services/DocumentManagementService";
-import { setDocumentList } from "../../reducers/documentsReducer";
+import { setDocumentList, setTotalDocumentPageCount } from "../../reducers/documentsReducer";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import List from "@mui/material/List";
 import moment from "moment";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import TableBody from "@mui/material/TableBody";
+import Table from "@mui/material/Table";
+import { DocumentList } from "../../interfaces/componentInterface";
+import TableHead from "@mui/material/TableHead";
+import TableContainer from "@mui/material/TableContainer";
+import Paper from "@mui/material/Paper";
+import Pagination from "@mui/material/Pagination";
+import { State } from "../../interfaces/stateInterface";
+import { Link } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
+import { resetSelectedCase } from "../../reducers/newCaseReducer";
 
 
 
 const CaseDocuments = () => {
-  const [filteredDocumentDetails, setFilteredDocumentDetails] = useState([]);
+  // const [filteredDocumentDetails, setFilteredDocumentDetails] = useState([]);
   // const [documentDetailsForEdit, setDocumentDetailsForEdit] = useState(null);
   const [searchField, setSearchField] = useState("");
   const [searchColumn, setSearchColumn] = useState("Name");
+  const [selectedPage,setSelectedPage] = useState(1);
+  const navigate = useNavigate();
+  const filteredDocumentDetails = useSelector((state:State)=>state.documents.documentsList)
+  const totalDocuemntCount = useSelector((state:State)=>state.documents.totalPageCount)
   const dropDownArray = ["Name","Description"];
   const [sortSetting, setSortSetting] = useState({orderBy :"name",orderType :false});
    const dispatch = useDispatch();
@@ -45,12 +62,15 @@ const CaseDocuments = () => {
 
 
   const filterDocumentDetails = async () => {
-    let searchResult = await searchCaseDocument(searchField,searchColumn,sortSetting.orderBy,sortSetting.orderType)
+    let searchResult = await searchCaseDocument(searchField,searchColumn,sortSetting.orderBy,sortSetting.orderType,selectedPage)
     // searchResult = searchResult.map((element) => {
 
     // });
     if(searchResult)
-    setFilteredDocumentDetails(searchResult)
+    console.log(searchResult)
+    // setFilteredDocumentDetails(searchResult.CaseDocuments)
+    dispatch(setDocumentList(searchResult.CaseDocuments));
+    dispatch(setTotalDocumentPageCount(searchResult.totalCount))
   };
 
 
@@ -58,12 +78,12 @@ const CaseDocuments = () => {
   useEffect(() => {
     fetchDocumentDetailsList()
     filterDocumentDetails();
-  }, [searchField]);
+  }, [searchField,selectedPage]);
 
 
   
   async function fetchDocumentDetailsList() {
-    let output = await getAllDocuments();
+    // let output = await getAllDocuments();
     // output = output.map((element) => {
     //   return {
     //     ...element,
@@ -71,7 +91,7 @@ const CaseDocuments = () => {
     //     modificationdate: element.modificationdate.split("T")[0],
     //   };
     // });
-    dispatch(setDocumentList(output));
+    // dispatch(setDocumentList(output));
   }
 
 //  const  fetchDocumentDetails=(data:any)=>{
@@ -87,6 +107,16 @@ const CaseDocuments = () => {
           );
         }
 
+}
+
+const onDocumentPageSelect = (e,p ) =>{
+  setSelectedPage(p)
+}
+
+const navigateToCaseDetailHandler = (caseId) => {
+
+    dispatch(resetSelectedCase())
+    navigate(`/private/cases/${caseId}/details`)
 }
 
 
@@ -109,13 +139,14 @@ const CaseDocuments = () => {
             <div>
               {/* <Upload selectedDMS = "dms1" documentDetailsForEdit={documentDetailsForEdit}  /> */}
               <div className="case-document-list">
-                <Grid container spacing={1}>
+                <Grid container spacing={1} style={{}}>
                   <Grid item xs={6}>
                     <Typography
-                      sx={{ padding: "1rem 1rem 1rem 1rem" }}
+                      sx={{ padding: "1rem 1rem 1rem 1rem"}}
                       variant="h6"
+                      className="case-document-title"
                     >
-                      Case Documents
+                      Recent Documents
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
@@ -125,112 +156,110 @@ const CaseDocuments = () => {
             setSearchColumn={setSearchColumn}
           ></Search> */}
                   </Grid>
-                </Grid>
+              </Grid>               
+                <TableContainer  >
+                 {(filteredDocumentDetails &&filteredDocumentDetails.length!==0)? 
+                 <div  className="case-document-table-container" >
+                 <Table sx={{ minWidth: 650}} aria-label="simple table" >
+                    <TableHead>
+                      <TableRow
+                        sx={{
+                          "& th": {
+                            fontWeight: "bold",
+                          },
+                        }}
+                      >
+                        <TableCell align="left">Name</TableCell>
+                        <TableCell align="left">Case ID</TableCell>
+                        <TableCell align="left">Date Created</TableCell>
+                        <TableCell align="left">Last Updated</TableCell>
+                        <TableCell>Version ##</TableCell>
+                        {/* <TableCell align="left">Last Modified Date </TableCell>
+              <TableCell align="left">Download </TableCell> */}
+                      </TableRow>
+                    </TableHead>
 
-                <Divider sx={{ borderBottomWidth: 3 }} />
-               <List component="nav"
-        aria-label="mailbox folders">
-
-          { (filteredDocumentDetails &&filteredDocumentDetails.length!==0)?            
-            filteredDocumentDetails.map(document =>{
-              return (
-                <>
-                  <ListItem key={document.id}>
-                    <Grid
-                      container
-                      spacing={1}
-                      onClick={() => {
-                        previewDocument(document.id, document.type);
-                      }}
-                    >
-                      <Grid item xs={1}>
-                        <ListItemText
-                          primary={<Typography variant="subtitle1">ID</Typography>}
-                          secondary={
-                            <Typography variant="body2">
-                              {document.id}
-                            </Typography>
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={2}>
-                        <ListItemText
-                          primary={
-                            <Typography variant="subtitle1">Case ID</Typography>
-                          }
-                          secondary={
-                            <Typography variant="body2">
-                              {document.caseId}
-                            </Typography>
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={3} >
-                        <ListItemText
-                          primary={
-                            <Typography variant="subtitle1">Name</Typography>
-                          }
-                          secondary={
-                            <Typography variant="body2">
-                              {document.name}
-                            </Typography>
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={3}>
-                        <ListItemText
-                          primary={
-                            <Typography variant="subtitle1">Description</Typography>
-                          }
-                          secondary={
-                            <Typography variant="body2">
-                              {document.desc}
-                            </Typography>
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={3}>
-                        <ListItemText
-                          primary={
-                            <Typography variant="subtitle1" noWrap>
-                              Creation Date
-                            </Typography>
-                          }
-                          secondary={
-                            <Typography variant="body2">
+                    <TableBody>
+                      {filteredDocumentDetails &&
+                        filteredDocumentDetails.map(
+                          (documentDetail: DocumentList) => (
+                            <TableRow
+                            style={{height:10}}
+                              key={documentDetail.id}
+                              sx={{
+                                "&:last-child td, &:last-child th": {
+                                  border: 0,
+                                },
+                              }}
+                            >
+                              <TableCell align="left" component="th" scope="row">
+                                {" "}
+                                <div className="name-field">
+                                  <img
+                                    className="pdf-file-img"
+                                    src={`${getFileIcon(documentDetail.name)}`}
+                                    alt="pdf"
+                                  />
+                                  <div className="case-document-name">
+                                    <a
+               onClick={()=>{
+                previewDocument(documentDetail.id,documentDetail.type)
+              }}
+                                    >
+                                      {documentDetail.name}
+                                    </a>
+                                  </div>
+                                </div>
+                              </TableCell>
+                              <TableCell component="th" scope="row">
+                                <Link component="button" onClick={()=>navigateToCaseDetailHandler(documentDetail.caseId)} >
+                                
+                                {documentDetail.caseId}
+                                </Link>
+                              </TableCell>
+                              <TableCell align="left">
                               {moment(document.creationdate).format(
                                 "MMMM Do, YYYY"
                               )}
-                            </Typography>
-                          }
-                        />
-                      </Grid>
-                    </Grid>
-                  </ListItem>
-                  <Divider />
-                </>
-              );
-              
-            }):
-             <ListItem >
-            <Grid container spacing={1}  >
-            <Grid item xs={12} >
-              <ListItemText
-                primary={
-                  <Typography 
-                  variant="subtitle1"
-                  style={{"textAlign":"center","color":"rgba(0, 0, 0, 0.6)"}}>
-                    No Case Document Found!
-                  </Typography>
-                }             
-              />
-            </Grid>
-            </Grid>
-          </ListItem>
-
-          }
-
-               </List>
+                              </TableCell>
+                              <TableCell component="th" scope="row">
+                                {documentDetail.versions?.length>0?moment(documentDetail.versions[0].modificationdate).format(
+                                "MMMM Do YYYY"
+                              ):""}
+                              </TableCell>
+                              <TableCell align="left">
+                                {documentDetail.versions?.length>0?documentDetail.versions[0].versions:""}
+                              </TableCell>
+                              {/* <TableCell align="left">
+                                {documentDetail.modificationdate}
+                              </TableCell> */}
+                              {/* <TableCell
+                    align="left"
+                    className="action-icon"
+                    onClick={fetchCMISfile(
+                      documentDetail.id,
+                      documentDetail.dms_provider,false
+                    )}
+                  >
+                    {<DownloadIcon />}
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    onClick={()=>{fetchDocumentDetails(documentDetail)}}
+                  >
+                    <span className="action-icon"> {<EditIcon />}</span>
+                  </TableCell> */}
+                            </TableRow>
+                          )
+                        )}
+                    </TableBody>
+                  </Table>
+                    </div>  
+                  :
+                  <p className="no-case-doc-found">No Case Documents Found !</p>
+                }
+                </TableContainer>
+                { (filteredDocumentDetails &&filteredDocumentDetails.length!==0 && totalDocuemntCount>1) && <Pagination count={totalDocuemntCount} shape="rounded" className="pagination-case-list" onChange={onDocumentPageSelect} />}
               </div>
             </div>
           </div>

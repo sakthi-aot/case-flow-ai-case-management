@@ -11,13 +11,18 @@
       text-decoration: underline;
       cursor: pointer;
     }
+    .pdf-file-img {
+      margin-right: 4px;
+      width: 1rem;
+      height: 1rem;
+    }
   
    
   }
   
 .background {
   background-color: #ffffff;
-  height: 100vh;
+  height: 100%;
   // width: 100vw;
   overflow-y: auto;
   align-items: center;
@@ -31,9 +36,13 @@
   }
 
   .case-document-list{
-    width: 70%;
+    // width: 70%;
     margin: auto;
-    padding: 5rem 0% 5rem 0%;
+    padding: 5rem 0% 5rem 0%;  
+
+    .case-document-title{
+      font-size: 1.5rem;
+    }
     
 
   }
@@ -46,12 +55,12 @@
     border-color: #404040,
 }
 }
+.pagination-case-list{
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+.case-document-table-container{
+  min-height: 36rem;
+}
 
-  .document-file-image{
-
-    .pdf-file-img {
-      margin-right: 4px;
-      width: 1rem;
-      height: 1rem;
-    }
-  }

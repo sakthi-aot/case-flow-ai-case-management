@@ -13,13 +13,19 @@ query{
 }`
 
 export const SEARCH_DOCUMENT_LIST = gql`
-query SearchCaseDocument($searchField:String!,$searchColumn:String!,$orderBy:String!,$orderType:String!){
-  SearchCaseDocument(searchField:$searchField,searchColumn:$searchColumn,orderBy:$orderBy,orderType:$orderType){
+query SearchCaseDocument($searchField:String!,$searchColumn:String!,$orderBy:String!,$orderType:String!,$skip:Int!,$take:Int!){
+  SearchCaseDocument(searchField:$searchField,searchColumn:$searchColumn,orderBy:$orderBy,orderType:$orderType,skip:$skip,take:$take){
     id,
     name,
     desc,
     caseId,
     creationdate,
-    type
+    type,
+    versions{
+       versions    
+       modificationdate
+      }
+    }
+      totalCount
     }
   }`

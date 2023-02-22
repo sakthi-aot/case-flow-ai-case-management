@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { PAGINATION_TAKE } from "../apiManager/endpoints/config";
 const initialState = {
   documentsList: [],
   seletedDocument: null,
+  totalPageCount:1,
 };
 
 const documentSlice = createSlice({
@@ -15,6 +17,10 @@ const documentSlice = createSlice({
     setSelectedDocument: (state, action) => {
       state.seletedDocument = action.payload;
     },
+    setTotalDocumentPageCount:(state,action) =>{
+      const TotalPage = Math.ceil(action.payload/Number (PAGINATION_TAKE))        
+      state.totalPageCount = TotalPage;
+    }
   },
   extraReducers: {
     logout: (state, action) => {
@@ -26,5 +32,6 @@ const documentSlice = createSlice({
 export const {
   setDocumentList,
   setSelectedDocument,
+  setTotalDocumentPageCount,
 } = documentSlice.actions;
 export default documentSlice.reducer;
