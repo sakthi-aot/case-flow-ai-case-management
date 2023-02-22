@@ -15,15 +15,16 @@ query{
 export const SEARCH_DOCUMENT_LIST = gql`
 query SearchCaseDocument($searchField:String!,$searchColumn:String!,$orderBy:String!,$orderType:String!,$skip:Int!,$take:Int!){
   SearchCaseDocument(searchField:$searchField,searchColumn:$searchColumn,orderBy:$orderBy,orderType:$orderType,skip:$skip,take:$take){
-    id,
-    name,
-    desc,
-    caseId,
-    creationdate,
-    type,
-    versions{
-       versions    
-       modificationdate
+    CaseDocuments{
+      id,
+      name,
+      desc,
+      caseId,
+      creationdate,
+      type,
+      versions{
+        versions    
+        modificationdate
       }
     }
       totalCount

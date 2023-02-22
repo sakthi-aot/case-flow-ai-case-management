@@ -13,4 +13,10 @@ export class FetchDocumentSearchInput {
 
   @Field(() => Int) 
   take = 25
+
+  @Field(() => String) 
+  orderBy
+
+  @Field(() => String) 
+  orderType
 }

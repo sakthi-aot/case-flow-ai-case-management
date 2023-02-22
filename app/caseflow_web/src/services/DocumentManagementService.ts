@@ -82,7 +82,7 @@ export const searchCaseDocument= async (searchField,searchColumn,orderBy ="id",o
       searchField : searchField,
       searchColumn : searchColumn,
       orderBy:orderBy,
-      orderType:  orderType ? "DESC" : "ASC"
+      orderType:  orderType ? "DESC" : "ASC",
       skip:skip,
       take:Number(PAGINATION_TAKE)
     },

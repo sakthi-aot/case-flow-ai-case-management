@@ -166,7 +166,7 @@ export class DocumentsService {
  * @param searchColumn 
  * @returns 
  */
-  searchCaseDocument(searchField,searchColumn,orderBy ='id',orderType: 'ASC' |'DESC' = 'DESC',skip,take){
+  async searchCaseDocument(searchField,searchColumn,orderBy ='id',orderType: 'ASC' |'DESC' = 'DESC',skip,take){
     orderBy = 'table.' + orderBy;
     try{
     if(searchColumn){

@@ -55,7 +55,7 @@ export class DocumentsResolver {
     @Args ()args:FetchDocumentSearchInput
      ): Promise<any> | HttpException{
 
-    return this.documentService.searchCaseDocument(args.searchField,args.searchColumn,args.skip,args.take,args.orderBy,args.orderType);
+    return this.documentService.searchCaseDocument(args.searchField,args.searchColumn,args.orderBy,args.orderType,args.skip,args.take);
   }
 
   //_____________________Mutation_____________________//
