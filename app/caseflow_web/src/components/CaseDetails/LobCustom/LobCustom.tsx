@@ -75,8 +75,9 @@ const LobCustom = () => {
           </div>
       </div> :   <Typography variant='body2'
                   color='#606060'
+                  className="no-details-found"
               >
-                No data available
+               No Details Found !
               </Typography>}
       </>
   )
