@@ -1,8 +1,12 @@
 
 
 export interface EachTask{
-  taskID:number,
-  taskDescription : string
+  id:number,
+  name : string,
+  dateCreated:Date,
+  description:string,
+  assignedBy:string,
+  status:string
 }
 
 export interface SearchProps{
