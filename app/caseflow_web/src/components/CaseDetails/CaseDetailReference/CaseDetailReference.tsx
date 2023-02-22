@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import "./CaseDetailReference.scss"
 import  lobConfig from "../../../config/lob_data.json";
 import { getLobDetails } from '../../../services/LOBService';
-import { setAdditionalCaseDetails, setSelectedCaseLOBDetails } from '../../../reducers/newCaseReducer';
+import { resetSelectedCase, setAdditionalCaseDetails, setSelectedCaseLOBDetails } from '../../../reducers/newCaseReducer';
 import { useSelector } from 'react-redux';
 import { State } from "../../../interfaces/stateInterface";
 import {useDispatch} from "react-redux";
@@ -28,12 +28,13 @@ const CaseDetailReference = ({caseId} :CaseDetailReferenceProps ) => {
   // let  additionalCaseDetails = {}
   useEffect( () => {
     if(selectedCase.id){
-
     getCaseExtraDetails(selectedCase.id)
     // additionalCaseDetails = selectedCase.lobDetails;
           
   }
   }, [selectedCase.id]);
+
+
   const getCaseExtraDetails = async (id) =>{
     let output = await getCaseAdditionalDetails(id); 
     if(output){
@@ -43,7 +44,7 @@ const CaseDetailReference = ({caseId} :CaseDetailReferenceProps ) => {
   return (
     <>
     <div className='case-detail-reference-first-row'>
-    {additionalCaseDetails ? Object.keys(additionalCaseDetails).map((key) => <>{getDisplayData(key) ? <div key={key}>
+    {additionalCaseDetails ? Object.keys(additionalCaseDetails).map((key,index) => <>{getDisplayData(key) ? <div key={index}>
       <div className='item'>
         <h3>{getDisplayData(key)["displayName"]}</h3>
         <p>{getDisplayData(key)["type"]=="boolean" ? (additionalCaseDetails[key] == true ? getDisplayData(key)["trueValueDisplayText"] : getDisplayData(key)["falseValueDisplayText"]) : (getDisplayData(key)["type"]=="Date" ? moment(additionalCaseDetails[key]).format('MMMM Do, YYYY') :additionalCaseDetails[key])  }</p>

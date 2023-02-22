@@ -19,11 +19,11 @@ const RecentCaseCard = (props) => {
   const navigate = useNavigate();  
  
   const viewCaseDetails = async (CaseDetails)=>{    
-    dispatch(setSelectedCase({
-      ...CaseDetails,
-      isEdit:false,
+    // dispatch(setSelectedCase({
+    //   ...CaseDetails,
+    //   isEdit:false,
       
-    }))
+    // }))
     navigate("/private/cases/"  + CaseDetails.id+'/details');
   }
 
