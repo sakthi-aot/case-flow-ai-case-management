@@ -43,6 +43,7 @@ export interface SelectedCase {
   typeid : number;
   lobcaseid:number;
   tasks : any[];
+  additionalFields : any;
 }
 
 export interface CaseList {

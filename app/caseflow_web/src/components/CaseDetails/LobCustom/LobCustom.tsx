@@ -1,34 +1,63 @@
 import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography'
-import React from 'react'
+import React, { useEffect } from 'react'
 import LaunchIcon from '@mui/icons-material/Launch';
 import "./LobCustom.scss";
 import Link from '@mui/material/Link';
 import { color } from '@mui/system';
+import { useDispatch, useSelector } from 'react-redux';
+import { State } from '../../../interfaces/stateInterface';
+import { getLobDetails } from '../../../services/LOBService';
+import { setSelectedCaseLOBDetails } from '../../../reducers/newCaseReducer';
+import { useNavigate } from 'react-router';
+
 
 const LobCustom = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const selectedCase = useSelector((state:State) => state.cases.selectedCase);
+    const lobData = selectedCase.lobDetails;
+    useEffect( () => {
+        if(selectedCase.lobcaseid > 0){
+    
+        getCaseLobDetails(selectedCase.lobcaseid)
+        // lobData = selectedCase.lobDetails;
+              
+      }
+    }, [selectedCase.lobcaseid]);
+    const getCaseLobDetails = async (id) =>{
+        let lobDetails = await getLobDetails(id);
+        if(lobDetails && lobDetails.id){
+          dispatch(setSelectedCaseLOBDetails(lobDetails))
+        }
+      }
+
+    const navigateToLob = () =>{
+        navigate("/private/lob/" + lobData.id+'/details');
+    }
+    
   return (
     <>
     <Typography variant='subtitle1' sx={{ margin: "3.5rem 0  1rem " }}>LOB Custom Content</Typography><Divider sx={{ borderBottomWidth: 3 }} />
-    <div className="lob-custom-content-case-detail">
+   { lobData && lobData.id ? <div className="lob-custom-content-case-detail">
           <div>
               <Typography variant='subtitle1'>
-                  Case Category
+                  Policy Number
               </Typography>
               <Typography variant='body2'
                   color='#606060'
               >
-                  WildLife offense
+                  {lobData.policyNumber}
               </Typography>
           </div>
           <div>
               <Typography variant='subtitle1'>
-                  District
+                  Sum Assured
               </Typography>
               <Typography variant='body2'
                   color='#606060'
               >
-                  thrissur
+                   {lobData.sumAssured}
               </Typography>
           </div>
 
@@ -38,15 +67,21 @@ const LobCustom = () => {
               </Typography>
               <Typography variant='body2' 
               >
-                <Link href="#" underline="always" style={{color:"blue"}}>
+                <Link onClick={navigateToLob} underline="always" style={{color:"blue"}}>
                 LOB Record <LaunchIcon  style={{ fontSize: '.875rem' }}/>
                 </Link>
                 
               </Typography>
           </div>
-      </div>
+      </div> :   <Typography variant='body2'
+                  color='#606060'
+              >
+                No data available
+              </Typography>}
       </>
   )
 }
 
 export default LobCustom
+
+

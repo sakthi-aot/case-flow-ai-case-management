@@ -9,7 +9,8 @@ selectedCase : {
    lobDetails:{},
    documents:[],
    totalDocCount:0,
-   tasks:[]
+   tasks:[],
+   additionalFields : {}
 },
 caseList : [{
   id : 0,
@@ -53,6 +54,9 @@ setTotalDocCount : (state,action) =>{
 setCaseTasks : (state,action) =>{
   state.selectedCase.tasks =action.payload
 },
+setAdditionalCaseDetails : (state,action) =>{
+  state.selectedCase.additionalFields =action.payload
+},
 
 
   }
@@ -68,5 +72,6 @@ export const {
   setPageSelected,
   setTotalDocCount,
   setCaseTasks,
+  setAdditionalCaseDetails,
 } = caseSlice.actions;
 export default caseSlice.reducer;

@@ -32,7 +32,7 @@ export class UpdateCaseInput {
   @Field({ nullable: true })
   completiondate: Date;
 
-  @Field({ nullable: true })
+  @Field({ nullable: true ,defaultValue: new Date()})
   lastmodificationdate: Date;
 
   @Field({ nullable: true })
