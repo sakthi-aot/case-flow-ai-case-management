@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-
+import  lobConfig from "../config/lob_data.json";
 
 
 export const FETCH_CASES = gql`
@@ -129,5 +129,13 @@ export const FETCH_CASEHISTORY = gql`
       }
     }
   
+  }`
+
+
+export const FETCH_ADDITIONAL_CASE_DETAILS= gql`
+query getCase($CaseId:Int!,){
+  getCase(id:$CaseId){
+    ${lobConfig.caseDetails.map(query => `${query.databaseIdentifier}`)}
+  }
   }`
 

@@ -1,37 +1,11 @@
 {
   "caseDetails": [
     {
-      "displayName": "Policy Number",
-      "databaseIdentifier": "policyNumber",
-      "type": "number"
-    },
-    {
-      "displayName": "Policy Effective Date",
-      "databaseIdentifier": "policyEffectiveDate",
-      "type": "Date"
-    },
-    {
-      "displayName": "Policy Expiry Date",
-      "databaseIdentifier": "policyExpiryDate",
-      "type": "Date"
-    },
-    {
-      "displayName": "Sum Assured",
-      "databaseIdentifier": "sumAssured",
-      "type": "number"
-    },
-    {
-      "displayName": "Status",
-      "databaseIdentifier": "isActive",
-      "type": "boolean",
-      "trueValueDisplayText" : "Active",
-      "falseValueDisplayText" : "Not Active"
-    },
-    {
-      "displayName": "Created Date",
-      "databaseIdentifier": "createdDate",
+      "displayName": "Last Updated On",
+      "databaseIdentifier": "lastmodificationdate",
       "type": "Date"
     }
+    
   ]
 
 }

@@ -14,7 +14,8 @@ import {
     FETCH_CASE_DETAILS,    
     SEARCH_CASE_LIST,
     FETCH_RECENT_CASES,
-    FETCH_CASEHISTORY,    
+    FETCH_CASEHISTORY,
+    FETCH_ADDITIONAL_CASE_DETAILS,    
   } from "../graphql/caseRequests"
   import { Case } from "../dto/cases"
   import { print } from "graphql";
@@ -120,6 +121,21 @@ import {
     const  output =  await httpPOSTRequest(url,{query: print(FETCH_CASE_DETAILS),
       variables: {
         CaseId : parseInt(id),
+      },
+    },null)
+      .then((res) => {return res.data.data.getCase})
+      .catch((error) => {
+        console.log({"error" : error})
+        return {}
+      });
+      return output
+
+  };
+  export const getCaseAdditionalDetails = async (id) => {
+    const url = GRAPHQL;
+    const  output =  await httpPOSTRequest(url,{query: print(FETCH_ADDITIONAL_CASE_DETAILS),
+      variables: {
+        CaseId : parseInt(id)
       },
     },null)
       .then((res) => {return res.data.data.getCase})
