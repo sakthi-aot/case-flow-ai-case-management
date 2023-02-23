@@ -34,8 +34,20 @@ import {
   };
 
   export const getTaksByCaseId = async (id) => {
-    console.log(parseInt(id))
     const url = `${BPM_URL}/camunda/engine-rest-ext/v1/task?caseInstanceId=${id}`;
+    const  output =  await httpGETRequest(url,{},null)
+      .then((res) => {return res.data})
+      .catch((error) => {
+        console.log({"error" : error})
+        return {}
+      });
+      return output
+
+  };
+
+  
+  export const getTaksByUserId = async (id) => {
+    const url = `${BPM_URL}/camunda/engine-rest-ext/v1/task?assignee=${id}`;
     const  output =  await httpGETRequest(url,{},null)
       .then((res) => {return res.data})
       .catch((error) => {
