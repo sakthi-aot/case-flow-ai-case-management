@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select'
 import "./FilterMuiComponent.scss"
+import { Typography } from '@mui/material';
 
 interface FilterMuiComponentProps{
   label:any,
@@ -33,7 +34,7 @@ const FilterMuiComponent = ({label,options,onChnagehandler,selected}:FilterMuiCo
                 paddingBlock: "1rem",
               }}
             >
-              {option.text}
+              <Typography variant='body2'>{option.text}</Typography>
             </MenuItem>
           ))}
         </Select>
