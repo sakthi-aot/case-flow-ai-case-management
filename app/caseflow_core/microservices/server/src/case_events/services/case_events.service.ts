@@ -20,11 +20,18 @@ export class CaseEventsService {
 
   /**
    * Create Method For Creating New Cases
-   * @param createCaseInput
+   * @param createCaseEventInput
    * @returns
    */
-  create(createCaseEventInput: CreateCaseEventInput) {
-    return 'This action adds a new caseEvent';
+  async create(createCaseEventInput: CreateCaseEventInput) {
+    try {
+      const newCaseEvent =  this.caseEventRepository.create(createCaseEventInput);
+      const data=await this.caseEventRepository.save(newCaseEvent);
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+
   }
 
     /**

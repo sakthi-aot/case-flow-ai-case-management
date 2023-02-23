@@ -6,6 +6,9 @@ import { InputType, Int, Field } from '@nestjs/graphql';
  */
 @InputType()
 export class CreateCaseEventInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field((type) => Int)
+  artifactId: number;
+
+  @Field((type) => Int)
+  eventtypeId: number;
 }

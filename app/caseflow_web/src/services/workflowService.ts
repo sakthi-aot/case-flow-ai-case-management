@@ -2,7 +2,11 @@ import {
     httpGETRequest,
     httpPOSTRequest,
   } from "../apiManager/httpRequestHandler";
-  import { BPM_URL } from "../apiManager/endpoints";
+import { BPM_URL } from "../apiManager/endpoints";
+import { GRAPHQL } from "../apiManager/endpoints";
+import { print } from "graphql";
+import { ADD_WORKFLOW_CASE_HISTORY } from "../graphql/caseRequests";
+
 
 
 
@@ -45,3 +49,26 @@ import {
       return output
 
   };
+
+  export const addWorkflowCaseHistory = async(caseId:string) => {
+    const url =  GRAPHQL;
+    return httpPOSTRequest(url,{query: print(ADD_WORKFLOW_CASE_HISTORY),
+      variables: {
+        createCaseEventInput: {
+          artifactId:parseInt(caseId),
+          eventtypeId: 12,
+        },
+      },
+    },null)
+      .then((res) => {
+        return {"success" : res};
+      })
+      .catch((error) => {
+        if (error?.response?.data) {
+          return({"error" : error})
+        } else {
+          return({"error" : "something went wrong"})
+        }
+      });
+ 
+};

@@ -30,7 +30,7 @@ import { setCaseStatuses } from "../../reducers/constantsReducer";
 import { State } from "../../interfaces/stateInterface";
 import PopUpDialogBox from "../PopUpDialogBox/PopUpDialogBox";
 import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
-import { getTaksByCaseId, getWorkflowList, startNewWorkflow } from "../../services/workflowService";
+import { addWorkflowCaseHistory, getTaksByCaseId, getWorkflowList, startNewWorkflow } from "../../services/workflowService";
 import { Button, Divider, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import LobCustom from "./LobCustom/LobCustom";
 
@@ -260,6 +260,8 @@ const [workflows, setworkflows]:any = useState([]);
     setSelected(0);
     setOpenWorkflowPopup(false);
     fetchRealtedTasks();
+    await addWorkflowCaseHistory(selectedCase.id)
+    await fetchCaseHistory(selectedCase.id)
   }
   else{
     toast.success("Failed to start the selected workflow");

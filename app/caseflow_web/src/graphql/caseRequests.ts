@@ -131,6 +131,14 @@ export const FETCH_CASEHISTORY = gql`
   
   }`
 
+  export const ADD_WORKFLOW_CASE_HISTORY = gql`
+  mutation createCaseEvent($createCaseEventInput:CreateCaseEventInput!){
+    createCaseEvent(createCaseEventInput:$createCaseEventInput){
+      id
+    }
+  }`
+
+
 
 export const FETCH_ADDITIONAL_CASE_DETAILS= gql`
 query getCase($CaseId:Int!,){
