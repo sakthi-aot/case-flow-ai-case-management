@@ -6,6 +6,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/system/Box";
 import moment from "moment";
+import { Link } from "@mui/material";
+import { FORMSFLOW_APP_URL } from "../../apiManager/endpoints/config";
 
 const MyTaskCard = (props ) => {
   console.log(props)
@@ -23,7 +25,7 @@ const MyTaskCard = (props ) => {
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
-                }}><u>{props.task.name}</u></Typography>}
+                }}> <Link target="_blank" href={FORMSFLOW_APP_URL +`/task/${props.task.id}`} > {props.task.name} </Link>  </Typography>}
             />
           </Grid>
           <Grid item xs={2} >
@@ -37,7 +39,7 @@ const MyTaskCard = (props ) => {
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap', 
-                }}>{moment( props.task.dateCreated).format("MMMM Do, YYYY")} </Typography>}
+                }}>{moment( props.task.created).format("MMMM Do, YYYY")} </Typography>}
             />
           </Grid>
           <Grid item xs={4} >
@@ -62,7 +64,7 @@ const MyTaskCard = (props ) => {
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
-                }}>{ props.task.assignedBy} </Typography>
+                }}>Admin </Typography>
                }
             />
           </Grid>     
@@ -71,7 +73,7 @@ const MyTaskCard = (props ) => {
           <Box >
           <Typography className="recent-case-card-status">
               <div className="recent-case-card-status-text">
-                {props.task.status}
+                Active
               </div>
           </Typography>
             </Box>

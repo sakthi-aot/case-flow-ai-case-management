@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 
@@ -9,35 +9,25 @@ import "./myTask.scss";
 import ListItem from "@mui/material/ListItem";
 import Grid from "@mui/material/Grid";
 import ListItemText from "@mui/material/ListItemText";
+import { useDispatch, useSelector } from "react-redux";
+import { State } from "../../interfaces/stateInterface";
+import { getTaksByUserId } from "../../services/workflowService";
+import { setUserTaskList } from "../../reducers/taskReducer";
 
 const MyTask = () => {
-  const allTasks : EachTask[] = [
-    {
-      id:1,
-      name:"Task No. 1",
-      dateCreated:new Date(),
-      description:"Hunter patrol 27km beaver FSR. He produced a hunting...",
-      assignedBy:"Chris Robinson",
-      status:"Open",      
-    },
-    {
-      id:2,
-      name:"Task No. 2",
-      dateCreated:new Date(),
-      description:"Hunter patrol 27km beaver FSR. He produced a hunting...",
-      assignedBy:"Chris Robinson",
-      status:"Open",      
-    },
-    {
-      id:3,
-      name:"Task No. 3",
-      dateCreated:new Date(),
-      description:"Hunter patrol 27km beaver FSR. He produced a hunting...",
-      assignedBy:"Chris Robinson",
-      status:"Open",      
-    },
-   
-  ];
+
+const dispatch = useDispatch();
+const userName = useSelector((state:State) => state.auth.userDetails.userName);
+const taskList = useSelector((state:State) => state.tasks.userTasksList);
+
+useEffect(() => {
+  fetchUserTasks();
+}, []);
+const fetchUserTasks = async() =>{
+  const tasks = await getTaksByUserId(userName)
+  dispatch(setUserTaskList(tasks))
+}
+
   return (
     <div className="myTaskStyle" style={{ padding: "2rem 4rem 0rem 4rem" }}>
       <Typography
@@ -129,9 +119,9 @@ const MyTask = () => {
 
 
       
-        {allTasks?.length>0 ? allTasks.map((eachTask) => (
+        {taskList?.length>0 ? taskList.map((eachTask,index) => (
           <MyTaskCard
-          key={eachTask.id}
+          key={index}
           task={eachTask}
           />
         )):

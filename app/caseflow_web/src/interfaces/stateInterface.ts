@@ -5,7 +5,8 @@ export interface State {
   documents: Document;
   cases: Cases;
   constants: Constants;
-  lob:Lob
+  lob:Lob;
+  tasks: Tasks;
 }
 
 export type AuthState = {
@@ -109,4 +110,7 @@ export interface LobList {
   policyExpiryDate:Date,
   policyEffectiveDate:Date,
   
+}
+export interface Tasks {
+  userTasksList : any[];
 }
