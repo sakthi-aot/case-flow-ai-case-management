@@ -91,12 +91,11 @@ const caseListpagination = (e,p) =>{
 }
   
   return (
-    <div style={{ padding: "1rem 4rem 0rem 4rem" }}>
+    <div style={{ padding: "2rem 4rem 0rem 4rem" }}>
       {/* <BreadCrumbs dataForBreadCrumbs={dataForBreadCrumbs}/> */}
 
       <span className="recent-case-header">
       <Typography
-        sx={{ padding: "1rem 1rem 1rem 1rem" }}
         variant="h6"
         className="recent-case-header-font "
       >
@@ -119,17 +118,10 @@ const caseListpagination = (e,p) =>{
         </FormControl> : "" } */}
       </span>
       
-      <div >
 
-      <List
-       
-        className="superbassClass"
-        component="nav"
-        aria-label="mailbox folders"
-
-         >
-          <ListItem >
-        <Grid container spacing={1} >
+      <List>
+        
+        <Grid container spacing={1} sx={{paddingBottom:1.5}}>
           <Grid item xs={2} onClick={()=>setSortSetting({orderBy:"id",orderType:!sortSetting.orderType})} >
             <ListItemText
               primary={
@@ -192,8 +184,8 @@ const caseListpagination = (e,p) =>{
           </Grid>
       </Grid>
       
-      </ListItem>
-      <Divider sx={{ borderBottomWidth: 3 }} />
+      
+      <Divider sx={{ borderBottomWidth: 2, backgroundColor:"#B3B3B3" }} />
         {allRecentCases.length!=0 ? allRecentCases.map((eachcases:Case) => (
           <RecentCasecard
             case = {eachcases}
@@ -220,7 +212,6 @@ const caseListpagination = (e,p) =>{
         {(config.pagination && totalPCount >1) &&  <Pagination count={totalPCount} shape="rounded" className="pagination-case-list" onChange={caseListpagination} />}
       </div>
 
-    </div>
   );
 });
 

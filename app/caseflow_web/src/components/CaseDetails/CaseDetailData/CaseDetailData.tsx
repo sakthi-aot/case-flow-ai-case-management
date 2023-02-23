@@ -30,7 +30,7 @@ const CaseDetailData = ({name,date,owner,caseDescription,tasks,caseType,lobCaseI
           <Typography variant='subtitle1'>Start Date</Typography >
 
           <Typography variant='body2'>
-            {moment(date).format('MMMM Do, YYYY')}
+            {moment(date).format('YYYY-MM-DD')}
 
           </Typography>
         </div>

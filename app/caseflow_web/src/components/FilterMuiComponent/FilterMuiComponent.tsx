@@ -16,7 +16,7 @@ const FilterMuiComponent = ({label,options,onChnagehandler,selected}:FilterMuiCo
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl sx={{ m: 1, minWidth: 100 }} size="small">
-        <InputLabel id="demo-multiple-chip-label">{label}</InputLabel>
+        {/* <InputLabel id="demo-multiple-chip-label">{label}</InputLabel> */}
 
         <Select
           label="Age"

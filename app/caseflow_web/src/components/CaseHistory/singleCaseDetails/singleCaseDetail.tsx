@@ -3,10 +3,12 @@ import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRound
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import "./SingleCaseDetail.scss"
 import Typography from '@mui/material/Typography';
+import moment from 'moment';
+import CaseHistory from '../caseHistory';
 
 
 
-const SingleCaseDetail = ({caseHisoryData,userInfo}) => {
+const SingleCaseDetail = ({caseHistoryData,userInfo}) => {
     
     // const docDate =  {
     //     id:1,
@@ -16,6 +18,7 @@ const SingleCaseDetail = ({caseHisoryData,userInfo}) => {
     //     tasks:["Task 01","Task 02"],
     //     documents:"Document.pdf"
     // }     
+    let date = caseHistoryData.date.split(" ")
     const[expand,setExpand] = useState(false)
     const expandDetailhandler = ( )=>{
         setExpand((prevState) =>{
@@ -24,14 +27,14 @@ const SingleCaseDetail = ({caseHisoryData,userInfo}) => {
     }
   return (
     <div className='case-grid-container'>
-        <span className='case-grid-date'>{caseHisoryData.date}</span>
-        <span className='case-grid-line'><Typography sx={{backgroundColor:'primary.main'}} className="case-grid-line-ball"></Typography></span>
+        <span className='case-grid-date'>{date[0]}<br/>{date[1]}</span>
+        <span className='case-grid-line'><Typography sx={{backgroundColor:'#404040'}} className="case-grid-line-ball"></Typography></span>
         <div className='case-gird-details'>
-            <h3 onClick={expandDetailhandler} className="case-gird-details-header"><span>{caseHisoryData.caseHistoryType}</span>
+            <h3 onClick={expandDetailhandler} className="case-gird-details-header"><span>{caseHistoryData.caseHistoryType}</span>
            {expand ? <KeyboardArrowUpRoundedIcon/>:<KeyboardArrowDownRoundedIcon/>}
             </h3>
             {expand && <div>
-                <p>{caseHisoryData.caseHistoryType}</p>
+                <p>{caseHistoryData.caseHistoryType}</p>
                 <p>User -   {userInfo.userName}</p>
                 {/* <h3>Notes</h3>
                 <p>{notes}</p>

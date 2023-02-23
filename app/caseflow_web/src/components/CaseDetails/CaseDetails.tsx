@@ -83,7 +83,7 @@ const CaseDetails = () => {
     const output = caseHistoryData.casehistory.map((element,index) => {
       return {  
         id :index,
-        date:moment(element.datetime).format('MMMM Do YYYY, h:mm:ss a'),
+        date:moment(element.datetime).format('YYYY-MM-DD H:MM'),
         caseHistoryType:element.event.eventtype.text,
       };
     });
@@ -297,7 +297,7 @@ const fetchRealtedTasks = async() =>{
             selected ={selected}
           />
         </span>
-        <Divider sx={{borderWidth:3}} />
+        <Divider sx={{borderBottomWidth:1,backgroundColor:"#999393"}} />
 
         <CaseDetailData
           name={selectedCase.name}
@@ -320,7 +320,7 @@ const fetchRealtedTasks = async() =>{
           className="case-documents-head-section"
           sx={{marginBottom:0}}
         >
-         <Typography variant = 'subtitle1' className="caseDocuments-headtag">Case Documents</Typography>
+         <Typography variant = 'body1' className="caseDocuments-headtag">Case Documents</Typography>
         </AccordionSummary>
         <AccordionDetails sx={{paddingLeft:0}}>
         <RelatedCaseDocuments id = {selectedCase.id} docDetail={docDetail}></RelatedCaseDocuments>
