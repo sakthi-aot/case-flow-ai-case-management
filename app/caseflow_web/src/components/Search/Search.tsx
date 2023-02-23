@@ -118,10 +118,10 @@ const Search = ({ setSearchField, dropDownArray, setSearchColumn } :SearchProps)
           {eachValue.title}
      </Typography>
      <Typography variant="caption"  sx={{ fontSize: 8}}>
-          {eachValue.title}
+          {eachValue.subtitle}
      </Typography>
      <Typography variant="body1"  sx={{ fontSize: 14}} gutterBottom>
-          {eachValue.title}
+          {eachValue.content}
      </Typography>
  
 

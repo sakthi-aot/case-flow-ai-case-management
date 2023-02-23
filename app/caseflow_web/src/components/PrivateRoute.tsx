@@ -19,6 +19,7 @@ import { State } from "../interfaces/stateInterface";
 import LOBCustomContent from "./LOBCustomContent/LOBCustomContent";
 import LobDetail from "./LobDetails/LobDetails";
 import NewLobData from "./NewLob/NewLobData";
+import AdvancedSearch from "./AdvanedSearch/advancedSearch";
 
 const NotFound = lazy(() => import("./NotFound/NotFound"));
 
@@ -61,7 +62,7 @@ const PrivateRoute = React.memo(({store}:any) => {
             <Route path=":id/edit" element={<NewLobData/>} />
 
           </Route>
-
+          <Route path="advancedSearch" element={<AdvancedSearch />} />
 
           </Route>
           <Route path="*" element={<NotFound />} />
