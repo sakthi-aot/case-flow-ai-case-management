@@ -5,7 +5,7 @@
     text-align: center; 
     
     .case-grid-line{
-        border-left: 3px solid rgb(161, 159, 159);
+        border-left: 2px solid #BCBCBC;
         height: 100%;
         margin: 0 .5rem;
         position: relative;
@@ -17,7 +17,7 @@
             border-radius: 50%;
             position: absolute;
             top: 20px;
-            right:-6.5px;
+            right:-6.8px;
         }
     }
     .case-gird-details{
@@ -25,6 +25,7 @@
     }
     .case-grid-date{
         margin-top: 1.2rem;
+        text-align: left;
     }
     .case-gird-details-header{
         text-align: left;

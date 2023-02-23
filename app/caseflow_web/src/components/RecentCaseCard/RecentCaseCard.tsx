@@ -4,7 +4,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import Box from '@mui/material/Box';
 import Grid from "@mui/material/Grid";
-import { Typography } from "@mui/material";
+import { List, Typography } from "@mui/material";
 import "./recentCaseCard.scss"
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux/es/exports";
@@ -33,9 +33,8 @@ const RecentCaseCard = (props) => {
 
  
   return (   
-    <div className="caselist" >
-      <Typography />
-      <ListItem button>
+    <div>
+      <ListItem button sx={{paddingInline:0 , paddingBlock:2}} >
         <Grid container spacing={1}  onClick={()=>{viewCaseDetails(CaseDetails)}}>
           <Grid item xs={2} >
             <ListItemText
@@ -94,7 +93,7 @@ const RecentCaseCard = (props) => {
 
           <Grid  item xs={2} display="flex" alignItems='center' justifyContent="flex-start" >
           <Box >
-          <Typography className="recent-case-card-status">
+          <Typography className="recent-case-card-status" >
               <div className="recent-case-card-status-text">
                 {CaseDetails?.casestatus?.displayname}
               </div>
@@ -106,7 +105,7 @@ const RecentCaseCard = (props) => {
         </Grid>
 
       </ListItem>
-      <Divider />
+      <Divider sx={{color:"E2E2E2"}}/>
 
     </div>      
     

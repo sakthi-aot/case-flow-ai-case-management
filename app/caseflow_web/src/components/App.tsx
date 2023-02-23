@@ -40,7 +40,7 @@ let theme = createTheme({
     body2:{
       fontWeight: 400,
       color:"#606060",
-      margin:"0rem 0 0rem 0"
+      margin:"0rem 0 0rem 0",
     },
     body1:{
       fontWeight: 500,

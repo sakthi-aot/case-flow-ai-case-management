@@ -4,7 +4,7 @@
     display: flex;
     justify-content:space-between;
     align-items: center;
-    padding: 1rem 1rem .3rem;
+    padding: .7rem 0rem;
     border-bottom: 1px solid rgb(153, 147, 147);
     margin-bottom: 1rem;
 
@@ -15,6 +15,7 @@
 }
 .case-history-container{
     min-height: 100vh;
+    padding-top: .8rem !important;
 }
 .case-gird-details{
     .case-gird-details-header{

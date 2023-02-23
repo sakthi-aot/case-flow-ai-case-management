@@ -1,5 +1,13 @@
 @import "../../styles.scss";
 
+.Table-Header {
+  font: normal normal 600 16px/25px Poppins;
+  color: #404040;
+  border-bottom: 2rem;
+  padding-left: 0;
+  border-bottom-color: #606060;
+}
+
 .case-document-table{
     padding: 0;
   .caseDocumentAction-center{

@@ -38,7 +38,7 @@ const LobCustom = () => {
     
   return (
     <>
-    <Typography variant='subtitle1' sx={{ margin: "3.5rem 0  1rem " }}>LOB Custom Content</Typography><Divider sx={{ borderBottomWidth: 3 }} />
+    <Typography variant='subtitle1' sx={{ margin: "3.5rem 0  1rem " }}>LOB Custom Content</Typography><Divider sx={{ borderBottomWidth:1,borderColor:'#9B9B9B' }} />
    { lobData && lobData.id ? <div className="lob-custom-content-case-detail">
           <div>
               <Typography variant='subtitle1'>

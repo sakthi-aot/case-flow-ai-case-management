@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import { getDocumentofCaseList } from "../../services/CaseService";
 import "./RelatedCaseDocuments.scss"
 import { getDocument,deleteDocument } from "../../services/DocumentManagementService";
-import { MenuItem, Select } from "@mui/material";
+import { MenuItem, Select, Typography } from "@mui/material";
 import { Pagination } from "@mui/material";
 import { PAGINATION_TAKE } from "../../apiManager/endpoints/config";
 import { setSelectedCaseDocuments,setTotalDocCount } from "../../reducers/newCaseReducer";
@@ -119,7 +119,7 @@ useEffect(() => {
     const output = caseHistoryData.casehistory.map((element,index) => {
       return {  
         id :index,
-        date:moment(element.datetime).format('MMMM Do YYYY, h:mm:ss a'),
+        date:moment(element.datetime).format('YYYY-MM-DD H:MM'),
         caseHistoryType:element.event.eventtype.text,
       };
     });
@@ -169,12 +169,12 @@ useEffect(() => {
     {docDetail && docDetail.length!==0 ?  <Table sx={{ minWidth: 650 ,border : 0,}} aria-label="simple table" className="case-document-table" >
         <TableHead >
           <TableRow>
-            <TableCell  sx={{ color: '#606060',fontSize: 16,border:0}} >Name</TableCell>
-            <TableCell align="right" sx={{ color: '#606060',fontSize: 16,border:0}} >Size</TableCell>
-            <TableCell align="right" sx={{ color: '#606060',fontSize: 16,border:0}} >Creation Date</TableCell>
-            <TableCell align="right" sx={{ color: '#606060',fontSize: 16,border:0}} >Last Updated</TableCell>
-            <TableCell align="right" sx={{ color: '#606060',fontSize: 16,border:0}} >version ##</TableCell>
-            <TableCell align="right" sx={{ color: '#606060',fontSize: 16,border:0}} ></TableCell>
+            <TableCell align="left" sx={{ color: '#404040',fontSize: 16,fontWeight:600,borderBottom:2,borderBottomColor:'#606060',paddingLeft:0}} >Name</TableCell>
+            <TableCell align="left" sx={{ color: '#404040',fontSize: 16,fontWeight:600,borderBottom:2,borderBottomColor:'#606060',paddingLeft:0}} >Size</TableCell>
+            <TableCell align="left" sx={{ color: '#404040',fontSize: 16,fontWeight:600,borderBottom:2,borderBottomColor:'#606060',paddingLeft:0}} >Date Created</TableCell>
+            <TableCell align="left" sx={{ color: '#404040',fontSize: 16,fontWeight:600,borderBottom:2,borderBottomColor:'#606060',paddingLeft:0}} >Last Updated</TableCell>
+            <TableCell align="left" sx={{ color: '#404040',fontSize: 16,fontWeight:600,borderBottom:2,borderBottomColor:'#606060',paddingLeft:0}} >version #</TableCell>
+            <TableCell align="left" sx={{ color: '#404040',fontSize: 16,fontWeight:600,borderBottom:2,borderBottomColor:'#606060',paddingLeft:0}} ></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -183,16 +183,16 @@ useEffect(() => {
             key={row.id}
             >
               <TableCell   
-              sx={{  border: 0 }}
+              sx={{  border: 0,borderBottom:1,borderBottomColor:'#E2E2E2',paddingLeft:0 }}
               onClick={()=>{
                 previewDocument(row.id,row.type)
               }
-              }  style={{borderBottom: "none"}} component="th" scope="row">{row.name}</TableCell>
-              <TableCell style={{borderBottom: "none"}} align="right">{row.size ? row.size : "1kb"}</TableCell>
-              <TableCell style={{borderBottom: "none"}} align="right">{moment(row.creationdate).format('MMMM Do YYYY , h:mm:ss a')}</TableCell>
-              <TableCell style={{borderBottom: "none"}} align="right">{moment(row.creationdate).format('MMMM Do YYYY , h:mm:ss a')}</TableCell>
-              <TableCell  style={{borderBottom: "none"}} align="right">{ getLatestVersion(row.versions)}</TableCell>
-              <TableCell  style={{borderBottom: "none"}} align="right">
+              } component="th" scope="row">{row.name}</TableCell>
+              <TableCell sx={{borderBottom:1,borderBottomColor:'#E2E2E2',paddingLeft:0}} align="left">{row.size ? row.size : "1kb"}</TableCell>
+              <TableCell sx={{borderBottom:1,borderBottomColor:'#E2E2E2',paddingLeft:0}} align="left">{moment(row.creationdate).format('MMMM Do YYYY , h:mm:ss a')}</TableCell>
+              <TableCell sx={{borderBottom:1,borderBottomColor:'#E2E2E2',paddingLeft:0}} align="left">{moment(row.creationdate).format('MMMM Do YYYY , h:mm:ss a')}</TableCell>
+              <TableCell sx={{borderBottom:1,borderBottomColor:'#E2E2E2',paddingLeft:0}} align="left">{ getLatestVersion(row.versions)}</TableCell>
+              <TableCell sx={{borderBottom:1,borderBottomColor:'#E2E2E2',paddingLeft:0}} align="left">
                 {/* <select className="caseDocumentAction-center" onChange={(e)=>{downloadDocument(row.id,e.target.value)}}>                
                 <option selected  >...</option>
                 <option >Delete</option>

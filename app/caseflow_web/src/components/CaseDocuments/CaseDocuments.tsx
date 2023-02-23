@@ -139,7 +139,7 @@ const navigateToCaseDetailHandler = (caseId) => {
             <div>
               {/* <Upload selectedDMS = "dms1" documentDetailsForEdit={documentDetailsForEdit}  /> */}
               <div className="case-document-list">
-                <Grid container spacing={1} style={{}}>
+                <Grid container spacing={1}>
                   <Grid item xs={6}>
                     <Typography
                       sx={{ padding: "1rem 1rem 1rem 1rem"}}
@@ -173,7 +173,7 @@ const navigateToCaseDetailHandler = (caseId) => {
                         <TableCell align="left">Case ID</TableCell>
                         <TableCell align="left">Date Created</TableCell>
                         <TableCell align="left">Last Updated</TableCell>
-                        <TableCell>Version ##</TableCell>
+                        <TableCell align="left">Version #</TableCell>
                         {/* <TableCell align="left">Last Modified Date </TableCell>
               <TableCell align="left">Download </TableCell> */}
                       </TableRow>
@@ -224,7 +224,7 @@ const navigateToCaseDetailHandler = (caseId) => {
                               </TableCell>
                               <TableCell component="th" scope="row">
                                 {documentDetail.versions?.length>0?moment(documentDetail.versions[0].modificationdate).format(
-                                "MMMM Do YYYY"
+                                "MMMM Do, YYYY"
                               ):""}
                               </TableCell>
                               <TableCell align="left">
