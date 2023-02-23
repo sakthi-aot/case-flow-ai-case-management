@@ -19,7 +19,6 @@ const FilterMuiComponent = ({label,options,onChnagehandler,selected}:FilterMuiCo
         {/* <InputLabel id="demo-multiple-chip-label">{label}</InputLabel> */}
 
         <Select
-          label="Age"
           value={selected}
           onChange={onChnagehandler}
           className="dropDownStyle"
