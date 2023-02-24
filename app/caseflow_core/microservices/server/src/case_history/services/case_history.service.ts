@@ -38,8 +38,14 @@ export class CaseHistoryService {
    * @param createCaseHistoryInput 
    * @returns 
    */
-  create(createCaseHistoryInput: CreateCaseHistoryInput) {
-    return 'This action adds a new caseHistory';
+  async create(createCaseHistoryInput: CreateCaseHistoryInput) {
+    try {
+      const CaseHistoryInput =  this.caseHistoryRepository.create(createCaseHistoryInput);
+      const data=await this.caseHistoryRepository.save(CaseHistoryInput);
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   /**
