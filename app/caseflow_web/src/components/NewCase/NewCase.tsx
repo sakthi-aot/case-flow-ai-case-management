@@ -5,9 +5,9 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import { Controller, useForm } from "react-hook-form";
 import Divider from "@mui/material/Divider";
-import { addCases, updateCases } from "../../services/CaseService";
+import { addCases, getCaseDetails, updateCases } from "../../services/CaseService";
 import {useDispatch, useSelector} from "react-redux";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
 import {resetSelectedCase } from "../../reducers/newCaseReducer";
@@ -16,10 +16,12 @@ import { FormControl, MenuItem, Select } from "@mui/material";
 import { fetchCaseTypess } from "../../services/constantsService";
 import { setCaseTypes } from "../../reducers/constantsReducer";
 import { State } from "../../interfaces/stateInterface";
+import { async } from "q";
 const NewCase = () => {
   
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const initialFieldValues = {
     id:0,
@@ -34,6 +36,7 @@ const NewCase = () => {
 const caseList =  useSelector((state : State)=>state.cases.selectedCase);
 const caseTypes =  useSelector((state : State)=>state.constants.caseTypes);
 const [values, setValues] = useState(initialFieldValues)
+const[isEdit,setIsEdit] = useState(false);
 const { handleSubmit, control,register } = useForm();
 // const [caseList.isEdit,setIsCaseEdit] = useState(Boolean);
 
@@ -42,7 +45,7 @@ const { handleSubmit, control,register } = useForm();
   const onSubmit = async () => 
   {
     let response;
-    if(caseList.isEdit){
+    if(isEdit){
      response = await updateCases(values);
      navigate("/private/cases/" + response.success.data.updateCase.id+'/details');
     }else{
@@ -56,15 +59,30 @@ const { handleSubmit, control,register } = useForm();
      else{ toast.error("Error");}
 
   }
-  useEffect(() => {   
-    if(caseList.isEdit){
-       setValues(caseList);     
-    }
-}, [caseList]);
+  useEffect(() => {     
+    fetchSelectedCaseDetails()    
+    getCaseTypes();
 
-useEffect(() => {
-  getCaseTypes();
 }, []);
+
+
+const fetchSelectedCaseDetails = async ( ) =>{
+  var matches = location.pathname.match(/(\d+)/);  
+    if(matches && matches[0] && caseList){ 
+      const data = await getCaseDetails(matches[0])
+      const InitialSelectedCaseDetails = {
+        id:data.id,
+        name: data.name,
+        desc:data.desc,
+        statusid: data.statusid,
+        typeid : data.typeid,
+        lobcaseid:data.lobcaseid,
+
+      }
+      setValues(InitialSelectedCaseDetails)
+      setIsEdit(true)
+    }
+}
 
 const getCaseTypes = async () =>{
   const caseTypes = await fetchCaseTypess();
@@ -83,7 +101,7 @@ const resetCases=()=>{
 
 }
 const handleBack = ()=>{
-  if(caseList.isEdit){
+  if(isEdit){
     navigate("/private/cases/" + values.id+'/details');
   }
   else{
@@ -100,7 +118,7 @@ const handleBack = ()=>{
   return (
     <div style={{ padding: "2rem 4rem 0rem 4rem" }} className="newOrupdateCaseBlock">
       <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6" className="case-heading">
-      {caseList.isEdit?"Update Case":"New Case"}  
+      {isEdit?"Update Case":"New Case"}  
       </Typography>
       <Divider sx={{ borderBottomWidth: 3 }} />
       <Grid container spacing={3} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
@@ -221,7 +239,7 @@ const handleBack = ()=>{
       />          
         </Grid>
       </Grid>
-      <div style={{"display" : "flex", padding: "2rem 1rem 1rem 1rem", "justify-content": "center"}}>
+      <div style={{"display" : "flex", padding: "2rem 1rem 1rem 1rem", "justifyContent": "center"}}>
           <Button
             style={{
               alignItems :"center",
@@ -232,7 +250,7 @@ const handleBack = ()=>{
             variant="contained"
             onClick={handleSubmit(onSubmit)}
           >
-           {caseList.isEdit?"Update":"Create"}  
+           {isEdit?"Update":"Create"}  
           </Button>
           <Button
             style={{

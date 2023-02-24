@@ -174,10 +174,9 @@ const [workflows, setworkflows]:any = useState([]);
    
   }
   const editCaseDetails=(selectedCase)=> {
-
     dispatch(setSelectedCase({...selectedCase,isEdit:true}));
-    localStorage.setItem('setSelectedCase',JSON.stringify({...selectedCase,isEdit:true}))    
-    navigate("/private/cases/create");
+    localStorage.setItem('setSelectedCase',JSON.stringify({...selectedCase,isEdit:true}))     
+    navigate("/private/cases/"+selectedCase.id+"/edit");
 
     }
 

@@ -38,7 +38,7 @@ const schema = Yup.object().shape({
 
 
 const NewLobData = () =>{
-  const dispatch = useDispatch();   
+   const dispatch = useDispatch();   
    const selectedLob = useSelector((state: State) => state.lob.selectedLob);
    const isEdit = useSelector((state: State) => state.lob.editLob);
    const location = useLocation();
