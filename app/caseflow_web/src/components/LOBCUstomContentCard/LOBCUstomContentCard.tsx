@@ -34,7 +34,7 @@ const formattedCreatedDate = moment(lobData.createdDate).format('MMMM Do, YYYY')
   return (
     <div onClick={()=>{viewCaseDetails()}}>    
       <Typography />
-      <ListItem button>
+      <ListItem button sx={{paddingInline:0,paddingBlock:2}}>
         <Grid container spacing={1}>
         <Grid item xs={1}>
             <ListItemText
@@ -94,7 +94,7 @@ const formattedCreatedDate = moment(lobData.createdDate).format('MMMM Do, YYYY')
          
         </Grid>
       </ListItem>
-      <Divider />
+      <Divider sx={{borderBottomWidth : 1 , borderBottomColor:"#E2E2E2"}}/>
    
     </div>
   );

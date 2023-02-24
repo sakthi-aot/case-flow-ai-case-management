@@ -56,7 +56,7 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
   return (
     <section className="dashboard">
       <div className="header-search">
-      <Typography variant="body1" className="title">CaseFlow</Typography>
+      <Typography variant="body1" className="title" sx={{paddingInline:0}}>CaseFlow</Typography>
       <div className="search">
         <Search
             setSearchField={setSearchField}
@@ -70,7 +70,7 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
       
       <div className="lobData-header">
       <Typography
-        sx={{ padding: "1rem 1rem 1rem 1rem" }}
+        sx={{ padding: "1rem 1rem 1rem 0rem" }}
         variant="h6"
         className="lob-heading"
       >
@@ -107,10 +107,10 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
         aria-label="mailbox folders"
       >
         
-        <ListItem >
-          <Grid container spacing={1}>
+        <ListItem sx={{paddingInline:0,paddingBlock:2}}>
+          <Grid container spacing={1} >
             <Grid item xs={1}>
-              <ListItemText
+              <ListItemText 
                 primary={
                   <Typography 
                   variant="subtitle1"
@@ -170,7 +170,7 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
             </Grid>
           </Grid> 
         </ListItem>
-        <Divider sx={{ borderBottomWidth: 3 }} />
+        <Divider sx={{ borderBottomWidth: 1 , borderBottomColor:"#888888"}} />
         {(lobListData && lobListData.length !== 0)?lobListData.map((lobData,index ) => (
           <LOBCUstomContentCard
           key={index}

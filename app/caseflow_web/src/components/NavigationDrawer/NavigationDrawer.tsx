@@ -172,10 +172,10 @@ export default function MiniDrawer(
               sx={{ fontSize: open ? "50px" : "40px", left: "20px", right: "10px" }}
             />
             <span>
-            <h3 style={{ fontSize: open ? "18px" : "0px", left: 0,textTransform:"capitalize" }}>
+            <h3 style={{ fontSize: open ? "16px" : "0px", left: 0,textTransform:"capitalize" }}>
             {userInfo.userName}
             </h3>
-            <label style={{ fontSize: open ? "18px" : "0px", left: 0 }}>Administrator </label>
+            <label style={{ fontSize: open ? "14px" : "0px", left: 0 }}>Administrator </label>
             </span> 
           </div>   
         </DrawerHeader>            

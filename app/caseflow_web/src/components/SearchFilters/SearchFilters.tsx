@@ -28,49 +28,49 @@ const SearchFilters = () => {
             return <img
             alt="Tasksicon"
             src={require("../../assets/TasksIcon.png")}
-            style={{"height":"1.3rem"}}
+            style={{"height":"1rem","marginTop":".1rem"}}
             ></img>;
           case 1:
             return <img
             alt="Tasksicon"
             src={require("../../assets/CasesIcon.png")}
-            style={{"height":"1.3rem"}}
+            style={{"height":"1rem","marginTop":".1rem"}}
             ></img>;
           case 2:
             return <img
             alt="Tasksicon"
             src={require("../../assets/DocumentsIcon.png")}
-            style={{"height":"1.3rem"}}
+            style={{"height":"1rem","marginTop":".1rem"}}
             ></img>;
           case 3:
             return <img
             alt="Tasksicon"
             src={require("../../assets/LOBIcon.png")}
-            style={{"height":"1.3rem"}}
+            style={{"height":"1rem","marginTop":".1rem"}}
             ></img>;
           case 4:
             return <img
             alt="Tasksicon"
             src={require("../../assets/AssignedIcon.png")}
-            style={{"height":"1.3rem"}}
+            style={{"height":"1rem","marginTop":".1rem"}}
             ></img>;
           case 5:
             return <img
             alt="Tasksicon"
             src={require("../../assets/LabelIcon.png")}
-            style={{"height":"1.3rem"}}
+            style={{"height":"1rem","marginTop":".1rem"}}
             ></img>;
           case 6:
             return <img
             alt="Tasksicon"
             src={require("../../assets/DateIcon.png")}
-            style={{"height":"1.3rem"}}
+            style={{"height":"1rem","marginTop":".1rem"}}
             ></img>;
           default:
             return <img
             alt="Tasksicon"
             src={require("../../assets/TasksIcon.png")}
-            style={{"height":"1.3rem"}}
+            style={{"height":"1rem"}}
             ></img>;
         }
       };
@@ -80,7 +80,7 @@ const SearchFilters = () => {
         <Typography variant="subtitle1">Filter By</Typography>
         {filters.map((item,index) => {
             return (
-                <FormControl sx={{ mt: 2, minWidth: 250 , border: 'none'}} className="filters">
+                <FormControl sx={{ mt: 2, minWidth: 250 , border:0}} className="filters" size="small">
                     <InputLabel id="demo-simple-select-label" className="filter-text">{getLogo(index)}{item.text}</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
