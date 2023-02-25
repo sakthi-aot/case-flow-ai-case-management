@@ -13,8 +13,7 @@ const MyTaskCard = (props ) => {
   console.log(props)
     return (     
       < >
-      <Typography />
-      <ListItem button>
+      <ListItem button sx={{paddingInline:0 , paddingTop:1.3, paddingBottom:2 }} >
         <Grid container spacing={1} >
           <Grid item xs={2} >
             <ListItemText
@@ -25,6 +24,7 @@ const MyTaskCard = (props ) => {
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
+                  paddingTop:"7px"
                 }}> <Link target="_blank" href={FORMSFLOW_APP_URL +`/task/${props.task.id}`} > {props.task.name} </Link>  </Typography>}
             />
           </Grid>
@@ -39,6 +39,7 @@ const MyTaskCard = (props ) => {
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap', 
+                  paddingTop:"7px"
                 }}>{moment( props.task.created).format("MMMM Do, YYYY")} </Typography>}
             />
           </Grid>
@@ -51,12 +52,13 @@ const MyTaskCard = (props ) => {
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
+                  paddingTop:"7px"
                 }}>{ props.task.description} </Typography>
                }
             />
           </Grid> 
           <Grid item xs={2} >
-            <ListItemText             
+            <ListItemText            
               primary={<Typography
                 variant="body2"
                 noWrap
@@ -64,19 +66,18 @@ const MyTaskCard = (props ) => {
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
+                  paddingTop:"7px"
                 }}>Admin </Typography>
                }
             />
           </Grid>     
 
-          <Grid  item xs={2} display="flex" alignItems='center' justifyContent="flex-start" >
-          <Box >
+          <Grid  item xs={2}>
           <Typography className="recent-case-card-status">
               <div className="recent-case-card-status-text">
                 Active
               </div>
           </Typography>
-            </Box>
           </Grid>
         </Grid>
       </ListItem>

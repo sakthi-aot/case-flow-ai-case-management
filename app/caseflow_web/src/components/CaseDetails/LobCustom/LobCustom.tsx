@@ -38,7 +38,7 @@ const LobCustom = () => {
     
   return (
     <>
-    <Typography variant='subtitle1' sx={{ margin: "3.5rem 0  1rem " }}>LOB Custom Content</Typography><Divider sx={{ borderBottomWidth:1,borderColor:'#9B9B9B' }} />
+    <Typography variant='body1' sx={{ margin: "3.5rem 0  1rem ", fontSize: 24 }}>LOB Custom Content</Typography><Divider sx={{ borderBottomWidth:1,borderColor:'#9B9B9B' }} />
    { lobData && lobData.id ? <div className="lob-custom-content-case-detail">
           <div>
               <Typography variant='subtitle1'>
@@ -67,7 +67,7 @@ const LobCustom = () => {
               </Typography>
               <Typography variant='body2' 
               >
-                <Link onClick={navigateToLob} underline="always" style={{color:"blue"}}>
+                <Link onClick={navigateToLob} underline="always" style={{color:"blue",cursor:"pointer"}}>
                 LOB Record <LaunchIcon  style={{ fontSize: '.875rem' }}/>
                 </Link>
                 

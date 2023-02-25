@@ -33,10 +33,10 @@ const RecentCaseCard = (props) => {
 
  
   return (   
-    <div>
+    <>
       <ListItem button sx={{paddingInline:0 , paddingBlock:2}} >
         <Grid container spacing={1}  onClick={()=>{viewCaseDetails(CaseDetails)}}>
-          <Grid item xs={2} >
+          <Grid item xs={2}>
             <ListItemText
               primary={<Typography 
                 variant="body2"  
@@ -107,7 +107,7 @@ const RecentCaseCard = (props) => {
       </ListItem>
       <Divider sx={{color:"E2E2E2"}}/>
 
-    </div>      
+    </>      
     
   );
 };

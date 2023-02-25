@@ -23,6 +23,8 @@ const FilterMuiComponent = ({label,options,onChnagehandler,selected}:FilterMuiCo
           value={selected}
           onChange={onChnagehandler}
           className="dropDownStyle"
+          displayEmpty 
+          renderValue={(value) => value || label}
         >
           {options.map((option, index) => (
             <MenuItem

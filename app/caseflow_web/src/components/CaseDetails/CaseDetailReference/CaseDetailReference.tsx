@@ -51,7 +51,7 @@ const CaseDetailReference = ({caseId} :CaseDetailReferenceProps ) => {
       </div>
       </div> : ""}</>) : ""}
     </div>
-    {additionalCaseDetails ? <div className='configurable-case-content-section'>Configurable case content</div> : "" }
+    {additionalCaseDetails ? <div className='configurable-case-content-section'><i>Configurable case content</i></div> : "" }
     </>
   )
 }

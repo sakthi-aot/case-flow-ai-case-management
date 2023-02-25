@@ -60,11 +60,12 @@ const CaseHistory = () => {
         <div className='case-history-header-name'>Case History</div>       
         <FilterMuiComponent label="Filter" selected = {selectedCaseHistoryFilterOption} options={optionsForFilter} onChnagehandler={onFilterChangehandler} />
       </header>
-      {selectedFilteredCaseHistory.map(singleCaseHistory =>{
+      {selectedFilteredCaseHistory.map((singleCaseHistory,index) =>{
        return <SingleCaseDetail
         key={singleCaseHistory.id}
         caseHistoryData = {singleCaseHistory}
         userInfo={userInfo}
+        progress = {index != selectedFilteredCaseHistory.length - 1 ? true : false }
          />
       })}
     </div>

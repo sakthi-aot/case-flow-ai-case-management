@@ -142,7 +142,7 @@ const navigateToCaseDetailHandler = (caseId) => {
                 <Grid container spacing={1}>
                   <Grid item xs={6}>
                     <Typography
-                      sx={{ padding: "1rem 1rem 1rem 1rem"}}
+                      sx={{ padding: "1rem 1rem 1rem 0rem"}}
                       variant="h6"
                       className="case-document-title"
                     >
@@ -166,10 +166,11 @@ const navigateToCaseDetailHandler = (caseId) => {
                         sx={{
                           "& th": {
                             fontWeight: "bold",
+                            borderBottom:1,
                           },
                         }}
                       >
-                        <TableCell align="left">Name</TableCell>
+                        <TableCell align="left" sx={{padding:0}}>Name</TableCell>
                         <TableCell align="left">Case ID</TableCell>
                         <TableCell align="left">Date Created</TableCell>
                         <TableCell align="left">Last Updated</TableCell>
@@ -184,15 +185,15 @@ const navigateToCaseDetailHandler = (caseId) => {
                         filteredDocumentDetails.map(
                           (documentDetail: DocumentList) => (
                             <TableRow
-                            style={{height:10}}
+                            style={{height:73}}
                               key={documentDetail.id}
                               sx={{
                                 "&:last-child td, &:last-child th": {
-                                  border: 0,
+                                  borderTop: 0,
                                 },
                               }}
                             >
-                              <TableCell align="left" component="th" scope="row">
+                              <TableCell align="left" component="th" scope="row" sx={{padding:0}}>
                                 {" "}
                                 <div className="name-field">
                                   <img

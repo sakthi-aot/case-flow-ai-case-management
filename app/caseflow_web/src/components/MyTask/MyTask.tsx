@@ -31,7 +31,7 @@ const fetchUserTasks = async() =>{
   return (
     <div className="myTaskStyle" style={{ padding: "2rem 4rem 0rem 4rem" }}>
       <Typography
-        sx={{ padding: "1rem 1rem 1rem 1rem" }}
+        sx={{ padding: "1rem 1rem 1rem 0rem" }}
         variant="h6"
         className="myTaskStyle"
       >
@@ -39,16 +39,7 @@ const fetchUserTasks = async() =>{
       </Typography>
       
 
-      <List
-        sx={{
-          width: "100%",
-          bgcolor: "background.paper",
-        }}
-        component="nav"
-        aria-label="mailbox folders"
-      >
-
-    <ListItem >
+    <ListItem sx={{paddingInline:0 , paddingBlock:2}}>
         <Grid container spacing={1} >
           <Grid item xs={2}  >
             <ListItemText
@@ -113,7 +104,7 @@ const fetchUserTasks = async() =>{
       </Grid>
       
       </ListItem>
-      <Divider sx={{ borderBottomWidth: 3 }} />
+      <Divider sx={{ borderBottomWidth: 1, backgroundColor:"#888888" }} />
 
 
 
@@ -141,7 +132,6 @@ const fetchUserTasks = async() =>{
           </Grid>
         </ListItem>
         }
-      </List>
 
     </div>
   );

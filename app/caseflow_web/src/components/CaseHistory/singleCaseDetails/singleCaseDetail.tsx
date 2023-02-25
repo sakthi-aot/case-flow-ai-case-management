@@ -8,7 +8,7 @@ import CaseHistory from '../caseHistory';
 
 
 
-const SingleCaseDetail = ({caseHistoryData,userInfo}) => {
+const SingleCaseDetail = ({caseHistoryData,userInfo,progress}) => {
     
     // const docDate =  {
     //     id:1,
@@ -28,8 +28,10 @@ const SingleCaseDetail = ({caseHistoryData,userInfo}) => {
   return (
     <div className='case-grid-container'>
         <span className='case-grid-date'>{date[0]}<br/>{date[1]}</span>
-        <span className='case-grid-line'><Typography sx={{backgroundColor:'#404040'}} className="case-grid-line-ball"></Typography></span>
-        <div className='case-gird-details'>
+        {progress ? <span className='case-grid-line'><Typography sx={{backgroundColor:'#404040'}} className="case-grid-line-ball"></Typography></span> : 
+        <span className='case-grid-line' style={{"borderLeft":"None"}}><Typography sx={{backgroundColor:'#404040'}} className="case-grid-line-ball" style={{"right":"-9.9px"}}></Typography></span>
+        }
+        <span className='case-gird-details'>
             <h3 onClick={expandDetailhandler} className="case-gird-details-header"><span>{caseHistoryData.caseHistoryType}</span>
            {expand ? <KeyboardArrowUpRoundedIcon/>:<KeyboardArrowDownRoundedIcon/>}
             </h3>
@@ -45,7 +47,7 @@ const SingleCaseDetail = ({caseHistoryData,userInfo}) => {
             </div>
 
             }
-        </div>      
+        </span>      
     </div>
   )
 }
