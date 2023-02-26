@@ -20,6 +20,7 @@ caseList : [{
 }],
 totalCaseCount:0,
 pageSelected:1,
+searchCaseResult:[]
 };
 
 const caseSlice = createSlice({
@@ -57,6 +58,9 @@ setCaseTasks : (state,action) =>{
 setAdditionalCaseDetails : (state,action) =>{
   state.selectedCase.additionalFields =action.payload
 },
+setsearchCaseResult : (state,action) =>{
+  state.searchCaseResult =action.payload
+},
 
 
   }
@@ -73,5 +77,6 @@ export const {
   setTotalDocCount,
   setCaseTasks,
   setAdditionalCaseDetails,
+  setsearchCaseResult,
 } = caseSlice.actions;
 export default caseSlice.reducer;

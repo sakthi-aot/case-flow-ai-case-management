@@ -5,7 +5,7 @@ import CaseList from "../CaseList/CaseList";
 import {useSelector,useDispatch} from "react-redux";
 import { State } from "../../interfaces/stateInterface";
 import { searchCases } from "../../services/CaseService";
-import { setTotalCaseCount } from "../../reducers/newCaseReducer";
+import { setTotalCaseCount,setsearchCaseResult } from "../../reducers/newCaseReducer";
 import { Typography } from "@mui/material";
 const caseListProps = {
   title : "Cases",
@@ -26,6 +26,8 @@ const Cases = (
 
   const dispatch = useDispatch()
   const selectedPage = useSelector((state:State)=>state.cases.pageSelected)
+  const searchResults = useSelector((state:State)=>state.cases.searchCaseResult)
+
   
   const filterDocumentDetails = async () => {    
     let searchResult = await searchCases(searchField,searchColumn,selectedPage,sortSetting.orderBy,sortSetting.orderType)    
@@ -38,11 +40,31 @@ const Cases = (
     dispatch(setTotalCaseCount(searchResult.totalCount))
   };
 
+  const searchCasesDetails = async ()=>{
+
+    let searchResult = await searchCases(searchField,searchColumn,selectedPage,sortSetting.orderBy,sortSetting.orderType)    
+    let searchResultCases = searchResult.Cases.map((element) => {
+       return {title:"Case Id:" +element.id + " - " +element.name,content:element.desc, subtitle:"Cases",link:"/private/cases/"  + element.id+'/details'};
+     });
+     
+     if(searchResultCases){
+console.log(searchResultCases)
+dispatch(setsearchCaseResult(searchResultCases))
+     }
+
+  }
 
 
   useEffect(() => {
     filterDocumentDetails();
-  }, [searchField,searchColumn,selectedPage,sortSetting]);
+  }, [selectedPage,sortSetting]);
+
+  useEffect(() => {
+    searchCasesDetails();
+  }, [searchField,searchColumn]);
+
+
+
 
 
 
@@ -55,6 +77,7 @@ const Cases = (
          setSearchField={setSearchField}
          dropDownArray={dropDownArray}
          setSearchColumn={setSearchColumn}
+         dropDownValues = {searchResults}
         ></Search>
       </div>
       </div>  

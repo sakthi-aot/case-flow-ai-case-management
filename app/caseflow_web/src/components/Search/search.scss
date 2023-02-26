@@ -5,6 +5,8 @@
     }
     .search-drop-down{
         width:30vw;
+        height: 50vh;
+        overflow-y: auto;
         position: absolute;
         padding-left: 10px;
         z-index: 100;  
