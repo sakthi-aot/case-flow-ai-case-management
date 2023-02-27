@@ -21,8 +21,10 @@ const userName = useSelector((state:State) => state.auth.userDetails.userName);
 const taskList = useSelector((state:State) => state.tasks.userTasksList);
 
 useEffect(() => {
-  fetchUserTasks();
-}, []);
+  if(userName){
+    fetchUserTasks();
+  }
+}, [userName]);
 const fetchUserTasks = async() =>{
   const tasks = await getTaksByUserId(userName)
   dispatch(setUserTaskList(tasks))
