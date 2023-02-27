@@ -16,15 +16,13 @@ interface FilterMuiComponentProps{
 const FilterMuiComponent = ({label,options,onChnagehandler,selected}:FilterMuiComponentProps) => {
   return (
     <Box sx={{ minWidth: 120 }}>
-      <FormControl sx={{ m: 1, minWidth: 100 }} size="small">
-        {/* <InputLabel id="demo-multiple-chip-label">{label}</InputLabel> */}
-
+      <FormControl sx={{ m: 1, minWidth: 100,border:0}} size="small">
         <Select
           value={selected}
           onChange={onChnagehandler}
           className="dropDownStyle"
           displayEmpty 
-          renderValue={(value) => value || label}
+          renderValue={(value) => value || <Typography variant='body2'sx={{paddingTop : .2}}>{label}</Typography>}
         >
           {options.map((option, index) => (
             <MenuItem
@@ -36,7 +34,7 @@ const FilterMuiComponent = ({label,options,onChnagehandler,selected}:FilterMuiCo
                 paddingBlock: "1rem",
               }}
             >
-              <Typography variant='body2'>{option.text}</Typography>
+              <Typography variant='body2' >{option.text}</Typography>
             </MenuItem>
           ))}
         </Select>

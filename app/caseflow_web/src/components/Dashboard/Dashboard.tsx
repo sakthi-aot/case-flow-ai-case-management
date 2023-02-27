@@ -20,10 +20,10 @@ const Dashboard = () =>
 
     const recentCaseList = async () => {
       let recentCases = await fetchRecentCaseList();
-      recentCases = recentCases.map((element) => {
-        return {...element}
+      recentCases = recentCases.filter((element,index) => {
+        return index < 5;
       });
-      if(recentCases) setrecentCases(recentCases)
+      setrecentCases(recentCases)
     };
   
   

@@ -78,7 +78,7 @@ const CaseDocuments = () => {
   useEffect(() => {
     fetchDocumentDetailsList()
     filterDocumentDetails();
-  }, [searchField,selectedPage]);
+  }, [searchField,selectedPage,sortSetting]);
 
 
   
@@ -123,14 +123,16 @@ const navigateToCaseDetailHandler = (caseId) => {
   return (
     <section className="dashboard">
       <div className="header-search">
-      <Typography variant="body1" className="title">CaseFlow</Typography>
-      <div className="search">
-        <Search
-        setSearchField={setSearchField}
-        dropDownArray={dropDownArray}
-        setSearchColumn={setSearchColumn}
-        ></Search>
-      </div>
+        <Typography variant="body1" className="title">
+          CaseFlow
+        </Typography>
+        <div className="search">
+          <Search
+            setSearchField={setSearchField}
+            dropDownArray={dropDownArray}
+            setSearchColumn={setSearchColumn}
+          ></Search>
+        </div>
       </div>
       <div className="recent-cases">
         {" "}
@@ -142,7 +144,7 @@ const navigateToCaseDetailHandler = (caseId) => {
                 <Grid container spacing={1}>
                   <Grid item xs={6}>
                     <Typography
-                      sx={{ padding: "1rem 1rem 1rem 0rem"}}
+                      sx={{ padding: "1rem 1rem 1rem 0rem" }}
                       variant="h6"
                       className="case-document-title"
                     >
@@ -156,85 +158,130 @@ const navigateToCaseDetailHandler = (caseId) => {
             setSearchColumn={setSearchColumn}
           ></Search> */}
                   </Grid>
-              </Grid>               
-                <TableContainer  >
-                 {(filteredDocumentDetails &&filteredDocumentDetails.length!==0)? 
-                 <div  className="case-document-table-container" >
-                 <Table sx={{ minWidth: 650}} aria-label="simple table" >
-                    <TableHead>
-                      <TableRow
-                        sx={{
-                          "& th": {
-                            fontWeight: "bold",
-                            borderBottom:1,
-                          },
-                        }}
-                      >
-                        <TableCell align="left" sx={{padding:0}}>Name</TableCell>
-                        <TableCell align="left">Case ID</TableCell>
-                        <TableCell align="left">Date Created</TableCell>
-                        <TableCell align="left">Last Updated</TableCell>
-                        <TableCell align="left">Version #</TableCell>
-                        {/* <TableCell align="left">Last Modified Date </TableCell>
-              <TableCell align="left">Download </TableCell> */}
-                      </TableRow>
-                    </TableHead>
-
-                    <TableBody>
-                      {filteredDocumentDetails &&
-                        filteredDocumentDetails.map(
-                          (documentDetail: DocumentList) => (
-                            <TableRow
-                            style={{height:73}}
-                              key={documentDetail.id}
-                              sx={{
-                                "&:last-child td, &:last-child th": {
-                                  borderTop: 0,
-                                },
-                              }}
+                </Grid>
+                <TableContainer>
+                  {filteredDocumentDetails &&
+                  filteredDocumentDetails.length !== 0 ? (
+                    <div className="case-document-table-container">
+                      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                          <TableRow
+                            sx={{
+                              "& th": {
+                                fontWeight: "bold",
+                                borderBottom: 1,
+                                borderColor:"#606060"
+                              },
+                            }}
+                          >
+                            <TableCell
+                              align="left"
+                              sx={{ padding: 0, cursor: "pointer" }}
+                              onClick={() =>
+                                setSortSetting({
+                                  orderBy: "name",
+                                  orderType: !sortSetting.orderType,
+                                })
+                              }
                             >
-                              <TableCell align="left" component="th" scope="row" sx={{padding:0}}>
-                                {" "}
-                                <div className="name-field">
-                                  <img
-                                    className="pdf-file-img"
-                                    src={`${getFileIcon(documentDetail.name)}`}
-                                    alt="pdf"
-                                  />
-                                  <div className="case-document-name">
-                                    <a
-               onClick={()=>{
-                previewDocument(documentDetail.id,documentDetail.type)
-              }}
+                              Name
+                            </TableCell>
+                            <TableCell
+                              align="left"
+                              sx={{cursor:"pointer"}}
+                              onClick={() =>
+                                setSortSetting({
+                                  orderBy: "id",
+                                  orderType: !sortSetting.orderType,
+                                })
+                              }
+                            >
+                              Case ID
+                            </TableCell>
+                            <TableCell align="left">Date Created</TableCell>
+                            <TableCell align="left">Last Updated</TableCell>
+                            <TableCell align="left">Version #</TableCell>
+                            {/* <TableCell align="left">Last Modified Date </TableCell>
+              <TableCell align="left">Download </TableCell> */}
+                          </TableRow>
+                        </TableHead>
+
+                        <TableBody>
+                          {filteredDocumentDetails &&
+                            filteredDocumentDetails.map(
+                              (documentDetail: DocumentList) => (
+                                <TableRow
+                                  style={{ height: 73 }}
+                                  key={documentDetail.id}
+                                  sx={{
+                                    "&:last-child td, &:last-child th": {
+                                      borderTop: 0,
+                                    },
+                                  }}
+                                >
+                                  <TableCell
+                                    align="left"
+                                    component="th"
+                                    scope="row"
+                                    sx={{ padding: 0, width:"15vw"}}
+                                  >
+                                    {" "}
+                                    <div className="name-field">
+                                      <img
+                                        className="pdf-file-img"
+                                        src={`${getFileIcon(
+                                          documentDetail.name
+                                        )}`}
+                                        alt="pdf"
+                                      />
+                                      <div className="case-document-name">
+                                        <a
+                                          onClick={() => {
+                                            previewDocument(
+                                              documentDetail.id,
+                                              documentDetail.type
+                                            );
+                                          }}
+                                        >
+                                          {documentDetail.name}
+                                        </a>
+                                      </div>
+                                    </div>
+                                  </TableCell>
+                                  <TableCell component="th" scope="row">
+                                    <Link
+                                      component="button"
+                                      onClick={() =>
+                                        navigateToCaseDetailHandler(
+                                          documentDetail.caseId
+                                        )
+                                      }
                                     >
-                                      {documentDetail.name}
-                                    </a>
-                                  </div>
-                                </div>
-                              </TableCell>
-                              <TableCell component="th" scope="row">
-                                <Link component="button" onClick={()=>navigateToCaseDetailHandler(documentDetail.caseId)} >
-                                
-                                {documentDetail.caseId}
-                                </Link>
-                              </TableCell>
-                              <TableCell align="left">
-                              {moment(document.creationdate).format(
-                                "MMMM Do, YYYY"
-                              )}
-                              </TableCell>
-                              <TableCell component="th" scope="row">
-                                {documentDetail.versions?.length>0?moment(documentDetail.versions[0].modificationdate).format(
-                                "MMMM Do, YYYY"
-                              ):""}
-                              </TableCell>
-                              <TableCell align="left">
-                                {documentDetail.versions?.length>0?documentDetail.versions[0].versions:""}
-                              </TableCell>
-                              {/* <TableCell align="left">
+                                      {documentDetail.caseId}
+                                    </Link>
+                                  </TableCell>
+                                  <TableCell align="left">
+                                    {moment(document.creationdate).format(
+                                      "MMMM Do, YYYY"
+                                    )}
+                                  </TableCell>
+                                  <TableCell component="th" scope="row">
+                                    {documentDetail.versions?.length > 0
+                                      ? moment(
+                                          documentDetail.versions[0]
+                                            .modificationdate
+                                        ).format("MMMM Do, YYYY")
+                                      : ""}
+                                  </TableCell>
+                                  <TableCell align="left">
+                                    {documentDetail.versions?.length > 0
+                                      ? documentDetail.versions[0].versions
+                                      : ""}
+                                  </TableCell>
+                                  {/* <TableCell align="left">
                                 {documentDetail.modificationdate}
                               </TableCell> */}
-                              {/* <TableCell
+                                  {/* <TableCell
                     align="left"
                     className="action-icon"
                     onClick={fetchCMISfile(
@@ -250,17 +297,28 @@ const navigateToCaseDetailHandler = (caseId) => {
                   >
                     <span className="action-icon"> {<EditIcon />}</span>
                   </TableCell> */}
-                            </TableRow>
-                          )
-                        )}
-                    </TableBody>
-                  </Table>
-                    </div>  
-                  :
-                  <p className="no-case-doc-found">No Case Documents Found !</p>
-                }
+                                </TableRow>
+                              )
+                            )}
+                        </TableBody>
+                      </Table>
+                    </div>
+                  ) : (
+                    <p className="no-case-doc-found">
+                      No Case Documents Found !
+                    </p>
+                  )}
                 </TableContainer>
-                { (filteredDocumentDetails &&filteredDocumentDetails.length!==0 && totalDocuemntCount>1) && <Pagination count={totalDocuemntCount} shape="rounded" className="pagination-case-list" onChange={onDocumentPageSelect} />}
+                {filteredDocumentDetails &&
+                  filteredDocumentDetails.length !== 0 &&
+                  totalDocuemntCount > 1 && (
+                    <Pagination
+                      count={totalDocuemntCount}
+                      shape="rounded"
+                      className="pagination-case-list"
+                      onChange={onDocumentPageSelect}
+                    />
+                  )}
               </div>
             </div>
           </div>
