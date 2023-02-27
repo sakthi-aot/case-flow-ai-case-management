@@ -13,6 +13,7 @@ export interface SearchProps{
     dropDownArray : string[],
     setSearchField :React.Dispatch<React.SetStateAction<string>>,
     setSearchColumn : React.Dispatch<React.SetStateAction<string>>
+    dropDownValues : any[]
   
   }
 

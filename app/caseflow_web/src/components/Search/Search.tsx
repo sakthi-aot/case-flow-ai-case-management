@@ -15,29 +15,22 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import SearchIcon from "@mui/icons-material/Search";
 import { SearchProps } from "../../interfaces/componentInterface";
 import "./search.scss"
+import { useNavigate } from "react-router-dom";
 
 
 
-const dropDownValues = [{
-  title:"NRO1 - One on One conversations",
-  subtitle:"Application Maintenance Services for ISSS Feb 02, 2023",
-  content:"Mines Digital Services (MDS) / … / User Research / One-on-Ones Nov 18, 2019 NRO - Vince Metcalf, Kathryn Gregory, Kevin Edquist Action Produced yes/noONotesOSystem of SourceDOAdministrative"
-},
-{
-  title:"NRO2 - One on One conversations",
-  subtitle:"Application Maintenance Services for ISSS Feb 02, 2023",
-  content:"Mines Digital Services (MDS) / … / User Research / One-on-Ones Nov 18, 2019 NRO - Vince Metcalf, Kathryn Gregory, Kevin Edquist Action Produced yes/noONotesOSystem of SourceDOAdministrative"
-}
-]
-const Search = ({ setSearchField, dropDownArray, setSearchColumn } :SearchProps) => {
+
+
+const Search = ({ setSearchField, dropDownArray, setSearchColumn , dropDownValues=[]} :SearchProps) => {
   
   const[dropDown,setDropDown] = useState(false)
   const onFocus = () => setDropDown(true)
-  const onBlur = () => setDropDown(false)
+  const onBlur = () => setTimeout(()=>setDropDown(false),1000)
   
   if(!dropDownArray.includes("All")){
     dropDownArray.unshift("All")
   } 
+  const navigate = useNavigate();  
 
   
   return (
@@ -52,7 +45,8 @@ const Search = ({ setSearchField, dropDownArray, setSearchColumn } :SearchProps)
           onChange={(e:React.ChangeEvent<HTMLInputElement>) => {
             setSearchField(e.target.value);
           }}
-          onFocus={onFocus} onBlur={onBlur}
+          onFocus={onFocus} 
+          onBlur={onBlur}
           startAdornment={
             <InputAdornment position="start">
               <SearchIcon />
@@ -113,10 +107,11 @@ const Search = ({ setSearchField, dropDownArray, setSearchColumn } :SearchProps)
     <Card >
       <CardContent>
       {dropDownValues.map((eachValue) => (
-        <div key={eachValue.title}>
-                <Typography variant="body1" sx={{textDecoration: 'underline' }} color="#002EFF" >
+      <div key={eachValue.title} >
+      <Typography variant="body1" sx={{textDecoration: 'underline', cursor:"pointer"}} color="#002EFF" onClick={()=>{navigate(eachValue.link)}}  >
           {eachValue.title}
      </Typography>
+
      <Typography variant="caption"  sx={{ fontSize: 8}}>
           {eachValue.subtitle}
      </Typography>
