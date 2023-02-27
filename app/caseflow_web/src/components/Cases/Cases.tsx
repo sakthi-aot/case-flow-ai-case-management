@@ -42,7 +42,7 @@ const Cases = (
 
   const searchCasesDetails = async ()=>{
 
-    let searchResult = await searchCases(searchField,searchColumn,selectedPage,sortSetting.orderBy,sortSetting.orderType)    
+    let searchResult = await searchCases(searchField,searchColumn,selectedPage,sortSetting.orderBy,sortSetting.orderType,true)    
     let searchResultCases = searchResult.Cases.map((element) => {
        return {title:"Case Id:" +element.id + " - " +element.name,content:element.desc, subtitle:"Cases",link:"/private/cases/"  + element.id+'/details'};
      });

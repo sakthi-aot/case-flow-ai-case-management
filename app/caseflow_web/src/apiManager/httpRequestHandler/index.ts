@@ -1,7 +1,10 @@
 import axios from "axios";
+
 import UserService from "../../services/UserService";
 import {store} from "../../services/Store";
 import {setLoader, setProgress} from "../../reducers/applicationReducer";
+const axionInstanceWithIntercepter = axios.create();
+const axionInstanceWithOutIntercepter = axios.create();
 export const httpGETRequest = (
   url,
   data,
@@ -9,7 +12,7 @@ export const httpGETRequest = (
   isBearer = true,
   headers = null
 ) => {
-  return axios.get(url, {
+  return axionInstanceWithIntercepter.get(url, {
     params: data,
     headers: !headers
       ? {
@@ -22,7 +25,7 @@ export const httpGETRequest = (
 };
 
 export const httpPOSTRequest = (url, data, token, isBearer = true,isUpload= false) => {
-  return axios.post(url, data, {
+  return axionInstanceWithIntercepter.post(url, data, {
     headers: {
       Authorization: isBearer
         ? `Bearer ${token || UserService.getToken()}`
@@ -36,6 +39,15 @@ export const httpPOSTRequest = (url, data, token, isBearer = true,isUpload= fals
     },
   });
 };
+export const httpSearchRequest = (url, data, token, isBearer = true) => {
+  return axionInstanceWithOutIntercepter.post(url, data, {
+    headers: {
+      Authorization: isBearer
+        ? `Bearer ${token || UserService.getToken()}`
+        : token,
+    }
+  });
+};
 
 export const httpPOSTRequestWithoutToken = (
   url,
@@ -44,7 +56,7 @@ export const httpPOSTRequestWithoutToken = (
   // eslint-disable-next-line no-unused-vars
   isBearer = true
 ) => {
-  return axios.post(url, data, {
+  return axionInstanceWithIntercepter.post(url, data, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -52,7 +64,7 @@ export const httpPOSTRequestWithoutToken = (
 };
 
 export const httpPOSTRequestWithHAL = (url, data, token, isBearer = true) => {
-  return axios.post(url, data, {
+  return axionInstanceWithIntercepter.post(url, data, {
     headers: {
       Authorization: isBearer
         ? `Bearer ${token || UserService.getToken()}`
@@ -63,7 +75,7 @@ export const httpPOSTRequestWithHAL = (url, data, token, isBearer = true) => {
 };
 
 export const httpPUTRequest = (url, data, token, isBearer = true) => {
-  return axios.put(url, data, {
+  return axionInstanceWithIntercepter.put(url, data, {
     headers: {
       Authorization: isBearer
         ? `Bearer ${token || UserService.getToken()}`
@@ -73,7 +85,7 @@ export const httpPUTRequest = (url, data, token, isBearer = true) => {
 };
 
 export const httpDELETERequest = (url, token, isBearer = true) => {
-  return axios.delete(url, {
+  return axionInstanceWithIntercepter.delete(url, {
     headers: {
       Authorization: isBearer
         ? `Bearer ${token || UserService.getToken()}`
@@ -89,7 +101,7 @@ export const httpGETBolbRequest = (
   isBearer = true,
   headers = null
 ) => {
-  return axios.get(url, {
+  return axionInstanceWithIntercepter.get(url, {
     params: data,
     headers: !headers
       ? {
@@ -102,7 +114,7 @@ export const httpGETBolbRequest = (
   });
 };
 
-axios.interceptors.request.use(function (config) {
+axionInstanceWithIntercepter.interceptors.request.use(function (config) {
   // Do something before request is sent
   store.dispatch(setLoader(true));
   return config;
@@ -113,7 +125,7 @@ axios.interceptors.request.use(function (config) {
 });
 
 // Add a response interceptor
-axios.interceptors.response.use(function (response) {
+axionInstanceWithIntercepter.interceptors.response.use(function (response) {
   // Any status code that lie within the range of 2xx cause this function to trigger
   // Do something with response data
   store.dispatch(setLoader(false));
