@@ -44,12 +44,13 @@ const Cases = (
 
     let searchResult = await searchCases(searchField,searchColumn,selectedPage,sortSetting.orderBy,sortSetting.orderType)    
     let searchResultCases = searchResult.Cases.map((element) => {
-       return {title:"Case Id:" +element.id + " - " +element.name,content:element.desc, subtitle:"Cases",link:"/private/cases/"  + element.id+'/details'};
+       return {title:element.id + " - " +element.name,content:element.desc, subtitle:"Cases",link:"/private/cases/"  + element.id+'/details',imgIcon:require("../../assets/CasesIcon.png")};
      });
+ 
      
      if(searchResultCases){
-console.log(searchResultCases)
-dispatch(setsearchCaseResult(searchResultCases))
+console.log({searchResultCases:searchResultCases,totalCount:searchResult.totalCount})
+dispatch(setsearchCaseResult({searchResultCases:searchResultCases,totalCount:searchResult.totalCount}))
      }
 
   }

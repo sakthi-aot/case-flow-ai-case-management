@@ -60,7 +60,7 @@ export interface Cases {
   caseList: CaseList[];
   totalCaseCount: number;
   pageSelected: number;
-  searchCaseResult:[]
+  searchCaseResult:{}
 }
 export interface USerDetails {
   email: string;

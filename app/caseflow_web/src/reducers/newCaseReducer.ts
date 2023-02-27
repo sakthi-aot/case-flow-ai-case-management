@@ -20,7 +20,7 @@ caseList : [{
 }],
 totalCaseCount:0,
 pageSelected:1,
-searchCaseResult:[]
+searchCaseResult:{}
 };
 
 const caseSlice = createSlice({
