@@ -2,6 +2,7 @@ import {
     httpGETRequest,
     httpPUTRequest,
     httpPOSTRequest,
+    httpSearchRequest,
   } from "../apiManager/httpRequestHandler";
   import { API} from "../apiManager/endpoints";
   import { GRAPHQL } from "../apiManager/endpoints";
@@ -163,26 +164,48 @@ import {
   }
 
   
-  export const searchCases = async (searchField,searchColumn,pno,orderBy ="id",orderType =true) => {    
+  export const searchCases = async (searchField,searchColumn,pno,orderBy ="id",orderType =true,isSearch= false) => {    
     const  skip =(pno-1)*10;     
     const url = GRAPHQL;
-    const  output =  await httpPOSTRequest(url,{query: print(SEARCH_CASE_LIST),
-      variables: {
-        searchField : searchField,
-        searchColumn : searchColumn,
-        Skip:skip,
-        Take:Number(PAGINATION_TAKE),
-        orderBy:orderBy,
-        orderType:  orderType ? "DESC" : "ASC"
-      },
-    },null)
-      .then((res) => {        
-        return (res.data.data.Searchcase) })
-      .catch((error) => {
-        console.log({"error" : "error loading data"})
-        return []
-      });
-      return output
+    if(isSearch){
+      const  output =  await httpSearchRequest(url,{query: print(SEARCH_CASE_LIST),
+        variables: {
+          searchField : searchField,
+          searchColumn : searchColumn,
+          Skip:skip,
+          Take:Number(PAGINATION_TAKE),
+          orderBy:orderBy,
+          orderType:  orderType ? "DESC" : "ASC"
+        },
+      },null)
+        .then((res) => {        
+          return (res.data.data.Searchcase) })
+        .catch((error) => {
+          console.log({"error" : "error loading data"})
+          return []
+        });
+        return output
+    }
+    else{
+      const  output =  await httpPOSTRequest(url,{query: print(SEARCH_CASE_LIST),
+        variables: {
+          searchField : searchField,
+          searchColumn : searchColumn,
+          Skip:skip,
+          Take:Number(PAGINATION_TAKE),
+          orderBy:orderBy,
+          orderType:  orderType ? "DESC" : "ASC"
+        },
+      },null)
+        .then((res) => {        
+          return (res.data.data.Searchcase) })
+        .catch((error) => {
+          console.log({"error" : "error loading data"})
+          return []
+        });
+        return output
+    }
+
   };
   
   export const fetchRecentCaseList = async () => {
