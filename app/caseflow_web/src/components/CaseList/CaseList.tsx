@@ -128,6 +128,7 @@ const caseListpagination = (e,p) =>{
                 <Typography 
                 variant="subtitle1"                
                 className="recent-case-card-style"
+                sx={{cursor : "pointer"}}
                 >
                    Case ID 
                 </Typography>
@@ -140,6 +141,7 @@ const caseListpagination = (e,p) =>{
                 <Typography 
                 variant="subtitle1"                
                 className="recent-case-card-style"
+                sx={{cursor : "pointer"}}
                 >
                    Name
                 </Typography>
@@ -152,6 +154,7 @@ const caseListpagination = (e,p) =>{
                 <Typography 
                 variant="subtitle1"                
                 className="recent-case-card-style"
+                sx={{cursor : "pointer"}}
                 >
                    Type
                 </Typography>
@@ -176,6 +179,7 @@ const caseListpagination = (e,p) =>{
                 <Typography 
                 variant="subtitle1"                
                 className="recent-case-card-style"
+                sx={{cursor : "pointer"}}
                 >
                   Status
                 </Typography>
