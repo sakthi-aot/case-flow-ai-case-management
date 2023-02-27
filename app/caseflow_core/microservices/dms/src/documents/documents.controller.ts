@@ -1,4 +1,4 @@
-import { Body,Headers , Controller, Post, UploadedFile, UseInterceptors,Delete, Get, Patch,NotFoundException, Put } from '@nestjs/common';
+import { Body,Headers , Controller, Post, UploadedFile, UseInterceptors,Delete, Get, Patch,NotFoundException, Put, Query } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { FileInterceptor } from '@nestjs/platform-express';
 
@@ -8,6 +8,8 @@ import { FileService } from '../helpers/file.service';
 import { DocumentsService } from './services/documents.service';
 import { Express } from 'express';
 import { TransformService } from '../helpers/transform.service';
+import { JoiValidationPipe } from 'src/pipes/joi-validation.pipe';
+import { createDocumentSchema, deleteDocumentSchema, downloadDocumentSchema, updateDocumentSchema } from 'src/validation-schemas/document_validation.schema';
 @Controller('documents')
 export class DocumentsController {
   constructor(
@@ -19,7 +21,7 @@ export class DocumentsController {
   // @MessagePattern({ cmd: 'create_document' })
    @UseInterceptors(FileInterceptor('file'))
   async uploadDocument(
-    @UploadedFile() file: Express.Multer.File,@Body() body,@Headers () auth) {
+    @UploadedFile() file: Express.Multer.File,@Body(new JoiValidationPipe(createDocumentSchema)) body,@Headers () auth) {
       try {
     let documentDetails = await this.fileService.uploadFile(file, body, body.dmsprovider,auth.authorization);
     let formattedDocument: any = this.helper.transform(
@@ -28,30 +30,32 @@ export class DocumentsController {
       documentDetails,
       body,
     );
-    return this.documentService.createDocument(formattedDocument);
+    const datamew = this.documentService.createDocument(formattedDocument);
+    return datamew
   } catch (err) {
     console.log(err.message);
   }
   }
 
   @Put()
-  @MessagePattern({ cmd: 'edit_document' })
-  async editDocument(data) {
+  // @MessagePattern({ cmd: 'edit_document' })
+  @UseInterceptors(FileInterceptor('file'))
+  async editDocument(@UploadedFile() file: Express.Multer.File,@Body(new JoiValidationPipe(updateDocumentSchema)) body,@Headers () auth,) {
     try {
-      const document = await this.documentService.findOne(parseInt(data.id));
- 
+      const document = await this.documentService.findOne(parseInt(body.id));
+      const token=auth?.authorization
       if(!document.isdeleted) {
-        let documentDetails = await (data.file && document && data.dmsprovider
-          ? this.fileService.updateFile(data.file, data,document, data.dmsprovider,)
+        let documentDetails = await (body.file && document && body.dmsprovider
+          ? this.fileService.updateFile(body.file, body,document, body.dmsprovider,token)
           : null);
         let formattedDocument: any = this.helper.transform(
-          data.dmsprovider,
+          body.dmsprovider,
           'UPDATE',
           documentDetails,
-          data,
+          body,
         );
         console.log('document', formattedDocument);
-        return this.documentService.update(data.id, document);
+        return this.documentService.update(body.id, document);
       }
       else {
         return new NotFoundException("No file found to update")
@@ -64,7 +68,7 @@ export class DocumentsController {
 
   @Get()
   @MessagePattern({ cmd: 'fetch_document' })
-  async fetchDocument(param) {
+  async fetchDocument(@Query(new JoiValidationPipe(downloadDocumentSchema))param) {
     const token=param.authorization;
     try {   
       let doc_id = null;
@@ -88,7 +92,7 @@ export class DocumentsController {
 
   @Delete()
   @MessagePattern({ cmd: 'delete_document' })
-  async DeleteDocument(param) {
+  async DeleteDocument(@Query(new JoiValidationPipe(deleteDocumentSchema))param) {
     try {
       let field = await this.documentService.findOne(parseInt(param.id));
       field.isdeleted = true;
