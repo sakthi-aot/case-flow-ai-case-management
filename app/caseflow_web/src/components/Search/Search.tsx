@@ -10,6 +10,7 @@ import {
   Typography,
   Card,
   CardContent,
+  Grid,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import SearchIcon from "@mui/icons-material/Search";
@@ -21,11 +22,11 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const Search = ({ setSearchField, dropDownArray, setSearchColumn , dropDownValues=[]} :SearchProps) => {
+const Search = ({ setSearchField, dropDownArray, setSearchColumn , dropDownValues={}} :SearchProps) => {
   
   const[dropDown,setDropDown] = useState(false)
   const onFocus = () => setDropDown(true)
-  const onBlur = () => setTimeout(()=>setDropDown(false),1000)
+  const onBlur = () => setTimeout(()=>setDropDown(false),300)
   
   if(!dropDownArray.includes("All")){
     dropDownArray.unshift("All")
@@ -104,9 +105,21 @@ const Search = ({ setSearchField, dropDownArray, setSearchColumn , dropDownValue
     </div>
     <div  style={{display:dropDown?"flex":"none"}}>
     <div className="search-drop-down">
-    <Card >
-      <CardContent>
-      {dropDownValues.map((eachValue) => (
+    <Card sx={{mb:2}} >
+      <CardContent >
+      <Typography variant="caption"  sx={{ paddingBottom:10 ,fontSize: 8}}>
+          {dropDownValues?.totalCount} search results
+     </Typography>
+      {dropDownValues?.searchResultCases?.map((eachValue) => (
+           <Grid container  key={eachValue.title}>
+                       <Grid item xs={0.5} >
+           <img
+            alt="Tasksicon"
+            src={eachValue.imgIcon}
+            style={{"height":"1rem"}}
+            ></img>
+        </Grid>
+        <Grid item xs={11} sx={{pl:"1rem"}}>
       <div key={eachValue.title} >
       <Typography variant="body1" sx={{textDecoration: 'underline', cursor:"pointer"}} color="#002EFF" onClick={()=>{navigate(eachValue.link)}}  >
           {eachValue.title}
@@ -121,13 +134,27 @@ const Search = ({ setSearchField, dropDownArray, setSearchColumn , dropDownValue
  
 
      </div>
+     </Grid>
+           </Grid>
         ))}
+    
 
 
       </CardContent>
+      <Divider />
+
+      <div className="advanced-search" onClick={()=>{navigate('/private/advancedSearch')}}>
+        <SearchIcon sx={{ fontSize: "18px"}}/>   
+          <Typography variant="body2" sx={{pl:1}}>
+          Advanced Search
+     </Typography>
+      </div>
+
 
     </Card>
+
     </div>
+ 
     </div>
     </div>
       
