@@ -66,8 +66,8 @@ export class DocumentsController {
     }
   }
 
-  @Get()
-  @MessagePattern({ cmd: 'fetch_document' })
+  @Get("/download")
+  // @MessagePattern({ cmd: 'fetch_document' })
   async fetchDocument(@Query(new JoiValidationPipe(downloadDocumentSchema))param) {
     const token=param.authorization;
     try {   
@@ -90,8 +90,8 @@ export class DocumentsController {
     }
   }
 
-  @Delete()
-  @MessagePattern({ cmd: 'delete_document' })
+  @Delete("/delete")
+  // @MessagePattern({ cmd: 'delete_document' })
   async DeleteDocument(@Query(new JoiValidationPipe(deleteDocumentSchema))param) {
     try {
       let field = await this.documentService.findOne(parseInt(param.id));

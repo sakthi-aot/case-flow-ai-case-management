@@ -26,6 +26,12 @@ async function bootstrap() {
 
     await app.startAllMicroservices();
 
+    app.enableCors({
+      origin: true,
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+      credentials: true,
+  })
+
     await app.listen(7002);
 
   } catch (err) {

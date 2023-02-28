@@ -42,7 +42,7 @@ export const  getAllDocuments = async () => {
 }
 
 export const  getDocument = async (id) => {
-  const url = API.DMS_API + "?id=" + id;
+  const url = API.DMS_API + "/download?id=" + id;
   const data = await httpGETBolbRequest(url,null,null)
   .then((res) => {return res})
   .catch((error) => {
@@ -59,7 +59,7 @@ export const  getDocument = async (id) => {
 
 
 export const  deleteDocument = async (id) => {
-  const url = API.DMS_API + "?id=" + id;
+  const url = API.DMS_API +"/delete?id=" + id;
   const data = await httpDELETERequest(url,null)
   .then((res) => {return res})
   .catch((error) => {

@@ -32,4 +32,8 @@ export const FORMSFLOW_APP_URL :string=
 (window._env_ && window._env_.REACT_APP_FORMSFLOW_APP_URL) ||
 process.env.REACT_APP_FORMSFLOW_APP_URL;
 
+export const CASEFLOW_DMS_API_URL :string=
+(window._env_ && window._env_.REACT_APP_CASEFLOW_DMS_API_URL) ||
+process.env.REACT_APP_CASEFLOW_DMS_API_URL;
+
 
