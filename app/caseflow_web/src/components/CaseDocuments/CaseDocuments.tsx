@@ -12,7 +12,7 @@ import pdf from "../../assets/pdf.png";
 import txt from "../../assets/txt.png";
 import {useDispatch, useSelector} from "react-redux";
 import { getAllDocuments,getDocument,searchCaseDocument } from "../../services/DocumentManagementService";
-import { setDocumentList, setTotalDocumentPageCount } from "../../reducers/documentsReducer";
+import { setDocumentList, setTotalDocumentPageCount , setsearchDocumentResult} from "../../reducers/documentsReducer";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import List from "@mui/material/List";
@@ -42,7 +42,8 @@ const CaseDocuments = () => {
   const navigate = useNavigate();
   const filteredDocumentDetails = useSelector((state:State)=>state.documents.documentsList)
   const totalDocuemntCount = useSelector((state:State)=>state.documents.totalPageCount)
-  const dropDownArray = ["Name","Description"];
+  const searchresults = useSelector((state:State)=>state.documents.documentsSearchResult)
+  const dropDownArray = ['Name', "Description"]
   const [sortSetting, setSortSetting] = useState({orderBy :"name",orderType :false});
    const dispatch = useDispatch();
   const getFileIcon = (fileName:any) => {
@@ -63,9 +64,7 @@ const CaseDocuments = () => {
 
   const filterDocumentDetails = async () => {
     let searchResult = await searchCaseDocument(searchField,searchColumn,sortSetting.orderBy,sortSetting.orderType,selectedPage)
-    // searchResult = searchResult.map((element) => {
-
-    // });
+    
     if(searchResult)
     console.log(searchResult)
     // setFilteredDocumentDetails(searchResult.CaseDocuments)
@@ -73,14 +72,27 @@ const CaseDocuments = () => {
     dispatch(setTotalDocumentPageCount(searchResult.totalCount))
   };
 
+  const searchDocumentDetails = async () => {
+    let searchResult = await searchCaseDocument(searchField,searchColumn,sortSetting.orderBy,sortSetting.orderType,true)
+    let searchDocumentResult = searchResult.CaseDocuments.map((element) => {
+        return {title:element.id + " - " +element.name,content:element.desc, subtitle:"CaseDocuments",link:"",imgIcon:require("../../assets/DocumentsIcon.png")};
+    });
+    if(searchDocumentResult)
+      console.log(searchDocumentResult)
+    
+    dispatch(setsearchDocumentResult({searchResult:searchDocumentResult,totalCount:searchResult.totalCount}));
+  };
+
 
 
   useEffect(() => {
     fetchDocumentDetailsList()
     filterDocumentDetails();
-  }, [searchField,selectedPage,sortSetting]);
+  }, [selectedPage,sortSetting]);
 
-
+ useEffect(() => {
+  searchDocumentDetails();
+ }, [searchField])
   
   async function fetchDocumentDetailsList() {
     // let output = await getAllDocuments();
@@ -131,6 +143,7 @@ const navigateToCaseDetailHandler = (caseId) => {
             setSearchField={setSearchField}
             dropDownArray={dropDownArray}
             setSearchColumn={setSearchColumn}
+            dropDownValues={searchresults}
           ></Search>
         </div>
       </div>
