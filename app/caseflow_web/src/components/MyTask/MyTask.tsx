@@ -104,7 +104,7 @@ const fetchUserTasks = async() =>{
       </Grid>
       
       </ListItem>
-      <Divider sx={{ borderBottomWidth: 1, backgroundColor:"#888888" }} />
+      <Divider sx={{ border:1,borderColor:'#606060' }} />
 
 
 

@@ -11,6 +11,7 @@ interface FilterMuiComponentProps{
   label:any,
   options:any[],
   onChnagehandler:any,selected : any}
+  
 
 
 const FilterMuiComponent = ({label,options,onChnagehandler,selected}:FilterMuiComponentProps) => {

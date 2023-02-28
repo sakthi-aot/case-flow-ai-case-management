@@ -303,7 +303,7 @@ const fetchRealtedTasks = async() =>{
             selected ={selected}
           />
         </span>
-        <Divider sx={{borderBottomWidth:1,backgroundColor:"#606060"}} />
+        <Divider sx={{border : 1,color:"#606060"}} />
         {(selectedCase && selectedCase.id) ? <>
         <CaseDetailData
           name={selectedCase.name}

@@ -169,7 +169,7 @@ const navigateToCaseDetailHandler = (caseId) => {
                             sx={{
                               "& th": {
                                 fontWeight: "bold",
-                                borderBottom: 1,
+                                borderBottom: 2,
                                 borderColor:"#606060"
                               },
                             }}

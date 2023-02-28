@@ -170,7 +170,7 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
             </Grid>
           </Grid> 
         </ListItem>
-        <Divider sx={{ borderBottomWidth: 1 , borderBottomColor:"#606060"}} />
+        <Divider sx={{ border: 1 , color:"#606060"}} />
         {(lobListData && lobListData.length !== 0)?lobListData.map((lobData,index ) => (
           <LOBCUstomContentCard
           key={index}
