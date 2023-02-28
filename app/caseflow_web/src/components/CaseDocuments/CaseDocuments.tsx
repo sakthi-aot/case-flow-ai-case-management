@@ -67,7 +67,6 @@ const CaseDocuments = () => {
     
     if(searchResult)
     console.log(searchResult)
-    // setFilteredDocumentDetails(searchResult.CaseDocuments)
     dispatch(setDocumentList(searchResult.CaseDocuments));
     dispatch(setTotalDocumentPageCount(searchResult.totalCount))
   };
