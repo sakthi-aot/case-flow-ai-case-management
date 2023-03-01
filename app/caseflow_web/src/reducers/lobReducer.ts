@@ -20,6 +20,7 @@ const initialState = {
       totalLobCount:1,
       pageSelected:1,
       editLob:false,
+      searchLobResult:{}
 }
 const lobSlice = createSlice({
     name:"lob",
@@ -38,6 +39,9 @@ const lobSlice = createSlice({
         setEditLob:(state,action)=>{
             state.editLob = action.payload;
         },
+        setSearchLobResult:(state,action)=>{
+            state.searchLobResult = action.payload;
+        },
   
     }
 });
@@ -48,5 +52,6 @@ export const {
     setLobTotalCount,
     setSelectedLob,
     setEditLob,
+    setSearchLobResult
   } = lobSlice.actions;
   export default lobSlice.reducer;

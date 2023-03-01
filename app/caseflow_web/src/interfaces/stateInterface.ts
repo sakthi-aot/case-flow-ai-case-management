@@ -101,6 +101,7 @@ export interface Lob {
   pageSelected:number,
   selectedLob:LobList,
   editLob:boolean,
+  searchLobResult:{}
 }
 export interface LobList {
   id:number,
