@@ -31,6 +31,7 @@ export interface Document {
   documentsList: never[];
   seletedDocument: null;
   totalPageCount:1,
+  documentsSearchResult:{},
 }
 
 export interface SelectedCase {

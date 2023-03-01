@@ -4,6 +4,7 @@ const initialState = {
   documentsList: [],
   seletedDocument: null,
   totalPageCount:1,
+  documentsSearchResult:{},
 };
 
 const documentSlice = createSlice({
@@ -20,7 +21,11 @@ const documentSlice = createSlice({
     setTotalDocumentPageCount:(state,action) =>{
       const TotalPage = Math.ceil(action.payload/Number (PAGINATION_TAKE))        
       state.totalPageCount = TotalPage;
-    }
+    },
+    setsearchDocumentResult : (state,action) =>{
+      state.documentsSearchResult =action.payload
+    },
+    
   },
   extraReducers: {
     logout: (state, action) => {
@@ -33,5 +38,6 @@ export const {
   setDocumentList,
   setSelectedDocument,
   setTotalDocumentPageCount,
+  setsearchDocumentResult,
 } = documentSlice.actions;
 export default documentSlice.reducer;
