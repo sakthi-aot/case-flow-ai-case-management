@@ -189,7 +189,7 @@ const caseListpagination = (e,p) =>{
       </Grid>
       
       
-      <Divider sx={{ borderBottomWidth: 1, backgroundColor:"#888888" }} />
+      <Divider sx={{ border: 1, color:"#606060" }} />
         {allRecentCases.length!=0 ? allRecentCases.map((eachcases:Case) => (
           <RecentCasecard
             case = {eachcases}

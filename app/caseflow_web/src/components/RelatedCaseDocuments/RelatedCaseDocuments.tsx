@@ -169,12 +169,12 @@ useEffect(() => {
     {docDetail && docDetail.length!==0 ?  <Table sx={{ minWidth: 650 ,border : 0,}} aria-label="simple table" className="case-document-table" >
         <TableHead >
           <TableRow>
-            <TableCell align="left" sx={{ color: '#404040',fontSize: 16,fontWeight:600,borderBottom:1,borderBottomColor:'#606060',paddingLeft:0}} >Name</TableCell>
-            <TableCell align="left" sx={{ color: '#404040',fontSize: 16,fontWeight:600,borderBottom:1,borderBottomColor:'#606060',paddingLeft:0}} >Size</TableCell>
-            <TableCell align="left" sx={{ color: '#404040',fontSize: 16,fontWeight:600,borderBottom:1,borderBottomColor:'#606060',paddingLeft:0}} >Date Created</TableCell>
-            <TableCell align="left" sx={{ color: '#404040',fontSize: 16,fontWeight:600,borderBottom:1,borderBottomColor:'#606060',paddingLeft:0}} >Last Updated</TableCell>
-            <TableCell align="left" sx={{ color: '#404040',fontSize: 16,fontWeight:600,borderBottom:1,borderBottomColor:'#606060',paddingLeft:0}} >version #</TableCell>
-            <TableCell align="left" sx={{ color: '#404040',fontSize: 16,fontWeight:600,borderBottom:1,borderBottomColor:'#606060',paddingLeft:0}} ></TableCell>
+            <TableCell align="left" sx={{ color: '#404040',fontSize: 16,fontWeight:600,borderBottom:2,borderBottomColor:'#606060',paddingLeft:0}} >Name</TableCell>
+            <TableCell align="left" sx={{ color: '#404040',fontSize: 16,fontWeight:600,borderBottom:2,borderBottomColor:'#606060',paddingLeft:0}} >Size</TableCell>
+            <TableCell align="left" sx={{ color: '#404040',fontSize: 16,fontWeight:600,borderBottom:2,borderBottomColor:'#606060',paddingLeft:0}} >Date Created</TableCell>
+            <TableCell align="left" sx={{ color: '#404040',fontSize: 16,fontWeight:600,borderBottom:2,borderBottomColor:'#606060',paddingLeft:0}} >Last Updated</TableCell>
+            <TableCell align="left" sx={{ color: '#404040',fontSize: 16,fontWeight:600,borderBottom:2,borderBottomColor:'#606060',paddingLeft:0,whiteSpace:"nowrap"}} >version #</TableCell>
+            <TableCell align="left" sx={{ color: '#404040',fontSize: 16,fontWeight:600,borderBottom:2,borderBottomColor:'#606060',paddingLeft:0}} ></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -183,7 +183,7 @@ useEffect(() => {
             key={row.id}
             >
               <TableCell   
-              sx={{  border: 0,borderBottom:1,borderBottomColor:'#E2E2E2',paddingLeft:0 }}
+              sx={{  border: 0,borderBottom:1,borderBottomColor:'#E2E2E2',paddingInline:0 }}
               onClick={()=>{
                 previewDocument(row.id,row.type)
               }
