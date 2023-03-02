@@ -32,7 +32,7 @@ const Search = ({ setSearchField, dropDownArray, setSearchColumn , dropDownValue
     dropDownArray.unshift("All")
   } 
   const navigate = useNavigate();  
-
+console.log(dropDownValues)
   
   return (
     <>
@@ -110,7 +110,7 @@ const Search = ({ setSearchField, dropDownArray, setSearchColumn , dropDownValue
       <Typography variant="caption"  sx={{ paddingBottom:10 ,fontSize: 8}}>
           {dropDownValues?.totalCount} search results
      </Typography>
-      {dropDownValues?.searchResultCases?.map((eachValue) => (
+      {dropDownValues?.searchResult?.map((eachValue) => (
            <Grid container  key={eachValue.title}>
                        <Grid item xs={0.5} >
            <img

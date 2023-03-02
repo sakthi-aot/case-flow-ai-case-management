@@ -50,7 +50,7 @@ const Cases = (
      
      if(searchResultCases){
 console.log({searchResultCases:searchResultCases,totalCount:searchResult.totalCount})
-dispatch(setsearchCaseResult({searchResultCases:searchResultCases,totalCount:searchResult.totalCount}))
+dispatch(setsearchCaseResult({searchResult:searchResultCases,totalCount:searchResult.totalCount}))
      }
 
   }

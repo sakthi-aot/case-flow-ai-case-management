@@ -31,6 +31,7 @@ export interface Document {
   documentsList: never[];
   seletedDocument: null;
   totalPageCount:1,
+  documentsSearchResult:{},
 }
 
 export interface SelectedCase {
@@ -101,6 +102,7 @@ export interface Lob {
   pageSelected:number,
   selectedLob:LobList,
   editLob:boolean,
+  searchLobResult:{}
 }
 export interface LobList {
   id:number,

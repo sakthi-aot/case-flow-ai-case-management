@@ -5,7 +5,7 @@ import Divider from "@mui/material/Divider";
 import LOBCUstomContentCard from "../LOBCUstomContentCard/LOBCUstomContentCard";
 import { getLobData } from "../../services/LOBService";
 import {useSelector,useDispatch} from "react-redux";
-import { setLobList, setLobTotalCount } from "../../reducers/lobReducer";
+import { setLobList, setLobTotalCount, setSearchLobResult } from "../../reducers/lobReducer";
 import { State } from "../../interfaces/stateInterface";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -16,12 +16,14 @@ import "./LOBCustomContent.scss"
 import { Link } from "react-router-dom";
 import { setEditLob } from "../../reducers/lobReducer";
 import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
+import moment from "moment";
+
 
 
 const LOBCustomContent = () => {
 
   const [searchField, setSearchField] = useState("");
-  const [searchColumn, setSearchColumn] = useState("All");
+  const [searchColumn, setSearchColumn] = useState("policyNumber");
   const [dropDownArray, setDropDownArray] = useState([""]);
   const [ selectedPage,setSelectedPage] = useState(1);
    
@@ -30,13 +32,19 @@ const LOBCustomContent = () => {
   
   const lobListData = useSelector((state:State)=>state.lob.lobList);
   const lobTotalPageCount = useSelector((state:State) =>state.lob.totalLobCount) 
+  const searchLobResult = useSelector((state:State) =>state.lob.searchLobResult) 
+
 const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/private"},{text:"Lob",link:"/private/lob"}]);
 
 
 
   useEffect(()=>{    
     fetchLobList()
-  },[searchField,searchColumn,selectedPage])
+  },[selectedPage])
+  
+  useEffect(()=>{    
+    searchLobDetails()
+  },[searchField,searchColumn])
 
   const fetchLobList =async () =>{
     const output = await getLobData(selectedPage,searchField,searchColumn);
@@ -46,6 +54,22 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
   //  let fields= Object.keys( output.CaseflowLob[0])
    setDropDownArray(["policyNumber"])    
   }
+
+  const searchLobDetails = async ()=>{
+
+    const output = await getLobData(selectedPage,searchField,searchColumn);
+
+    let searchResultCases = output.CaseflowLob.map((element) => {    
+        return {title:element.id + " - " +element.policyNumber,content: moment(element.createdDate).format('MMMM Do, YYYY'), subtitle:"Policy",link:"/private/lob/"+ element.id+'/details',imgIcon:require("../../assets/CasesIcon.png")};
+     });
+ 
+
+     if(searchResultCases){
+dispatch(setSearchLobResult({searchResultCases:searchResultCases,totalCount:output.totalCount}))
+     }
+
+  }
+
 
   const onLobPageCountChange =(e,p) =>{
     setSelectedPage(p)
@@ -62,6 +86,7 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
             setSearchField={setSearchField}
             dropDownArray={dropDownArray}
             setSearchColumn={setSearchColumn}
+            dropDownValues={searchLobResult}
         ></Search>
       </div>
       </div>   
