@@ -33,6 +33,8 @@ import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
 import { addWorkflowCaseHistory, getTaksByCaseId, getWorkflowList, startNewWorkflow } from "../../services/workflowService";
 import { Button, Divider, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import LobCustom from "./LobCustom/LobCustom";
+import { getFormDetails, getFormsList } from "../../services/formsService";
+import {Form} from '@formio/react'
 
 
 
@@ -99,8 +101,10 @@ const [newStatus,setNewStatus] = useState(0);
 const [selected, setSelected] = useState(0);
 const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents);
 const [isOpenWorkflowPopup,setOpenWorkflowPopup] = useState(false);
-const [selectedWorkflow, setselectedWorkflow]:any = useState("");
-const [workflows, setworkflows]:any = useState([]);
+const [isOpenFormIOPopup,setOpenFormIOPopup] = useState(false);
+const [selectedForm, setselectedForm]:any = useState("");
+const [formsList, setFormsList]:any = useState([]);
+const [selectedFormDetails, setSelectedFormDetails]:any = useState();
 
   const handleClose = (
     event,
@@ -111,13 +115,20 @@ const [workflows, setworkflows]:any = useState([]);
   };
 
   const onChnagehandler =(event) =>{
-    setselectedWorkflow(event.target.value)
+    setselectedForm(event.target.value)
   }
   const handleWorkflowPopUpClose = (
     event,
     reason
   ) => {
     setOpenWorkflowPopup(false);
+   setSelected(0)
+  };
+  const handleFormIOPopUpClose = (
+    event,
+    reason
+  ) => {
+    setOpenFormIOPopup(false);
    setSelected(0)
   };
   const onSuccess = async ()=>{
@@ -139,7 +150,7 @@ const [workflows, setworkflows]:any = useState([]);
     setSelected(e.target.value)
     switch(e.target.value){
       case 1:{
-        return getWorkflows() // Wake
+        return getForms() // Wake
       }
       case 2:{
         return changeStatus(1) // Wake
@@ -159,9 +170,9 @@ const [workflows, setworkflows]:any = useState([]);
     }
   };
 
-  const getWorkflows = async () =>{
-    const workflowsList = await getWorkflowList(1);
-    setworkflows(workflowsList);
+  const getForms = async () =>{
+    const formsList = await getFormsList(1);
+    setFormsList(formsList);
     setOpenWorkflowPopup(true);
   }
 
@@ -233,9 +244,18 @@ const [workflows, setworkflows]:any = useState([]);
     ])
   }, [selectedCase]);
 
+  const selectForm = async () =>{
+    if(selectedForm){
+      const formDetails  = await getFormDetails(selectedForm);
+      setSelectedFormDetails(formDetails)
+      setOpenFormIOPopup(true)
+
+    }
+  }
+
   const startWorkflow = async () =>{
 
-    if(selectedWorkflow){
+    if(selectedForm){
     const wordFlowDetails = {
       variables: {
         caseId: {
@@ -252,7 +272,7 @@ const [workflows, setworkflows]:any = useState([]);
     };
 
     
-  const workflow = await startNewWorkflow(selectedWorkflow, wordFlowDetails);
+  const workflow = await startNewWorkflow(selectedForm, wordFlowDetails);
   if(workflow.id){
     toast.success("New workflow started successfully");
     setSelected(0);
@@ -341,7 +361,7 @@ const fetchRealtedTasks = async() =>{
       </section>
     </div>
     <CustomizedDialog title="Upload File" isOpen={isOpenPopup} setIsOpen={setOpenPopup} handleClose={handleClose}><Upload onSuccess={onSuccess} /></CustomizedDialog>
-    <CustomizedDialog title="Select Workflow" isOpen={isOpenWorkflowPopup} setIsOpen={setOpenWorkflowPopup} handleClose={handleWorkflowPopUpClose}>
+    <CustomizedDialog title="Select Form" isOpen={isOpenWorkflowPopup} setIsOpen={setOpenWorkflowPopup} handleClose={handleWorkflowPopUpClose} fullWidth>
       <div className="workflow">
     <FormControl sx={{ m: 1, minWidth: 90, }} size="small">
                 <InputLabel id="demo-simple-select-label">Workflow</InputLabel>
@@ -349,23 +369,28 @@ const fetchRealtedTasks = async() =>{
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"          
                   label="Age" 
-                  value={selectedWorkflow}   
+                  value={selectedForm}   
                   onChange={onChnagehandler}   
                   className="dropDownStyle"   
                 >
-                   {workflows.map((option,index) => <MenuItem key={index}  value={option.key}>{option.name}</MenuItem>)}                  
+                   {formsList?.forms?.map((option,index) => <MenuItem key={index}  value={option.formId}>{option.formName}</MenuItem>)}                  
                 </Select>
             </FormControl>
             <FormControl>
             <Button
                 variant="contained"
                 sx={{backgroundColor:'primary.main'}}
-                onClick={startWorkflow}
+                onClick={selectForm}
                 
               >
-               Start Workflow
+               Select FOrm
               </Button>
             </FormControl>
+            </div>
+    </CustomizedDialog>
+    <CustomizedDialog title="Fill the Details" isOpen={isOpenFormIOPopup} setIsOpen={setOpenFormIOPopup} handleClose={handleFormIOPopUpClose}>
+      <div className="workflow">
+    <Form form={selectedFormDetails}></Form>
             </div>
     </CustomizedDialog>
     <ToastContainer />

@@ -9,10 +9,10 @@ import CloseIcon from '@mui/icons-material/Close';
 
 export default function CustomizedDialog(props) {
 
-  const {title,children,isOpen, setIsOpen,handleClose} = props;
+  const {title,children,isOpen, setIsOpen,handleClose,fullWidth} = props;
  
   return (
-    <Dialog open={isOpen}  onClose={(e)=>handleClose(e)} fullWidth  >
+    <Dialog open={isOpen}  onClose={(e)=>handleClose(e)} fullWidth={fullWidth}  >
       <DialogTitle>{title}<IconButton
           aria-label="close"
           onClick={()=> handleClose() }
