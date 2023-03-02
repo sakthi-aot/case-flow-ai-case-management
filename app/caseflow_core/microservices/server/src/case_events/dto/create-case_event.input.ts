@@ -1,4 +1,5 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
 /**
  * Summary :  Create input DTO for Case events
@@ -7,8 +8,12 @@ import { InputType, Int, Field } from '@nestjs/graphql';
 @InputType()
 export class CreateCaseEventInput {
   @Field((type) => Int)
+  @IsNumber()
+  @IsNotEmpty()
   artifactId: number;
 
   @Field((type) => Int)
+  @IsNumber()
+  @IsNotEmpty()
   eventtypeId: number;
 }
