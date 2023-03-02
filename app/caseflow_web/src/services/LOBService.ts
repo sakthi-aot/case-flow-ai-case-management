@@ -54,7 +54,7 @@ import { PAGINATION_TAKE } from "../apiManager/endpoints/config";
     return {}
     })   
     
-    return output.searchCaseflowLob;
+    return output?.searchCaseflowLob;
   }
 
 

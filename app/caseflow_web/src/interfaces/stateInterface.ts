@@ -25,6 +25,10 @@ export interface Auth {
 export interface Application {
   isShowLoader: boolean;
   progressBarStatus: number;
+  advanceSearchResult : {
+    searchResult:any[],
+    totalCount: string |number
+  }
 }
 
 export interface Document {
