@@ -136,13 +136,15 @@ const Upload = (props) => {
     if (values.documentID == 0) {
       // check with docid exist or not id documentID=0 insert opertaion work
       setSubmitted(true);
+
       await uploadCMISfile({
        "file" :  values.file,
        "name" : values.fileName,
        "desc" : values.fileDescription,
        "caseId" : selectedCase.id,
        "dmsprovider" : CASEFLOW_DMS,
-       "metaData" :JSON.stringify(inputFields)
+       "metaData" :JSON.stringify(inputFields),
+       "type":values.file.type,
       }
       )
       .then((response)=>{
