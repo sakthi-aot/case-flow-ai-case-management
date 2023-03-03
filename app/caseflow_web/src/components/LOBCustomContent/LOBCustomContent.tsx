@@ -65,7 +65,7 @@ const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/
  
 
      if(searchResultCases){
-dispatch(setSearchLobResult({searchResultCases:searchResultCases,totalCount:output.totalCount}))
+dispatch(setSearchLobResult({searchResult:searchResultCases,totalCount:output.totalCount}))
      }
 
   }

@@ -1,46 +1,62 @@
 import { Grid, InputAdornment, OutlinedInput, Typography } from '@mui/material';
-import * as React from 'react';
+import  React, { useEffect, useState }  from 'react';
 import Search from '../Search/Search';
 import "./advancedSearch.scss";
 import SearchIcon from "@mui/icons-material/Search";
 import SearchFilters from '../SearchFilters/SearchFilters';
-
-const searchValues = [{
-  title:"NRO1 - One on One conversations",
-  subtitle:"Application Maintenance Services for ISSS Feb 02, 2023",
-  content:"Mines Digital Services (MDS) / … / User Research / One-on-Ones Nov 18, 2019 NRO - Vince Metcalf, Kathryn Gregory, Kevin Edquist Action Produced yes/noONotesOSystem of SourceDOAdministrative",
-  imgIcon:require("../../assets/CasesIcon.png")
-},
-{
-  title:"NRO2 - One on One conversations",
-  subtitle:"Application Maintenance Services for ISSS Feb 02, 2023",
-  content:"Mines Digital Services (MDS) / … / User Research / One-on-Ones Nov 18, 2019 NRO - Vince Metcalf, Kathryn Gregory, Kevin Edquist Action Produced yes/noONotesOSystem of SourceDOAdministrative",
-  imgIcon:require("../../assets/CasesIcon.png")
-
-},
-{
-  title:"NRO2 - One on One conversations",
-  subtitle:"Application Maintenance Services for ISSS Feb 02, 2023",
-  content:"Mines Digital Services (MDS) / … / User Research / One-on-Ones Nov 18, 2019 NRO - Vince Metcalf, Kathryn Gregory, Kevin Edquist Action Produced yes/noONotesOSystem of SourceDOAdministrative",
-  imgIcon:require("../../assets/CasesIcon.png")
-
-},{
-  title:"NRO2 - One on One conversations",
-  subtitle:"Application Maintenance Services for ISSS Feb 02, 2023",
-  content:"Mines Digital Services (MDS) / … / User Research / One-on-Ones Nov 18, 2019 NRO - Vince Metcalf, Kathryn Gregory, Kevin Edquist Action Produced yes/noONotesOSystem of SourceDOAdministrative",
-  imgIcon:require("../../assets/CasesIcon.png")
-
-},{
-  title:"NRO2 - One on One conversations",
-  subtitle:"Application Maintenance Services for ISSS Feb 02, 2023",
-  content:"Mines Digital Services (MDS) / … / User Research / One-on-Ones Nov 18, 2019 NRO - Vince Metcalf, Kathryn Gregory, Kevin Edquist Action Produced yes/noONotesOSystem of SourceDOAdministrative",
-  imgIcon:require("../../assets/CasesIcon.png")
-
-}
-]
+import { searchCases } from "../../services/CaseService";
+import {searchCaseDocument } from "../../services/DocumentManagementService";
+import {useDispatch, useSelector} from "react-redux";
+import { State } from "../../interfaces/stateInterface";
+import { setadvanceSearchResult } from '../../reducers/applicationReducer';
+import { getLobData } from "../../services/LOBService";
+import moment from "moment";
 
 
-export default function AdvancedSearch({setSearchField}) {
+
+export default function AdvancedSearch() {
+
+  const [searchField, setSearchField] = useState("");
+  const searchresults = useSelector((state:State)=>state.app.advanceSearchResult)
+  const dispatch = useDispatch();
+
+
+  const searchDetails = async ()=>{
+    let result:any = []
+    let totalCount = 0
+    await Promise.all([searchCases(searchField,"name",1,"id",true,true)
+    .then((searchCaseResult=>{
+      totalCount = totalCount + searchCaseResult.totalCount;
+      searchCaseResult?.Cases.map((element) => {
+        result.push({title:element.id + " - " +element.name,content:element.desc, subtitle:"Cases",link:"/private/cases/"  + element.id+'/details',imgIcon:require("../../assets/CasesIcon.png")})
+      });
+    })) , searchCaseDocument(searchField,"Name","name",true,true)
+    .then(searchDocumentResult=>{
+      totalCount = totalCount + searchDocumentResult.totalCount;
+      searchDocumentResult?.CaseDocuments.map((element) => {
+        result.push({title:element.id + " - " +element.name,content:element.desc, subtitle:"CaseDocuments",link:"",imgIcon:require("../../assets/DocumentsIcon.png")})
+    });
+    }),
+     getLobData(1,searchField,"policyNumber")
+    .then(searchLobResult=>{
+      totalCount = totalCount + searchLobResult?.totalCount;
+      searchLobResult?.CaseflowLob.map((element) => {    
+        result.push({title:element.id + " - " +element.policyNumber,content: moment(element.createdDate).format('MMMM Do, YYYY'), subtitle:"Policy",link:"/private/lob/"+ element.id+'/details',imgIcon:require("../../assets/LOBIcon.png")})
+     });
+    }
+    )
+    
+  ]);
+
+    dispatch(setadvanceSearchResult({searchResult:result,totalCount:totalCount}));
+  }
+
+  
+ useEffect(() => {
+  searchDetails();
+  console.log(searchresults)
+ }, [searchField])
+
 
  
   return (<>
@@ -74,10 +90,10 @@ export default function AdvancedSearch({setSearchField}) {
           }/>
           </div>
           <Typography variant="caption"  sx={{ fontSize: 8}}>
-          {searchValues?.length} search results
+          {searchresults?.totalCount} search results
      </Typography>
 
-     {searchValues.map((eachValue) => (
+     {searchresults?.searchResult.map((eachValue) => (
            <Grid container  key={eachValue.title}>
            <Grid item xs={0.5} sx={{pt:"5vh"}}>
            <img
