@@ -39,10 +39,12 @@ import UserService from "./UserService";
       return output
 
   };
-  export const startNewWorkflow = async (id,body) => {
+  export const submitNewForm = async (id,body) => {
     console.log(parseInt(id))
-    const url = `${FORM_URL}/camunda/engine-rest-ext/v1/process-definition/key/${id}/start`;
-    const  output =  await httpPOSTRequest(url,body,null)
+    const formIoToken = await getFormIORoleIds()
+    const token = {"x-jwt-token" : formIoToken};
+    const url = `${FORMSFLOW_APPLICATION_URL}/formio/form/${id}/submission`;
+    const  output =  await httpPOSTRequest(url,body,null,true,false,token)
       .then((res) => {return res.data})
       .catch((error) => {
         console.log({"error" : error})
@@ -106,7 +108,11 @@ export const getFormIORoleIds = () => {
   
   return httpGETRequest(url, {}, UserService.getToken(), true)
       .then((res) => {
+        const token = res.headers["x-jwt-token"];
+        localStorage.setItem("formioToken", token.toString());
+        localStorage.setItem("roleIds", JSON.stringify(res.data.form));
         return res.headers["x-jwt-token"];
+        
        
       })
       .catch((error) => {

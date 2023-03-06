@@ -33,10 +33,11 @@ import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
 import { addWorkflowCaseHistory, getTaksByCaseId, getWorkflowList, startNewWorkflow } from "../../services/workflowService";
 import { Button, Divider, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import LobCustom from "./LobCustom/LobCustom";
-import { getFormDetails, getFormsList } from "../../services/formsService";
-import {Form} from '@formio/react'
+import { getFormDetails, getFormsList, submitNewForm } from "../../services/formsService";
+import {Form as FormIOForm,saveSubmission,Formio } from 'react-formio'
 
-
+Formio.setProjectUrl("https://app2.aot-technologies.com/formio");
+Formio.setBaseUrl("https://app2.aot-technologies.com/formio");
 
 
 
@@ -293,6 +294,9 @@ const fetchRealtedTasks = async() =>{
   const taskList = await getTaksByCaseId(selectedCase.id)
   dispatch(setCaseTasks(taskList))
 }
+const callBack = (err, submission) => {
+
+}
   return (
     <>
     <div className="details-container">
@@ -388,9 +392,24 @@ const fetchRealtedTasks = async() =>{
             </FormControl>
             </div>
     </CustomizedDialog>
-    <CustomizedDialog title="Fill the Details" isOpen={isOpenFormIOPopup} setIsOpen={setOpenFormIOPopup} handleClose={handleFormIOPopUpClose}>
+    <CustomizedDialog title="Fill the Details" isOpen={isOpenFormIOPopup} setIsOpen={setOpenFormIOPopup} handleClose={handleFormIOPopUpClose} fullWidth>
       <div className="workflow">
-    <Form form={selectedFormDetails}></Form>
+    <FormIOForm form={selectedFormDetails}   submission={undefined} onSubmit={(data) => {
+              
+               console.log(data)
+               dispatch(
+                saveSubmission(
+                  "submission",
+                  data,
+                  selectedFormDetails._id,
+                  callBack
+                )
+              );
+              //  submitNewForm(selectedForm,data)
+              }}/>
+
+      
+ 
             </div>
     </CustomizedDialog>
     <ToastContainer />
