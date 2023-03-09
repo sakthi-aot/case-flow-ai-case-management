@@ -1,6 +1,7 @@
 import {
     httpGETRequest,
     httpPOSTRequest,
+    httpPUTRequest,
   } from "../apiManager/httpRequestHandler";
 import { GRAPHQL, FORM_URL, FORMSFLOW_APPLICATION_URL} from "../apiManager/endpoints";
 import { print } from "graphql";
@@ -53,6 +54,29 @@ import UserService from "./UserService";
       return output
 
   };
+
+  export const submitNewFormDraft = async (body,draftId) => {
+    const url = `${FORM_URL}/draft/${draftId}/submit`;
+      return await httpPUTRequest(url,body,null)
+      .then((res) => {return res.data})
+      .catch((error) => {
+        console.log({"error" : error})
+        return {}
+      });
+  };
+
+  export const createDraft = async (body) => {
+    const draftUrl = `${FORM_URL}/draft`;
+    const  output =  await httpPOSTRequest(draftUrl,body,null,true,false,null)
+      .then((res) => {return res.data.id})
+      .catch((error) => {
+        console.log({"error" : error})
+        return {}
+      });
+      return output
+
+  };
+  
 
   export const getTaksByCaseId = async (id) => {
     const url = `${FORM_URL}/camunda/engine-rest-ext/v1/task?caseInstanceId=${id}`;

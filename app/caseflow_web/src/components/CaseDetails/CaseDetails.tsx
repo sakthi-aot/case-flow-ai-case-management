@@ -33,8 +33,9 @@ import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
 import { addWorkflowCaseHistory, getTaksByCaseId, getWorkflowList, startNewWorkflow } from "../../services/workflowService";
 import { Button, Divider, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import LobCustom from "./LobCustom/LobCustom";
-import { getFormDetails, getFormsList, submitNewForm } from "../../services/formsService";
+import { createDraft, getFormDetails, getFormsList, submitNewForm,submitNewFormDraft } from "../../services/formsService";
 import {Form as FormIOForm,saveSubmission,Formio } from 'react-formio'
+import { FORMSFLOW_APPLICATION_URL } from "../../apiManager/endpoints";
 
 Formio.setProjectUrl("https://app2.aot-technologies.com/formio");
 Formio.setBaseUrl("https://app2.aot-technologies.com/formio");
@@ -297,6 +298,38 @@ const fetchRealtedTasks = async() =>{
 const callBack = (err, submission) => {
 
 }
+
+const submitForm = (data) => {
+              
+  console.log(data)
+ console.log(selectedFormDetails)
+
+ //  dispatch(
+ //   saveSubmission(
+ //     "submission",
+ //     data,
+ //     selectedFormDetails._id,
+ //     callBack
+ //   )
+ // );
+  submitNewForm(selectedForm,data)
+  .then(res=>{
+   let submissionData = {
+     "formId": res.form,
+     "submissionId": res._id,
+     "formUrl": FORMSFLOW_APPLICATION_URL + "/formio/form/"+res.form +"/submission/"+res._id,
+     "webFormUrl": FORMSFLOW_APPLICATION_URL+ "/form/"+res.form +"/submission/"+res._id
+ }
+ let createDraftData = {data:{},formId:res.form}
+  createDraft(createDraftData)
+  .then((draftId)=>{
+    if(draftId){
+      return submitNewFormDraft(submissionData,draftId)
+    }
+  })
+
+  })
+ }
   return (
     <>
     <div className="details-container">
@@ -394,19 +427,7 @@ const callBack = (err, submission) => {
     </CustomizedDialog>
     <CustomizedDialog title="Fill the Details" isOpen={isOpenFormIOPopup} setIsOpen={setOpenFormIOPopup} handleClose={handleFormIOPopUpClose} fullWidth>
       <div className="workflow">
-    <FormIOForm form={selectedFormDetails}   submission={undefined} onSubmit={(data) => {
-              
-               console.log(data)
-               dispatch(
-                saveSubmission(
-                  "submission",
-                  data,
-                  selectedFormDetails._id,
-                  callBack
-                )
-              );
-              //  submitNewForm(selectedForm,data)
-              }}/>
+    <FormIOForm form={selectedFormDetails}   submission={undefined} onSubmit={(data)=>submitForm(data)}/>
 
       
  
