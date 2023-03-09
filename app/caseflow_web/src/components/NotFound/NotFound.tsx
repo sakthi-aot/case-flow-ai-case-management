@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./notfound.scss";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import { Typography } from "@mui/material";
 const NotFound = () => {
   return (
     <div className="notfound">
@@ -23,9 +24,9 @@ const NotFound = () => {
               src={require("../../assets/logo.png")}
             />
             <div className="inner_text">
-              <h1 className="title">404</h1>
-              <h2 className="sub-title">Page Not Found</h2>
-              <p className="text">The page you requested could not be found</p>
+              <Typography className="title">404</Typography>
+              <Typography className="sub-title">Page Not Found</Typography>
+              <Typography className="text">The page you requested could not be found</Typography>
               <div className="buttons">
                 <Button
                   component={Link}
@@ -36,7 +37,8 @@ const NotFound = () => {
                   }}
                   variant="outlined"
                 >
-                  Go Home
+                  <Typography variant='body1'>Go Home</Typography>
+                  
                 </Button>
               </div>
             </div>
