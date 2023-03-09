@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./landingpage.scss";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import { Typography } from "@mui/material";
 const LandingPage = () => {
   return (
     <div className="home">
@@ -16,18 +17,18 @@ const LandingPage = () => {
               src={require("../../assets/logo.png")}
             />
             <div className="inner_text">
-              <h1 className="title">
+              <Typography variant='body1' sx={{fontSize:"3rem", paddingBlock:"1rem"}}>
                 An open-source generic Case Management application built on top
                 of formsflow.ai
-              </h1>
-              <p className="text">
+              </Typography>
+              <Typography variant="body1" sx={{fontSize:"1rem",paddingBottom:"1rem"}}>
                 caseflow.ai is a completely free and open-source framework
                 explicitly designed to be highly generic and configurable that
                 assesses, plans, implements, coordinates, monitors, and
                 evaluates to improve outcomes, experiences, and value. An
                 open-source generic Case Management application built on top of
                 formsflow.ai
-              </p>
+              </Typography>
               <div className="buttons">
                 <Button
                   component={Link}
@@ -35,7 +36,7 @@ const LandingPage = () => {
                   className="landing-page-getStarted-btn"
                   variant="contained"
                 >
-                  Get Started
+                  <Typography variant='body1'>Get Started</Typography>
                 </Button>
 
                 <Button
@@ -44,7 +45,7 @@ const LandingPage = () => {
                   className="landing-page-explore-more-btn"
                   variant="outlined"
                 >
-                  Explore More
+                  <Typography variant='body1'>Explore More</Typography>
                 </Button>
               </div>
             </div>
