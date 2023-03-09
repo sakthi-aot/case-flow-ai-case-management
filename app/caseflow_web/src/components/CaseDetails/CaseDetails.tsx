@@ -30,11 +30,15 @@ import { setCaseStatuses } from "../../reducers/constantsReducer";
 import { State } from "../../interfaces/stateInterface";
 import PopUpDialogBox from "../PopUpDialogBox/PopUpDialogBox";
 import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
-import { addWorkflowCaseHistory, getTaksByCaseId, getWorkflowList, startNewWorkflow } from "../../services/workflowService";
+import { addWorkflowCaseHistory, getTaksByCaseId, getTaksByProcessInstanceId, getWorkflowList, startNewWorkflow, updateTaksById } from "../../services/workflowService";
 import { Button, Divider, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import LobCustom from "./LobCustom/LobCustom";
+import { createDraft, getFormDetails, getFormsList, submitNewForm,submitNewFormDraft } from "../../services/formsService";
+import {Form as FormIOForm,saveSubmission,Formio } from 'react-formio'
+import { FORMSFLOW_APPLICATION_URL } from "../../apiManager/endpoints";
 
-
+Formio.setProjectUrl("https://app2.aot-technologies.com/formio");
+Formio.setBaseUrl("https://app2.aot-technologies.com/formio");
 
 
 
@@ -99,8 +103,10 @@ const [newStatus,setNewStatus] = useState(0);
 const [selected, setSelected] = useState(0);
 const docDetail = useSelector((state:store)=>state.cases.selectedCase.documents);
 const [isOpenWorkflowPopup,setOpenWorkflowPopup] = useState(false);
-const [selectedWorkflow, setselectedWorkflow]:any = useState("");
-const [workflows, setworkflows]:any = useState([]);
+const [isOpenFormIOPopup,setOpenFormIOPopup] = useState(false);
+const [selectedForm, setselectedForm]:any = useState("");
+const [formsList, setFormsList]:any = useState([]);
+const [selectedFormDetails, setSelectedFormDetails]:any = useState();
 
   const handleClose = (
     event,
@@ -111,13 +117,20 @@ const [workflows, setworkflows]:any = useState([]);
   };
 
   const onChnagehandler =(event) =>{
-    setselectedWorkflow(event.target.value)
+    setselectedForm(event.target.value)
   }
   const handleWorkflowPopUpClose = (
     event,
     reason
   ) => {
     setOpenWorkflowPopup(false);
+   setSelected(0)
+  };
+  const handleFormIOPopUpClose = (
+    event,
+    reason
+  ) => {
+    setOpenFormIOPopup(false);
    setSelected(0)
   };
   const onSuccess = async ()=>{
@@ -139,7 +152,7 @@ const [workflows, setworkflows]:any = useState([]);
     setSelected(e.target.value)
     switch(e.target.value){
       case 1:{
-        return getWorkflows() // Wake
+        return getForms() // Wake
       }
       case 2:{
         return changeStatus(1) // Wake
@@ -159,9 +172,9 @@ const [workflows, setworkflows]:any = useState([]);
     }
   };
 
-  const getWorkflows = async () =>{
-    const workflowsList = await getWorkflowList(1);
-    setworkflows(workflowsList);
+  const getForms = async () =>{
+    const formsList = await getFormsList(1);
+    setFormsList(formsList);
     setOpenWorkflowPopup(true);
   }
 
@@ -233,9 +246,18 @@ const [workflows, setworkflows]:any = useState([]);
     ])
   }, [selectedCase]);
 
+  const selectForm = async () =>{
+    if(selectedForm){
+      const formDetails  = await getFormDetails(selectedForm);
+      setSelectedFormDetails(formDetails)
+      setOpenFormIOPopup(true)
+
+    }
+  }
+
   const startWorkflow = async () =>{
 
-    if(selectedWorkflow){
+    if(selectedForm){
     const wordFlowDetails = {
       variables: {
         caseId: {
@@ -252,11 +274,12 @@ const [workflows, setworkflows]:any = useState([]);
     };
 
     
-  const workflow = await startNewWorkflow(selectedWorkflow, wordFlowDetails);
+  const workflow = await startNewWorkflow(selectedForm, wordFlowDetails);
   if(workflow.id){
     toast.success("New workflow started successfully");
     setSelected(0);
     setOpenWorkflowPopup(false);
+    setOpenFormIOPopup(false);
     fetchRealtedTasks();
     await addWorkflowCaseHistory(selectedCase.id)
     await fetchCaseHistory(selectedCase.id)
@@ -273,6 +296,64 @@ const fetchRealtedTasks = async() =>{
   const taskList = await getTaksByCaseId(selectedCase.id)
   dispatch(setCaseTasks(taskList))
 }
+const callBack = (err, submission) => {
+
+}
+
+const submitForm = (data) => {
+              
+  console.log(data)
+ console.log(selectedFormDetails)
+
+ //  dispatch(
+ //   saveSubmission(
+ //     "submission",
+ //     data,
+ //     selectedFormDetails._id,
+ //     callBack
+ //   )
+ // );
+  submitNewForm(selectedForm,data)
+  .then(res=>{
+   let submissionData = {
+     "formId": res.form,
+     "submissionId": res._id,
+     "formUrl": FORMSFLOW_APPLICATION_URL + "/formio/form/"+res.form +"/submission/"+res._id,
+     "webFormUrl": FORMSFLOW_APPLICATION_URL+ "/form/"+res.form +"/submission/"+res._id
+ }
+ let createDraftData = {data:{},formId:res.form}
+  createDraft(createDraftData)
+  .then((draftId)=>{
+    if(draftId){
+      return submitNewFormDraft(submissionData,draftId)
+    }
+  }).then(data =>{
+     return getTaksByProcessInstanceId(data.processInstanceId)
+
+  }).then(tasks =>{
+    let task = tasks[0];
+    task.caseInstanceId = selectedCase.id;
+    return updateTaksById(task.id,task)
+
+  }).then( async(updatedTask) =>{
+
+    if(updatedTask["status"] == 204){
+      toast.success("New workflow started successfully");
+      setSelected(0);
+      setOpenWorkflowPopup(false);
+      setOpenFormIOPopup(false);
+      fetchRealtedTasks();
+      await addWorkflowCaseHistory(selectedCase.id)
+      await fetchCaseHistory(selectedCase.id)
+    }
+    else{
+      toast.success("Failed to  start the workflow. Please try again!");
+    }
+
+  })
+
+  })
+ }
   return (
     <>
     <div className="details-container">
@@ -341,31 +422,39 @@ const fetchRealtedTasks = async() =>{
       </section>
     </div>
     <CustomizedDialog title="Upload File" isOpen={isOpenPopup} setIsOpen={setOpenPopup} handleClose={handleClose}><Upload onSuccess={onSuccess} /></CustomizedDialog>
-    <CustomizedDialog title="Select Workflow" isOpen={isOpenWorkflowPopup} setIsOpen={setOpenWorkflowPopup} handleClose={handleWorkflowPopUpClose}>
+    <CustomizedDialog title="Select Form" isOpen={isOpenWorkflowPopup} setIsOpen={setOpenWorkflowPopup} handleClose={handleWorkflowPopUpClose} fullWidth>
       <div className="workflow">
     <FormControl sx={{ m: 1, minWidth: 90, }} size="small">
-                <InputLabel id="demo-simple-select-label">Workflow</InputLabel>
+                <InputLabel id="demo-simple-select-label">Forms</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"          
                   label="Age" 
-                  value={selectedWorkflow}   
+                  value={selectedForm}   
                   onChange={onChnagehandler}   
                   className="dropDownStyle"   
                 >
-                   {workflows.map((option,index) => <MenuItem key={index}  value={option.key}>{option.name}</MenuItem>)}                  
+                   {formsList?.forms?.map((option,index) => <MenuItem key={index}  value={option.formId}>{option.formName}</MenuItem>)}                  
                 </Select>
             </FormControl>
             <FormControl>
             <Button
                 variant="contained"
                 sx={{backgroundColor:'primary.main'}}
-                onClick={startWorkflow}
+                onClick={selectForm}
                 
               >
-               Start Workflow
+               Select Form
               </Button>
             </FormControl>
+            </div>
+    </CustomizedDialog>
+    <CustomizedDialog title="Fill the Details" isOpen={isOpenFormIOPopup} setIsOpen={setOpenFormIOPopup} handleClose={handleFormIOPopUpClose} fullWidth>
+      <div className="workflow">
+    <FormIOForm form={selectedFormDetails}   submission={undefined} onSubmit={(data)=>submitForm(data)}/>
+
+      
+ 
             </div>
     </CustomizedDialog>
     <ToastContainer />

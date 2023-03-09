@@ -44,7 +44,7 @@ const CaseDetailReference = ({caseId} :CaseDetailReferenceProps ) => {
   return (
     <>
     <div className='case-detail-reference-first-row'>
-    {additionalCaseDetails ? Object.keys(additionalCaseDetails).map((key,index) => <>{getDisplayData(key) ? <div key={index}>
+    {additionalCaseDetails ? Object.keys(additionalCaseDetails).map((key,index) => <>{(additionalCaseDetails[key] && getDisplayData(key)) ? <div key={index}>
       <div className='item'>
         <h3>{getDisplayData(key)["displayName"]}</h3>
         <p>{getDisplayData(key)["type"]=="boolean" ? (additionalCaseDetails[key] == true ? getDisplayData(key)["trueValueDisplayText"] : getDisplayData(key)["falseValueDisplayText"]) : (getDisplayData(key)["type"]=="Date" ? moment(additionalCaseDetails[key]).format('MMMM Do, YYYY') :additionalCaseDetails[key])  }</p>

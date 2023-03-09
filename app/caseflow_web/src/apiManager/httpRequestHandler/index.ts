@@ -24,9 +24,9 @@ export const httpGETRequest = (
   });
 };
 
-export const httpPOSTRequest = (url, data, token, isBearer = true,isUpload= false) => {
+export const httpPOSTRequest = (url, data, token,  isBearer = true,isUpload= false,headers) => {
   return axionInstanceWithIntercepter.post(url, data, {
-    headers: {
+    headers: headers ? headers : {
       Authorization: isBearer
         ? `Bearer ${token || UserService.getToken()}`
         : token,
