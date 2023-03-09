@@ -30,7 +30,7 @@ import { setCaseStatuses } from "../../reducers/constantsReducer";
 import { State } from "../../interfaces/stateInterface";
 import PopUpDialogBox from "../PopUpDialogBox/PopUpDialogBox";
 import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
-import { addWorkflowCaseHistory, getTaksByCaseId, getWorkflowList, startNewWorkflow } from "../../services/workflowService";
+import { addWorkflowCaseHistory, getTaksByCaseId, getTaksByProcessInstanceId, getWorkflowList, startNewWorkflow, updateTaksById } from "../../services/workflowService";
 import { Button, Divider, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import LobCustom from "./LobCustom/LobCustom";
 import { createDraft, getFormDetails, getFormsList, submitNewForm,submitNewFormDraft } from "../../services/formsService";
@@ -279,6 +279,7 @@ const [selectedFormDetails, setSelectedFormDetails]:any = useState();
     toast.success("New workflow started successfully");
     setSelected(0);
     setOpenWorkflowPopup(false);
+    setOpenFormIOPopup(false);
     fetchRealtedTasks();
     await addWorkflowCaseHistory(selectedCase.id)
     await fetchCaseHistory(selectedCase.id)
@@ -326,6 +327,29 @@ const submitForm = (data) => {
     if(draftId){
       return submitNewFormDraft(submissionData,draftId)
     }
+  }).then(data =>{
+     return getTaksByProcessInstanceId(data.processInstanceId)
+
+  }).then(tasks =>{
+    let task = tasks[0];
+    task.caseInstanceId = selectedCase.id;
+    return updateTaksById(task.id,task)
+
+  }).then( async(updatedTask) =>{
+
+    if(updatedTask["status"] == 204){
+      toast.success("New workflow started successfully");
+      setSelected(0);
+      setOpenWorkflowPopup(false);
+      setOpenFormIOPopup(false);
+      fetchRealtedTasks();
+      await addWorkflowCaseHistory(selectedCase.id)
+      await fetchCaseHistory(selectedCase.id)
+    }
+    else{
+      toast.success("Failed to  start the workflow. Please try again!");
+    }
+
   })
 
   })
@@ -401,7 +425,7 @@ const submitForm = (data) => {
     <CustomizedDialog title="Select Form" isOpen={isOpenWorkflowPopup} setIsOpen={setOpenWorkflowPopup} handleClose={handleWorkflowPopUpClose} fullWidth>
       <div className="workflow">
     <FormControl sx={{ m: 1, minWidth: 90, }} size="small">
-                <InputLabel id="demo-simple-select-label">Workflow</InputLabel>
+                <InputLabel id="demo-simple-select-label">Forms</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"          
@@ -420,7 +444,7 @@ const submitForm = (data) => {
                 onClick={selectForm}
                 
               >
-               Select FOrm
+               Select Form
               </Button>
             </FormControl>
             </div>

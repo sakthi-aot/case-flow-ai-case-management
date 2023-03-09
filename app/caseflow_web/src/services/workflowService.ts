@@ -1,6 +1,7 @@
 import {
     httpGETRequest,
     httpPOSTRequest,
+    httpPUTRequest,
   } from "../apiManager/httpRequestHandler";
 import { BPM_URL } from "../apiManager/endpoints";
 import { GRAPHQL } from "../apiManager/endpoints";
@@ -41,6 +42,28 @@ import { ADD_WORKFLOW_CASE_HISTORY } from "../graphql/caseRequests";
     const url = `${BPM_URL}/camunda/engine-rest-ext/v1/task?caseInstanceId=${id}`;
     const  output =  await httpGETRequest(url,{},null)
       .then((res) => {return res.data})
+      .catch((error) => {
+        console.log({"error" : error})
+        return {}
+      });
+      return output
+
+  };
+  export const getTaksByProcessInstanceId = async (id) => {
+    const url = `${BPM_URL}/camunda/engine-rest-ext/v1/task?processInstanceId=${id}`;
+    const  output =  await httpGETRequest(url,{},null)
+      .then((res) => {return res.data})
+      .catch((error) => {
+        console.log({"error" : error})
+        return {}
+      });
+      return output
+
+  };
+  export const updateTaksById = async (id,body) => {
+    const url = `${BPM_URL}/camunda/engine-rest-ext/v1/task/${id}`;
+    const  output =  await httpPUTRequest(url,body,null)
+      .then((res) => {return res})
       .catch((error) => {
         console.log({"error" : error})
         return {}
