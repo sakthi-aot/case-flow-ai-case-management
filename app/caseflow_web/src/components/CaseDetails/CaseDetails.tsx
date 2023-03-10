@@ -440,7 +440,7 @@ const submitForm = (data) => {
             <FormControl>
             <Button
                 variant="contained"
-                sx={{backgroundColor:'primary.main'}}
+                sx={{backgroundColor:'primary.main',borderColor:'primary.main'}}
                 onClick={selectForm}
                 
               >
@@ -451,11 +451,11 @@ const submitForm = (data) => {
     </CustomizedDialog>
     <CustomizedDialog title="Fill the Details" isOpen={isOpenFormIOPopup} setIsOpen={setOpenFormIOPopup} handleClose={handleFormIOPopUpClose} fullWidth>
       <div className="workflow">
-    <FormIOForm form={selectedFormDetails}   submission={undefined} onSubmit={(data)=>submitForm(data)}/>
+        <FormIOForm form={selectedFormDetails}   submission={undefined} onSubmit={(data)=>submitForm(data)}/>
 
       
  
-            </div>
+      </div>
     </CustomizedDialog>
     <ToastContainer />
     <PopUpDialogBox 
