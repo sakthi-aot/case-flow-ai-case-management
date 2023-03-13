@@ -11,6 +11,7 @@ import { State } from "../../interfaces/stateInterface";
 import { setadvanceSearchResult } from '../../reducers/applicationReducer';
 import { getLobData } from "../../services/LOBService";
 import moment from "moment";
+import { useNavigate } from 'react-router';
 
 
 
@@ -19,6 +20,8 @@ export default function AdvancedSearch() {
   const [searchField, setSearchField] = useState("");
   const searchresults = useSelector((state:State)=>state.app.advanceSearchResult)
   const dispatch = useDispatch();
+  const navigate = useNavigate();  
+
 
 
   const searchDetails = async ()=>{
@@ -104,7 +107,7 @@ export default function AdvancedSearch() {
         </Grid>
         <Grid item xs={11}>
         <div>
-                <Typography variant="body1" sx={{pt:4,textDecoration: 'underline' }} color="#002EFF" >
+                <Typography variant="body1" sx={{pt:4,textDecoration: 'underline', cursor:"pointer" }} color="#002EFF"onClick={()=>{navigate(eachValue.link)}}  >
           {eachValue.title}
      </Typography>
      <Typography variant="caption"  sx={{ fontSize: 8}}>
