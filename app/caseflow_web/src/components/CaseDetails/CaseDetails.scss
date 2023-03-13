@@ -178,8 +178,24 @@ input[type=number]:focus,
     border-color: #404040;
     background-color: #404040;
     box-shadow: none ;
+    margin-top: 1rem;
 }
 
-.btn:focus {
-    
+.formio-component {
+    margin-bottom: 1rem;
+}
+
+.form-check {
+    margin-bottom: 1rem;
+}
+
+input[type=checkbox],
+input[type=radio] {
+    accent-color: #404040;
+  }
+
+.form-check-label {
+    display: flex !important;
+    align-items: center;
+    gap: 5px;
 }
