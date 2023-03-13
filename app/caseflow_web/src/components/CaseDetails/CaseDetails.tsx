@@ -151,22 +151,22 @@ const [selectedFormDetails, setSelectedFormDetails]:any = useState();
 
     setSelected(e.target.value)
     switch(e.target.value){
-      case 1:{
+      case optionsForAction[1].text:{
         return getForms() // Wake
       }
-      case 2:{
+      case optionsForAction[2].text:{
         return changeStatus(1) // Wake
       }
-      case 3:{
+      case optionsForAction[3].text:{
         return changeStatus(2) // Pending
       }
-      case 4:{
+      case optionsForAction[4].text:{
         return changeStatus(3) // Complete
       }
-      case 7 : {
+      case optionsForAction[7].text : {
        return setOpenPopup(true);
       }
-      case 9 : {
+      case optionsForAction[0].text : {
        return editCaseDetails(selectedCase);
       }
     }
