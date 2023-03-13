@@ -110,7 +110,7 @@ dispatch(setSearchLobResult({searchResult:searchResultCases,totalCount:output.to
         borderRadius:"8px",
         textTransform:"unset"
         }}
-        sx={{backgroundColor:'primary.main'}}
+        sx={{backgroundColor:'primary.main',whiteSpace:"nowrap"}}
         variant="contained"
         component={Link} to="/private/lob/create"
         onClick={resetEdit}
