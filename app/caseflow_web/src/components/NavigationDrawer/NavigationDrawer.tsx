@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -26,6 +26,7 @@ import { State } from "../../interfaces/stateInterface";
 import "./navigation.scss"
 import { resetSelectedCase } from "../../reducers/newCaseReducer";
 import { useTheme } from "@mui/material/styles";
+import { FORMSFLOW_APPLICATION_URL } from "../../apiManager/endpoints";
 
 
 const drawerWidth = 240;
@@ -104,6 +105,21 @@ export default function MiniDrawer(
   const userInfo = useSelector((state:State)=>state.auth.userDetails)
 
   const theme = useTheme();
+  const navigate = useNavigate();
+  function openLinkInNewTab(url) {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+  const routeToPath = (route)=>{
+    if(route.key ===2){
+      openLinkInNewTab(FORMSFLOW_APPLICATION_URL + "/task" )
+    }
+    else{
+      navigate(route.path)
+    }
+    
+  }
+  
+
 
 
   const routes = [
@@ -112,7 +128,7 @@ export default function MiniDrawer(
       text: "Home",
       path: "/private/",
     },
-    { key: 2, text: "Tasks", path: "/private/tasks" },
+    { key: 2, text: "Tasks", path:  FORMSFLOW_APPLICATION_URL + "/tasks" },
     { key: 3, text: "Cases", path: "/private/cases" },
     { key: 4, text: "Documents", path: "/private/documents" },
     { key: 5, text: "LOB", path: "/private/lob" },
@@ -196,20 +212,21 @@ export default function MiniDrawer(
         <List>
           <Typography variant="body2">
           {routes.map((route, index) => (
-            <Link
-              to={route.path}
-              key={index}
-              style={{
-                color: "black",
-                textDecoration: "none",
+            // <Link
+            //   to={route.path}
+            //   key={index}
+            //   style={{
+            //     color: "black",
+            //     textDecoration: "none",
                 
-              }}             
-            >
+            //   }}             
+            // >
               <ListItem
                 key={index}
                 selected={route.path === selectedPathName}
                 disablePadding
                 sx={{ display: "block" }}
+                onClick = {()=>routeToPath(route)}
               >
                 <ListItemButton
                   sx={{
@@ -235,7 +252,7 @@ export default function MiniDrawer(
                   />
                 </ListItemButton>
               </ListItem>
-            </Link>
+            // </Link>
           ))}
           </Typography>
         </List>
