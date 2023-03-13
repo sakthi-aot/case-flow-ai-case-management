@@ -82,7 +82,7 @@ useEffect(() => {
   
       let response = await getDocument(id)
       const downloadUrl = window.URL.createObjectURL(
-        new Blob([response["data"]],)
+        new Blob([response["data"]])
       );
 
       const link = document.createElement("a");

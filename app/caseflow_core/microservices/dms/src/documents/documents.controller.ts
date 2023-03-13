@@ -1,12 +1,11 @@
-import { Body,Headers , Controller, Post, UploadedFile, UseInterceptors,Delete, Get, Patch,NotFoundException, Put, Query } from '@nestjs/common';
+import { Body,Headers , Controller, Post, UploadedFile, UseInterceptors,Delete, Get, Patch,NotFoundException, Put, Query,Response } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { FileInterceptor } from '@nestjs/platform-express';
-
+import { Express, Response as ExpressResponse } from 'express';
 //_____________________Custom Imports_____________________//
 import { FileService } from '../helpers/file.service';
 
 import { DocumentsService } from './services/documents.service';
-import { Express } from 'express';
 import { TransformService } from '../helpers/transform.service';
 import { JoiValidationPipe } from 'src/pipes/joi-validation.pipe';
 import { createDocumentSchema, deleteDocumentSchema, downloadDocumentSchema, updateDocumentSchema } from 'src/validation-schemas/document_validation.schema';
@@ -68,7 +67,7 @@ export class DocumentsController {
 
   @Get("/download")
   // @MessagePattern({ cmd: 'fetch_document' })
-  async fetchDocument(@Query(new JoiValidationPipe(downloadDocumentSchema))param) {
+  async fetchDocument(@Query(new JoiValidationPipe(downloadDocumentSchema))param,@Response() res: ExpressResponse) {
     const token=param.authorization;
     try {   
       let doc_id = null;
@@ -84,7 +83,12 @@ export class DocumentsController {
         ).documentref;
       }  
       const data = await this.fileService.downloadFile(doc_id, dms,token);
-      return {data : data , type : documentDetails.type,name : documentDetails.name,dmsprovider : documentDetails.dmsprovider}
+      if(dms !== 2){
+        return res.send(new Buffer(data));
+
+      }else{
+        return res.send(data)
+      }
     } catch (error) {
       console.log(error.message);
     }

@@ -42,10 +42,11 @@ export class SharepointServices{
             const responseUpload = await firstValueFrom(this.httpService.get(spURL,{
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,                   
-                }
+                },
+                responseType : 'arraybuffer'
             }))          
            
-          return responseUpload.data.buffer;
+          return responseUpload.data;
         } catch (e) {
           console.log(e)
 
