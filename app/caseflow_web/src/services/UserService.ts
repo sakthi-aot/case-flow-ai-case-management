@@ -84,6 +84,8 @@ const refreshToken = (store:any) => {
         .then((refreshed) => {
           if (refreshed) {
             store.dispatch(setAuthToken(KeycloakData.token));
+            sessionStorage.setItem("authToken",KeycloakData["token"] ? KeycloakData["token"] : "")
+            sessionStorage.setItem("refreshToken",KeycloakData["refreshToken"] ? KeycloakData["refreshToken"] : "")
           }
         })
         .catch((error) => {
