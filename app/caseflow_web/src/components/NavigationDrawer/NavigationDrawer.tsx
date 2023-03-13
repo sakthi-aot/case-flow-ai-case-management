@@ -185,13 +185,13 @@ export default function MiniDrawer(
         <DrawerHeader style={{ display: "flaex" }}>
           <div className="naviagtion-header">
             <AccountCircleIcon
-              sx={{ fontSize: open ? "50px" : "40px", left: "20px", right: "10px" }}
+              sx={{ fontSize: open ? "32px" : "32px", left: "20px", right: "10px" ,marginTop:"10px" }}
             />
             <span>
-            <h3 style={{ fontSize: open ? "16px" : "0px", left: 0,textTransform:"capitalize" }}>
+            <Typography variant="subtitle1" style={{ fontSize: open ? "16px" : "0px", left: 0,textTransform:"capitalize",color:"#000000" }}>
             {userInfo.userName}
-            </h3>
-            <label style={{ fontSize: open ? "14px" : "0px", left: 0 }}>Administrator </label>
+            </Typography>
+            <Typography style={{ fontSize: open ? "14px" : "0px", left: 0 }}>Administrator</Typography>
             </span> 
           </div>   
         </DrawerHeader>            
@@ -266,7 +266,7 @@ export default function MiniDrawer(
                   borderRadius:"50%",
                   border:"1px solid grey",
                   zIndex:"1000",  
-                  marginTop:"3vh",
+                  marginTop:"5vh",
                  left:"14rem",
                   backgroundColor:"#ffff"   ,
                   cursor:"pointer",
