@@ -32,7 +32,7 @@ const CaseHistory = () => {
 
     const onFilterChangehandler = (e: any) => {
       setselectedCaseHistoryFilterOption(e.target.value);
-      if(e.target.value === 0)
+      if(e.target.value === "All")
       dispatch(setFilteredCaseHistory(selectedCaseHistory))
       else{
         dispatch(
@@ -41,7 +41,7 @@ const CaseHistory = () => {
               (eachCaseHistory) =>
                 eachCaseHistory.caseHistoryType ===
                 optionsForFilter.filter(
-                  (eachOptions) => eachOptions.id === e.target.value
+                  (eachOptions) => eachOptions.text === e.target.value
                 )[0].text
             )
           )

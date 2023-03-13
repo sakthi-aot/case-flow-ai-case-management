@@ -28,7 +28,7 @@ const FilterMuiComponent = ({label,options,onChnagehandler,selected}:FilterMuiCo
           {options.map((option, index) => (
             <MenuItem
               key={index}
-              value={option.id}
+              value={option.text}
               sx={{
                 borderTop: 1,
                 borderColor: "#E2E2E2",
