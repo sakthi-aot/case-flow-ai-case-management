@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 
@@ -11,24 +11,51 @@ import Grid from "@mui/material/Grid";
 import ListItemText from "@mui/material/ListItemText";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../../interfaces/stateInterface";
-import { getTaksByUserId } from "../../services/workflowService";
-import { setUserTaskList } from "../../reducers/taskReducer";
+import { getTaksByUserId, getTaskCountByUserId } from "../../services/workflowService";
+import { setUserTaskList,setTotalTaskCount, setPageSelected } from "../../reducers/taskReducer";
+import { Pagination } from "@mui/material";
+import { PAGINATION_TAKE } from "../../apiManager/endpoints/config";
+
+
+
 
 const MyTask = () => {
 
 const dispatch = useDispatch();
+const [totalPCount,setTotalPCount] = useState(1);
 const userName = useSelector((state:State) => state.auth.userDetails.userName);
 const taskList = useSelector((state:State) => state.tasks.userTasksList);
+const totalCount = useSelector((state:State)=>state.tasks.totalTaskCount);
+const pageSelected = useSelector((state:State)=>state.tasks.pageSelected);
+
+
 
 useEffect(() => {
   if(userName){
     fetchUserTasks();
   }
-}, [userName]);
+}, [userName,pageSelected]);
 const fetchUserTasks = async() =>{
-  const tasks = await getTaksByUserId(userName)
+  const  start = (pageSelected- 1)*Number(PAGINATION_TAKE)
+  const tasks = await getTaksByUserId(userName,start,Number(PAGINATION_TAKE) )
+  getTaskCountByUserId(userName).then((data)=>{  dispatch(setTotalTaskCount(data.count))})
   dispatch(setUserTaskList(tasks))
 }
+useEffect(() => {
+  dispatch(setPageSelected(1))
+  setTotalPgCount();   
+
+}, [totalCount]);
+
+async function setTotalPgCount() {       
+  const totalPage = Math.ceil(totalCount/ Number(PAGINATION_TAKE))
+  setTotalPCount(totalPage)
+} 
+
+const caseListpagination = (e,p) =>{ 
+  dispatch(setPageSelected(p))
+}
+  
 
   return (
     <div className="myTaskStyle" style={{ padding: "2rem 4rem 0rem 4rem" }}>
@@ -134,6 +161,7 @@ const fetchUserTasks = async() =>{
           </Grid>
         </ListItem>
         }
+        {(totalPCount>1 ) &&  <Pagination count={totalPCount} shape="rounded" className="pagination-case-list" onChange={caseListpagination} />}
 
     </div>
   );

@@ -120,4 +120,6 @@ export interface LobList {
 }
 export interface Tasks {
   userTasksList : any[];
+  totalTaskCount:number,
+pageSelected:number,
 }

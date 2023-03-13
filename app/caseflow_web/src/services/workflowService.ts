@@ -73,8 +73,21 @@ import { ADD_WORKFLOW_CASE_HISTORY } from "../graphql/caseRequests";
   };
 
   
-  export const getTaksByUserId = async (id) => {
-    const url = `${BPM_URL}/camunda/engine-rest-ext/v1/task?assignee=${id}`;
+  export const getTaksByUserId = async (id,start=0,size=2) => {
+    const url = `${BPM_URL}/camunda/engine-rest-ext/v1/task?assignee=${id}&firstResult=${start}&maxResults=${size}`;
+    const  output =  await httpGETRequest(url,{},null)
+      .then((res) => {return res.data})
+      .catch((error) => {
+        console.log({"error" : error})
+        return {}
+      });
+      return output
+
+  };
+
+    
+  export const getTaskCountByUserId = async (id) => {
+    const url = `${BPM_URL}/camunda/engine-rest-ext/v1/task/count?assignee=${id}`;
     const  output =  await httpGETRequest(url,{},null)
       .then((res) => {return res.data})
       .catch((error) => {
