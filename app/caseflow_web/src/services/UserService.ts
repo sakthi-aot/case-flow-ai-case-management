@@ -14,13 +14,17 @@ import { _kc } from "../constants/tenantConstant";
 
 const initKeycloak = (store:any, ...rest :any[]) => {
   const done = rest.length ? rest[0] : () => {};
+  const token = sessionStorage.getItem("authToken")
+  const reToken = sessionStorage.getItem("refreshToken")
   KeycloakData.init({
     onLoad: "check-sso",
     // promiseType: "native",
     silentCheckSsoRedirectUri:
-      window.location.origin + "/silent-check-sso.html",
+    window.location.origin + "/silent-check-sso.html",
     pkceMethod: "S256",
     checkLoginIframe: false,
+    token : token ?  token : "",
+    refreshToken :  reToken ?  reToken : "",
   }).then((authenticated) => {
     console.log("authenticated",authenticated);
     if (authenticated) {
@@ -51,6 +55,8 @@ const initKeycloak = (store:any, ...rest :any[]) => {
         // onAuthenticatedCallback();
         console.log("UserRoles",UserRoles)
         console.log("KeycloakData",KeycloakData.token)
+        sessionStorage.setItem("authToken",KeycloakData["token"] ? KeycloakData["token"] : "")
+        sessionStorage.setItem("refreshToken",KeycloakData["refreshToken"] ? KeycloakData["refreshToken"] : "")
         console.log("userInfo",userInfo)
         console.log("email",email)
         done({
