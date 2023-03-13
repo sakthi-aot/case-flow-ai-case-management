@@ -87,7 +87,7 @@ export class DocumentsController {
         return res.send(new Buffer(data));
 
       }else{
-        return res.send(new Buffer(data,"base64"))
+        return res.send(data)
       }
     } catch (error) {
       console.log(error.message);
