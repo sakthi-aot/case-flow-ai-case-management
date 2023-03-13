@@ -17,7 +17,7 @@ export class FileService {
         return await this.s3Service.uploadDocument(file, data.name);
       }
       case '2': {
-        return await this.spService.uploadDocument(file, data.name);
+        return await this.spService.uploadDocument(file.buffer, data.name);
       }
       case '3': {
         return await this.alfrescoService.uploadDocument(file, data,token);
