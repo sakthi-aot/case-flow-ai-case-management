@@ -86,7 +86,7 @@ const CaseDetails = () => {
     const output = caseHistoryData.casehistory.map((element,index) => {
       return {  
         id :index,
-        date:moment(element.datetime).format('YYYY-MM-DD H:MM'),
+        date:moment(element.datetime).format("yyyy-MM-DD HH:mm"),
         caseHistoryType:element.event.eventtype.text,
       };
     });
