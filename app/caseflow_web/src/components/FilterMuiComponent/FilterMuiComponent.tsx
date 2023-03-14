@@ -25,8 +25,8 @@ const FilterMuiComponent = ({label,options,onChnagehandler,selected}:FilterMuiCo
           displayEmpty 
           renderValue={(value) => value || <Typography variant='body2'sx={{paddingTop : .2}}>{label}</Typography>}
         >
-          {options.map((option, index) => (
-            option.status == 'disabled' ? 
+          {options?.map((option, index) => (
+            option?.status == 'Disabled' ? 
             <MenuItem
               disabled
               key={index}

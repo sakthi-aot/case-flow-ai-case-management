@@ -60,28 +60,31 @@ const CaseDetails = () => {
     docketNum: "1234",
     courtRef: "2022-11-01",
   }
-  const optionsForAction = selectedCase?.casestatus?.displayname == 'Pending' ? [
-    {id : 9, code :9 ,text: "Edit",status:"disabled"},
-    {id : 1, code :'1' ,text: "Start Workflow",status:"disabled"},
-    {id : 2, code :2 ,text: "Wake",status:"Active"},
-    {id : 3, code :3 ,text: "Pending",status:"disabled"},
-    {id : 4, code :4 ,text: "Complete",status:"disabled"},
-    {id : 5, code :5 ,text: "Merge",status:"disabled"},
-    {id : 6, code :6 ,text: "Archive",status:"disabled"},
-    {id : 7, code :7 ,text: "Upload Document",status:"disabled"},
-    {id : 8, code :8 ,text: "Delete",status:"disabled"}, 
-  ] : [
-    {id : 9, code :9 ,text: "Edit",status:"Active"},
-    {id : 1, code :'1' ,text: "Start Workflow",status:"Active"},
-    {id : 2, code :2 ,text: "Wake",status:"Active"},
-    {id : 3, code :3 ,text: "Pending",status:"Active"},
-    {id : 4, code :4 ,text: "Complete",status:"Active"},
-    {id : 5, code :5 ,text: "Merge",status:"Active"},
-    {id : 6, code :6 ,text: "Archive",status:"Active"},
-    {id : 7, code :7 ,text: "Upload Document",status:"Active"},
-    {id : 8, code :8 ,text: "Delete",status:"Active"}, 
-  ];
-  
+  const optionsForAction = [
+    {id : 9, code :9 ,text: "Edit"},
+    {id : 1, code :'1' ,text: "Start Workflow"},
+    {id : 2, code :2 ,text: "Wake"},
+    {id : 3, code :3 ,text: "Pending"},
+    {id : 4, code :4 ,text: "Complete"},
+    {id : 5, code :5 ,text: "Merge"},
+    {id : 6, code :6 ,text: "Archive"},
+    {id : 7, code :7 ,text: "Upload Document"},
+    {id : 8, code :8 ,text: "Delete"}, 
+  ]
+
+  optionsForAction.map((action) => {
+    if(selectedCase?.casestatus?.displayname == 'Pending') {
+      if(action.text === "Wake") {
+        action.status = "Active";
+        return action
+      }
+      action.status = 'Disabled'
+      return action
+    }
+    return action
+  })
+
+  console.log(optionsForAction);
 
   async function fetchCaseDetails() {
     var matches = location.pathname.match(/(\d+)/);
