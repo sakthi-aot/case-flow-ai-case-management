@@ -316,9 +316,7 @@ const navigateToCaseDetailHandler = (caseId) => {
                       </Table>
                     </div>
                   ) : (
-                    <p className="no-case-doc-found">
-                      No Case Documents Found !
-                    </p>
+                    <Typography variant="body1" className="no-case-doc-found" >No Case Documents Found !</Typography>
                   )}
                 </TableContainer>
                 {filteredDocumentDetails &&

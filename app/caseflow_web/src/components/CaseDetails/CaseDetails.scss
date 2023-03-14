@@ -154,7 +154,8 @@ input[type=number]:focus,
 [type=password].form-control:focus, 
 [type=email].form-control:focus, 
 [type=tel].form-control:focus, 
-[contenteditable].form-control:focus {
+[contenteditable].form-control:focus,
+.form-control:focus {
     outline: none ;
     border: 2px solid #404040;
     border-top: 0;

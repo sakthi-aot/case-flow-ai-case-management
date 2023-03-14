@@ -31,7 +31,7 @@ const Cases = (
   
   const filterDocumentDetails = async () => {    
     let searchResult = await searchCases(searchField,searchColumn,selectedPage,sortSetting.orderBy,sortSetting.orderType)    
-   let searchResultCases = searchResult.Cases.map((element) => {
+   let searchResultCases = searchResult.Cases?.map((element) => {
       return {...element,status:"Open"};
     });
     
@@ -43,7 +43,7 @@ const Cases = (
   const searchCasesDetails = async ()=>{
 
     let searchResult = await searchCases(searchField,searchColumn,selectedPage,sortSetting.orderBy,sortSetting.orderType,true)    
-    let searchResultCases = searchResult.Cases.map((element) => {
+    let searchResultCases = searchResult.Cases?.map((element) => {
        return {title:element.id + " - " +element.name,content:element.desc, subtitle:"Cases",link:"/private/cases/"  + element.id+'/details',imgIcon:require("../../assets/CasesIcon.png")};
      });
  
