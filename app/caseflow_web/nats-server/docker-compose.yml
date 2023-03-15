@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  nats:
+    container_name: nats
+    image: nats:2.9.15
+    entrypoint: '/nats-server -c /opt/conf/nats-server.conf'
+    volumes:
+      - ./conf:/opt/conf/
+    environment:
+      GOMAXPROCS: '2'
+    ports:
+      - '4222:4222'
+      - '6222:6222'
+      - '8080:8080'

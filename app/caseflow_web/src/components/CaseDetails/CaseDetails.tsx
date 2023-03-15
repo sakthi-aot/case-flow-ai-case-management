@@ -36,6 +36,7 @@ import LobCustom from "./LobCustom/LobCustom";
 import { createDraft, getFormDetails, getFormsList, submitNewForm,submitNewFormDraft } from "../../services/formsService";
 import {Form as FormIOForm,saveSubmission,Formio } from 'react-formio'
 import { FORMSFLOW_APPLICATION_URL } from "../../apiManager/endpoints";
+import { publishMessage } from '../../services/NatsServices';
 
 Formio.setProjectUrl("https://app2.aot-technologies.com/formio");
 Formio.setBaseUrl("https://app2.aot-technologies.com/formio");
@@ -222,8 +223,8 @@ const [selectedFormDetails, setSelectedFormDetails]:any = useState();
   const onConfirmation = async () =>{
     let newStatusDetails = statuses.find(stat=> stat.code == newStatus);  
     if(newStatusDetails && newStatusDetails.id){  
-    const newStatus = parseInt(newStatusDetails.id.toString()) ;
-    const updatedSelectedCase = {...selectedCase,statusid:newStatus}    
+    const newStatus = parseInt(newStatusDetails.id.toString());
+    const updatedSelectedCase = {...selectedCase,statusid:newStatus};
     let responseDetails = await updateCases(updatedSelectedCase);
     if(responseDetails && responseDetails["success"]){
       setSelected(0)
@@ -233,6 +234,13 @@ const [selectedFormDetails, setSelectedFormDetails]:any = useState();
     }
     else{
       toast.error("Error updating the status")
+    }
+    try {
+      const SUBJECT = newStatusDetails.name;
+      const MESSAGE = new Date()
+      publishMessage(SUBJECT,MESSAGE)
+    } catch (error) {
+      console.log(error)
     }
   }
    
