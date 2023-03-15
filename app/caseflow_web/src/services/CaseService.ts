@@ -16,12 +16,14 @@ import {
     SEARCH_CASE_LIST,
     FETCH_RECENT_CASES,
     FETCH_CASEHISTORY,
-    FETCH_ADDITIONAL_CASE_DETAILS,    
+    FETCH_ADDITIONAL_CASE_DETAILS,
+    UPDATE_CASE_TYPE,    
   } from "../graphql/caseRequests"
   import { Case } from "../dto/cases"
   import { print } from "graphql";
   // import { PAGINATION_TAK}";
   import { PAGINATION_TAKE } from "../apiManager/endpoints/config"; 
+import { CaseTypes } from "../interfaces/stateInterface";
 
   
   export const addCases = async(newCase: Case) => {
@@ -223,3 +225,28 @@ import {
   };
 
   
+  export const updateCaseType = async(CaseType: CaseTypes) => {
+    const url =  GRAPHQL;
+    return httpPOSTRequest(url,{query: print(UPDATE_CASE_TYPE),
+      variables: {
+        updateCaseTypeInput: {
+          id:parseInt(CaseType.id.toString()),
+          name: CaseType.name,
+          formid: CaseType.formid,
+          displayname:CaseType.displayname,
+          code:CaseType.code
+        },
+      },
+    },null,true,false,null)
+      .then((res) => {
+        return {"success" : res.data};
+      })
+      .catch((error) => {
+        if (error?.response?.data) {
+          return({"error" : error})
+        } else {
+          return({"error" : "something went wrong"})
+        }
+      });
+ 
+};
