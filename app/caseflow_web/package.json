@@ -52,6 +52,7 @@
     "saas": "^1.0.0",
     "styled-components": "^5.3.6",
     "typescript": "^4.9.3",
+    "uuidv4": "^6.2.13",
     "web-vitals": "^2.1.4",
     "yup": "^1.0.0"
   },

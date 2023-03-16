@@ -37,6 +37,7 @@ import { createDraft, getFormDetails, getFormsList, submitNewForm,submitNewFormD
 import {Form as FormIOForm,saveSubmission,Formio } from 'react-formio'
 import { FORMSFLOW_APPLICATION_URL } from "../../apiManager/endpoints";
 import { publishMessage } from '../../services/NatsServices';
+import { v4 as uuidv4 } from 'uuid';
 
 Formio.setProjectUrl("https://app2.aot-technologies.com/formio");
 Formio.setBaseUrl("https://app2.aot-technologies.com/formio");
@@ -51,6 +52,7 @@ const CaseDetails = () => {
   const statuses =   useSelector((state:State) => state.constants.caseTypes);
   const tasks =   useSelector((state:State) => state.cases.selectedCase.tasks);
   const selectedCase =   useSelector((state:State) => state.cases.selectedCase);
+  const userName = useSelector((state:State)=> state.auth.userDetails.userName)
   const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/private"}]);
 
   const caseDetail = {
@@ -84,7 +86,7 @@ const CaseDetails = () => {
   }
     async function fetchCaseHistory(id) {    
     const caseHistoryData = await getCaseHistory(id);
-    const output = caseHistoryData.casehistory.map((element,index) => {
+    const output = caseHistoryData?.casehistory.map((element,index) => {
       return {  
         id :index,
         date:moment(element.datetime).format("yyyy-MM-DD HH:mm"),
@@ -236,8 +238,17 @@ const [selectedFormDetails, setSelectedFormDetails]:any = useState();
       toast.error("Error updating the status")
     }
     try {
+      console.log(newStatusDetails)
       const SUBJECT = newStatusDetails.name;
-      const MESSAGE = new Date()
+      const MESSAGE = {
+        eventId : String(uuidv4()),
+        eventRef : String(selectedCase.id),
+        eventOrigin : String('Caseflow'),
+        eventCategory : String('Caseflow'),
+        eventType : String(newStatusDetails.name),
+        eventDateTime : String(new Date()),
+        eventPublisher : String(userName),
+      }
       publishMessage(SUBJECT,MESSAGE)
     } catch (error) {
       console.log(error)

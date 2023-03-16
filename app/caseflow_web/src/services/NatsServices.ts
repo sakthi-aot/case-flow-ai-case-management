@@ -3,15 +3,13 @@ const NATS_URL = ' ws://localhost:8080';
 
 export const publishMessage = async (SUBJECT,MESSAGE) => {
     try {
+      MESSAGE = JSON.stringify(MESSAGE);
       const message = new TextEncoder().encode(MESSAGE);
       const nc = await connect({ servers: NATS_URL });
       console.log('Connected to NATS server');
-    //   const jsm = await nc.jetstream();
-      
       nc.publish(SUBJECT, message);
       // nc.flush();
       // nc.close();
-    //   console.log(jsm);
       console.log(nc);
       console.log('Message published successfully');
     } catch (error) {
