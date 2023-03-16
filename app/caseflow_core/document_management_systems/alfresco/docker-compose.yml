@@ -50,8 +50,8 @@ services:
                 -XX:MaxRAMPercentage=80
                 -Dauthentication.chain=identity-service1:identity-service
                 -Didentity-service.enable-basic-auth=true
-                -Didentity-service.auth-server-url=https://caseflow-idm.aot-technologies.com:8443/auth
-                -Didentity-service.realm=caseflow
+                -Didentity-service.auth-server-url=https://iam.aot-technologies.com/auth
+                -Didentity-service.realm=forms-flow-mahagony
                 -Didentity-service.resource=case-flow-web
                 "
         volumes:

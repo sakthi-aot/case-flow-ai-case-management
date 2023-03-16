@@ -4,7 +4,7 @@ import {  ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/a
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 
-import { KeycloakConnectModule} from 'nest-keycloak-connect';
+import { AuthGuard, KeycloakConnectModule} from 'nest-keycloak-connect';
 import { ConfigModule,ConfigService } from '@nestjs/config';
 
 //_____________________Custom Imports_____________________//
@@ -15,6 +15,7 @@ import { CaseEventsModule } from './case_events/case_events.module';
 import { EventTypesModule } from './event_types/event_types.module';
 import { CaseStatusModule } from './case_status/case_status.module';
 import { CaseTypesModule } from './case_types/case_types.module';
+import { APP_GUARD } from '@nestjs/core';
 
 
 /** 
@@ -26,10 +27,10 @@ const keyCloakOptionsProvider =  {
   useFactory: (config: ConfigService) => {
     return {
 
-      // authServerUrl: "https://caseflow-idm.aot-technologies.com:8443/auth",
-      // realm: "caseflow",
-      // clientId: "case-flow-nest",
-      // secret: "Qhvu0sBg15UsiplYL5msFVqjzyOVaxRr"
+      // authServerUrl: "https://iam.aot-technologies.com/auth",
+      // realm: "forms-flow-mahagony",
+      // clientId: "case-flow-micro-service",
+      // secret: "4d16f2bf-0998-46e0-b1d9-6f8b096e69b7",
 
       authServerUrl: config.get('KEYCLOCK_AUTH_URL'),
       realm: config.get('KEYCLOCK_REALM'),
@@ -87,10 +88,11 @@ const keyCloakOptionsProvider =  {
   ],
   controllers: [],
   providers: [
-    // {
-    //   provide: APP_GUARD, //For keyclock Auth Token
-     //  useClass: AuthGuard,
-    //  },
+    {
+      provide: APP_GUARD, //For keyclock Auth Token
+      useClass: AuthGuard,
+     },
+
     // {
     //   provide: APP_GUARD, //For keyclock Role management
     //   useClass: RoleGuard,
