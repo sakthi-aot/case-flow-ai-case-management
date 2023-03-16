@@ -4,7 +4,7 @@ import {  ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/a
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 
-import { KeycloakConnectModule } from 'nest-keycloak-connect';
+import { AuthGuard, KeycloakConnectModule } from 'nest-keycloak-connect';
 import { ConfigModule,ConfigService } from '@nestjs/config';
 
 //_____________________Custom Imports_____________________//
@@ -12,6 +12,7 @@ import { DocumentsModule } from './documents/documents.module';
 import { HelpersModule } from './helpers/helpers.module';
 import { VersionsModule } from './versions/versions.module';
 import {HttpModule} from  '@nestjs/axios'
+import { APP_GUARD } from '@nestjs/core';
 
 //keycloack settings
 const keyCloakOptionsProvider =  {
@@ -68,10 +69,10 @@ const keyCloakOptionsProvider =  {
   ],
   controllers: [],
   providers: [
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: AuthGuard,
-    //  },
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+     },
     // {
     //   provide: APP_GUARD,
     //   useClass: RoleGuard,
