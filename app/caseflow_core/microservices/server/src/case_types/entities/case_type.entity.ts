@@ -20,13 +20,13 @@ export class CaseTypes {
 
 
   @Column({ nullable: true })
-  @Field()
-  caseextrafields: number;
+  @Field({ nullable: true })
+  caseextrafields: number |null;
 
 
   @Column({ nullable: true })
-  @Field()
-  lobfields: number;
+  @Field({ nullable: true })
+  lobfields: number |null;
 
   @Column({ nullable: true })
   @Field()
@@ -35,6 +35,10 @@ export class CaseTypes {
   @Column({ nullable: true })
   @Field()
   displaylocations: number;
+
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  formid : string |null;
 
   @OneToMany(() => CaseStatuses, (casestatuses) => casestatuses.casestype)
   @Field(() => [CaseStatuses], { nullable: true })

@@ -92,6 +92,7 @@ export interface CaseStatuses {
   displayname: string;
   code: string;
   lobcaseid : number;
+  formid:string
 }
 
 export interface CaseTypes {
@@ -99,6 +100,7 @@ export interface CaseTypes {
   name: string;
   displayname: string;
   code: number;
+  formid:string
 }
 export interface Lob {
   lobList:LobList[],

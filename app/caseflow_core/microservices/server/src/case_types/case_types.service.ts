@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateCaseTypeInput } from './dto/create-case_type.input';
@@ -28,8 +28,19 @@ export class CaseTypesService {
     return `This action returns a #${id} caseType`;
   }
 
-  update(id: number, updateCaseTypeInput: UpdateCaseTypeInput) {
-    return `This action updates a #${id} caseType`;
+  async update(id: number, updateCaseTypeInput: UpdateCaseTypeInput) {
+    try {
+      return await this.caseTypesRepository.update(id, updateCaseTypeInput).then(() => {
+        return this.caseTypesRepository.findOne({
+          where: {
+            id: id,
+          }}).catch((err) => {
+          throw new HttpException(err.response, HttpStatus.NOT_FOUND);
+        });
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   remove(id: number) {
