@@ -87,10 +87,10 @@ const keyCloakOptionsProvider =  {
   ],
   controllers: [],
   providers: [
-    // {
-    //   provide: APP_GUARD, //For keyclock Auth Token
-    //   useClass: AuthGuard,
-    //  },
+     {
+       provide: APP_GUARD, //For keyclock Auth Token
+       useClass: AuthGuard,
+      },
     // {
     //   provide: APP_GUARD, //For keyclock Role management
     //   useClass: RoleGuard,
