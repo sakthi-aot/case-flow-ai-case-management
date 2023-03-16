@@ -238,14 +238,27 @@ const [selectedFormDetails, setSelectedFormDetails]:any = useState();
       toast.error("Error updating the status")
     }
     try {
-      console.log(newStatusDetails)
-      const SUBJECT = newStatusDetails.name;
+      let SUBJECT
+      switch (newStatusDetails.name) {
+        case "Open":
+          SUBJECT = "CaseOpen"
+          break;
+        case "Pending":
+          SUBJECT = "CasePend"
+          break;   
+        case "Completed":
+          SUBJECT = "CaseComp"
+          break;
+        default:
+          SUBJECT = ""
+          break;
+      }
       const MESSAGE = {
         eventId : String(uuidv4()),
         eventRef : String(selectedCase.id),
         eventOrigin : String('Caseflow'),
         eventCategory : String('Caseflow'),
-        eventType : String(newStatusDetails.name),
+        eventType : String(SUBJECT),
         eventDateTime : String(new Date()),
         eventPublisher : String(userName),
       }
