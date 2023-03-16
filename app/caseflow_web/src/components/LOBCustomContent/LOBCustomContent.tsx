@@ -207,11 +207,7 @@ dispatch(setSearchLobResult({searchResult:searchResultCases,totalCount:output.to
         <Grid item xs={12} >
           <ListItemText
             primary={
-              <Typography 
-              variant="body2"
-              style={{"textAlign":"center","color":"rgba(0, 0, 0, 0.6)"}}>
-                No LOB Found!
-              </Typography>
+              <Typography variant="body1"> No LOB Found! </Typography>
             }             
           />
         </Grid>

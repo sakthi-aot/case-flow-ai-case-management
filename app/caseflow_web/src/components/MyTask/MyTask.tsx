@@ -146,18 +146,12 @@ const caseListpagination = (e,p) =>{
           />
         )):
       <ListItem >
-          <Grid container spacing={1}  >
-          <Grid item xs={12} >
-            <ListItemText
-              primary={
-                <Typography 
-                variant="body2"
-                style={{"textAlign":"center","color":"rgba(0, 0, 0, 0.6)"}}>
-                  No Task  Found!
-                </Typography>
-              }             
-            />
-          </Grid>
+          <Grid container spacing={1} >
+            <Grid item xs={12} >
+              <ListItemText>
+                <Typography variant="body1" align="center"> No Task Found! </Typography>   
+              </ListItemText>   
+            </Grid>
           </Grid>
         </ListItem>
         }

@@ -25,8 +25,10 @@ const FilterMuiComponent = ({label,options,onChnagehandler,selected}:FilterMuiCo
           displayEmpty 
           renderValue={(value) => value || <Typography variant='body2'sx={{paddingTop : .2}}>{label}</Typography>}
         >
-          {options.map((option, index) => (
+          {options?.map((option, index) => (
+            option?.status == 'Disabled' ? 
             <MenuItem
+              disabled
               key={index}
               value={option.text}
               sx={{
@@ -36,7 +38,18 @@ const FilterMuiComponent = ({label,options,onChnagehandler,selected}:FilterMuiCo
               }}
             >
               <Typography variant='body2' >{option.text}</Typography>
-            </MenuItem>
+            </MenuItem> :
+            <MenuItem
+            key={index}
+            value={option.text}
+            sx={{
+              borderTop: 1,
+              borderColor: "#E2E2E2",
+              paddingBlock: "1rem",
+            }}
+          >
+            <Typography variant='body2' >{option.text}</Typography>
+          </MenuItem>
           ))}
         </Select>
       </FormControl>

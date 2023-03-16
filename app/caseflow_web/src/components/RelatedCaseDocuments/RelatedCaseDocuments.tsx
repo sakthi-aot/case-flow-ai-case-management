@@ -215,7 +215,7 @@ useEffect(() => {
           ))}
         </TableBody>
       </Table> :
-      <p className="no-case-doc-found">No Case Documents Found !</p>
+      <Typography variant="body1" className="no-case-doc-found">No Case Documents Found !</Typography>
       }
       {totalPageNo>1 &&  <Pagination count={totalPageNo} shape="rounded" className="pagination-case-list" onChange={onChangePageNumber}  />}
     </TableContainer>    
