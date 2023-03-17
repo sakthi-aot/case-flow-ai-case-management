@@ -2,7 +2,7 @@ import { Button, Checkbox,  FormControlLabel, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React, {  useState } from 'react'
 import Search from '../Search/Search'
-import { connect,StringCodec   } from 'nats.ws';
+import { connect   } from 'nats.ws';
 import "./NatsSubscription.scss"
 
 
@@ -93,13 +93,12 @@ const subscribeToMessages = async( ) =>{
         <FormControlLabel control={<Checkbox value='CasePend' onChange={onNatsSubjectChangeHandler}  />} label="CasePend" />
         <FormControlLabel control={<Checkbox value='CaseComp' onChange={onNatsSubjectChangeHandler}  />} label="CaseComp" />
         <FormControlLabel control={<Checkbox value='DocAdded ' onChange={onNatsSubjectChangeHandler}  />} label="DocAdded " />    
-        <FormControlLabel control={<Checkbox value='DocDeleted ' onChange={onNatsSubjectChangeHandler}  />} label="DocDeleted " />    
-        
+        <FormControlLabel control={<Checkbox value='DocDeleted ' onChange={onNatsSubjectChangeHandler}  />} label="DocDeleted " />          
      
         <Button
             style={{
               alignItems :"center",
-              // margin: "auto",
+              marginTop:"1rem",
               height: "2.4375rem",
               width: "20%",
               backgroundColor:'primary.main'            
@@ -116,26 +115,21 @@ const subscribeToMessages = async( ) =>{
     <Box>     
       {message && message.length>0 ? message.map(msg=>{
         return  <Typography  className='nats-messages'>
-          <Typography variant='h6'>Event ID : {msg.eventId}</Typography>
-          <Typography variant='h6'>Event Ref : {msg.eventRef}</Typography>
-          <Typography variant='h6'>Event Origin : {msg.eventOrigin}</Typography>
-          <Typography variant='h6'>Event Category : {msg.eventCategory}</Typography>
-          <Typography variant='h6'>Event Type : {msg.eventType}</Typography>
-          <Typography variant='h6'>Event Date : {msg.eventDateTime}</Typography>
-          <Typography variant='h6'>Event Publisher : {msg.eventPublisher}</Typography>
+          <Typography >Event ID : {msg.eventId}</Typography>
+          <Typography >Event Ref : {msg.eventRef}</Typography>
+          <Typography >Event Origin : {msg.eventOrigin}</Typography>
+          <Typography >Event Category : {msg.eventCategory}</Typography>
+          <Typography >Event Type : {msg.eventType}</Typography>
+          <Typography >Event Date : {msg.eventDateTime}</Typography>
+          <Typography >Event Publisher : {msg.eventPublisher}</Typography>
           
         </Typography>
       }):
       <Typography variant='h6' className='nats-message' >No Message </Typography>
-    }
+    }  
      
-    
     </Box>
-
-
-
-      </div>
-    
+      </div>    
   </section>
   )
 }
