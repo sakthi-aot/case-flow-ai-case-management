@@ -8,11 +8,9 @@ import { IsArray, IsBoolean, IsDate, IsNotEmpty, IsNumber, IsString } from 'clas
 export class UpdateCaseInput {
   @Field((type) => Int)
   @IsNumber()
-  @IsNotEmpty()
   id: number;
 
   @Field((type) => Int, { nullable: true })
-  @IsNumber()
   lobid: number;
 
   @Field()
@@ -22,7 +20,6 @@ export class UpdateCaseInput {
 
   @Field({ nullable: true })
   @IsString()
-  @IsNotEmpty()
   desc: string;
 
   @Field((type) => Int)
@@ -31,59 +28,38 @@ export class UpdateCaseInput {
   statusid: number;
 
   @Field({ nullable: true })
-  @IsNumber()
-  @IsNotEmpty()
   typeid: number;
 
   @Field((type) => [Int], { nullable: true })
-  @IsArray()
   linkedcases: number[];
 
   @Field({ defaultValue: new Date() })
-  @IsDate()
-  @IsNotEmpty()
   creationdate: Date;
 
   @Field({ nullable: true })
-  @IsDate()
-  @IsNotEmpty()
   completiondate: Date;
 
   @Field({ nullable: true ,defaultValue: new Date()})
-  @IsDate()
-  @IsNotEmpty()
   lastmodificationdate: Date;
 
   @Field({ nullable: true })
-  @IsDate()
-  @IsNotEmpty()
   penduntildate: Date;
 
   @Field({ nullable: true })
-  @IsDate()
-  @IsNotEmpty()
   archivedate: Date;
 
   @Field((type) => Int, { nullable: true })
-  @IsNumber()
-  @IsNotEmpty()
   startuserid: number;
 
   @Field((type) => Int, { nullable: true })
-  @IsNumber()
-  @IsNotEmpty()
   currentownerid: number;
 
   @Field((type) => [Int], { nullable: true })
-  @IsArray()
   involvedparties: number[];
 
   @Field({ defaultValue: false, nullable: true })
-  @IsBoolean()
-  @IsNotEmpty()
   isdeleted: boolean;
 
   @Field({ nullable: true })
-  @IsNumber()
   lobcaseid: number;
 }
