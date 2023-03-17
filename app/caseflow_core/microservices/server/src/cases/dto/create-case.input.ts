@@ -61,7 +61,6 @@ export class CreateCaseInput {
   isdeleted: boolean;
 
   @Field({ nullable: true })
-  @IsNumber()
   lobcaseid: number;
 
 }
