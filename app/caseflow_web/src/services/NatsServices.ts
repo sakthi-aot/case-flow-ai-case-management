@@ -1,5 +1,5 @@
 import { connect, NatsConnection,Msg   } from 'nats.ws';
-const NATS_URL = ' ws://localhost:8080';
+const NATS_URL = 'ws://caseflow-natserver.aot-technologies.com:8080';
 
 export const publishMessage = async (SUBJECT,MESSAGE) => {
     try {

@@ -322,7 +322,26 @@ const [selectedFormDetails, setSelectedFormDetails]:any = useState();
 
     
   const workflow = await startNewWorkflow(selectedForm, wordFlowDetails);
+
   if(workflow.id){
+    // try {
+    //   const SUBJECT = 'workFlowStart'
+    //   console.log(SUBJECT)
+    //   const MESSAGE = {
+    //     eventId : String(uuidv4()),
+    //     eventRef : String(selectedCase.id),
+    //     eventOrigin : String('Caseflow'),
+    //     eventCategory : String('Caseflow'),
+    //     eventType : String(SUBJECT),
+    //     eventDateTime : String(new Date()),
+    //     eventPublisher : String(userName),
+    //   }
+    //   console.log(MESSAGE)
+    //   publishMessage(SUBJECT,MESSAGE)
+    //   console.log("here");
+    // } catch (error) {
+    //   console.log(error)
+    // }
     toast.success("New workflow started successfully");
     setSelected(0);
     setOpenWorkflowPopup(false);
@@ -348,10 +367,23 @@ const callBack = (err, submission) => {
 }
 
 const submitForm = (data) => {
-              
   console.log(data)
- console.log(selectedFormDetails)
-
+  console.log(selectedFormDetails)
+ try {
+  const SUBJECT = 'workFlowStart';
+  const MESSAGE = {
+    eventId : String(uuidv4()),
+    eventRef : String(selectedCase.id),
+    eventOrigin : String('Caseflow'),
+    eventCategory : String('Caseflow'),
+    eventType : String(SUBJECT),
+    eventDateTime : String(new Date()),
+    eventPublisher : String(userName),
+  };
+  publishMessage(SUBJECT,MESSAGE);
+  } catch (error) {
+    console.log(error)
+  }
  //  dispatch(
  //   saveSubmission(
  //     "submission",
