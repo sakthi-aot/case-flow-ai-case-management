@@ -1,0 +1,18 @@
+
+
+.nats-subscription-container{
+    padding: 2rem 4rem 0 4rem;
+    .nats-heading{
+        font-size: 1.5rem;
+    }
+    .nats-messages{
+        background-color: #404040;
+        color: white;
+        padding: .5rem 1rem;
+        border-radius: 10px;
+        display: inline-block;
+        min-width: 50rem;
+        text-align: left;
+        margin: 1rem 0;       
+    }
+}

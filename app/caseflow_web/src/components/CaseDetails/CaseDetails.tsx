@@ -36,6 +36,8 @@ import LobCustom from "./LobCustom/LobCustom";
 import { createDraft, getFormDetails, getFormsList, submitNewForm,submitNewFormDraft } from "../../services/formsService";
 import {Form as FormIOForm,saveSubmission,Formio } from 'react-formio'
 import { FORMSFLOW_APPLICATION_URL } from "../../apiManager/endpoints";
+import { publishMessage } from '../../services/NatsServices';
+import { v4 as uuidv4 } from 'uuid';
 
 Formio.setProjectUrl("https://app2.aot-technologies.com/formio");
 Formio.setBaseUrl("https://app2.aot-technologies.com/formio");
@@ -50,6 +52,7 @@ const CaseDetails = () => {
   const statuses =   useSelector((state:State) => state.constants.caseTypes);
   const tasks =   useSelector((state:State) => state.cases.selectedCase.tasks);
   const selectedCase =   useSelector((state:State) => state.cases.selectedCase);
+  const userName = useSelector((state:State)=> state.auth.userDetails.userName);
   const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/private"}]);
 
   const caseDetail = {
@@ -98,7 +101,7 @@ const CaseDetails = () => {
   }
     async function fetchCaseHistory(id) {    
     const caseHistoryData = await getCaseHistory(id);
-    const output = caseHistoryData.casehistory.map((element,index) => {
+    const output = caseHistoryData?.casehistory.map((element,index) => {
       return {  
         id :index,
         date:moment(element.datetime).format("yyyy-MM-DD HH:mm"),
@@ -152,6 +155,21 @@ const [selectedFormDetails, setSelectedFormDetails]:any = useState();
     setOpenPopup(false);
     setSelected(0)
     // fetchCaseDocumentDetails()
+    try {
+      const SUBJECT = 'DocAdded'
+      const MESSAGE = {
+        eventId : String(uuidv4()),
+        eventRef : String(selectedCase.id),
+        eventOrigin : String('Caseflow'),
+        eventCategory : String('Caseflow'),
+        eventType : String(SUBJECT),
+        eventDateTime : String(new Date()),
+        eventPublisher : String(userName),
+      }
+      publishMessage(SUBJECT,MESSAGE)
+    } catch (error) {
+      console.log(error)
+    }
     toast.success("Success")
     await fetchRelatedDocuments()
     await fetchCaseHistory(selectedCase.id)
@@ -237,8 +255,8 @@ const [selectedFormDetails, setSelectedFormDetails]:any = useState();
   const onConfirmation = async () =>{
     let newStatusDetails = statuses.find(stat=> stat.code == newStatus);  
     if(newStatusDetails && newStatusDetails.id){  
-    const newStatus = parseInt(newStatusDetails.id.toString()) ;
-    const updatedSelectedCase = {...selectedCase,statusid:newStatus}    
+    const newStatus = parseInt(newStatusDetails.id.toString());
+    const updatedSelectedCase = {...selectedCase,statusid:newStatus};
     let responseDetails = await updateCases(updatedSelectedCase);
     if(responseDetails && responseDetails["success"]){
       setSelected(0)
@@ -248,6 +266,35 @@ const [selectedFormDetails, setSelectedFormDetails]:any = useState();
     }
     else{
       toast.error("Error updating the status")
+    }
+    try {
+      let SUBJECT
+      switch (newStatusDetails.name) {
+        case "Open":
+          SUBJECT = "CaseOpen"
+          break;
+        case "Pending":
+          SUBJECT = "CasePend"
+          break;   
+        case "Completed":
+          SUBJECT = "CaseComp"
+          break;
+        default:
+          SUBJECT = ""
+          break;
+      }
+      const MESSAGE = {
+        eventId : String(uuidv4()),
+        eventRef : String(selectedCase.id),
+        eventOrigin : String('Caseflow'),
+        eventCategory : String('Caseflow'),
+        eventType : String(SUBJECT),
+        eventDateTime : String(new Date()),
+        eventPublisher : String(userName),
+      }     
+      publishMessage(SUBJECT,MESSAGE)
+    } catch (error) {
+      console.log(error)
     }
   }
    
@@ -290,7 +337,26 @@ const [selectedFormDetails, setSelectedFormDetails]:any = useState();
 
     
   const workflow = await startNewWorkflow(selectedForm, wordFlowDetails);
+
   if(workflow.id){
+    // try {
+    //   const SUBJECT = 'workFlowStart'
+    //   console.log(SUBJECT)
+    //   const MESSAGE = {
+    //     eventId : String(uuidv4()),
+    //     eventRef : String(selectedCase.id),
+    //     eventOrigin : String('Caseflow'),
+    //     eventCategory : String('Caseflow'),
+    //     eventType : String(SUBJECT),
+    //     eventDateTime : String(new Date()),
+    //     eventPublisher : String(userName),
+    //   }
+    //   console.log(MESSAGE)
+    //   publishMessage(SUBJECT,MESSAGE)
+    //   console.log("here");
+    // } catch (error) {
+    //   console.log(error)
+    // }
     toast.success("New workflow started successfully");
     setSelected(0);
     setOpenWorkflowPopup(false);
@@ -316,10 +382,23 @@ const callBack = (err, submission) => {
 }
 
 const submitForm = (data) => {
-              
   console.log(data)
- console.log(selectedFormDetails)
-
+  console.log(selectedFormDetails)
+ try {
+  const SUBJECT = 'workFlowStart';
+  const MESSAGE = {
+    eventId : String(uuidv4()),
+    eventRef : String(selectedCase.id),
+    eventOrigin : String('Caseflow'),
+    eventCategory : String('Caseflow'),
+    eventType : String(SUBJECT),
+    eventDateTime : String(new Date()),
+    eventPublisher : String(userName),
+  };
+  publishMessage(SUBJECT,MESSAGE);
+  } catch (error) {
+    console.log(error)
+  }
  //  dispatch(
  //   saveSubmission(
  //     "submission",

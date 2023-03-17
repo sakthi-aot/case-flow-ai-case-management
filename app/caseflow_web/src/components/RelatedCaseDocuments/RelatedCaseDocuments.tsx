@@ -20,6 +20,8 @@ import { setSelectedDocument } from "../../reducers/documentsReducer";
 import moment from "moment";
 import { getCaseHistory } from '../../services/CaseService';
 import { setCaseHistory, setFilteredCaseHistory } from '../../reducers/caseHistoryReducer';
+import { publishMessage } from "../../services/NatsServices";
+import { v4 as uuidv4 } from 'uuid';
 
 
 
@@ -47,6 +49,7 @@ const [isDeleteConfirmationUpOpen,setDeleteConfirmation] =useState(false);
 const dispatch = useDispatch()
 const SelectedDocId = useSelector((state:store) =>state.documents.seletedDocument)
 const totalDocCount = useSelector((state:store)=>state.cases.selectedCase.totalDocCount);
+const userName = useSelector((state:store)=> state.auth.userDetails.userName);
 
 
 useEffect(() => {
@@ -153,9 +156,24 @@ useEffect(() => {
   }
 
   const onConfirmDeleteDoc = async ( ) =>{
-    let document = await deleteDocument(SelectedDocId)
-    fetchCaseDetails()
-    setDeleteConfirmation(false) 
+    let document = await deleteDocument(SelectedDocId);
+    fetchCaseDetails();
+    setDeleteConfirmation(false);
+    try {
+      const SUBJECT = 'DocDeleted'
+      const MESSAGE = {
+        eventId : String(uuidv4()),
+        eventRef : String(id),
+        eventOrigin : String('Caseflow'),
+        eventCategory : String('Caseflow'),
+        eventType : String(SUBJECT),
+        eventDateTime : String(new Date()),
+        eventPublisher : String(userName),
+      }
+      publishMessage(SUBJECT,MESSAGE)
+    } catch (error) {
+      console.log(error)
+    }
     await fetchCaseHistory(id);
 
     

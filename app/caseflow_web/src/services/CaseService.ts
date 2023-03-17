@@ -1,3 +1,4 @@
+import { store } from './../interfaces/stateInterface';
 import {
     httpGETRequest,
     httpPUTRequest,
@@ -22,8 +23,11 @@ import {
   import { Case } from "../dto/cases"
   import { print } from "graphql";
   // import { PAGINATION_TAK}";
-  import { PAGINATION_TAKE } from "../apiManager/endpoints/config"; 
+  import { PAGINATION_TAKE } from "../apiManager/endpoints/config";
+import { v4 as uuidv4 } from 'uuid';
+import { publishMessage } from './NatsServices';
 import { CaseTypes } from "../interfaces/stateInterface";
+
 
   
   export const addCases = async(newCase: Case) => {
@@ -77,6 +81,8 @@ import { CaseTypes } from "../interfaces/stateInterface";
           return({"error" : "something went wrong"})
         }
       });
+
+      
  
 };
   export const getCasesList = async (number) => {   

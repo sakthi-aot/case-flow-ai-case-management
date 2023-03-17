@@ -58,7 +58,7 @@ export const  getDocument = async (id) => {
 }
 
 
-export const  deleteDocument = async (id) => {
+export const deleteDocument = async (id) => {
   const url = API.DMS_API +"/delete?id=" + id;
   const data = await httpDELETERequest(url,null)
   .then((res) => {return res})

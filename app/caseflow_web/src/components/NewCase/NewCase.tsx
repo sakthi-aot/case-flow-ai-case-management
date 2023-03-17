@@ -17,6 +17,10 @@ import { fetchCaseTypess } from "../../services/constantsService";
 import { setCaseTypes } from "../../reducers/constantsReducer";
 import { State } from "../../interfaces/stateInterface";
 import { async } from "q";
+import { publishMessage } from "../../services/NatsServices";
+import { v4 as uuidv4 } from 'uuid';
+
+
 const NewCase = () => {
   
   const dispatch = useDispatch();
@@ -35,6 +39,7 @@ const NewCase = () => {
 
 const caseList =  useSelector((state : State)=>state.cases.selectedCase);
 const caseTypes =  useSelector((state : State)=>state.constants.caseTypes);
+const userName = useSelector((state:State)=> state.auth.userDetails.userName);
 const [values, setValues] = useState(initialFieldValues)
 const[isEdit,setIsEdit] = useState(false);
 const { handleSubmit, control,register } = useForm();
@@ -46,10 +51,44 @@ const { handleSubmit, control,register } = useForm();
   {
     let response;
     if(isEdit){
-     response = await updateCases(values);
+     response = await updateCases(values).then(()=> {
+      try {
+        const SUBJECT = 'CaseUpdate'
+        const MESSAGE = {
+          eventId : String(uuidv4()),
+          eventRef : String(values.id),
+          eventOrigin : String('Caseflow'),
+          eventCategory : String('Caseflow'),
+          eventType : String(SUBJECT),
+          eventDateTime : String(new Date()),
+          eventPublisher : String(userName),
+        }
+        publishMessage(SUBJECT,MESSAGE)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    )
      navigate("/private/cases/" + response.success.data.updateCase.id+'/details');
     }else{
-    response = await addCases(values);
+    response = await addCases(values).then(()=> {
+      try {
+        const SUBJECT = 'CaseCreate'
+        const MESSAGE = {
+          eventId : String(uuidv4()),
+          eventRef : String(values.id),
+          eventOrigin : String('Caseflow'),
+          eventCategory : String('Caseflow'),
+          eventType : String(SUBJECT),
+          eventDateTime : String(new Date()),
+          eventPublisher : String(userName),
+        }
+        publishMessage(SUBJECT,MESSAGE)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    )
     navigate("/private/cases/"  + response.success.data.createCase.id+'/details');
     }
 

@@ -22,8 +22,7 @@ const PopUpDialogBox = (props) =>{
     { props.type == "delete" ?<DialogActions className={props.type=="delete"?"dialogActionCenter":""}>
        <Button onClick={props.onClose} className="btn1Style" variant="outlined">{props.btn1}</Button>
        <Button onClick={props.onConfirm} autoFocus className="btn2Style" variant="contained"
-                sx={{backgroundColor:
-                'primary.main'}}>
+                sx={{backgroundColor:'primary.main'}}>
          {props.btn2}
        </Button>
      </DialogActions> : ""}
