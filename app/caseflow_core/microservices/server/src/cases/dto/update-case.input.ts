@@ -13,7 +13,6 @@ export class UpdateCaseInput {
 
   @Field((type) => Int, { nullable: true })
   @IsNumber()
-  @IsNotEmpty()
   lobid: number;
 
   @Field()
@@ -86,6 +85,5 @@ export class UpdateCaseInput {
 
   @Field({ nullable: true })
   @IsNumber()
-  @IsNotEmpty()
   lobcaseid: number;
 }
