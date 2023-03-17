@@ -20,6 +20,7 @@ import LOBCustomContent from "./LOBCustomContent/LOBCustomContent";
 import LobDetail from "./LobDetails/LobDetails";
 import NewLobData from "./NewLob/NewLobData";
 import AdvancedSearch from "./AdvanedSearch/advancedSearch";
+import NatsSubscription from "./Nats/NatsSubscription";
 
 const NotFound = lazy(() => import("./NotFound/NotFound"));
 
@@ -46,6 +47,7 @@ const PrivateRoute = React.memo(({store}:any) => {
           <Route path="/" element={<Home />}>
             <Route index element={<Dashboard />} />
             <Route path="tasks" element={<Tasks />} />
+            <Route path="nats" element={<NatsSubscription />} />
             <Route path="cases" >
             <Route index element={<Cases />} />
             <Route path="create" element={<NewCaseComponent />} />

@@ -276,7 +276,7 @@ const [selectedFormDetails, setSelectedFormDetails]:any = useState();
         eventType : String(SUBJECT),
         eventDateTime : String(new Date()),
         eventPublisher : String(userName),
-      }
+      }     
       publishMessage(SUBJECT,MESSAGE)
     } catch (error) {
       console.log(error)
