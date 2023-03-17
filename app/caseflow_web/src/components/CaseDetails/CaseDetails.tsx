@@ -52,7 +52,7 @@ const CaseDetails = () => {
   const statuses =   useSelector((state:State) => state.constants.caseTypes);
   const tasks =   useSelector((state:State) => state.cases.selectedCase.tasks);
   const selectedCase =   useSelector((state:State) => state.cases.selectedCase);
-  const userName = useSelector((state:State)=> state.auth.userDetails.userName)
+  const userName = useSelector((state:State)=> state.auth.userDetails.userName);
   const [dataForBreadCrumbs,setDataForBreadCrumbs]= useState([{text:"Home",link:"/private"}]);
 
   const caseDetail = {

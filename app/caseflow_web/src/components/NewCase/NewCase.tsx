@@ -35,6 +35,7 @@ const NewCase = () => {
 
 const caseList =  useSelector((state : State)=>state.cases.selectedCase);
 const caseTypes =  useSelector((state : State)=>state.constants.caseTypes);
+const userName = useSelector((state:State)=> state.auth.userDetails.userName);
 const [values, setValues] = useState(initialFieldValues)
 const[isEdit,setIsEdit] = useState(false);
 const { handleSubmit, control,register } = useForm();
@@ -46,10 +47,10 @@ const { handleSubmit, control,register } = useForm();
   {
     let response;
     if(isEdit){
-     response = await updateCases(values);
+     response = await updateCases(values,userName);
      navigate("/private/cases/" + response.success.data.updateCase.id+'/details');
     }else{
-    response = await addCases(values);
+    response = await addCases(values,userName);
     navigate("/private/cases/"  + response.success.data.createCase.id+'/details');
     }
 

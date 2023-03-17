@@ -1,3 +1,4 @@
+import { store } from './../interfaces/stateInterface';
 import {
     httpGETRequest,
     httpPUTRequest,
@@ -21,10 +22,13 @@ import {
   import { Case } from "../dto/cases"
   import { print } from "graphql";
   // import { PAGINATION_TAK}";
-  import { PAGINATION_TAKE } from "../apiManager/endpoints/config"; 
+  import { PAGINATION_TAKE } from "../apiManager/endpoints/config";
+import { v4 as uuidv4 } from 'uuid';
+import { publishMessage } from './NatsServices';
+
 
   
-  export const addCases = async(newCase: Case) => {
+  export const addCases = async(newCase: Case,userName : String) => {
       const url =  GRAPHQL;
       return httpPOSTRequest(url,{query: print(ADD_CASE),
         variables: {
@@ -38,6 +42,21 @@ import {
         },
       },null)
         .then((res) => {
+          try {
+            const SUBJECT = 'CaseStart'
+            const MESSAGE = {
+              eventId : String(uuidv4()),
+              eventRef : String(newCase.id),
+              eventOrigin : String('Caseflow'),
+              eventCategory : String('Caseflow'),
+              eventType : String(SUBJECT),
+              eventDateTime : String(new Date()),
+              eventPublisher : String(userName),
+            }
+            publishMessage(SUBJECT,MESSAGE)
+          } catch (error) {
+            console.log(error)
+          }
           return {"success" : res.data};
         })
         .catch((error) => {
@@ -51,7 +70,7 @@ import {
   };
 
 
-  export const updateCases = async(newCase: Case) => {
+  export const updateCases = async(newCase: Case,userName : String) => {
     const url =  GRAPHQL;
     return httpPOSTRequest(url,{query: print(UPDATE_CASE),
       variables: {
@@ -66,6 +85,21 @@ import {
       },
     },null)
       .then((res) => {
+        try {
+          const SUBJECT = 'CaseUpdate'
+          const MESSAGE = {
+            eventId : String(uuidv4()),
+            eventRef : String(newCase.id),
+            eventOrigin : String('Caseflow'),
+            eventCategory : String('Caseflow'),
+            eventType : String(SUBJECT),
+            eventDateTime : String(new Date()),
+            eventPublisher : String(userName),
+          }
+          publishMessage(SUBJECT,MESSAGE)
+        } catch (error) {
+          console.log(error)
+        }
         return {"success" : res.data};
       })
       .catch((error) => {
@@ -75,6 +109,8 @@ import {
           return({"error" : "something went wrong"})
         }
       });
+
+      
  
 };
   export const getCasesList = async (number) => {   
