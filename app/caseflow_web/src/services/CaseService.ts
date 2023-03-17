@@ -28,7 +28,7 @@ import { publishMessage } from './NatsServices';
 
 
   
-  export const addCases = async(newCase: Case,userName : String) => {
+  export const addCases = async(newCase: Case) => {
       const url =  GRAPHQL;
       return httpPOSTRequest(url,{query: print(ADD_CASE),
         variables: {
@@ -42,21 +42,6 @@ import { publishMessage } from './NatsServices';
         },
       },null)
         .then((res) => {
-          try {
-            const SUBJECT = 'CaseStart'
-            const MESSAGE = {
-              eventId : String(uuidv4()),
-              eventRef : String(newCase.id),
-              eventOrigin : String('Caseflow'),
-              eventCategory : String('Caseflow'),
-              eventType : String(SUBJECT),
-              eventDateTime : String(new Date()),
-              eventPublisher : String(userName),
-            }
-            publishMessage(SUBJECT,MESSAGE)
-          } catch (error) {
-            console.log(error)
-          }
           return {"success" : res.data};
         })
         .catch((error) => {
@@ -70,7 +55,7 @@ import { publishMessage } from './NatsServices';
   };
 
 
-  export const updateCases = async(newCase: Case,userName : String) => {
+  export const updateCases = async(newCase: Case) => {
     const url =  GRAPHQL;
     return httpPOSTRequest(url,{query: print(UPDATE_CASE),
       variables: {
@@ -85,21 +70,6 @@ import { publishMessage } from './NatsServices';
       },
     },null)
       .then((res) => {
-        try {
-          const SUBJECT = 'CaseUpdate'
-          const MESSAGE = {
-            eventId : String(uuidv4()),
-            eventRef : String(newCase.id),
-            eventOrigin : String('Caseflow'),
-            eventCategory : String('Caseflow'),
-            eventType : String(SUBJECT),
-            eventDateTime : String(new Date()),
-            eventPublisher : String(userName),
-          }
-          publishMessage(SUBJECT,MESSAGE)
-        } catch (error) {
-          console.log(error)
-        }
         return {"success" : res.data};
       })
       .catch((error) => {
