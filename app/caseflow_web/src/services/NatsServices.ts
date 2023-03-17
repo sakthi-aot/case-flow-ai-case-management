@@ -7,6 +7,7 @@ export const publishMessage = async (SUBJECT,MESSAGE) => {
       const message = new TextEncoder().encode(MESSAGE);
       const nc = await connect({ servers: NATS_URL });
       console.log('Connected to NATS server');
+      console.log(SUBJECT);
       nc.publish(SUBJECT, message);
       // nc.flush();
       // nc.close();

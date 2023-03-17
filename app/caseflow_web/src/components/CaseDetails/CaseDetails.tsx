@@ -140,6 +140,21 @@ const [selectedFormDetails, setSelectedFormDetails]:any = useState();
     setOpenPopup(false);
     setSelected(0)
     // fetchCaseDocumentDetails()
+    try {
+      const SUBJECT = 'DocAdded'
+      const MESSAGE = {
+        eventId : String(uuidv4()),
+        eventRef : String(selectedCase.id),
+        eventOrigin : String('Caseflow'),
+        eventCategory : String('Caseflow'),
+        eventType : String(SUBJECT),
+        eventDateTime : String(new Date()),
+        eventPublisher : String(userName),
+      }
+      publishMessage(SUBJECT,MESSAGE)
+    } catch (error) {
+      console.log(error)
+    }
     toast.success("Success")
     await fetchRelatedDocuments()
     await fetchCaseHistory(selectedCase.id)
