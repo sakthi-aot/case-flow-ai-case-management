@@ -94,6 +94,7 @@ const subscribeToMessages = async( ) =>{
         <FormControlLabel control={<Checkbox value='CaseComp' onChange={onNatsSubjectChangeHandler}  />} label="CaseComp" />
         <FormControlLabel control={<Checkbox value='DocAdded ' onChange={onNatsSubjectChangeHandler}  />} label="DocAdded " />    
         <FormControlLabel control={<Checkbox value='DocDeleted ' onChange={onNatsSubjectChangeHandler}  />} label="DocDeleted " />          
+        <FormControlLabel control={<Checkbox value='workFlowStart ' onChange={onNatsSubjectChangeHandler}  />} label="workFlowStart " />          
      
         <Button
             style={{
