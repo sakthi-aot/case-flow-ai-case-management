@@ -9,7 +9,6 @@ import { IsArray, IsBoolean, IsDate, IsNotEmpty, IsNumber, IsString } from 'clas
 export class CreateCaseInput {
   @Field((type) => Int, { nullable: true })
   @IsNumber()
-  @IsNotEmpty()
   lobid: number;
 
   @Field()
@@ -82,7 +81,6 @@ export class CreateCaseInput {
 
   @Field({ nullable: true })
   @IsNumber()
-  @IsNotEmpty()
   lobcaseid: number;
 
 }
