@@ -21,7 +21,7 @@ const NatsSubscribition = () => {
 
     const [subjects,setSubjects] = useState([]);  
     const [message, setMessage] = useState<natsPayload | undefined>([]);
-    const NATS_URL = 'ws://caseflow-natserver.aot-technologies.com:8080';
+    const NATS_URL = 'ws://35.183.76.114:8080';
 
 const subscribeToMessages = async( ) =>{
   try{
