@@ -1,4 +1,4 @@
-import { Module, Version } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { VersionsService } from './services/versions.service';
 import { VersionsResolver } from './resolvers/versions.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';

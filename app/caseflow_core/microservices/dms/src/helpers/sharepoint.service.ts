@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-// import queryString from 'query-string';
 import  {  AxiosResponse } from 'axios';
 import { HttpService } from '@nestjs/axios/dist';
 import { firstValueFrom } from 'rxjs';
@@ -56,8 +55,7 @@ export class SharepointServices{
     async deleteDocument (fileName:any):Promise<any>{
             const spURL = `https://aottech.sharepoint.com/sites/Caseflow/_api/web/GetFileByServerRelativeUrl('/sites/Caseflow/Caseflow/${fileName}')`           
             try {   
-                const accessToken = await this.getAccessToken();
-                // const FormDigestValue =await this.getFormDigestValue()               
+                const accessToken = await this.getAccessToken();             
 
                 const responseUpload = await firstValueFrom(this.httpService.delete(spURL,{ 
                     headers:{

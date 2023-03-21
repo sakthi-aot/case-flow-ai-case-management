@@ -19,10 +19,6 @@ export class AlfrescoService {
     "Authorization": token ,
 };
  
-   const auth = {
-    username: 'admin',
-    password: 'admin'
-  }
     const url = this.configService.get('ALFRESCO_REPO_URL') + "/1/nodes/-root-/children"
     try{
       let response = await firstValueFrom(this.httpService.post(url,body,{
@@ -48,10 +44,6 @@ export class AlfrescoService {
     "Authorization": token ,
 };
  
-   const auth = {
-    username: 'admin',
-    password: 'admin'
-  }
     const url = this.configService.get('ALFRESCO_REPO_URL') + "/1/nodes/" + documnet.documentref + '/content'
   const params =  {
     "name" : data.name,
@@ -118,15 +110,7 @@ export class AlfrescoService {
   // Created By : Don C Varghese
   mapAlfrescoForm(file,data) {
     let fileData = new Buffer(file.buffer ? file.buffer : file)
-  //   const form = new FormData( { 
-  //   'name' : data.name,
-  //   'nodeType': 'cm:content',
-  //   'cm:title' : data.name,
-  //   'cm:description' : data.desc,
-  //   'relativePath' : this.configService.get('ALFRESCO_RELATIVE_PATH'),
-  //   'filedata' : fileData,
-   
-  // });
+    
   const form = new FormData();
 form.append('filedata', fileData, data.name);
 form.append('name', data.name);

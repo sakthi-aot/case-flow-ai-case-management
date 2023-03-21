@@ -9,7 +9,6 @@ export class TransformService {
   // Created By : Don C Varghese
   transformS3 = (type, document, data) => {
 
-    console.log(type)
     switch (type) {
       case 'CREATE':
         try{
@@ -109,7 +108,7 @@ export class TransformService {
   // summery : Transform selector fro DMS object to schema specific format
   // Created By : Don C Varghese
   transform = (dms, type, document, data) => {
-    console.log("dms",dms,type)
+    
     switch (dms) {
       case '1':
         return this.transformS3(type, document, data);
