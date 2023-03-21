@@ -14,7 +14,8 @@ export class SharepointServices{
     constructor(private readonly configService: ConfigService,private readonly httpService:HttpService){}
 
    async uploadDocument(file,fileName):Promise<any>{  
-            const spURL = `https://aottech.sharepoint.com/sites/Caseflow/_api/web/GetFolderByServerRelativeUrl('/sites/Caseflow/Caseflow')/Files/Add(url='${fileName}', overwrite=true)`
+
+            const spURL = this.configService.get('SHAREPOINT_UPLOAD_URL').replace('${FileName}',fileName)
            
             try {  
                 const accessToken =await this.getAccessToken(); 
@@ -36,7 +37,7 @@ export class SharepointServices{
 
 
     async getDocument (fileName:any):Promise<any>{
-        const spURL = `https://aottech.sharepoint.com/sites/Caseflow/_api/web/GetFileByServerRelativeUrl('/sites/Caseflow/Caseflow/${fileName}')/$value`
+        const spURL = this.configService.get('SHAREPOINT_GET_DOCUMENT_URL').replace('${FileName}',fileName)
         try {    
             const accessToken =await this.getAccessToken();           
             const responseUpload = await firstValueFrom(this.httpService.get(spURL,{
@@ -54,7 +55,7 @@ export class SharepointServices{
     }
 
     async deleteDocument (fileName:any):Promise<any>{
-            const spURL = `https://aottech.sharepoint.com/sites/Caseflow/_api/web/GetFileByServerRelativeUrl('/sites/Caseflow/Caseflow/${fileName}')`           
+            const spURL = this.configService.get('SHAREPOINT_DELETE_DOCUMENT_URL').replace('${FileName}',fileName)          
             try {   
                 const accessToken = await this.getAccessToken();
                 // const FormDigestValue =await this.getFormDigestValue()               
@@ -86,7 +87,8 @@ export class SharepointServices{
          const headersRequest = {
                 "Content-Type": "application/x-www-form-urlencoded"                        
             };
-        const getToken = await firstValueFrom (this.httpService.post('https://accounts.accesscontrol.windows.net/d34e6929-73f4-48ce-bac5-faf8cfea0be6/tokens/OAuth/2',
+            const spurl = this.configService.get("SHAREPOINT_ACCESS_TOKEN_URL")
+        const getToken = await firstValueFrom (this.httpService.post(spurl,
         data  ,   {headers:headersRequest}       
         )   )
         return  getToken.data.access_token;
@@ -99,7 +101,8 @@ export class SharepointServices{
     async getFormDigestValue():Promise<AxiosResponse>{
         try{
             const access_token =await this.getAccessToken()
-            const formDigestValue = await firstValueFrom(this.httpService.post("https://aottech.sharepoint.com/sites/Caseflow/_api/contextinfo",{},
+            const spurl = this.configService.get("SHAREPOINT_FORM_DIGEST_VALUE_URL")
+            const formDigestValue = await firstValueFrom(this.httpService.post(spurl,{},
             {
                 headers:{
                     "Authorization":`Bearer ${access_token}`
