@@ -110,7 +110,6 @@ export class AlfrescoService {
   // Created By : Don C Varghese
   mapAlfrescoForm(file,data) {
     let fileData = new Buffer(file.buffer ? file.buffer : file)
-    
   const form = new FormData();
 form.append('filedata', fileData, data.name);
 form.append('name', data.name);
