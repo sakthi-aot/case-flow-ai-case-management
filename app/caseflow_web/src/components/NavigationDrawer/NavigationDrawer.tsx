@@ -340,7 +340,7 @@ export default function MiniDrawer(
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"          
                   label="Age" 
-                  value={selectedFormType}   
+                  value={selectedType}   
                   onChange={onChangehandler}   
                   className="dropDownStyle"   
                 >
