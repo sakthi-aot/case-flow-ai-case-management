@@ -12,11 +12,15 @@ import { toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
 import {resetSelectedCase } from "../../reducers/newCaseReducer";
 import "./NewCaseComponent.scss"
-import { FormControl, MenuItem, Select } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Paper, Select } from "@mui/material";
 import { fetchCaseTypess } from "../../services/constantsService";
 import { setCaseTypes } from "../../reducers/constantsReducer";
 import { State } from "../../interfaces/stateInterface";
 import { async } from "q";
+import { createDraft, getFormDetails, getFormsList, getFormsListByName, submitNewForm, submitNewFormDraft } from "../../services/formsService";
+import { getTaksByProcessInstanceId } from "../../services/workflowService";
+import { FORMSFLOW_APPLICATION_URL } from "../../apiManager/endpoints";
+import {Form as FormIOForm,saveSubmission,Formio } from 'react-formio'
 const NewCase = () => {
   
   const dispatch = useDispatch();
@@ -35,11 +39,13 @@ const NewCase = () => {
 
 const caseList =  useSelector((state : State)=>state.cases.selectedCase);
 const caseTypes =  useSelector((state : State)=>state.constants.caseTypes);
+const selectedCaseType =  useSelector((state : State)=>state.cases.selectedCaseFormType);
 const [values, setValues] = useState(initialFieldValues)
 const[isEdit,setIsEdit] = useState(false);
 const { handleSubmit, control,register } = useForm();
 // const [caseList.isEdit,setIsCaseEdit] = useState(Boolean);
-
+const [selectedForm, setselectedForm]:any = useState("");
+const [selectedFormDetails, setSelectedFormDetails]:any = useState();
 
 
   const onSubmit = async () => 
@@ -62,8 +68,14 @@ const { handleSubmit, control,register } = useForm();
   useEffect(() => {     
     fetchSelectedCaseDetails()    
     getCaseTypes();
+ 
 
 }, []);
+
+  useEffect(() => {     
+    getForm();
+
+}, [selectedCaseType]);
 
 
 const fetchSelectedCaseDetails = async ( ) =>{
@@ -110,6 +122,62 @@ const handleBack = ()=>{
 
 }
 
+
+
+
+const getForm = async () =>{
+  // if(selectedForm){
+    // const formsList = await getFormsListByName(form);
+    const formDetails  = await getFormDetails(selectedCaseType);
+    setSelectedFormDetails(formDetails)
+ 
+
+  // }
+}
+const submitForm = (data) => {
+              
+
+
+ //  dispatch(
+ //   saveSubmission(
+ //     "submission",
+ //     data,
+ //     selectedFormDetails._id,
+ //     callBack
+ //   )
+ // );
+  submitNewForm(selectedFormDetails._id,data)
+  .then(res=>{
+   let submissionData = {
+     "formId": res.form,
+     "submissionId": res._id,
+     "formUrl": FORMSFLOW_APPLICATION_URL + "/formio/form/"+res.form +"/submission/"+res._id,
+     "webFormUrl": FORMSFLOW_APPLICATION_URL+ "/form/"+res.form +"/submission/"+res._id
+ }
+ let createDraftData = {data:{},formId:res.form}
+  createDraft(createDraftData)
+  .then((draftId)=>{
+    if(draftId){
+      return submitNewFormDraft(submissionData,draftId)
+    }
+  }).then(data =>{
+     return getTaksByProcessInstanceId(data.processInstanceId)
+
+  }).then(tasks =>{
+    let task = tasks[0];
+    if(task["id"]){
+      toast.success("New workflow started successfully");
+      navigate("/private/cases/" + task.caseInstanceId+'/details');
+    }
+    else{
+      toast.success("Failed to  start the workflow. Please try again!");
+    }
+
+  });
+
+  });
+ }
+
   //set values when document input fiels changes
   // const handleDocumentInputChange = (e) => {
   //   const target = e.target;
@@ -117,7 +185,10 @@ const handleBack = ()=>{
   // };
   return (
     <div style={{ padding: "2rem 4rem 0rem 4rem" }} className="newOrupdateCaseBlock">
-      <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6" className="case-heading">
+     
+      {isEdit ?  
+      <>
+       <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6" className="case-heading">
       {isEdit?"Update Case":"New Case"}  
       </Typography>
       <Divider sx={{ borderBottomWidth: 3 }} />
@@ -265,6 +336,23 @@ const handleBack = ()=>{
            Back
           </Button>
         </div>
+        </>
+        :  <> <Grid container spacing={1} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
+        <Grid item xs={8}>
+        <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6" className="case-heading">
+      {isEdit?"Update Case":"New Case"}  
+      </Typography>
+        </Grid>
+      
+        <Divider sx={{ borderBottomWidth: 3 ,width :"95rem" }} />
+      </Grid>
+      <div className="form-io">
+      { selectedFormDetails? <FormIOForm form={selectedFormDetails}   submission={undefined} onSubmit={(data)=>submitForm(data)}/> :    <Typography variant='body1' className="no-details-found">
+               Please choose a case type!
+              </Typography> }
+      </div>
+      </>}
+      
     </div>
   );
 };

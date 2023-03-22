@@ -37,5 +37,13 @@
     text-transform: unset !important;
     column-gap: .5rem;
 }
+.case-type-buttons{
+    display: grid;
+    grid-template-columns: 10rem 10rem;
+    align-items: center;
+    justify-content: center;
+    grid-gap: 5px;
+   
+}
 
 

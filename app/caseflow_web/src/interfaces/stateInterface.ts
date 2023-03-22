@@ -66,6 +66,7 @@ export interface Cases {
   totalCaseCount: number;
   pageSelected: number;
   searchCaseResult:{}
+  selectedCaseFormType: undefined;
 }
 export interface USerDetails {
   email: string;

@@ -26,9 +26,20 @@ import UserService from "./UserService";
       return output
 
   };
+  export const getFormsListByName = async (name) => {
+    const url =   `${FORM_URL}/form?formName=${name}`;
+    const  output =  await httpGETRequest(url,{},null)
+      .then((res) => {return res.data})
+      .catch((error) => {
+        console.log({"error" : error})
+        return {}
+      });
+      return output
 
-  export const getFormDetails = async (formId) => {
-    const url =   `${FORMSFLOW_APPLICATION_URL}/formio/form/${formId}`;
+  };
+
+  export const getFormDetails = async (form) => {
+    const url =   `${FORMSFLOW_APPLICATION_URL}/formio/${form}`;
     const formIoToken = await getFormIORoleIds()
     const token = {"x-jwt-token" : formIoToken};
     const  output =  await httpGETRequest(url,{},formIoToken,true,token)
