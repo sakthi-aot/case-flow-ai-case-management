@@ -66,8 +66,8 @@ export class DocumentsController {
 
   @Get("/download")
   // @MessagePattern({ cmd: 'fetch_document' })
-  async fetchDocument(@Query(new JoiValidationPipe(downloadDocumentSchema))param,@Response() res: ExpressResponse) {
-    const token=param.authorization;
+  async fetchDocument(@Query(new JoiValidationPipe(downloadDocumentSchema))param,@Response() res: ExpressResponse,@Headers () auth) {
+    const token=auth?.authorization;
     try {   
       let doc_id = null;
       let documentDetails = await this.documentService.findOne(parseInt(param.id));
