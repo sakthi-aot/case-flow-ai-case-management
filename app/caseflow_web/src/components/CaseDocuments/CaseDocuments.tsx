@@ -239,13 +239,13 @@ const navigateToCaseDetailHandler = (caseId) => {
                                   >
                                     {" "}
                                     <div className="name-field">
-                                      <img
+                                      {/* <img
                                         className="pdf-file-img"
                                         src={`${getFileIcon(
                                           documentDetail.name
                                         )}`}
                                         alt="pdf"
-                                      />
+                                      /> */}
                                       <div className="case-document-name">
                                         <a
                                           onClick={() => {
