@@ -41,8 +41,8 @@ import UserService from "./UserService";
   export const getFormDetails = async (form) => {
     const url =   `${FORMSFLOW_APPLICATION_URL}/formio/${form}`;
     const formIoToken = await getFormIORoleIds()
-    const token = {"x-jwt-token" : formIoToken};
-    const  output =  await httpGETRequest(url,{},formIoToken,true,token)
+    const headers = {"x-jwt-token" : formIoToken};
+    const  output =  await httpGETRequest(url,{},formIoToken,false,headers)
       .then((res) => {return res.data})
       .catch((error) => {
         console.log({"error" : error})

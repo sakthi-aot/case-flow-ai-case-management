@@ -10,7 +10,7 @@ export const httpGETRequest = (
   data,
   token,
   isBearer = true,
-  headers = null
+  headers
 ) => {
   return axionInstanceWithIntercepter.get(url, {
     params: data,
