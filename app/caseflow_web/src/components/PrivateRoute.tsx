@@ -52,7 +52,6 @@ const PrivateRoute = React.memo(({store}:any) => {
             <Route path="cases" >
             <Route index element={<Cases />} />
             <Route path="create" element={<NewCaseComponent />} />
-            <Route path="configurations" element={<Configurations />} />
             <Route path=":id/edit" element={<NewCaseComponent />} />
             <Route path=":id/details" element={<CaseDetails />} />
           </Route>
@@ -68,7 +67,7 @@ const PrivateRoute = React.memo(({store}:any) => {
 
           </Route>
           <Route path="advancedSearch" element={<AdvancedSearch />} />
-
+          <Route path="configurations" element={<Configurations />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

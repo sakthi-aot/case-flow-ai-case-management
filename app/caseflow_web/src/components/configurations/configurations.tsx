@@ -182,7 +182,7 @@ const Configurations = () => {
           </ListItem>
           <Divider sx={{ border: 1, borderColor: "#606060" }} />
 
-          {caseTypes.map((option, index) => (
+          {caseTypes?.map((option, index) => (
             <>
               <ListItem key={index} sx={{ paddingInline: 0, paddingBlock: 2 }}>
                 <Grid container spacing={1}>

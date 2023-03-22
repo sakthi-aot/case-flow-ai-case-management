@@ -18,15 +18,19 @@ import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import CasesOutlinedIcon from "@mui/icons-material/CasesOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
-import { Button, Typography } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import UserService from "../../services/UserService";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useSelector,useDispatch } from "react-redux";
 import { State } from "../../interfaces/stateInterface";
 import "./navigation.scss"
-import { resetSelectedCase } from "../../reducers/newCaseReducer";
+import { resetSelectedCase, setSelectedCaseType } from "../../reducers/newCaseReducer";
 import { useTheme } from "@mui/material/styles";
 import { FORMSFLOW_APPLICATION_URL } from "../../apiManager/endpoints";
+import { fetchCaseTypess } from "../../services/constantsService";
+import { setCaseTypes } from "../../reducers/constantsReducer";
+import { useState } from "react";
+import CustomizedDialog from "../Dialog/Dialog";
 
 
 const drawerWidth = 240;
@@ -106,6 +110,13 @@ export default function MiniDrawer(
 
   const theme = useTheme();
   const navigate = useNavigate();
+  const caseTypes =  useSelector((state : State)=>state.constants.caseTypes);
+  const selectedFormType =  useSelector((state : State)=>state.cases.selectedCaseFormType);
+  const [isOpenPopup,setOpenPopup] = useState(false);
+  const [selectedType,setSelectedType] = useState("");
+
+
+
   function openLinkInNewTab(url) {
     window.open(url, '_blank', 'noopener,noreferrer');
   }
@@ -176,9 +187,36 @@ export default function MiniDrawer(
   const logoutCaseFlowHandler = ( ) =>{
     UserService.userLogout()
   }
+  const openSelectFormTypePopup = ( ) =>{
+    UserService.userLogout()
+
+    
+  }
+  const getCaseTypes = async () =>{
+    const caseTypes = await fetchCaseTypess();
+    dispatch(setCaseTypes(caseTypes))
+    // if(caseTypes && caseTypes.length){
+    //   dispatch(setSelectedCaseType(caseTypes[0].formid))
+    // }
+    
+  }
  
 
-  return (     
+  const handleClosePopup= () =>{
+    setOpenPopup(false);
+  }
+  const onChangehandler= (event) =>{
+    setSelectedType(event.target.value)
+   
+  }
+  const selectForm = () =>{
+    dispatch(setSelectedCaseType(selectedType))
+    setOpenPopup(false);
+    navigate("cases/create");
+  }
+
+  return (    
+    <>
     <Box >
       <CssBaseline />
       <Drawer variant="permanent" open={open} className="navaigation-drawer-container" >
@@ -206,8 +244,8 @@ export default function MiniDrawer(
 
         }} 
         sx={{backgroundColor:'primary.main'}}
-        onClick={()=>{dispatch(resetSelectedCase())}}
-        component={Link} to="/private/cases/create"><AddCircleIcon/>Start New Case</Button>}
+        onClick={()=>{dispatch(resetSelectedCase());getCaseTypes();setOpenPopup(true)}}
+       ><AddCircleIcon/>Start New Case</Button>}
         
         <List>
           <Typography variant="body2">
@@ -294,6 +332,48 @@ export default function MiniDrawer(
         {/* {children} */}
       </Box>
     </Box>   
-    
+    <CustomizedDialog title="Start New Case" isOpen={isOpenPopup} setIsOpen={setOpenPopup} handleClose={handleClosePopup} fullWidth>
+       <div className="workflow">
+    <FormControl sx={{ m: 1, minWidth: 90, }} size="small">
+                <InputLabel id="demo-simple-select-label">Select Case Type</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"          
+                  label="Age" 
+                  value={selectedFormType}   
+                  onChange={onChangehandler}   
+                  className="dropDownStyle"   
+                >
+                
+                   {caseTypes.map((option,index) => <MenuItem key={index}  value={option.formid}>{option.displayname}</MenuItem>)}                 
+                </Select>
+            </FormControl>
+            <div  className="case-type-buttons">
+                <FormControl>
+                <Button
+                variant="contained"
+                sx={{backgroundColor:'secondary.main',borderColor:'primary.secondary'}}
+                onClick={handleClosePopup}
+                
+              >
+               Cancel
+              </Button>
+                </FormControl>
+                <FormControl>
+            
+            <Button
+                variant="contained"
+                sx={{backgroundColor:'primary.main',borderColor:'primary.main'}}
+                onClick={selectForm}
+                
+              >
+              Continue
+              </Button>
+            </FormControl>
+            </div>
+           
+            </div>
+    </CustomizedDialog>
+    </>
   );
 }
