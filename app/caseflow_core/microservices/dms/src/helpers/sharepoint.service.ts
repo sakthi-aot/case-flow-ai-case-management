@@ -30,7 +30,7 @@ export class SharepointServices{
                 
               return responseUpload.data    
             } catch (e) {
-              console.log(e)
+              return e;
             }         
     }    
 
@@ -48,7 +48,7 @@ export class SharepointServices{
            
           return responseUpload.data;
         } catch (e) {
-          console.log(e)
+          return e;
 
         }       
     }
@@ -69,7 +69,7 @@ export class SharepointServices{
                 }))                            
               return responseUpload    
             } catch (e) {
-              console.log(e)
+              return e;
 
             }
     }
@@ -92,7 +92,7 @@ export class SharepointServices{
         return  getToken.data.access_token;
 
        }catch(err){    
-        console.log(err)
+        return err
        }
     }
 
@@ -110,7 +110,7 @@ export class SharepointServices{
             
 
         }catch(err){
-            console.log(err)
+            return err
         }
     }
 

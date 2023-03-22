@@ -32,6 +32,7 @@ export class DocumentsController {
     return datamew
   } catch (err) {
     console.log(err.message);
+    return err
   }
   }
 
@@ -61,6 +62,7 @@ export class DocumentsController {
 
     } catch (err) {
       console.log(err.message);
+      return err;
     }
   }
 
@@ -90,6 +92,7 @@ export class DocumentsController {
       }
     } catch (error) {
       console.log(error.message);
+      return error
     }
   }
 
@@ -108,6 +111,7 @@ export class DocumentsController {
       );
     } catch (error) {
       console.log(error.message);
+      return error;
     }
   }
 }

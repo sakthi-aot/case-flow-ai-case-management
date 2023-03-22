@@ -23,7 +23,7 @@ export class VersionsService {
       const newVersion = this.verisonRepository.create(createVersionInput);
       return this.verisonRepository.save(newVersion);
     } catch (err) {
-      console.log(err);
+      return err;
     }
   }
 
@@ -36,9 +36,10 @@ export class VersionsService {
     try {
     return this.verisonRepository.find({relations:["documents"], order: {
       id: "DESC",
-     }});
+     }
+    });
   } catch (err) {
-    console.log(err);
+    return err;
   }
   }
 
@@ -69,7 +70,7 @@ export class VersionsService {
     }
     throw new BadRequestException("request doesn't have any id");
   } catch (err) {
-    console.log(err);
+    return err;
   }
   }
 
@@ -95,11 +96,11 @@ export class VersionsService {
         });        
         if (value) return value;
   
-        console.log(`Record cannot find by id ${id}`);
+        throw new NotFoundException(`Record cannot find by id ${id}`);
       }
-      console.log("request doesn't have any id");
+      throw new BadRequestException("request doesn't have any id");
     } catch (err) {
-      console.log(err);
+      return (err)
     }
     }
   
