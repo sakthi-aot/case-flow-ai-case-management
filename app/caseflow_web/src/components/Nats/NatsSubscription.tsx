@@ -21,19 +21,17 @@ const NatsSubscribition = () => {
 
     const [subjects,setSubjects] = useState([]);  
     const [message, setMessage] = useState<natsPayload | undefined>([]);
-    const NATS_URL = 'ws://35.183.76.114:8080';
+    const [connection,setConnection] = useState({clicked:false,connection:false});
+    const NATS_URL = 'wss://caseflow-natserver.aot-technologies.com';
 
-const subscribeToMessages = async( ) =>{
+const subscribeToMessages = async( ) =>{  
   try{
-    const natsConnection = await connect({ servers: NATS_URL }); 
-    console.log("subscrip")
-    subjects.map(async(subj)=>{
-      console.log("sub",subj)
-      let sub = natsConnection.subscribe(subj);
+    const natsConnection = await connect({ servers: NATS_URL });  
+    subjects.map(async(subj)=>{    
+      let sub = natsConnection.subscribe(subj); 
+      (sub && sub.err== undefined) ? setConnection({clicked:true,connection:true}) :setConnection({clicked:true,connection:false})        
       for await (const m of sub) {
-        var msg = new TextDecoder().decode(m.data);
-        // console.log(JSON.stringify(JSON.parse (msg)))
-        console.log(JSON.parse (msg))
+        var msg = new TextDecoder().decode(m.data);       
         setMessage((prev)=>{
           let newMsg = JSON.parse(msg)
           return [...prev,newMsg]
@@ -43,15 +41,14 @@ const subscribeToMessages = async( ) =>{
 
   }catch(err){
     console.log(err)
+    setConnection({clicked:true,connection:false})        
   }
 }
 
 
 
  const onNatsSubjectChangeHandler = (e) =>{
-    const index = subjects.indexOf(e.target.value)
-    console.log(e.target.value)
-    console.log(index)
+    const index = subjects.indexOf(e.target.value)  
     if(index === -1){
         setSubjects((prev)=>{
             return [...prev,e.target.value]
@@ -102,13 +99,14 @@ const subscribeToMessages = async( ) =>{
               marginTop:"1rem",
               height: "2.4375rem",
               width: "20%",
-              backgroundColor:'primary.main'            
+              // backgroundColor:'primary.main'   
+              backgroundColor:connection.clicked?connection.connection?"green":"red":"primary.main"
             }}
             variant="contained"
             type="submit"  
             onClick={subscribeToMessages}        
           >
-            Submit
+            {connection.clicked?connection.connection?"Subscribed":"Try again":"Subscribe"}
           </Button>  
  
     </Box>
