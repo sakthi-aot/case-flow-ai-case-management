@@ -14,6 +14,7 @@ import {
   import { print } from "graphql";
   import lobConfig from "../config/lob_data.json"
 import { PAGINATION_TAKE } from "../apiManager/endpoints/config";
+import moment from "moment";
 
 
 
@@ -36,7 +37,7 @@ import { PAGINATION_TAKE } from "../apiManager/endpoints/config";
 
   };
 
-  export const getLobData = async (number,searchField,searchColumn) =>{
+  export const getLobData = async (number,searchField,searchColumn,fromDate,toDate) =>{
     const url =LOBURL;
     const  skip =(number-1)*Number(PAGINATION_TAKE);  
    
@@ -45,8 +46,9 @@ import { PAGINATION_TAKE } from "../apiManager/endpoints/config";
         Skip:skip,
         Take:Number(PAGINATION_TAKE),  
         SearchField:searchField,
-        SearchColumn:searchColumn  
-
+        SearchColumn:searchColumn  ,
+        fromDate: (fromDate && fromDate.$d) ? moment(fromDate.$d).format('YYYY-MM-DD') :'',
+        toDate: (toDate && toDate.$d) ? moment(toDate.$d).format('YYYY-MM-DD') :moment().format('YYYY-MM-DD')
     },
   },null)
   .then((res)=>{return res.data.data})

@@ -5,13 +5,20 @@ import { IsInt, IsNotEmpty, IsString, Max, Min } from 'class-validator'
 export class FetchSearchArgs {
   @Field(() => String)  
   @IsString()
-  @IsNotEmpty()
   searchField 
 
   @Field(() => String)  
   @IsString()
-  @IsNotEmpty()
   searchColumn 
+
+  @Field(() => String)  
+  @IsString()
+  fromDate 
+
+  @Field(() => String)  
+  @IsString()
+  toDate 
+
 
   @Field(() => Int)
   @IsInt()

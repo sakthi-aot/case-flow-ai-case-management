@@ -1,4 +1,4 @@
-import { Grid, InputAdornment, OutlinedInput, Typography } from '@mui/material';
+import { Box, Button, Checkbox, FormControl, FormControlLabel, Grid, InputAdornment, OutlinedInput, TextField, Typography } from '@mui/material';
 import  React, { useEffect, useState }  from 'react';
 import Search from '../Search/Search';
 import "./advancedSearch.scss";
@@ -12,6 +12,10 @@ import { setadvanceSearchResult } from '../../reducers/applicationReducer';
 import { getLobData } from "../../services/LOBService";
 import moment from "moment";
 import { useNavigate } from 'react-router';
+import { textAlign } from '@mui/system';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 
 
@@ -21,26 +25,39 @@ export default function AdvancedSearch() {
   const searchresults = useSelector((state:State)=>state.app.advanceSearchResult)
   const dispatch = useDispatch();
   const navigate = useNavigate();  
+  const [allSearch,setAllsearch] =useState(true)
+  const [documentSearch,setDocumentsearch] =useState(false)
+  const [caseSearch,setCasesearch] =useState(false)
+  const [lobSearch,setLobsearch] =useState(false)
+  const [fromDateForSearch,setFromDateForSearch] =useState(null)
+  const [toDateForSearch,setToDateForSearch] =useState(null)
+  const [showDate,setShowDate] =useState(false)
+
+
+
+
 
 
 
   const searchDetails = async ()=>{
     let result:any = []
     let totalCount = 0
-    await Promise.all([searchCases(searchField,"name",1,"id",true,true)
-    .then((searchCaseResult=>{
-      totalCount = totalCount + searchCaseResult.totalCount;
-      searchCaseResult?.Cases.map((element) => {
-        result.push({title:element.id + " - " +element.name,content:element.desc, subtitle:"Cases",link:"/private/cases/"  + element.id+'/details',imgIcon:require("../../assets/CasesIcon.png")})
-      });
-    })) , searchCaseDocument(searchField,"Name","name",true,true)
+    await Promise.all([(allSearch || caseSearch) && searchCases(searchField,"name",1,"id",true,true, fromDateForSearch,toDateForSearch)
+    .then(( searchCaseResult=>{
+        totalCount = totalCount + searchCaseResult.totalCount;
+        searchCaseResult?.Cases.map((element) => {
+          result.push({title:element.id + " - " +element.name,content:element.desc, subtitle:"Cases",link:"/private/cases/"  + element.id+'/details',imgIcon:require("../../assets/CasesIcon.png")})
+        });
+  
+    })) ,(allSearch || documentSearch) &&  searchCaseDocument(searchField,"Name","name",true,true,fromDateForSearch,toDateForSearch)
     .then(searchDocumentResult=>{
+
       totalCount = totalCount + searchDocumentResult.totalCount;
       searchDocumentResult?.CaseDocuments.map((element) => {
         result.push({title:element.id + " - " +element.name,content:element.desc, subtitle:"CaseDocuments",link:"",imgIcon:require("../../assets/DocumentsIcon.png")})
     });
     }),
-     getLobData(1,searchField,"policyNumber")
+    (allSearch || lobSearch) && getLobData(1,searchField,"policyNumber",fromDateForSearch,toDateForSearch)
     .then(searchLobResult=>{
       totalCount = totalCount + searchLobResult?.totalCount;
       searchLobResult?.CaseflowLob.map((element) => {    
@@ -54,11 +71,22 @@ export default function AdvancedSearch() {
     dispatch(setadvanceSearchResult({searchResult:result,totalCount:totalCount}));
   }
 
+  const clearFilter = ()=>{
+    setCasesearch(false)
+    setAllsearch(true)
+    setDocumentsearch(false)
+    setLobsearch(false)
+    setFromDateForSearch(null)
+    setToDateForSearch(null)
+    setShowDate(false)
+
+  }
+
   
  useEffect(() => {
   searchDetails();
   console.log(searchresults)
- }, [searchField])
+ }, [searchField,fromDateForSearch,allSearch,documentSearch,caseSearch,lobSearch,toDateForSearch])
 
 
  
@@ -67,13 +95,7 @@ export default function AdvancedSearch() {
   <div className="details-container">
       <div className="header-search">
       <Typography variant="body1" className="title">CaseFlow</Typography>
-      <div className="search">
-        <Search
-          setSearchField={() => {}}
-          dropDownArray={[]}
-          setSearchColumn={() => {}}
-        ></Search>
-      </div>
+   
       </div>
   <div className="search-area-container">
   <Typography variant="h5">Advanced Search</Typography>
@@ -92,10 +114,58 @@ export default function AdvancedSearch() {
             </InputAdornment>
           }/>
           </div>
+          <div>
           <Typography variant="caption"  sx={{ fontSize: 8}}>
           {searchresults?.totalCount} search results
      </Typography>
+     </div>
+      <FormControl  >
+     <Box sx={{ display: 'flex',width:"100%"}}>
 
+         <FormControlLabel control={<Checkbox checked={allSearch} onChange={()=>{setAllsearch(!allSearch)}} defaultChecked />} label="All" />
+          <FormControlLabel control={<Checkbox checked={caseSearch} onChange={()=>{setCasesearch(!caseSearch);setAllsearch(false)}}  />} label="Cases" />
+           <FormControlLabel control={<Checkbox checked={documentSearch} onChange={()=>{setDocumentsearch(!documentSearch);setAllsearch(false)}} />} label="Documents" />
+            <FormControlLabel control={<Checkbox checked={lobSearch} onChange={()=>{setLobsearch(!lobSearch);setAllsearch(false)}} />} label="Line of Bussiness" />
+            <FormControlLabel control={<Checkbox checked={showDate} onChange={()=>{setShowDate(!showDate);    setFromDateForSearch(null)
+    setToDateForSearch(null)}} />} label="Date" />
+
+{showDate &&
+      <>
+            <Box sx={{mx:4,width:"10rem"}} >
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DatePicker
+        label="From Date"
+        inputFormat="YYYY-MM-DD"
+        value={fromDateForSearch}
+        onChange={(newValue) => {
+          setFromDateForSearch(newValue);
+        }}
+        renderInput={(params) => <TextField {...params} />}
+      />
+    </LocalizationProvider>
+    </Box>
+    <Box sx={{width:"10rem"}} >
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DatePicker
+        label="To Date"
+        inputFormat="YYYY-MM-DD"
+        value={toDateForSearch}
+        onChange={(newValue) => {
+          setToDateForSearch(newValue);
+        }}
+        renderInput={(params) => <TextField {...params} />}
+      />
+    </LocalizationProvider>
+    </Box>
+
+    </>
+}
+    <Button sx={{ml:2}} onClick={clearFilter} variant="text">Clear</Button>
+    
+      </Box>
+
+      </FormControl>
+    <Box sx={{overflow:"auto",height:"55vh"}}>
      {searchresults?.searchResult.map((eachValue) => (
            <Grid container  key={eachValue.title}>
            <Grid item xs={0.5} sx={{pt:"5vh"}}>
@@ -124,12 +194,14 @@ export default function AdvancedSearch() {
       
 
         ))}
+
+</Box>
   </div>
 
 
-  <div className="filter-area-container">
+  {/* <div className="filter-area-container">
 <SearchFilters />
-  </div>
+  </div> */}
 
 
 

@@ -63,7 +63,7 @@ const CaseDocuments = () => {
 
 
   const filterDocumentDetails = async () => {
-    let searchResult = await searchCaseDocument(searchField,searchColumn,sortSetting.orderBy,sortSetting.orderType,selectedPage)
+    let searchResult = await searchCaseDocument(searchField,searchColumn,sortSetting.orderBy,sortSetting.orderType,selectedPage,null,null)
     
     if(searchResult)
     console.log(searchResult)
@@ -72,7 +72,7 @@ const CaseDocuments = () => {
   };
 
   const searchDocumentDetails = async () => {
-    let searchResult = await searchCaseDocument(searchField,searchColumn,sortSetting.orderBy,sortSetting.orderType,true)
+    let searchResult = await searchCaseDocument(searchField,searchColumn,sortSetting.orderBy,sortSetting.orderType,true,null,null)
     let searchDocumentResult = searchResult.CaseDocuments.map((element) => {
         return {title:element.id + " - " +element.name,content:element.desc, subtitle:"CaseDocuments",link:"",imgIcon:require("../../assets/DocumentsIcon.png")};
     });

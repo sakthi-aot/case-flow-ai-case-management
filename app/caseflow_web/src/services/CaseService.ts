@@ -27,6 +27,8 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { publishMessage } from './NatsServices';
 import { CaseTypes } from "../interfaces/stateInterface";
+import moment from 'moment';
+import { toDate } from 'date-fns';
 
 
   
@@ -172,7 +174,7 @@ import { CaseTypes } from "../interfaces/stateInterface";
   }
 
   
-  export const searchCases = async (searchField,searchColumn,pno,orderBy ="id",orderType =true,isSearch= false) => {    
+  export const searchCases = async (searchField,searchColumn,pno,orderBy ="id",orderType =true,isSearch= false,fromDate,toDate) => {    
     const  skip =(pno-1)*10;     
     const url = GRAPHQL;
     if(isSearch){
@@ -183,7 +185,9 @@ import { CaseTypes } from "../interfaces/stateInterface";
           Skip:skip,
           Take:Number(PAGINATION_TAKE),
           orderBy:orderBy,
-          orderType:  orderType ? "DESC" : "ASC"
+          orderType:  orderType ? "DESC" : "ASC",
+          fromDate: fromDate && fromDate.$d ? moment(fromDate.$d).format('YYYY-MM-DD') :'',
+          toDate: toDate && toDate.$d ? moment(toDate.$d).format('YYYY-MM-DD') :moment().format('YYYY-MM-DD')
         },
       },null)
         .then((res) => {        
