@@ -56,6 +56,10 @@ export class CaseDocuments {
   @Field({ nullable: true })
   type: string;
 
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  size: number;
+
   @Field(() => Cases)
   cases: Cases;
 

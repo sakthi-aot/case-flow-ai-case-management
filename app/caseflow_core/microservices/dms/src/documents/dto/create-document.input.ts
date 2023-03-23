@@ -35,4 +35,7 @@ export class CreateDocumentInput {
 
   @Field({ nullable: true })
   type: string;
+
+  @Field({ nullable: true })
+  size: number;
 }

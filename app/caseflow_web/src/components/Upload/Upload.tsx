@@ -25,6 +25,7 @@ const Upload = (props) => {
     dms: 1,
     file: "",
     fileName: "",
+    fileSize: null,
     fileDescription: null,
     previewURL: "",
     filetypeUploaded: null,
@@ -117,6 +118,7 @@ const Upload = (props) => {
           ...values,
           file,
           fileName: file.name,
+          fileSize: file.size,
           filetypeUploaded: file.type.split("/")[1],
           previewURL: URL.createObjectURL(file),
         });
@@ -145,6 +147,7 @@ const Upload = (props) => {
      bodyFormData.append("dmsprovider",CASEFLOW_DMS)
      bodyFormData.append("metaData",JSON.stringify(inputFields))
      bodyFormData.append("type",values.file.type)
+     bodyFormData.append("size",values.fileSize)
 
       await uploadCMISfile(bodyFormData)
       .then((response)=>{
