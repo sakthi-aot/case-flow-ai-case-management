@@ -36,17 +36,22 @@ export class CaseflowLobService {
   // }
 
   async findById(id: number): Promise<CaseflowLob> {
-    if (id) {
-      const value = await this.caseLobRepository.findOne({
-        where: {
-          id: id,
-        },
-      });
-      if (value) return value;
-      throw new NotFoundException(`Record cannot find by id ${id}`);
+    try {
+      if (id) {
+        const value = await this.caseLobRepository.findOne({
+          where: {
+            id: id,
+          },
+        });
+        if (value) return value;
+        throw new NotFoundException(`Record cannot find by id ${id}`);
+      }
+      throw new BadRequestException("request doesn't have any id");
     }
-    throw new BadRequestException("request doesn't have any id");
-  }
+    catch (error) {
+      return error;
+    }
+  }  
 
 
     /**
@@ -70,6 +75,7 @@ export class CaseflowLobService {
       return { CaseflowLob, totalCount };
     } catch (err) {
       console.log(err);
+      return err;
     }
     }
 
@@ -112,7 +118,7 @@ export class CaseflowLobService {
 
     }
     catch(err){
-      throw new HttpException("something went wrong", HttpStatus.INTERNAL_SERVER_ERROR)
+      return new HttpException("something went wrong", HttpStatus.INTERNAL_SERVER_ERROR)
     }
 
   }
@@ -133,6 +139,7 @@ export class CaseflowLobService {
       return this.caseLobRepository.save(newCaseflowLob);
     } catch (err) {
       console.log(err);
+      return err;
     }
   }
 
@@ -156,6 +163,7 @@ export class CaseflowLobService {
         });
     } catch (err) {
       console.log(err);
+      return err;
     }
   }
 
@@ -176,6 +184,7 @@ export class CaseflowLobService {
       throw new NotFoundException(`Record cannot find by id ${id}`);
     } catch (err) {
       console.log(err);
+      return err;
     }
   }
 }

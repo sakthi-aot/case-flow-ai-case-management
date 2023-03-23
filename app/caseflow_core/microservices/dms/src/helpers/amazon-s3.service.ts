@@ -51,6 +51,7 @@ export class AmazonS3Service {
       return data
     } catch (err) {
       console.log(err);
+      return err
     }
   }
 }

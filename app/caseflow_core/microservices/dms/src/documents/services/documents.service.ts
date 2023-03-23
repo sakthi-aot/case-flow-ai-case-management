@@ -40,6 +40,7 @@ export class DocumentsService {
     });
   } catch (err) {
     console.log(err);
+    return err;
   }
   }
 
@@ -64,11 +65,12 @@ export class DocumentsService {
       }
       const data=await this.versionService.create(versionData);
     }else{
-      console.log("Error in doc upload");
+      throw new HttpException("Error in doc upload",HttpStatus.INTERNAL_SERVER_ERROR);
     }
       return docData;
     } catch (err) {
       console.log(err);
+      return err;
     }
   }
 
@@ -88,7 +90,8 @@ export class DocumentsService {
       },
        );           
     }catch(err){
-      console.log(err)
+      console.log(err);
+      return err;
     }
   }
 
@@ -99,10 +102,12 @@ export class DocumentsService {
     return this.documentRepository.update(id,updateCaseInput)
     .then( ()=> this.findOne(id))
     .catch( (e) => {
-      console.error(e.message)
+      console.error(e.message);
+      throw new HttpException("Error in document update",HttpStatus.INTERNAL_SERVER_ERROR);
     })
   } catch (err) {
     console.log(err);
+    return err;
   }
   }
 
@@ -124,6 +129,7 @@ export class DocumentsService {
     throw new NotFoundException(`Record cannot find by id ${id}`);
   } catch (err) {
     console.log(err);
+    return err;
   }
   }
 
@@ -158,6 +164,7 @@ export class DocumentsService {
     // return {output,count}
   } catch (err) {
     console.log(err);
+    return err;
   }
   }
 /**
@@ -202,8 +209,8 @@ export class DocumentsService {
 
     }
     catch(err){
-      console.log(err)
-      throw new HttpException("something went wrong", HttpStatus.INTERNAL_SERVER_ERROR)
+      console.log(err);
+      return new HttpException("something went wrong", HttpStatus.INTERNAL_SERVER_ERROR)
     }
 
   }
