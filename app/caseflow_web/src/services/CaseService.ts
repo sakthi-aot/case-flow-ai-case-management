@@ -206,7 +206,9 @@ import { toDate } from 'date-fns';
           Skip:skip,
           Take:Number(PAGINATION_TAKE),
           orderBy:orderBy,
-          orderType:  orderType ? "DESC" : "ASC"
+          orderType:  orderType ? "DESC" : "ASC",
+          fromDate: fromDate && fromDate.$d ? moment(fromDate.$d).format('YYYY-MM-DD') :'',
+          toDate: toDate && toDate.$d ? moment(toDate.$d).format('YYYY-MM-DD') :moment().format('YYYY-MM-DD')
         },
       },null)
         .then((res) => {        
