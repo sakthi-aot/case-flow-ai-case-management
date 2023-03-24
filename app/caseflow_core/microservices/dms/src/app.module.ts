@@ -19,11 +19,6 @@ const keyCloakOptionsProvider =  {
   provide: 'keyCloakDataProvider',
   useFactory: (config: ConfigService) => {
     return {
-      // authServerUrl: "https://caseflow-idm.aot-technologies.com:8443/auth",
-      // realm: "caseflow",
-      // clientId: "case-flow-nest",
-      // secret: "Qhvu0sBg15UsiplYL5msFVqjzyOVaxRr"
-
       authServerUrl: config.get('KEYCLOCK_AUTH_URL'),
       realm: config.get('KEYCLOCK_REALM'),
       clientId: config.get('KEYCLOCK_CLIENT_ID'),
@@ -48,12 +43,6 @@ const keyCloakOptionsProvider =  {
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
       type: 'postgres',
-
-      // host: 'caseflowdev.ccizdidwz3tj.ca-central-1.rds.amazonaws.com',
-      // port: 5432,
-      // username: 'postgres',
-      // password: '0DhoxLWL5HlS27WjLkUL',
-      // database: 'caseflow_core',
 
       host: config.get('POSTGRESQL_HOST') || 'caseflowdev.ccizdidwz3tj.ca-central-1.rds.amazonaws.com',
       port: parseInt(config.get('POSTGRESQL_PORT')) || 5432,

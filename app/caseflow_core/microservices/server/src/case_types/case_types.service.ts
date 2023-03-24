@@ -7,11 +7,11 @@ import { CaseTypes } from './entities/case_type.entity';
 
 @Injectable()
 export class CaseTypesService {
-
   constructor(
-    @InjectRepository(CaseTypes) private caseTypesRepository: Repository<CaseTypes>
+    @InjectRepository(CaseTypes)
+    private caseTypesRepository: Repository<CaseTypes>,
   ) {}
-  
+
   create(createCaseTypeInput: CreateCaseTypeInput) {
     return 'This action adds a new caseType';
   }
@@ -19,8 +19,9 @@ export class CaseTypesService {
   findAll() {
     try {
       return this.caseTypesRepository.find({});
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   }
 
@@ -30,16 +31,22 @@ export class CaseTypesService {
 
   async update(id: number, updateCaseTypeInput: UpdateCaseTypeInput) {
     try {
-      return await this.caseTypesRepository.update(id, updateCaseTypeInput).then(() => {
-        return this.caseTypesRepository.findOne({
-          where: {
-            id: id,
-          }}).catch((err) => {
-          throw new HttpException(err.response, HttpStatus.NOT_FOUND);
+      return await this.caseTypesRepository
+        .update(id, updateCaseTypeInput)
+        .then(() => {
+          return this.caseTypesRepository
+            .findOne({
+              where: {
+                id: id,
+              },
+            })
+            .catch((err) => {
+              throw new HttpException(err.response, HttpStatus.NOT_FOUND);
+            });
         });
-      });
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   }
 

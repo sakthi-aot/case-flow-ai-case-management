@@ -18,8 +18,8 @@ export class AmazonS3Service {
         { Bucket: this.bucket, Key: documentId }
       ).promise();
       return data.Body ? (data.Body) : new NotFoundException("No item Found")
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
       return new NotFoundException("No item Found")
     }
   }
@@ -27,8 +27,8 @@ export class AmazonS3Service {
   // summery : Upload File to S3
   // Created By : Don C Varghese
   async uploadDocument(data: any, fileName: string): Promise<any> {
+    try {
     let base64data = new Buffer(data.buffer, 'binary');
-
     return await this.s3
       .upload({
         Bucket: this.bucket,
@@ -36,6 +36,10 @@ export class AmazonS3Service {
         Key: `${uuid()}-${fileName}`,
       })
       .promise();
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   }
 
   async deleteDocument(documentId: string): Promise<any> {
@@ -48,10 +52,10 @@ export class AmazonS3Service {
           }
         },
       ).promise();
-      return data
-    } catch (err) {
-      console.log(err);
-      return err
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   }
 }

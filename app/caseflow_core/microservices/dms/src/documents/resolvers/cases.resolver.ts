@@ -13,7 +13,7 @@ constructor(private readonly documentService:DocumentsService){}
 
 @ResolveField((of)=>caseDocumentResponse)
 public async documents(@Parent() cases:Cases,@Args() args: FetchArgs):Promise<caseDocumentResponse>{
-   const output =await this.documentService.forCases(args,cases.id);
-   return output 
+   const output = await this.documentService.forCases(args,cases.id);
+   return output;
 }
 }

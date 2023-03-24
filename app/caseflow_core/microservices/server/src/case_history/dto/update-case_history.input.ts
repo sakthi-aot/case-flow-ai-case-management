@@ -6,7 +6,9 @@ import { IsNotEmpty, IsNumber } from 'class-validator';
  * Created By : Akhila U S
  */
 @InputType()
-export class UpdateCaseHistoryInput extends PartialType(CreateCaseHistoryInput) {
+export class UpdateCaseHistoryInput extends PartialType(
+  CreateCaseHistoryInput,
+) {
   @Field(() => Int)
   @IsNumber()
   @IsNotEmpty()

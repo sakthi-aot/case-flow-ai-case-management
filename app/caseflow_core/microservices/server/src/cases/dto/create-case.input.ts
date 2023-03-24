@@ -1,5 +1,12 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
-import { IsArray, IsBoolean, IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsBoolean,
+  IsDate,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+} from 'class-validator';
 
 /**
  * Summary :  Create input DTO for Cases
@@ -62,5 +69,4 @@ export class CreateCaseInput {
 
   @Field({ nullable: true })
   lobcaseid: number;
-
 }

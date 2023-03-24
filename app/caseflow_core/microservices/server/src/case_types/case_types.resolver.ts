@@ -9,7 +9,9 @@ export class CaseTypesResolver {
   constructor(private readonly caseTypesService: CaseTypesService) {}
 
   @Mutation(() => CaseTypes)
-  createCaseType(@Args('createCaseTypeInput') createCaseTypeInput: CreateCaseTypeInput) {
+  createCaseType(
+    @Args('createCaseTypeInput') createCaseTypeInput: CreateCaseTypeInput,
+  ) {
     return this.caseTypesService.create(createCaseTypeInput);
   }
 
@@ -24,8 +26,13 @@ export class CaseTypesResolver {
   }
 
   @Mutation(() => CaseTypes)
-  updateCaseType(@Args('updateCaseTypeInput') updateCaseTypeInput: UpdateCaseTypeInput) {
-    return this.caseTypesService.update(updateCaseTypeInput.id, updateCaseTypeInput);
+  updateCaseType(
+    @Args('updateCaseTypeInput') updateCaseTypeInput: UpdateCaseTypeInput,
+  ) {
+    return this.caseTypesService.update(
+      updateCaseTypeInput.id,
+      updateCaseTypeInput,
+    );
   }
 
   @Mutation(() => CaseTypes)

@@ -19,12 +19,11 @@ export class UpdateCaseTypeInput extends PartialType(CreateCaseTypeInput) {
   @IsNotEmpty()
   displayname: string;
 
+  @Field({ nullable: true })
+  caseextrafields: number | null;
 
   @Field({ nullable: true })
-  caseextrafields: number|null;
-
-  @Field({ nullable: true })
-  lobfields: number|null;
+  lobfields: number | null;
 
   @Field()
   @IsNumber()
@@ -35,5 +34,5 @@ export class UpdateCaseTypeInput extends PartialType(CreateCaseTypeInput) {
 
   @Field({ nullable: true })
   @IsString()
-  formid: string |null;
+  formid: string | null;
 }

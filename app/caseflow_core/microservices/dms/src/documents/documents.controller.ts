@@ -3,7 +3,6 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { Express, Response as ExpressResponse } from 'express';
 //_____________________Custom Imports_____________________//
 import { FileService } from '../helpers/file.service';
-
 import { DocumentsService } from './services/documents.service';
 import { TransformService } from '../helpers/transform.service';
 import { JoiValidationPipe } from 'src/pipes/joi-validation.pipe';
@@ -16,7 +15,6 @@ export class DocumentsController {
     private documentService: DocumentsService,
   ) {}
   @Post('/uploadDocument')
-  // @MessagePattern({ cmd: 'create_document' })
    @UseInterceptors(FileInterceptor('file'))
   async uploadDocument(
     @UploadedFile() file: Express.Multer.File,@Body(new JoiValidationPipe(createDocumentSchema)) body,@Headers () auth) {
@@ -28,22 +26,21 @@ export class DocumentsController {
       documentDetails,
       body,
     );
-    const datamew = this.documentService.createDocument(formattedDocument);
-    return datamew
-  } catch (err) {
-    console.log(err.message);
-    return err
+    const data = this.documentService.createDocument(formattedDocument);
+    return data;
+  } catch (error) {
+    console.log(error.message);
+    return error;
   }
   }
 
   @Put()
-  // @MessagePattern({ cmd: 'edit_document' })
   @UseInterceptors(FileInterceptor('file'))
   async editDocument(@UploadedFile() file: Express.Multer.File,@Body(new JoiValidationPipe(updateDocumentSchema)) body,@Headers () auth,) {
     try {
       const document = await this.documentService.findOne(parseInt(body.id));
       const token=auth?.authorization
-      if(!document.isdeleted) {
+      if(document && !document.isdeleted) {
         let documentDetails = await (body.file && document && body.dmsprovider
           ? this.fileService.updateFile(body.file, body,document, body.dmsprovider,token)
           : null);
@@ -53,21 +50,19 @@ export class DocumentsController {
           documentDetails,
           body,
         );
-        console.log('document', formattedDocument);
         return this.documentService.update(body.id, document);
       }
       else {
         return new NotFoundException("No file found to update")
       }
 
-    } catch (err) {
-      console.log(err.message);
-      return err;
+    } catch (error) {
+      console.log(error.message);
+      return error;
     }
   }
 
   @Get("/download")
-  // @MessagePattern({ cmd: 'fetch_document' })
   async fetchDocument(@Query(new JoiValidationPipe(downloadDocumentSchema))param,@Response() res: ExpressResponse,@Headers () auth) {
     const token=auth?.authorization;
     try {   
@@ -97,7 +92,6 @@ export class DocumentsController {
   }
 
   @Delete("/delete")
-  // @MessagePattern({ cmd: 'delete_document' })
   async DeleteDocument(@Query(new JoiValidationPipe(deleteDocumentSchema))param) {
     try {
       let field = await this.documentService.findOne(parseInt(param.id));

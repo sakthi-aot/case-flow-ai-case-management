@@ -9,18 +9,19 @@ const FormData = require('form-data');
 export class AlfrescoService {
   constructor(private readonly configService: ConfigService,private readonly httpService: HttpService) {}
 
-  // Summary : Upload File to S3
+  // Summary : Upload File to Alfresco
   // Created By : Don C Varghese
   async uploadDocument(file: any, data: any,token:string):  Promise<any>  {
   //  console.log(file,data);
-   let body = this.mapAlfrescoForm(file,data)
+  try{
+   let body = this.mapAlfrescoForm(file,data);
    const headersRequest = {
     'Content-Type': 'multipart/form-data',
     "Authorization": token ,
-};
+   };
  
     const url = this.configService.get('ALFRESCO_REPO_URL') + "/1/nodes/-root-/children"
-    try{
+    
       let response = await firstValueFrom(this.httpService.post(url,body,{
         headers : headersRequest
       
@@ -28,17 +29,18 @@ export class AlfrescoService {
       
       return response.data;
     }
-    catch(err){
- console.log(err);
+    catch(error){
+    console.log(error);
+    throw error;
     }
    
    
   }
 
-  // Summary : Upload File to S3
+  // Summary : Upload File to Alfresco
   // Created By : Don C Varghese
   async updateDocument(file: any,documnet : any,data: any,token:string):  Promise<any>  {
-  
+    try{
    let body = new Buffer(file.buffer ? file.buffer : file);
    const headersRequest = {
     "Authorization": token ,
@@ -49,7 +51,7 @@ export class AlfrescoService {
     "name" : data.name,
     "cm:description" : data.desc
   }
-    try{
+    
       let response = await firstValueFrom(this.httpService.put(url,body,{
         
         headers : headersRequest,
@@ -59,14 +61,15 @@ export class AlfrescoService {
      
       return response;
     }
-    catch(err){
- console.log(err);
+    catch(error){
+ console.log(error);
+ throw error;
     }
    
    
   }
 
-    // Summary : Get  File from afresco
+    // Summary : Get  File from Afresco
   // Created By : Don C Varghese
   async getDocument(documentId: string,token:string): Promise<any> {
     try{
@@ -77,14 +80,15 @@ export class AlfrescoService {
     })
     .then(response => Buffer.from(response.data, 'binary'))
     }
-    catch(err){
-    console.log(err);
+    catch(error){
+    console.log(error);
+    throw error;
     }
 
     
   }
 
-    // Summary : Delete  File from afresco
+    // Summary : Delete  File from Afresco
   // Created By : Don C Varghese
   async deleteDocument(documentId: string,token:string): Promise<any> {
     try{
@@ -99,8 +103,9 @@ export class AlfrescoService {
     
       return response;
     }
-    catch(err){
-      return err;
+    catch(error){
+      console.log(error);
+      throw error;
     }
 
     
