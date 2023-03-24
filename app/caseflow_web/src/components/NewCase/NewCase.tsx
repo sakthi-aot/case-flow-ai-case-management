@@ -167,18 +167,15 @@ const handleBack = ()=>{
 
 
 const getForm = async () =>{
-  // if(selectedForm){
-    // const formsList = await getFormsListByName(form);
-    if(selectedCaseType){
+ 
+    if(selectedCaseType && !isEdit){
     const formDetails  = await getFormDetails(selectedCaseType);
     setSelectedFormDetails(formDetails)
   } 
-  else{
+  else if(!selectedCaseType && !isEdit){
     setOpenPopup(true);
   }
  
-
-  // }
 }
 const submitForm = (data) => {
               
