@@ -13,8 +13,8 @@ query{
 }`
 
 export const SEARCH_DOCUMENT_LIST = gql`
-query SearchCaseDocument($searchField:String!,$searchColumn:String!,$orderBy:String!,$orderType:String!,$skip:Int!,$take:Int!){
-  SearchCaseDocument(searchField:$searchField,searchColumn:$searchColumn,orderBy:$orderBy,orderType:$orderType,skip:$skip,take:$take){
+query SearchCaseDocument($searchField:String!,$searchColumn:String!,$orderBy:String!,$orderType:String!,$skip:Int!,$take:Int!,$fromDate:String!,$toDate:String!){
+  SearchCaseDocument(searchField:$searchField,searchColumn:$searchColumn,orderBy:$orderBy,orderType:$orderType,skip:$skip,take:$take,fromDate:$fromDate,toDate:$toDate){
     CaseDocuments{
       id,
       name,

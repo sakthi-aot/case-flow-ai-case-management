@@ -25,6 +25,7 @@ export class TransformService {
             latestversion: document.VersionId,
             isdeleted: false,
             type : data?.type,
+            size : data?.size,
           };
        
         

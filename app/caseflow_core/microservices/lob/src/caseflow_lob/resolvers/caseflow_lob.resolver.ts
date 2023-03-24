@@ -43,7 +43,7 @@ export class CaseflowLobResolver {
      @Args() args: FetchSearchArgs     
       ): Promise<any> | HttpException{
  
-     return this.caseflowLobService.searchCaseflowLob(args.searchField,args.searchColumn,args.skip,args.take);
+     return this.caseflowLobService.searchCaseflowLob(args.searchField,args.searchColumn,args.skip,args.take,args.fromDate,args.toDate);
    }
 
    

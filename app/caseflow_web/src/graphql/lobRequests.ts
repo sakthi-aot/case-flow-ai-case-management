@@ -17,8 +17,8 @@ query getLobById($Id:Int!){
 
 
 export const FETCH_ALL_LOB_DATA= gql`
-query getLobDetails($Skip:Int!,$Take:Int!,$SearchField:String!,$SearchColumn:String! ){
-  searchCaseflowLob(searchField:$SearchField,searchColumn:$SearchColumn,skip:$Skip,take:$Take){
+query getLobDetails($Skip:Int!,$Take:Int!,$SearchField:String!,$SearchColumn:String!,$fromDate:String!,$toDate:String! ){
+  searchCaseflowLob(searchField:$SearchField,searchColumn:$SearchColumn,skip:$Skip,take:$Take,fromDate:$fromDate,toDate:$toDate){
     totalCount,
     CaseflowLob{  
       id,   

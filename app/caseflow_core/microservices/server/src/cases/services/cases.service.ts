@@ -167,9 +167,10 @@ export class CasesService {
    * @returns 
    */
   
-   async searchCase(searchField,searchColumn,skip,take,orderBy ='id',orderType: 'ASC' |'DESC' = 'DESC'){
+   async searchCase(searchField,searchColumn,skip,take,orderBy ='id',orderType: 'ASC' |'DESC' = 'DESC',fromDate,toDate){
     orderBy = 'table.' + orderBy;
     try{
+      if(fromDate==='') fromDate = '2000-01-01'
     if(searchColumn){
       switch(searchColumn){ 
         case 'Description': {
@@ -181,7 +182,11 @@ export class CasesService {
         }
         default :
          const [Cases,totalCount] = await  (this.caseRepository.createQueryBuilder("table")
-        .where("LOWER(table.name) LIKE :title", { title: `%${ searchField.toLowerCase() }%` }) .orderBy({[orderBy]: orderType}).take(take).skip(skip)
+        .where("LOWER(table.name) LIKE :title", { title: `%${ searchField.toLowerCase() }%` }) 
+        .andWhere('table.creationdate >= :start_at', { start_at: fromDate})
+        .andWhere('table.creationdate <= :end_at', { end_at: toDate})
+      
+        .orderBy({[orderBy]: orderType}).take(take).skip(skip)
         .leftJoinAndSelect('table.casestatus', 'status')
         .leftJoinAndSelect('table.casestype', 'type')
         .getManyAndCount())
