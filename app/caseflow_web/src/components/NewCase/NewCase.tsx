@@ -10,7 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
-import {resetSelectedCase } from "../../reducers/newCaseReducer";
+import {resetSelectedCase, setSelectedCaseType } from "../../reducers/newCaseReducer";
 import "./NewCaseComponent.scss"
 import { FormControl, InputLabel, MenuItem, Paper, Select } from "@mui/material";
 import { fetchCaseTypess } from "../../services/constantsService";
@@ -21,6 +21,7 @@ import { createDraft, getFormDetails, getFormsList, getFormsListByName, submitNe
 import { getTaksByProcessInstanceId } from "../../services/workflowService";
 import { FORMSFLOW_APPLICATION_URL } from "../../apiManager/endpoints";
 import {Form as FormIOForm,saveSubmission,Formio } from 'react-formio'
+import CustomizedDialog from "../Dialog/Dialog";
 const NewCase = () => {
   
   const dispatch = useDispatch();
@@ -46,7 +47,8 @@ const { handleSubmit, control,register } = useForm();
 // const [caseList.isEdit,setIsCaseEdit] = useState(Boolean);
 const [selectedForm, setselectedForm]:any = useState("");
 const [selectedFormDetails, setSelectedFormDetails]:any = useState();
-
+const [selectedType,setSelectedType] = useState("");
+const [isOpenPopup,setOpenPopup] = useState(false);
 
   const onSubmit = async () => 
   {
@@ -128,8 +130,13 @@ const handleBack = ()=>{
 const getForm = async () =>{
   // if(selectedForm){
     // const formsList = await getFormsListByName(form);
+    if(selectedCaseType){
     const formDetails  = await getFormDetails(selectedCaseType);
     setSelectedFormDetails(formDetails)
+  } 
+  else{
+    setOpenPopup(true);
+  }
  
 
   // }
@@ -177,6 +184,17 @@ const submitForm = (data) => {
 
   });
  }
+ const onChangehandler= (event) =>{
+  setSelectedType(event.target.value)
+ 
+}
+const handleClosePopup= () =>{
+  setOpenPopup(false);
+}
+const selectForm = () =>{
+  dispatch(setSelectedCaseType(selectedType))
+  setOpenPopup(false);
+}
 
   //set values when document input fiels changes
   // const handleDocumentInputChange = (e) => {
@@ -184,6 +202,7 @@ const submitForm = (data) => {
   //   setValues({ ...values, [name]: value });
   // };
   return (
+    <>
     <div style={{ padding: "2rem 4rem 0rem 4rem" }} className="newOrupdateCaseBlock">
      
       {isEdit ?  
@@ -354,6 +373,49 @@ const submitForm = (data) => {
       </>}
       
     </div>
+       <CustomizedDialog title="Start New Case" isOpen={isOpenPopup} setIsOpen={setOpenPopup} handleClose={handleClosePopup} fullWidth>
+       <div className="workflow">
+    <FormControl sx={{ m: 1, minWidth: 90, }} size="small">
+                <InputLabel id="demo-simple-select-label">Select Case Type</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"          
+                  label="Age" 
+                  value={selectedType}   
+                  onChange={onChangehandler}   
+                  className="dropDownStyle"   
+                >
+                
+                   {caseTypes.map((option,index) => <MenuItem key={index}  value={option.formid}>{option.displayname}</MenuItem>)}                 
+                </Select>
+            </FormControl>
+            <div  className="case-type-buttons">
+                <FormControl>
+                <Button
+                variant="contained"
+                sx={{backgroundColor:'secondary.main',borderColor:'primary.secondary'}}
+                onClick={handleClosePopup}
+                
+              >
+               Cancel
+              </Button>
+                </FormControl>
+                <FormControl>
+            
+            <Button
+                variant="contained"
+                sx={{backgroundColor:'primary.main',borderColor:'primary.main'}}
+                onClick={selectForm}
+                
+              >
+              Continue
+              </Button>
+            </FormControl>
+            </div>
+           
+            </div>
+    </CustomizedDialog>
+    </>
   );
 };
 
