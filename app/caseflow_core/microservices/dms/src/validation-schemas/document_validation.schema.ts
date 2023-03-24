@@ -8,6 +8,7 @@ export const createDocumentSchema = Joi.object({
   metaData: Joi.string().required(),
   name: Joi.string().required(),
   type: Joi.string(),
+  size: Joi.number().required(),
 });
 
 export const updateDocumentSchema = Joi.object({
@@ -18,6 +19,7 @@ export const updateDocumentSchema = Joi.object({
   metaData: Joi.string().required(),
   name: Joi.string().required(),
   type: Joi.string(),
+  size: Joi.number().required(),
 });
 
 

@@ -197,6 +197,8 @@ useEffect(() => {
         </TableHead>
         <TableBody>
           {docDetail.map((row:any,index) => (
+            // console.log(row)
+            // console.log(row.size)
             <TableRow
             key={row.id}
             >
@@ -206,7 +208,7 @@ useEffect(() => {
                 previewDocument(row.id,row.type)
               }
               } component="th" scope="row">{row.name}</TableCell>
-              <TableCell sx={{borderBottom:1,borderBottomColor:'#E2E2E2',paddingLeft:0}} align="left">{row.size ? row.size : "1kb"}</TableCell>
+              <TableCell sx={{borderBottom:1,borderBottomColor:'#E2E2E2',paddingLeft:0}} align="left">{row.size ? `${(row.size/1024/1024).toFixed(2)} Mb` : ""}</TableCell>
               <TableCell sx={{borderBottom:1,borderBottomColor:'#E2E2E2',paddingLeft:0}} align="left">{moment(row.creationdate).format('MMMM Do YYYY , h:mm:ss a')}</TableCell>
               <TableCell sx={{borderBottom:1,borderBottomColor:'#E2E2E2',paddingLeft:0}} align="left">{moment(row.creationdate).format('MMMM Do YYYY , h:mm:ss a')}</TableCell>
               <TableCell sx={{borderBottom:1,borderBottomColor:'#E2E2E2',paddingLeft:0}} align="left">{ getLatestVersion(row.versions)}</TableCell>

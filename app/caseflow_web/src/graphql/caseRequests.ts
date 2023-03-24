@@ -29,6 +29,7 @@ query getCase($CaseId:Int!,$Skip:Int,$Take:Int){
       latestversion,
       creationdate,
       type,
+      size,
       versions{
           versions
         }
