@@ -58,7 +58,7 @@ export class CasesResolver {
      @Args() args: FetchSearchArgs     
       ): Promise<any> | HttpException{
  
-     return this.casesService.searchCase(args.searchField,args.searchColumn,args.skip,args.take,args.orderBy,args.orderType);
+     return this.casesService.searchCase(args.searchField,args.searchColumn,args.skip,args.take,args.orderBy,args.orderType,args.fromDate,args.toDate);
    }
 
    

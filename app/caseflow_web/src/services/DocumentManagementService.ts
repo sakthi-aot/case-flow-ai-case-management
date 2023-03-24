@@ -9,6 +9,7 @@ import {API, GRAPHQL} from "../apiManager/endpoints";
 import { FETCH_DOCUMENTS,SEARCH_DOCUMENT_LIST } from "../graphql/documentsRequests";
 import { print } from "graphql";
 import { PAGINATION_TAKE } from "../apiManager/endpoints/config";
+import moment from "moment";
 // export const getDocumetById = (documentId) => {
 //   return (dispatch) => {
 //     const url = API.DMS_API + "download?id=" + documentId;
@@ -74,7 +75,7 @@ export const deleteDocument = async (id) => {
   return data;
 }
 
-export const searchCaseDocument= async (searchField,searchColumn,orderBy ="id",orderType =true,selectedPage) => {
+export const searchCaseDocument= async (searchField,searchColumn,orderBy ="id",orderType =true,selectedPage,fromDate,toDate) => {
   const url = GRAPHQL;
   const  skip =(selectedPage-1)*Number(PAGINATION_TAKE)
   const  output =  await httpPOSTRequest(url,{query: print(SEARCH_DOCUMENT_LIST),
@@ -84,7 +85,10 @@ export const searchCaseDocument= async (searchField,searchColumn,orderBy ="id",o
       orderBy:orderBy,
       orderType:  orderType ? "DESC" : "ASC",
       skip:skip,
-      take:Number(PAGINATION_TAKE)
+      take:Number(PAGINATION_TAKE),
+      fromDate: (fromDate && fromDate.$d) ? moment(fromDate.$d).format('YYYY-MM-DD') :'',
+      toDate: (toDate && toDate.$d) ? moment(toDate.$d).format('YYYY-MM-DD') :moment().format('YYYY-MM-DD')
+
     },
   },null)
     .then((res) => {return (res.data.data.SearchCaseDocument) })

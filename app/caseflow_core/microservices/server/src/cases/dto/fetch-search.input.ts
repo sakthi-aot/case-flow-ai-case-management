@@ -13,6 +13,14 @@ export class FetchSearchArgs {
 
   @Field(() => String)  
   @IsString()
+  fromDate 
+
+  @Field(() => String)  
+  @IsString()
+  toDate 
+
+  @Field(() => String)  
+  @IsString()
   orderBy 
 
   @Field(() => String)  

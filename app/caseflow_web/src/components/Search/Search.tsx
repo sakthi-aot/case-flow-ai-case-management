@@ -110,7 +110,8 @@ console.log(dropDownValues)
       <Typography variant="caption"  sx={{ paddingBottom:10 ,fontSize: 8}}>
           {dropDownValues?.totalCount} search results
      </Typography>
-      {dropDownValues?.searchResult?.map((eachValue) => (
+     <Box sx={{overflow:"auto",height:"40vh"}}>  
+          {dropDownValues?.searchResult?.map((eachValue) => (
            <Grid container  key={eachValue.title}>
                        <Grid item xs={0.5} >
            <img
@@ -137,6 +138,8 @@ console.log(dropDownValues)
      </Grid>
            </Grid>
         ))}
+        </Box>
+
     
 
 

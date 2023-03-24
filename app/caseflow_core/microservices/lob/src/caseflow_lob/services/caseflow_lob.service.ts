@@ -87,19 +87,27 @@ export class CaseflowLobService {
    * @returns 
    */
   
-   async searchCaseflowLob(searchField,searchColumn,skip,take){   
+   async searchCaseflowLob(searchField,searchColumn,skip,take,fromDate,toDate){   
     try{
+      if(fromDate==='') fromDate = '2000-01-01'
+
     if(searchColumn ){
       if(searchField.length !== 0){
         switch(searchColumn){ 
           case 'policyNumber': {
             const [CaseflowLob,totalCount] =await this.caseLobRepository.createQueryBuilder("table")
-            .where("table.policyNumber = :policyNumber", { policyNumber:searchField }).orderBy({'table.id': 'DESC'}).take(take).skip(skip)
+            .where("table.policyNumber = :policyNumber", { policyNumber:searchField })
+            .andWhere('table.createdDate >= :start_at', { start_at: fromDate})
+            .andWhere('table.createdDate <= :end_at', { end_at: toDate})
+
+            .orderBy({'table.id': 'DESC'}).take(take).skip(skip)
             .getManyAndCount()
             return  {CaseflowLob,totalCount};
           }
           default :
            const [CaseflowLob,totalCount] = await  (this.caseLobRepository.createQueryBuilder("table")
+           .andWhere('table.createdDate >= :start_at', { start_at: fromDate})
+           .andWhere('table.createdDate <= :end_at', { end_at: toDate})
           .orderBy({'table.id': 'DESC'}).take(take).skip(skip)
           .getManyAndCount())
           return {CaseflowLob,totalCount}
@@ -107,7 +115,10 @@ export class CaseflowLobService {
 
       }else{
         const [CaseflowLob,totalCount] = await  (this.caseLobRepository.createQueryBuilder("table")
+        .andWhere('table.createdDate >= :start_at', { start_at: fromDate})
+        .andWhere('table.createdDate <= :end_at', { end_at: toDate})
           .orderBy({'table.id': 'DESC'}).take(take).skip(skip)
+        
           .getManyAndCount())
           return {CaseflowLob,totalCount}
       }

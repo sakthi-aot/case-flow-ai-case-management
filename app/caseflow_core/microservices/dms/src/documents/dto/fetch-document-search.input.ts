@@ -8,6 +8,12 @@ export class FetchDocumentSearchInput {
   @Field(() => String)  
   searchColumn 
 
+  @Field(() => String)  
+  toDate 
+
+  @Field(() => String)  
+  fromDate 
+
   @Field(() => Int)  
   skip = 0
 
