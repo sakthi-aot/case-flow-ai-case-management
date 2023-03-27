@@ -246,7 +246,7 @@ const selectForm = () =>{
        <Typography sx={{ padding: "1rem 1rem 1rem 1rem" }} variant="h6" className="case-heading">
       {isEdit?"Update Case":"New Case"}  
       </Typography>
-      <Divider sx={{ borderBottomWidth: 3 }} />
+      <Divider sx={{ borderBottomWidth: 3 , width:"75vw" }} />
       <Grid container spacing={3} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
         <Grid item xs={4}>
           <Typography sx={{ padding: "1rem 1rem 0rem 0rem" }} variant="body2" className="case-name-tag">
@@ -399,7 +399,7 @@ const selectForm = () =>{
       </Typography>
         </Grid>
       
-        <Divider sx={{ borderBottomWidth: 3 ,width :"95rem" }} />
+        <Divider sx={{ borderBottomWidth: 3 ,width :"75vw" }} />
       </Grid>
       <div className="form-io">
       { selectedFormDetails? <FormIOForm form={selectedFormDetails}   submission={undefined} onSubmit={(data)=>submitForm(data)}/> :    <Typography variant='body1' className="no-details-found">
