@@ -33,7 +33,7 @@ import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
 import { addWorkflowCaseHistory, getTaksByCaseId, getTaksByProcessInstanceId, getWorkflowList, startNewWorkflow, updateTaksById } from "../../services/workflowService";
 import { Button, Divider, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import LobCustom from "./LobCustom/LobCustom";
-import { createDraft, getFormDetails, getFormsList, submitNewForm,submitNewFormDraft } from "../../services/formsService";
+import { createDraft, getFormDetailsById, getFormsList, submitNewForm,submitNewFormDraft } from "../../services/formsService";
 import {Form as FormIOForm,saveSubmission,Formio } from 'react-formio'
 import { FORMSFLOW_APPLICATION_URL } from "../../apiManager/endpoints";
 
@@ -263,7 +263,7 @@ const [selectedFormDetails, setSelectedFormDetails]:any = useState();
 
   const selectForm = async () =>{
     if(selectedForm){
-      const formDetails  = await getFormDetails(selectedForm);
+      const formDetails  = await getFormDetailsById(selectedForm);
       setSelectedFormDetails(formDetails)
       setOpenFormIOPopup(true)
 
@@ -342,16 +342,30 @@ const submitForm = (data) => {
     if(draftId){
       return submitNewFormDraft(submissionData,draftId)
     }
-  }).then(data =>{
-     return getTaksByProcessInstanceId(data.processInstanceId)
-
+  }).then(async (data) =>{
+    if(data && data.applicationStatus == "Completed"){
+      toast.success("New workflow started successfully");
+      setOpenWorkflowPopup(false);
+      setOpenFormIOPopup(false);
+      fetchRealtedTasks();
+      setSelected(0);
+      await addWorkflowCaseHistory(selectedCase.id)
+      await fetchCaseHistory(selectedCase.id)
+    }
+    else{
+      return getTaksByProcessInstanceId(data.processInstanceId)
+    }
+     
   }).then(tasks =>{
+    
+    if(tasks){
     let task = tasks[0];
+    if(task){
     task.caseInstanceId = selectedCase.id;
-    return updateTaksById(task.id,task)
+    return updateTaksById(task.id,task)}}
 
   }).then( async(updatedTask) =>{
-
+    if(updatedTask){
     if(updatedTask["status"] == 204){
       toast.success("New workflow started successfully");
       setSelected(0);
@@ -363,7 +377,7 @@ const submitForm = (data) => {
     }
     else{
       toast.success("Failed to  start the workflow. Please try again!");
-    }
+    }}
 
   })
 
