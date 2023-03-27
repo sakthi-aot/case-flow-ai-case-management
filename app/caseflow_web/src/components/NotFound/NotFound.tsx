@@ -26,19 +26,20 @@ const NotFound = () => {
             <div className="inner_text">
               <Typography className="title">404</Typography>
               <Typography className="sub-title">Page Not Found</Typography>
-              <Typography className="text">The page you requested could not be found</Typography>
+              <Typography className="text">
+                The page you requested could not be found
+              </Typography>
               <div className="buttons">
                 <Button
                   component={Link}
                   to="/"
                   style={{
                     color: "#404040",
-                    border:"1px solid #404040"
+                    border: "1px solid #404040",
                   }}
                   variant="outlined"
                 >
-                  <Typography variant='body1'>Go Home</Typography>
-                  
+                  <Typography variant="body1">Go Home</Typography>
                 </Button>
               </div>
             </div>

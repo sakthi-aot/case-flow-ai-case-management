@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import Search from "../Search/Search";
 import "./dashboard.scss";
 import CaseList from "../CaseList/CaseList";
@@ -10,59 +10,60 @@ const caseListProps = {
   title: "Recent Cases",
   count: 5,
   isShowSort: false,
-  pagination:false
+  pagination: false,
 };
 
-
-const Dashboard = () =>
-  {
+const Dashboard = () => {
   const [recentCases, setrecentCases] = useState([]);
 
-    const recentCaseList = async () => {
-      let recentCases = await fetchRecentCaseList();
-      recentCases = recentCases.filter((element,index) => {
-        return index < 5;
-      });
-      setrecentCases(recentCases)
-    };
-  
-  
-  
-    useEffect(() => {
-      recentCaseList()
-    }, []);
-    // useEffect(() => {
-      // getRecentCases({}, (err, res) => {
-      //   // const {token } = res;
-      //   // dispatch(setAuthToken(token));
-      //   // dispatch(setAuthenticated(true));
-      //   // });
-      // });
-    // });
-    const [filteredCaseDetails, setFilteredCaseDetails] = useState([]);
-    const [searchField, setSearchField] = useState("");
-    const [searchColumn, setSearchColumn] = useState("name");
-    const [dropDownArray, setdropDownArray] = useState(['Name', "Description"]);
-    return (
-      <div className="dashboard">
-      <div className="header-search">
-      <Typography variant="body1" className="title">CaseFlow</Typography>
-      <div className="search">
-        <Search
-         setSearchField={setSearchField}
-         dropDownArray={dropDownArray}
-         setSearchColumn={setSearchColumn}
-        ></Search>
-      </div>
-      </div>
-        <div className="recent-cases">
-          <CaseList config={caseListProps} allRecentCases ={recentCases} ></CaseList>
-        </div>
-        <div className="my-task">
-          <MyTask></MyTask>
-        </div>
-      </div>
-    );
+  const recentCaseList = async () => {
+    let recentCases = await fetchRecentCaseList();
+    recentCases = recentCases.filter((element, index) => {
+      return index < 5;
+    });
+    setrecentCases(recentCases);
   };
+
+  useEffect(() => {
+    recentCaseList();
+  }, []);
+  // useEffect(() => {
+  // getRecentCases({}, (err, res) => {
+  //   // const {token } = res;
+  //   // dispatch(setAuthToken(token));
+  //   // dispatch(setAuthenticated(true));
+  //   // });
+  // });
+  // });
+  const [filteredCaseDetails, setFilteredCaseDetails] = useState([]);
+  const [searchField, setSearchField] = useState("");
+  const [searchColumn, setSearchColumn] = useState("name");
+  const [dropDownArray, setdropDownArray] = useState(["Name", "Description"]);
+  return (
+    <div className="dashboard">
+      <div className="header-search">
+        <Typography variant="body1" className="title">
+          CaseFlow
+        </Typography>
+        <div className="search">
+          <Search
+            setSearchField={setSearchField}
+            dropDownArray={dropDownArray}
+            setSearchColumn={setSearchColumn}
+          ></Search>
+        </div>
+      </div>
+      <div className="recent-cases">
+        <CaseList
+          config={caseListProps}
+          allRecentCases={recentCases}
+        ></CaseList>
+      </div>
+      <div className="my-task">
+        <MyTask></MyTask>
+      </div>
+    </div>
+  );
+};
 
 export default Dashboard;

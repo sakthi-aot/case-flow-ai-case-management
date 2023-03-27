@@ -11,12 +11,14 @@ import FileViewer from "react-file-viewer";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
-import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
-import Box from '@mui/material/Box';
+import LinearProgress, {
+  LinearProgressProps,
+} from "@mui/material/LinearProgress";
+import Box from "@mui/material/Box";
 import { v4 as uuidv4 } from "uuid";
 
 import { store } from "../../interfaces/stateInterface";
-import {CASEFLOW_DMS} from "../../constants/constants"
+import { CASEFLOW_DMS } from "../../constants/constants";
 
 const Upload = (props) => {
   //inital fields values for the documents
@@ -68,9 +70,9 @@ const Upload = (props) => {
       content: content,
     };
   }
-  let selectedCase =  useSelector((state:store)=>state.cases.selectedCase);
-  const progress = useSelector((state:store)=>state.app.progressBarStatus);
-  
+  let selectedCase = useSelector((state: store) => state.cases.selectedCase);
+  const progress = useSelector((state: store) => state.app.progressBarStatus);
+
   const handleChanges = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
@@ -106,7 +108,6 @@ const Upload = (props) => {
   //   });
   //   dispatch(setDocumentList(output));
   // }
-  
 
   // set and show  the uploaded file details
   const showPreview = (e) => {
@@ -138,31 +139,27 @@ const Upload = (props) => {
     if (values.documentID == 0) {
       // check with docid exist or not id documentID=0 insert opertaion work
       setSubmitted(true);
-      
-      let bodyFormData = new FormData(); 
-     bodyFormData.append("file",values.file,values.fileName)
-     bodyFormData.append("name",values.fileName)
-     bodyFormData.append("desc",values.fileDescription)
-     bodyFormData.append("caseId",selectedCase.id)
-     bodyFormData.append("dmsprovider",CASEFLOW_DMS)
-     bodyFormData.append("metaData",JSON.stringify(inputFields))
-     bodyFormData.append("type",values.file.type)
-     bodyFormData.append("size",values.fileSize)
 
-      await uploadCMISfile(bodyFormData)
-      .then((response)=>{
+      let bodyFormData = new FormData();
+      bodyFormData.append("file", values.file, values.fileName);
+      bodyFormData.append("name", values.fileName);
+      bodyFormData.append("desc", values.fileDescription);
+      bodyFormData.append("caseId", selectedCase.id);
+      bodyFormData.append("dmsprovider", CASEFLOW_DMS);
+      bodyFormData.append("metaData", JSON.stringify(inputFields));
+      bodyFormData.append("type", values.file.type);
+      bodyFormData.append("size", values.fileSize);
+
+      await uploadCMISfile(bodyFormData).then((response) => {
         if (response && response.data && response.data.id) {
-          props.onSuccess()
+          props.onSuccess();
           setSubmitted(false);
           refreshDocumentList();
         } else {
-          setProgressBarColor("error")
-          toast.error("Error");}
+          setProgressBarColor("error");
+          toast.error("Error");
+        }
       });
-      
-     
-  
-
     } else {
       // for update
       setSubmitted(true);
@@ -173,13 +170,12 @@ const Upload = (props) => {
         values.fileDescription,
         values.dms_provider
       );
-      
+
       toast.success("Success");
       refreshDocumentList();
     }
   };
-  const onPreviewErrorhandler = (e) => {
-  };
+  const onPreviewErrorhandler = (e) => {};
 
   //set the matadata fields
   const handleMetaDataChangeInput = (id, event) => {
@@ -192,20 +188,22 @@ const Upload = (props) => {
 
     setInputFields(newInputFields);
   };
-  const LinearProgressWithLabel = (props: LinearProgressProps & { value: number }) =>{
+  const LinearProgressWithLabel = (
+    props: LinearProgressProps & { value: number }
+  ) => {
     return (
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Box sx={{ width: '100%', mr: 1 }}>
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box sx={{ width: "100%", mr: 1 }}>
           <LinearProgress variant="determinate" {...props} />
         </Box>
         <Box sx={{ minWidth: 35 }}>
           <Typography variant="body2" color={props.color}>{`${Math.round(
-            props.value,
+            props.value
           )}%`}</Typography>
         </Box>
       </Box>
     );
-          }
+  };
   //metadata add operation
   const handleAddFields = () => {
     setInputFields([
@@ -239,7 +237,11 @@ const Upload = (props) => {
                 onChange={showPreview}
                 hidden
               />
-              <Button className="choose-file-btn-upload" variant="contained" sx={{backgroundColor:'primary.main'}}>
+              <Button
+                className="choose-file-btn-upload"
+                variant="contained"
+                sx={{ backgroundColor: "primary.main" }}
+              >
                 <label
                   htmlFor="actual-btn"
                   className="choose-file-btn-label-upload"
@@ -264,7 +266,6 @@ const Upload = (props) => {
                 placeholder="File Name..."
               />
             </div>
-           
           </div>
 
           <div className="upload-right">
@@ -291,41 +292,37 @@ const Upload = (props) => {
                   />
                 </div>
               )}
-            
           </div>
-         
-             
-            
         </div>
-       
+
         {values.file !== "" && (
-                < div className="hidden-inputs">
-                <div 
-                  style={{
-                    paddingTop: "1rem",
-                    width: "100%",
-                  }}
-                >
-                  <TextField
-                    id="outlined-multiline-static"
-                    label="Description"
-                    multiline
-                    rows={4}
-                    variant="standard"
-                    sx={{
-                      "& .MuiInputLabel-root": { color: "#404040" },
-                      borderBottom: "1px solid #404040",
-                      width: "100%",
-                    }}
-                    InputProps={{ disableUnderline: true }}
-                    value={values.fileDescription}
-                    name="fileDescription"
-                    onChange={handleDocumentInputChange}
-                    placeholder="My text document description..."
-                  />
-                </div>
-                
-                {/* <div>
+          <div className="hidden-inputs">
+            <div
+              style={{
+                paddingTop: "1rem",
+                width: "100%",
+              }}
+            >
+              <TextField
+                id="outlined-multiline-static"
+                label="Description"
+                multiline
+                rows={4}
+                variant="standard"
+                sx={{
+                  "& .MuiInputLabel-root": { color: "#404040" },
+                  borderBottom: "1px solid #404040",
+                  width: "100%",
+                }}
+                InputProps={{ disableUnderline: true }}
+                value={values.fileDescription}
+                name="fileDescription"
+                onChange={handleDocumentInputChange}
+                placeholder="My text document description..."
+              />
+            </div>
+
+            {/* <div>
                <label>Metadata</label>
                 <form>
                   {inputFields.map((inputField) => (
@@ -371,24 +368,31 @@ const Upload = (props) => {
                 </form>
               
             </div> */}
-            
-                </div>
-                
-              )}
-              <div className="upload-button">
-              {(isSumbitted && values.file && values.fileName) ? <LinearProgressWithLabel value={progress} color={progressBarColor} /> :""}
-              <Button
-                className={values.file && values.fileName?"upload-btn-abled":"upload-btn-disabled"}
-                disabled={values.file && values.fileName?false:true}
-                variant="contained" sx={{backgroundColor:'primary.main'}}
-                
-                onClick={onSubmitHandler}
-              >
-                {values.documentID == 0 ? "Upload file" : "Update File"}
-              </Button>
-            </div>
-      
-        
+          </div>
+        )}
+        <div className="upload-button">
+          {isSumbitted && values.file && values.fileName ? (
+            <LinearProgressWithLabel
+              value={progress}
+              color={progressBarColor}
+            />
+          ) : (
+            ""
+          )}
+          <Button
+            className={
+              values.file && values.fileName
+                ? "upload-btn-abled"
+                : "upload-btn-disabled"
+            }
+            disabled={values.file && values.fileName ? false : true}
+            variant="contained"
+            sx={{ backgroundColor: "primary.main" }}
+            onClick={onSubmitHandler}
+          >
+            {values.documentID == 0 ? "Upload file" : "Update File"}
+          </Button>
+        </div>
       </div>
 
       <ToastContainer />

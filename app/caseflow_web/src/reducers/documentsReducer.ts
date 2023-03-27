@@ -3,8 +3,8 @@ import { PAGINATION_TAKE } from "../apiManager/endpoints/config";
 const initialState = {
   documentsList: [],
   seletedDocument: null,
-  totalPageCount:1,
-  documentsSearchResult:{},
+  totalPageCount: 1,
+  documentsSearchResult: {},
 };
 
 const documentSlice = createSlice({
@@ -18,14 +18,13 @@ const documentSlice = createSlice({
     setSelectedDocument: (state, action) => {
       state.seletedDocument = action.payload;
     },
-    setTotalDocumentPageCount:(state,action) =>{
-      const TotalPage = Math.ceil(action.payload/Number (PAGINATION_TAKE))        
+    setTotalDocumentPageCount: (state, action) => {
+      const TotalPage = Math.ceil(action.payload / Number(PAGINATION_TAKE));
       state.totalPageCount = TotalPage;
     },
-    setsearchDocumentResult : (state,action) =>{
-      state.documentsSearchResult =action.payload
+    setsearchDocumentResult: (state, action) => {
+      state.documentsSearchResult = action.payload;
     },
-    
   },
   extraReducers: {
     logout: (state, action) => {

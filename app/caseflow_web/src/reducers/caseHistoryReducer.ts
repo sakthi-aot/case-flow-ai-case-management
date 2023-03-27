@@ -2,8 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   caseHistory: [],
   filteredCaseHistory: [],
-  optionsForFilter : ["loading"]
-
+  optionsForFilter: ["loading"],
 };
 
 const setCaseHistorySlice = createSlice({
@@ -27,9 +26,6 @@ const setCaseHistorySlice = createSlice({
   },
 });
 
-export const {
-  setCaseHistory,
-  setoptionsForFilter,
-  setFilteredCaseHistory,
-} = setCaseHistorySlice.actions;
+export const { setCaseHistory, setoptionsForFilter, setFilteredCaseHistory } =
+  setCaseHistorySlice.actions;
 export default setCaseHistorySlice.reducer;

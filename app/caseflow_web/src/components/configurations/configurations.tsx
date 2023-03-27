@@ -23,8 +23,8 @@ import { setCaseTypes } from "../../reducers/constantsReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../../interfaces/stateInterface";
 import EditIcon from "@mui/icons-material/Edit";
-import CloseIcon from '@mui/icons-material/Close';
-import DoneIcon from '@mui/icons-material/Done';
+import CloseIcon from "@mui/icons-material/Close";
+import DoneIcon from "@mui/icons-material/Done";
 import { updateCaseType } from "../../services/CaseService";
 import { toast, ToastContainer } from "react-toastify";
 
@@ -46,78 +46,74 @@ const Configurations = () => {
   useEffect(() => {
     getCaseTypes().then((data) => {});
   }, []);
-  const [isEdit, setIsEdit] = useState<{
-    id: number;
-    isEdit: boolean;
-    textValue:string
-}[]>([]);
-
+  const [isEdit, setIsEdit] = useState<
+    {
+      id: number;
+      isEdit: boolean;
+      textValue: string;
+    }[]
+  >([]);
 
   useEffect(() => {
-    if(isEdit.length===0){
-    const isEditArray = caseTypes.map((element)=>{return {id:element.id,isEdit:false,textValue:""}})
-    setIsEdit(isEditArray)
+    if (isEdit.length === 0) {
+      const isEditArray = caseTypes.map((element) => {
+        return { id: element.id, isEdit: false, textValue: "" };
+      });
+      setIsEdit(isEditArray);
     }
   }, [caseTypes]);
 
-  const onEdit = id => {
-    let newArr = [...isEdit]; 
-    var foundIndex = newArr.findIndex(x => x.id == id);
-    newArr[foundIndex].isEdit = true; 
-  
+  const onEdit = (id) => {
+    let newArr = [...isEdit];
+    var foundIndex = newArr.findIndex((x) => x.id == id);
+    newArr[foundIndex].isEdit = true;
+
     setIsEdit(newArr);
-  }
-  const onClose = id => {
-    getCaseTypes().then(()=>{
-      let newArr = [...isEdit]; 
-      var foundIndex = newArr.findIndex(x => x.id == id);
-      newArr[foundIndex].isEdit = false; 
+  };
+  const onClose = (id) => {
+    getCaseTypes().then(() => {
+      let newArr = [...isEdit];
+      var foundIndex = newArr.findIndex((x) => x.id == id);
+      newArr[foundIndex].isEdit = false;
       setIsEdit(newArr);
-    })
-   
-  }
-  const getEdit = id => {
-    if(isEdit.length>0){
-      var foundIndex = isEdit.findIndex(x => x.id == id);
-      return isEdit[foundIndex].isEdit
-    }
-    else return false
-  }
-  const getTextValue = id => {
-    if(isEdit.length>0){
-      var foundIndex = isEdit.findIndex(x => x.id == id);
-      return isEdit[foundIndex].textValue
-    }
-    else return ""
-  }
+    });
+  };
+  const getEdit = (id) => {
+    if (isEdit.length > 0) {
+      var foundIndex = isEdit.findIndex((x) => x.id == id);
+      return isEdit[foundIndex].isEdit;
+    } else return false;
+  };
+  const getTextValue = (id) => {
+    if (isEdit.length > 0) {
+      var foundIndex = isEdit.findIndex((x) => x.id == id);
+      return isEdit[foundIndex].textValue;
+    } else return "";
+  };
 
-  const onSubmit = (id:number)=>{
-    const caseType = caseTypes.filter(x => x.id === id)[0]
-    const formId = isEdit.filter(x => x.id === id)[0].textValue
-   updateCaseType({...caseType,formid:formId}).then((data)=>{
-    if(data && data?.success){
-      toast.success("Updated CaseType Successfully");
-      getCaseTypes().then((data) => {});
-      let newArr = [...isEdit]; 
-      var foundIndex = newArr.findIndex(x => x.id == id);
-      newArr[foundIndex].isEdit = false; 
-    }
-    else{
-    toast.error("Error updating the Type")
-
-    }
-  
-   })
-   .catch(()=>{
-    toast.error("Error updating the Type")
-
-   })
-  }
-  const onChange = (textValue:string,id:number)=>{
-    var foundIndex = isEdit.findIndex(x => x.id === id);
-    isEdit[foundIndex].textValue = textValue; 
-
-  }
+  const onSubmit = (id: number) => {
+    const caseType = caseTypes.filter((x) => x.id === id)[0];
+    const formId = isEdit.filter((x) => x.id === id)[0].textValue;
+    updateCaseType({ ...caseType, formid: formId })
+      .then((data) => {
+        if (data && data?.success) {
+          toast.success("Updated CaseType Successfully");
+          getCaseTypes().then((data) => {});
+          let newArr = [...isEdit];
+          var foundIndex = newArr.findIndex((x) => x.id == id);
+          newArr[foundIndex].isEdit = false;
+        } else {
+          toast.error("Error updating the Type");
+        }
+      })
+      .catch(() => {
+        toast.error("Error updating the Type");
+      });
+  };
+  const onChange = (textValue: string, id: number) => {
+    var foundIndex = isEdit.findIndex((x) => x.id === id);
+    isEdit[foundIndex].textValue = textValue;
+  };
 
   return (
     <Box sx={{ mx: 20, mt: 20 }}>
@@ -223,9 +219,9 @@ const Configurations = () => {
                             variant="standard"
                             disabled={!getEdit(option.id)}
                             defaultValue={option.formid}
-
-
-                             onChange={(e) => onChange(e.target.value,option.id)}
+                            onChange={(e) =>
+                              onChange(e.target.value, option.id)
+                            }
                           />
                         </Typography>
                       }
@@ -242,11 +238,16 @@ const Configurations = () => {
                             <IconButton onClick={() => onEdit(option.id)}>
                               <EditIcon />
                             </IconButton>
-                          ): <><IconButton  onClick={() => onClose(option.id)}>
-                          <CloseIcon/>
-                        </IconButton > <IconButton onClick={() => onSubmit(option.id)} >
-                              <DoneIcon/>
-                            </IconButton></> }
+                          ) : (
+                            <>
+                              <IconButton onClick={() => onClose(option.id)}>
+                                <CloseIcon />
+                              </IconButton>{" "}
+                              <IconButton onClick={() => onSubmit(option.id)}>
+                                <DoneIcon />
+                              </IconButton>
+                            </>
+                          )}
                         </Typography>
                       }
                     />
@@ -258,8 +259,7 @@ const Configurations = () => {
           ))}
         </AccordionDetails>
       </Accordion>
-    <ToastContainer/>
-
+      <ToastContainer />
     </Box>
   );
 };

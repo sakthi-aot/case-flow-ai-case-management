@@ -5,7 +5,7 @@ export interface State {
   documents: Document;
   cases: Cases;
   constants: Constants;
-  lob:Lob;
+  lob: Lob;
   tasks: Tasks;
 }
 
@@ -25,17 +25,17 @@ export interface Auth {
 export interface Application {
   isShowLoader: boolean;
   progressBarStatus: number;
-  advanceSearchResult : {
-    searchResult:any[],
-    totalCount: string |number
-  }
+  advanceSearchResult: {
+    searchResult: any[];
+    totalCount: string | number;
+  };
 }
 
 export interface Document {
   documentsList: never[];
   seletedDocument: null;
-  totalPageCount:1,
-  documentsSearchResult:{},
+  totalPageCount: 1;
+  documentsSearchResult: {};
 }
 
 export interface SelectedCase {
@@ -45,11 +45,11 @@ export interface SelectedCase {
   statusid: number;
   lobDetails: any;
   documents: any[];
-  totalDocCount:number;
-  typeid : number;
-  lobcaseid:number;
-  tasks : any[];
-  additionalFields : any;
+  totalDocCount: number;
+  typeid: number;
+  lobcaseid: number;
+  tasks: any[];
+  additionalFields: any;
 }
 
 export interface CaseList {
@@ -65,7 +65,7 @@ export interface Cases {
   caseList: CaseList[];
   totalCaseCount: number;
   pageSelected: number;
-  searchCaseResult:{}
+  searchCaseResult: {};
   selectedCaseFormType: undefined;
 }
 export interface USerDetails {
@@ -92,8 +92,8 @@ export interface CaseStatuses {
   name: string;
   displayname: string;
   code: string;
-  lobcaseid : number;
-  formid:string
+  lobcaseid: number;
+  formid: string;
 }
 
 export interface CaseTypes {
@@ -101,28 +101,27 @@ export interface CaseTypes {
   name: string;
   displayname: string;
   code: number;
-  formid:string
+  formid: string;
 }
 export interface Lob {
-  lobList:LobList[],
-  totalLobCount:number,
-  pageSelected:number,
-  selectedLob:LobList,
-  editLob:boolean,
-  searchLobResult:{}
+  lobList: LobList[];
+  totalLobCount: number;
+  pageSelected: number;
+  selectedLob: LobList;
+  editLob: boolean;
+  searchLobResult: {};
 }
 export interface LobList {
-  id:number,
-  sumAssured : number,
-  policyNumber : string,
-  createdDate :  Date ,
-  isActive : string,
-  policyExpiryDate:Date,
-  policyEffectiveDate:Date,
-  
+  id: number;
+  sumAssured: number;
+  policyNumber: string;
+  createdDate: Date;
+  isActive: string;
+  policyExpiryDate: Date;
+  policyEffectiveDate: Date;
 }
 export interface Tasks {
-  userTasksList : any[];
-  totalTaskCount:number,
-pageSelected:number,
+  userTasksList: any[];
+  totalTaskCount: number;
+  pageSelected: number;
 }

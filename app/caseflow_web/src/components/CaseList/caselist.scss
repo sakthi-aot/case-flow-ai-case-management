@@ -1,18 +1,16 @@
 @import "../../styles.scss";
 
-.recent-case-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-right:2rem ;
-    .recent-case-header-font{
-        font-size: 1.5rem;
-
-    }
+.recent-case-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 2rem;
+  .recent-case-header-font {
+    font-size: 1.5rem;
+  }
 }
 
-.pagination-case-list{    
-    display: flex;
-    justify-content: flex-end;   
+.pagination-case-list {
+  display: flex;
+  justify-content: flex-end;
 }
-
