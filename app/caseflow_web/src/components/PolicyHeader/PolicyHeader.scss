@@ -1,35 +1,32 @@
 @import "../../styles.scss";
-.lob-detail-header{
-
+.lob-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid grey;
+  box-sizing: border-box;
+  .lob-id-status {
     display: flex;
     justify-content: space-between;
-    align-items: center;    
-    border-bottom: 1px solid grey;
-    box-sizing: border-box;       
-    .lob-id-status{
-        display: flex;       
-        justify-content: space-between;
-        align-items: center;
-        grid-column-gap: 2rem;
-        .lob-status{
-            background-color: #EBEBEB;
-            height: 25px;
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-family:  $primary-font;
-            text-align: left;
-            font: normal normal normal 12px/18px Poppins;
-            color: #404040;
-            opacity: 1;
-        }
-        .lob-id{
-            font-size: 1.5rem;
-        }
-        .lob-edit{
-            font-size: 1.5rem;
-            padding-top: .5rem;
-
-        }
-
+    align-items: center;
+    grid-column-gap: 2rem;
+    .lob-status {
+      background-color: #ebebeb;
+      height: 25px;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-family: $primary-font;
+      text-align: left;
+      font: normal normal normal 12px/18px Poppins;
+      color: #404040;
+      opacity: 1;
     }
+    .lob-id {
+      font-size: 1.5rem;
+    }
+    .lob-edit {
+      font-size: 1.5rem;
+      padding-top: 0.5rem;
+    }
+  }
 }

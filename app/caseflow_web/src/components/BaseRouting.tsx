@@ -4,7 +4,6 @@ import { Route, Routes } from "react-router-dom";
 import LandingPage from "./LandingPage/LandingPage";
 
 const BaseRouting = React.memo(() => {
-
   return (
     <div>
       <Routes>

@@ -1,6 +1,9 @@
 import { httpGETRequest } from "../apiManager/httpRequestHandler";
 import { GRAPHQL } from "../apiManager/endpoints";
-import { FETCH_CASE_STATUSES, FETCH_CASE_TYPES } from "../graphql/constantsRequests";
+import {
+  FETCH_CASE_STATUSES,
+  FETCH_CASE_TYPES,
+} from "../graphql/constantsRequests";
 import { print } from "graphql";
 
 export const fetchCaseStatuses = async () => {

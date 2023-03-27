@@ -1,31 +1,31 @@
-import * as React from 'react';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-
-
+import * as React from "react";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function CustomizedDialog(props) {
+  const { title, children, isOpen, setIsOpen, handleClose, fullWidth } = props;
 
-  const {title,children,isOpen, setIsOpen,handleClose,fullWidth} = props;
- 
   return (
-    <Dialog open={isOpen}  onClose={(e)=>handleClose(e)} fullWidth={fullWidth}  >
-      <DialogTitle>{title}<IconButton
+    <Dialog open={isOpen} onClose={(e) => handleClose(e)} fullWidth={fullWidth}>
+      <DialogTitle>
+        {title}
+        <IconButton
           aria-label="close"
-          onClick={()=> handleClose() }
+          onClick={() => handleClose()}
           sx={{
-            position: 'absolute',
+            position: "absolute",
             right: 8,
             top: 8,
             color: (theme) => theme.palette.grey[500],
           }}
         >
           <CloseIcon />
-        </IconButton></DialogTitle>
+        </IconButton>
+      </DialogTitle>
       <DialogContent dividers>{children}</DialogContent>
-      </Dialog>)
-
-  }
+    </Dialog>
+  );
+}

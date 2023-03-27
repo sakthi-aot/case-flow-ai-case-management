@@ -13,18 +13,28 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import CasesOutlinedIcon from "@mui/icons-material/CasesOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
-import { Button, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
 import UserService from "../../services/UserService";
-import LogoutIcon from '@mui/icons-material/Logout';
-import { useSelector,useDispatch } from "react-redux";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { useSelector, useDispatch } from "react-redux";
 import { State } from "../../interfaces/stateInterface";
-import "./navigation.scss"
-import { resetSelectedCase, setSelectedCaseType } from "../../reducers/newCaseReducer";
+import "./navigation.scss";
+import {
+  resetSelectedCase,
+  setSelectedCaseType,
+} from "../../reducers/newCaseReducer";
 import { useTheme } from "@mui/material/styles";
 import { FORMSFLOW_APPLICATION_URL } from "../../apiManager/endpoints";
 import { fetchCaseTypess } from "../../services/constantsService";
@@ -32,10 +42,9 @@ import { setCaseTypes } from "../../reducers/constantsReducer";
 import { useState } from "react";
 import CustomizedDialog from "../Dialog/Dialog";
 
-
 const drawerWidth = 240;
 
-const openedMixin = (theme:any) => ({
+const openedMixin = (theme: any) => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
@@ -44,7 +53,7 @@ const openedMixin = (theme:any) => ({
   overflowX: "hidden",
 });
 
-const closedMixin = (theme:any) => ({
+const closedMixin = (theme: any) => ({
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -85,53 +94,59 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
-})(({ theme,variant,className, open }:{theme?:any,variant?:string, className?:any,open:any}) => ({
-  width: drawerWidth,
-  flexShrink: 0,
-  whiteSpace: "nowrap",
-  boxSizing: "border-box",
-  ...(open && {
-    ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme),
-  }),
-  ...(!open && {
-    ...closedMixin(theme),
-    "& .MuiDrawer-paper": closedMixin(theme),
-  }),
-}));
+})(
+  ({
+    theme,
+    variant,
+    className,
+    open,
+  }: {
+    theme?: any;
+    variant?: string;
+    className?: any;
+    open: any;
+  }) => ({
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: "nowrap",
+    boxSizing: "border-box",
+    ...(open && {
+      ...openedMixin(theme),
+      "& .MuiDrawer-paper": openedMixin(theme),
+    }),
+    ...(!open && {
+      ...closedMixin(theme),
+      "& .MuiDrawer-paper": closedMixin(theme),
+    }),
+  })
+);
 
-export default function MiniDrawer(
-  // { children }
-  ) {
+export default function MiniDrawer() {
+// { children }
   const dispatch = useDispatch();
-  const [open, setOpen] = React.useState(true); 
+  const [open, setOpen] = React.useState(true);
 
-  const userInfo = useSelector((state:State)=>state.auth.userDetails)
+  const userInfo = useSelector((state: State) => state.auth.userDetails);
 
   const theme = useTheme();
   const navigate = useNavigate();
-  const caseTypes =  useSelector((state : State)=>state.constants.caseTypes);
-  const selectedFormType =  useSelector((state : State)=>state.cases.selectedCaseFormType);
-  const [isOpenPopup,setOpenPopup] = useState(false);
-  const [selectedType,setSelectedType] = useState("");
-
-
+  const caseTypes = useSelector((state: State) => state.constants.caseTypes);
+  const selectedFormType = useSelector(
+    (state: State) => state.cases.selectedCaseFormType
+  );
+  const [isOpenPopup, setOpenPopup] = useState(false);
+  const [selectedType, setSelectedType] = useState("");
 
   function openLinkInNewTab(url) {
-    window.open(url, '_blank', 'noopener,noreferrer');
+    window.open(url, "_blank", "noopener,noreferrer");
   }
-  const routeToPath = (route)=>{
-    if(route.key ===2){
-      openLinkInNewTab(FORMSFLOW_APPLICATION_URL + "/task" )
+  const routeToPath = (route) => {
+    if (route.key === 2) {
+      openLinkInNewTab(FORMSFLOW_APPLICATION_URL + "/task");
+    } else {
+      navigate(route.path);
     }
-    else{
-      navigate(route.path)
-    }
-    
-  }
-  
-
-
+  };
 
   const routes = [
     {
@@ -139,241 +154,291 @@ export default function MiniDrawer(
       text: "Home",
       path: "/private/",
     },
-    { key: 2, text: "Tasks", path:  FORMSFLOW_APPLICATION_URL + "/tasks" },
+    { key: 2, text: "Tasks", path: FORMSFLOW_APPLICATION_URL + "/tasks" },
     { key: 3, text: "Cases", path: "/private/cases" },
     { key: 4, text: "Documents", path: "/private/documents" },
     { key: 5, text: "LOB", path: "/private/lob" },
   ];
   const { pathname } = useLocation();
-  const selectedPathName = pathname.split("/").slice(0,3).join("/")  
+  const selectedPathName = pathname.split("/").slice(0, 3).join("/");
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
-  const getLogo = (index:Number) => {
+  const getLogo = (index: Number) => {
     switch (index) {
       case 0:
-        return <img
-          alt="Homeicon"
-          src={require("../../assets/HomeIcon.png")}
-          ></img>;
+        return (
+          <img alt="Homeicon" src={require("../../assets/HomeIcon.png")}></img>
+        );
       case 1:
-        return <img
-          alt="Tasksicon"
-          src={require("../../assets/TasksIcon.png")}
-          ></img>;
+        return (
+          <img
+            alt="Tasksicon"
+            src={require("../../assets/TasksIcon.png")}
+          ></img>
+        );
       case 2:
-        return <img
-          alt="Casesicon"
-          src={require("../../assets/CasesIcon.png")}
-          ></img>;
+        return (
+          <img
+            alt="Casesicon"
+            src={require("../../assets/CasesIcon.png")}
+          ></img>
+        );
       case 3:
-        return <img
-          alt="documentsicon"
-          src={require("../../assets/DocumentsIcon.png")}
-          ></img>;
+        return (
+          <img
+            alt="documentsicon"
+            src={require("../../assets/DocumentsIcon.png")}
+          ></img>
+        );
       case 4:
-        return <img
-          alt="LOBicon"
-          src={require("../../assets/LOBIcon.png")}
-          ></img>;
+        return (
+          <img alt="LOBicon" src={require("../../assets/LOBIcon.png")}></img>
+        );
       default:
-        return <img
-          alt="Home"
-          src={require("../../assets/HomeIcon.png")}
-          ></img>;
+        return (
+          <img alt="Home" src={require("../../assets/HomeIcon.png")}></img>
+        );
     }
   };
 
-  const logoutCaseFlowHandler = ( ) =>{
-    UserService.userLogout()
-  }
-  const openSelectFormTypePopup = ( ) =>{
-    UserService.userLogout()
-
-    
-  }
-  const getCaseTypes = async () =>{
+  const logoutCaseFlowHandler = () => {
+    UserService.userLogout();
+  };
+  const openSelectFormTypePopup = () => {
+    UserService.userLogout();
+  };
+  const getCaseTypes = async () => {
     const caseTypes = await fetchCaseTypess();
-    dispatch(setCaseTypes(caseTypes))
+    dispatch(setCaseTypes(caseTypes));
     // if(caseTypes && caseTypes.length){
     //   dispatch(setSelectedCaseType(caseTypes[0].formid))
     // }
-    
-  }
- 
+  };
 
-  const handleClosePopup= () =>{
+  const handleClosePopup = () => {
     setOpenPopup(false);
-  }
-  const onChangehandler= (event) =>{
-    setSelectedType(event.target.value)
-   
-  }
-  const selectForm = () =>{
-    dispatch(setSelectedCaseType(selectedType))
+  };
+  const onChangehandler = (event) => {
+    setSelectedType(event.target.value);
+  };
+  const selectForm = () => {
+    dispatch(setSelectedCaseType(selectedType));
     setOpenPopup(false);
     navigate("cases/create");
-  }
+  };
 
-  return (    
+  return (
     <>
-    <Box >
-      <CssBaseline />
-      <Drawer variant="permanent" open={open} className="navaigation-drawer-container" >
-        <DrawerHeader style={{ display: "flaex" }}>
-          <div className="naviagtion-header">
-            <AccountCircleIcon
-              sx={{ fontSize: open ? "32px" : "32px", left: "20px", right: "10px" ,marginTop:"10px" }}
-            />
-            <span>
-            <Typography variant="subtitle1" style={{ fontSize: open ? "16px" : "0px", left: 0,textTransform:"capitalize",color:"#000000" }}>
-            {userInfo.userName}
-            </Typography>
-            <Typography style={{ fontSize: open ? "14px" : "0px", left: 0 }}>Administrator</Typography>
-            </span> 
-          </div>   
-        </DrawerHeader>            
-        {open && <button className="logout-btn-caseflow" onClick={logoutCaseFlowHandler}>Logout <LogoutIcon style={{fontSize:"13px"}}/></button>}
-       {open && <Button variant="contained"
-          className="btn-navigation-style"
-       style={{
-          width:"206px",
-          margin:".7rem auto 0",
-          borderRadius:"8px",
-          transition:"all 1s ease",  
-
-        }} 
-        sx={{backgroundColor:'primary.main'}}
-        onClick={()=>{dispatch(resetSelectedCase());getCaseTypes();setOpenPopup(true)}}
-       ><AddCircleIcon/>Start New Case</Button>}
-        
-        <List>
-          <Typography variant="body2">
-          {routes.map((route, index) => (
-            // <Link
-            //   to={route.path}
-            //   key={index}
-            //   style={{
-            //     color: "black",
-            //     textDecoration: "none",
-                
-            //   }}             
-            // >
-              <ListItem
-                key={index}
-                selected={route.path === selectedPathName}
-                disablePadding
-                sx={{ display: "block" }}
-                onClick = {()=>routeToPath(route)}
-              >
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 4.5,
-                    borderRadius:"8%"
+      <Box>
+        <CssBaseline />
+        <Drawer
+          variant="permanent"
+          open={open}
+          className="navaigation-drawer-container"
+        >
+          <DrawerHeader style={{ display: "flaex" }}>
+            <div className="naviagtion-header">
+              <AccountCircleIcon
+                sx={{
+                  fontSize: open ? "32px" : "32px",
+                  left: "20px",
+                  right: "10px",
+                  marginTop: "10px",
+                }}
+              />
+              <span>
+                <Typography
+                  variant="subtitle1"
+                  style={{
+                    fontSize: open ? "16px" : "0px",
+                    left: 0,
+                    textTransform: "capitalize",
+                    color: "#000000",
                   }}
                 >
-                  <ListItemIcon
+                  {userInfo.userName}
+                </Typography>
+                <Typography
+                  style={{ fontSize: open ? "14px" : "0px", left: 0 }}
+                >
+                  Administrator
+                </Typography>
+              </span>
+            </div>
+          </DrawerHeader>
+          {open && (
+            <button
+              className="logout-btn-caseflow"
+              onClick={logoutCaseFlowHandler}
+            >
+              Logout <LogoutIcon style={{ fontSize: "13px" }} />
+            </button>
+          )}
+          {open && (
+            <Button
+              variant="contained"
+              className="btn-navigation-style"
+              style={{
+                width: "206px",
+                margin: ".7rem auto 0",
+                borderRadius: "8px",
+                transition: "all 1s ease",
+              }}
+              sx={{ backgroundColor: "primary.main" }}
+              onClick={() => {
+                dispatch(resetSelectedCase());
+                getCaseTypes();
+                setOpenPopup(true);
+              }}
+            >
+              <AddCircleIcon />
+              Start New Case
+            </Button>
+          )}
+
+          <List>
+            <Typography variant="body2">
+              {routes.map((route, index) => (
+                // <Link
+                //   to={route.path}
+                //   key={index}
+                //   style={{
+                //     color: "black",
+                //     textDecoration: "none",
+
+                //   }}
+                // >
+                <ListItem
+                  key={index}
+                  selected={route.path === selectedPathName}
+                  disablePadding
+                  sx={{ display: "block" }}
+                  onClick={() => routeToPath(route)}
+                >
+                  <ListItemButton
                     sx={{
-                      minWidth: 0,
-                      mr: open ? 1.5 : "auto",
-                      justifyContent: "center",
-                      margin:"1rem"
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 4.5,
+                      borderRadius: "8%",
                     }}
                   >
-                    {getLogo(index)}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={<Typography variant="body1" >{route.text}</Typography>}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            // </Link>
-          ))}
-          </Typography>
-        </List>
-      </Drawer>
-      <div className="Chevron-parent-container">
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 1.5 : "auto",
+                        justifyContent: "center",
+                        margin: "1rem",
+                      }}
+                    >
+                      {getLogo(index)}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography variant="body1">{route.text}</Typography>
+                      }
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+                // </Link>
+              ))}
+            </Typography>
+          </List>
+        </Drawer>
+        <div className="Chevron-parent-container">
           {open ? (
-              <ChevronLeftIcon
-                style={{  
-                  fontSize: "30px",
-                  position:"fixed",
-                  borderRadius:"50%",
-                  border:"1px solid grey",
-                  zIndex:"1000",  
-                  marginTop:"5vh",
-                 left:"14rem",
-                  backgroundColor:"#ffff"   ,
-                  cursor:"pointer",
-                }}
-                onClick={handleDrawerToggle}
-              />
-              ) : (
-                <ChevronRightIcon
-                style={{   
-                  fontSize: "30px",
-                  position:"fixed",
-                  borderRadius:"50%",
-                  border:"1px solid grey",
-                  zIndex:"1000",  
-                 marginTop:"3vh",
-                 left:"3.1rem",
-                  backgroundColor:"#ffff"   ,
-                  cursor:"pointer",
-                }}
-                onClick={handleDrawerToggle}
-                />
-                )}
-    </div>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        {/* {children} */}
+            <ChevronLeftIcon
+              style={{
+                fontSize: "30px",
+                position: "fixed",
+                borderRadius: "50%",
+                border: "1px solid grey",
+                zIndex: "1000",
+                marginTop: "5vh",
+                left: "14rem",
+                backgroundColor: "#ffff",
+                cursor: "pointer",
+              }}
+              onClick={handleDrawerToggle}
+            />
+          ) : (
+            <ChevronRightIcon
+              style={{
+                fontSize: "30px",
+                position: "fixed",
+                borderRadius: "50%",
+                border: "1px solid grey",
+                zIndex: "1000",
+                marginTop: "3vh",
+                left: "3.1rem",
+                backgroundColor: "#ffff",
+                cursor: "pointer",
+              }}
+              onClick={handleDrawerToggle}
+            />
+          )}
+        </div>
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          {/* {children} */}
+        </Box>
       </Box>
-    </Box>   
-    <CustomizedDialog title="Start New Case" isOpen={isOpenPopup} setIsOpen={setOpenPopup} handleClose={handleClosePopup} fullWidth>
-       <div className="workflow">
-    <FormControl sx={{ m: 1, minWidth: 90, }} size="small">
-                <InputLabel id="demo-simple-select-label">Select Case Type</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"          
-                  label="Age" 
-                  value={selectedType}   
-                  onChange={onChangehandler}   
-                  className="dropDownStyle"   
-                >
-                
-                   {caseTypes.map((option,index) => <MenuItem key={index}  value={option.formid}>{option.displayname}</MenuItem>)}                 
-                </Select>
-            </FormControl>
-            <div  className="case-type-buttons">
-                <FormControl>
-                <Button
+      <CustomizedDialog
+        title="Start New Case"
+        isOpen={isOpenPopup}
+        setIsOpen={setOpenPopup}
+        handleClose={handleClosePopup}
+        fullWidth
+      >
+        <div className="workflow">
+          <FormControl sx={{ m: 1, minWidth: 90 }} size="small">
+            <InputLabel id="demo-simple-select-label">
+              Select Case Type
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Age"
+              value={selectedType}
+              onChange={onChangehandler}
+              className="dropDownStyle"
+            >
+              {caseTypes.map((option, index) => (
+                <MenuItem key={index} value={option.formid}>
+                  {option.displayname}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <div className="case-type-buttons">
+            <FormControl>
+              <Button
                 variant="contained"
-                sx={{backgroundColor:'secondary.main',borderColor:'primary.secondary'}}
+                sx={{
+                  backgroundColor: "secondary.main",
+                  borderColor: "primary.secondary",
+                }}
                 onClick={handleClosePopup}
-                
               >
-               Cancel
-              </Button>
-                </FormControl>
-                <FormControl>
-            
-            <Button
-                variant="contained"
-                sx={{backgroundColor:'primary.main',borderColor:'primary.main'}}
-                onClick={selectForm}
-                
-              >
-              Continue
+                Cancel
               </Button>
             </FormControl>
-            </div>
-           
-            </div>
-    </CustomizedDialog>
+            <FormControl>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "primary.main",
+                  borderColor: "primary.main",
+                }}
+                onClick={selectForm}
+              >
+                Continue
+              </Button>
+            </FormControl>
+          </div>
+        </div>
+      </CustomizedDialog>
     </>
   );
 }

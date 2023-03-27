@@ -1,23 +1,18 @@
-
 @import "../../styles.scss";
-.popup{
-  .dialogActionCenter{
-    .btn2Style{
-      background-color:$primary-theme-black-color;   
+.popup {
+  .dialogActionCenter {
+    .btn2Style {
+      background-color: $primary-theme-black-color;
     }
-    .btn2Style:hover{      
+    .btn2Style:hover {
       color: white;
     }
-   
-    
   }
-  .confirm{
-    .secondary{
+  .confirm {
+    .secondary {
       color: $primary-theme-black-color;
     }
     .primary {
-     
     }
   }
-  
 }

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   caseTypes: [],
-  caseStatuses : [],
+  caseStatuses: [],
 };
 
 const constantsSlice = createSlice({
@@ -17,5 +17,5 @@ const constantsSlice = createSlice({
   },
 });
 
-export const { setCaseTypes ,setCaseStatuses} = constantsSlice.actions;
+export const { setCaseTypes, setCaseStatuses } = constantsSlice.actions;
 export default constantsSlice.reducer;
