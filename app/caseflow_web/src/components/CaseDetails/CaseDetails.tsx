@@ -444,8 +444,8 @@ const CaseDetails = () => {
             return submitNewFormDraft(submissionData, draftId);
           }
         })
-        .then((data) => {
-             if(data && data.applicationStatus == "Completed"){
+        .then(async (data) => {
+        if(data && data.applicationStatus == "Completed"){
 		      toast.success("New workflow started successfully");
 		      setOpenWorkflowPopup(false);
 		      setOpenFormIOPopup(false);
