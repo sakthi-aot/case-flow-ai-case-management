@@ -57,10 +57,11 @@ type CaseTypes {
   id: ID!
   name: String
   displayname: String!
-  caseextrafields: Float!
-  lobfields: Float!
+  caseextrafields: Float
+  lobfields: Float
   code: Float!
   displaylocations: Float!
+  formid: String
   casestatus: [CaseStatuses!]
   cases: [Cases!]
 }
@@ -106,7 +107,7 @@ type casesResponse {
 type Query {
   getCase(skip: Int = 0, take: Int = 25, id: Int!): Cases!
   case(skip: Int = 0, take: Int = 25): casesResponse!
-  Searchcase(searchField: String!, searchColumn: String!, orderBy: String!, orderType: String!, skip: Int = 0, take: Int = 25): casesResponse!
+  Searchcase(searchField: String!, searchColumn: String!, fromDate: String!, toDate: String!, orderBy: String!, orderType: String!, skip: Int = 0, take: Int = 25): casesResponse!
   fetchRecentCase: [Cases!]!
   getAllCaseHistory: [CaseHistory!]!
   caseHistory(id: Int!): CaseHistory!
@@ -145,7 +146,7 @@ input CreateCaseInput {
   statusid: Int!
   typeid: Float
   linkedcases: [Int!]
-  creationdate: DateTime = "2023-02-20T17:08:36.565Z"
+  creationdate: DateTime = "2023-03-27T13:19:38.166Z"
   completiondate: DateTime
   lastmodificationdate: DateTime
   penduntildate: DateTime
@@ -165,9 +166,9 @@ input UpdateCaseInput {
   statusid: Int!
   typeid: Float
   linkedcases: [Int!]
-  creationdate: DateTime = "2023-02-20T17:08:36.561Z"
+  creationdate: DateTime = "2023-03-27T13:19:38.155Z"
   completiondate: DateTime
-  lastmodificationdate: DateTime
+  lastmodificationdate: DateTime = "2023-03-27T13:19:38.155Z"
   penduntildate: DateTime
   archivedate: DateTime
   startuserid: Int
@@ -178,24 +179,34 @@ input UpdateCaseInput {
 }
 
 input CreateCaseHistoryInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  datetime: DateTime = "2023-03-27T13:19:38.198Z"
+  outcome: String = "sucess"
+  userid: Float
+  caseId: [Int!]!
+  eventId: [Int!]!
+  doc_desc: String
+  doc_name: String
 }
 
 input UpdateCaseHistoryInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  datetime: DateTime = "2023-03-27T13:19:38.198Z"
+  outcome: String = "sucess"
+  userid: Float
+  caseId: [Int!]
+  eventId: [Int!]
+  doc_desc: String
+  doc_name: String
   id: Int!
 }
 
 input CreateCaseEventInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  artifactId: Int!
+  eventtypeId: Int!
 }
 
 input UpdateCaseEventInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  artifactId: Int
+  eventtypeId: Int
   id: Int!
 }
 
@@ -219,6 +230,13 @@ input UpdateCaseTypeInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
+  name: String!
+  displayname: String!
+  caseextrafields: Float
+  lobfields: Float
+  code: Float!
+  displaylocations: Float
+  formid: String
 }
 
 scalar link__Import

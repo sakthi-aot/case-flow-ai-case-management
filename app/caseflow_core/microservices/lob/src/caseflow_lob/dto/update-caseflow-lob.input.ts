@@ -15,11 +15,6 @@ export class UpdateCaseflowLobInput {
   @Field(() => Int, { nullable: true })
   @IsNumber()
   @IsNotEmpty()
-  caseId?: number;
-
-  @Field(() => Int, { nullable: true })
-  @IsNumber()
-  @IsNotEmpty()
   policyNumber?: number;
 
   @Field({ nullable: true })
