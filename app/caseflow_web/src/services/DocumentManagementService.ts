@@ -107,7 +107,7 @@ export const searchCaseDocument = async (
         toDate:
           toDate && toDate.$d
             ? moment(toDate.$d).format("YYYY-MM-DD")
-            : moment().format("YYYY-MM-DD"),
+            : moment(),
       },
     },
     null

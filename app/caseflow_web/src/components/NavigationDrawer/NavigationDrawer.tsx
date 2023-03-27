@@ -223,6 +223,7 @@ export default function MiniDrawer() {
     setSelectedType(event.target.value);
   };
   const selectForm = () => {
+    dispatch(resetSelectedCase());
     dispatch(setSelectedCaseType(selectedType));
     setOpenPopup(false);
     navigate("cases/create");
@@ -287,7 +288,6 @@ export default function MiniDrawer() {
               }}
               sx={{ backgroundColor: "primary.main" }}
               onClick={() => {
-                dispatch(resetSelectedCase());
                 getCaseTypes();
                 setOpenPopup(true);
               }}

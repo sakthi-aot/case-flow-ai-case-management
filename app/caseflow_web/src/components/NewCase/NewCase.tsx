@@ -78,8 +78,9 @@ const NewCase = () => {
   const onSubmit = async () => {
     let response;
     if (isEdit) {
-      response = await updateCases(values).then(() => {
+      await updateCases(values).then((data) => {
         try {
+          response = data;
           const SUBJECT = "CaseUpdate";
           const MESSAGE = {
             eventId: String(uuidv4()),
@@ -99,8 +100,9 @@ const NewCase = () => {
         "/private/cases/" + response.success.data.updateCase.id + "/details"
       );
     } else {
-      response = await addCases(values).then(() => {
+     await addCases(values).then((data) => {
         try {
+          response = data;
           const SUBJECT = "CaseCreate";
           const MESSAGE = {
             eventId: String(uuidv4()),
@@ -180,7 +182,7 @@ const NewCase = () => {
     if (selectedCaseType && !isEdit) {
       const formDetails = await getFormDetails(selectedCaseType);
       setSelectedFormDetails(formDetails);
-    } else if (!selectedCaseType && !isEdit) {
+    } else if (!selectedCaseType && !caseList) {
       setOpenPopup(true);
     }
   };
