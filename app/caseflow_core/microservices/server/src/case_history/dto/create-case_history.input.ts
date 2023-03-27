@@ -13,7 +13,7 @@ export class CreateCaseHistoryInput {
   @IsNotEmpty()
   datetime: Date;
 
-  @Field({ defaultValue: "sucess" })
+  @Field({ defaultValue: 'sucess' })
   @IsString()
   @IsNotEmpty()
   outcome: string;
@@ -21,13 +21,13 @@ export class CreateCaseHistoryInput {
   @Field({ nullable: true })
   @IsNumber()
   @IsNotEmpty()
-  userid: number ;
+  userid: number;
 
   @Field((type) => [Int])
   @IsNumber()
   @IsNotEmpty()
   caseId: number;
-  
+
   @Field((type) => [Int])
   @IsNumber()
   @IsNotEmpty()
@@ -36,11 +36,10 @@ export class CreateCaseHistoryInput {
   @Field({ nullable: true })
   @IsString()
   @IsNotEmpty()
-  doc_desc: string ;
+  doc_desc: string;
 
   @Field({ nullable: true })
   @IsString()
   @IsNotEmpty()
-  doc_name: string ;
-
+  doc_name: string;
 }

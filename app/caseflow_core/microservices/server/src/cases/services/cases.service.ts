@@ -40,8 +40,9 @@ export class CasesService {
       this.caseRepository.count(),
     ]);
     return { Cases, totalCount };
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
   }
 
@@ -58,8 +59,9 @@ export class CasesService {
         },
         relations : ['casestatus','casestatus.casestype','casestype']
       });
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   }
 
@@ -73,8 +75,9 @@ export class CasesService {
     try {
       const newCase = this.caseRepository.create(createCaseInput);
       return this.caseRepository.save(newCase);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   }
 

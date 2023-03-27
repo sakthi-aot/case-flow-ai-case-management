@@ -10,9 +10,17 @@ import jpeg from "../../assets/jpeg.png";
 import png from "../../assets/png.png";
 import pdf from "../../assets/pdf.png";
 import txt from "../../assets/txt.png";
-import {useDispatch, useSelector} from "react-redux";
-import { getAllDocuments,getDocument,searchCaseDocument } from "../../services/DocumentManagementService";
-import { setDocumentList, setTotalDocumentPageCount , setsearchDocumentResult} from "../../reducers/documentsReducer";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllDocuments,
+  getDocument,
+  searchCaseDocument,
+} from "../../services/DocumentManagementService";
+import {
+  setDocumentList,
+  setTotalDocumentPageCount,
+  setsearchDocumentResult,
+} from "../../reducers/documentsReducer";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import List from "@mui/material/List";
@@ -28,25 +36,32 @@ import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import { State } from "../../interfaces/stateInterface";
 import { Link } from "@mui/material";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { resetSelectedCase } from "../../reducers/newCaseReducer";
-
-
 
 const CaseDocuments = () => {
   // const [filteredDocumentDetails, setFilteredDocumentDetails] = useState([]);
   // const [documentDetailsForEdit, setDocumentDetailsForEdit] = useState(null);
   const [searchField, setSearchField] = useState("");
   const [searchColumn, setSearchColumn] = useState("Name");
-  const [selectedPage,setSelectedPage] = useState(1);
+  const [selectedPage, setSelectedPage] = useState(1);
   const navigate = useNavigate();
-  const filteredDocumentDetails = useSelector((state:State)=>state.documents.documentsList)
-  const totalDocuemntCount = useSelector((state:State)=>state.documents.totalPageCount)
-  const searchresults = useSelector((state:State)=>state.documents.documentsSearchResult)
-  const dropDownArray = ['Name', "Description"]
-  const [sortSetting, setSortSetting] = useState({orderBy :"name",orderType :false});
-   const dispatch = useDispatch();
-  const getFileIcon = (fileName:any) => {
+  const filteredDocumentDetails = useSelector(
+    (state: State) => state.documents.documentsList
+  );
+  const totalDocuemntCount = useSelector(
+    (state: State) => state.documents.totalPageCount
+  );
+  const searchresults = useSelector(
+    (state: State) => state.documents.documentsSearchResult
+  );
+  const dropDownArray = ["Name", "Description"];
+  const [sortSetting, setSortSetting] = useState({
+    orderBy: "name",
+    orderType: false,
+  });
+  const dispatch = useDispatch();
+  const getFileIcon = (fileName: any) => {
     let ext = fileName.split(".").pop();
     ext = ext.toLowerCase();
     switch (ext) {
@@ -61,38 +76,60 @@ const CaseDocuments = () => {
     }
   };
 
-
   const filterDocumentDetails = async () => {
-    let searchResult = await searchCaseDocument(searchField,searchColumn,sortSetting.orderBy,sortSetting.orderType,selectedPage,null,null)
-    
-    if(searchResult)
-    console.log(searchResult)
+    let searchResult = await searchCaseDocument(
+      searchField,
+      searchColumn,
+      sortSetting.orderBy,
+      sortSetting.orderType,
+      selectedPage,
+      null,
+      null
+    );
+
+    if (searchResult) console.log(searchResult);
     dispatch(setDocumentList(searchResult.CaseDocuments));
-    dispatch(setTotalDocumentPageCount(searchResult.totalCount))
+    dispatch(setTotalDocumentPageCount(searchResult.totalCount));
   };
 
   const searchDocumentDetails = async () => {
-    let searchResult = await searchCaseDocument(searchField,searchColumn,sortSetting.orderBy,sortSetting.orderType,true,null,null)
+    let searchResult = await searchCaseDocument(
+      searchField,
+      searchColumn,
+      sortSetting.orderBy,
+      sortSetting.orderType,
+      true,
+      null,
+      null
+    );
     let searchDocumentResult = searchResult.CaseDocuments.map((element) => {
-        return {title:element.id + " - " +element.name,content:element.desc, subtitle:"CaseDocuments",link:"",imgIcon:require("../../assets/DocumentsIcon.png")};
+      return {
+        title: element.id + " - " + element.name,
+        content: element.desc,
+        subtitle: "CaseDocuments",
+        link: "",
+        imgIcon: require("../../assets/DocumentsIcon.png"),
+      };
     });
-    if(searchDocumentResult)
-      console.log(searchDocumentResult)
-    
-    dispatch(setsearchDocumentResult({searchResult:searchDocumentResult,totalCount:searchResult.totalCount}));
+    if (searchDocumentResult) console.log(searchDocumentResult);
+
+    dispatch(
+      setsearchDocumentResult({
+        searchResult: searchDocumentResult,
+        totalCount: searchResult.totalCount,
+      })
+    );
   };
 
-
+  useEffect(() => {
+    fetchDocumentDetailsList();
+    filterDocumentDetails();
+  }, [selectedPage, sortSetting]);
 
   useEffect(() => {
-    fetchDocumentDetailsList()
-    filterDocumentDetails();
-  }, [selectedPage,sortSetting]);
+    searchDocumentDetails();
+  }, [searchField]);
 
- useEffect(() => {
-  searchDocumentDetails();
- }, [searchField])
-  
   async function fetchDocumentDetailsList() {
     // let output = await getAllDocuments();
     // output = output.map((element) => {
@@ -105,31 +142,28 @@ const CaseDocuments = () => {
     // dispatch(setDocumentList(output));
   }
 
-//  const  fetchDocumentDetails=(data:any)=>{
-// setDocumentDetailsForEdit(data)
-//   }
-  
-  const previewDocument = async (id,type) => {
-    let response = await getDocument(id)
-    let newWindow = window.open('/')!
-        newWindow.onload = () => {
-          newWindow.location = window.URL.createObjectURL(
-            new Blob([response["data"]], {type: type})
-          );
-        }
+  //  const  fetchDocumentDetails=(data:any)=>{
+  // setDocumentDetailsForEdit(data)
+  //   }
 
-}
+  const previewDocument = async (id, type) => {
+    let response = await getDocument(id);
+    let newWindow = window.open("/")!;
+    newWindow.onload = () => {
+      newWindow.location = window.URL.createObjectURL(
+        new Blob([response["data"]], { type: type })
+      );
+    };
+  };
 
-const onDocumentPageSelect = (e,p ) =>{
-  setSelectedPage(p)
-}
+  const onDocumentPageSelect = (e, p) => {
+    setSelectedPage(p);
+  };
 
-const navigateToCaseDetailHandler = (caseId) => {
-
-    dispatch(resetSelectedCase())
-    navigate(`/private/cases/${caseId}/details`)
-}
-
+  const navigateToCaseDetailHandler = (caseId) => {
+    dispatch(resetSelectedCase());
+    navigate(`/private/cases/${caseId}/details`);
+  };
 
   return (
     <section className="dashboard">
@@ -182,7 +216,7 @@ const navigateToCaseDetailHandler = (caseId) => {
                               "& th": {
                                 fontWeight: "bold",
                                 borderBottom: 2,
-                                borderColor:"#606060"
+                                borderColor: "#606060",
                               },
                             }}
                           >
@@ -200,7 +234,7 @@ const navigateToCaseDetailHandler = (caseId) => {
                             </TableCell>
                             <TableCell
                               align="left"
-                              sx={{cursor:"pointer"}}
+                              sx={{ cursor: "pointer" }}
                               onClick={() =>
                                 setSortSetting({
                                   orderBy: "id",
@@ -235,7 +269,7 @@ const navigateToCaseDetailHandler = (caseId) => {
                                     align="left"
                                     component="th"
                                     scope="row"
-                                    sx={{ padding: 0, width:"15vw"}}
+                                    sx={{ padding: 0, width: "15vw" }}
                                   >
                                     {" "}
                                     <div className="name-field">
@@ -316,7 +350,9 @@ const navigateToCaseDetailHandler = (caseId) => {
                       </Table>
                     </div>
                   ) : (
-                    <Typography variant="body1" className="no-case-doc-found" >No Case Documents Found !</Typography>
+                    <Typography variant="body1" className="no-case-doc-found">
+                      No Case Documents Found !
+                    </Typography>
                   )}
                 </TableContainer>
                 {filteredDocumentDetails &&

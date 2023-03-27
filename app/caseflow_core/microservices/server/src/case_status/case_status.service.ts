@@ -4,24 +4,21 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 @Injectable()
 export class CaseStatusService {
-
   constructor(
-    @InjectRepository(CaseStatuses) private statusRepository: Repository<CaseStatuses>
+    @InjectRepository(CaseStatuses)
+    private statusRepository: Repository<CaseStatuses>,
   ) {}
-  
+
   findAll() {
     try {
-      return this.statusRepository.find({relations:["casestype"]});
-    } catch (err) {
-      console.log(err);
+      return this.statusRepository.find({ relations: ['casestype'] });
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   }
 
   findOne(id: number) {
     return `This action returns a #${id} caseStatus`;
   }
-
-
 }
-
-

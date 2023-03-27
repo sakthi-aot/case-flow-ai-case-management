@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-isShowLoader : false,
-progressBarStatus : 0,
-advanceSearchResult : {
-  searchResult:[],
-  totalCount :0
-}
+  isShowLoader: false,
+  progressBarStatus: 0,
+  advanceSearchResult: {
+    searchResult: [],
+    totalCount: 0,
+  },
 };
 
 const appSlice = createSlice({
@@ -15,20 +15,15 @@ const appSlice = createSlice({
     setLoader: (state, action) => {
       state.isShowLoader = action.payload;
     },
-    setProgress : (state, action) => {
+    setProgress: (state, action) => {
       state.progressBarStatus = action.payload;
     },
-    setadvanceSearchResult : (state, action) => {
+    setadvanceSearchResult: (state, action) => {
       state.advanceSearchResult = action.payload;
     },
-
-
-  }
+  },
 });
 
-export const {
-    setLoader,
-    setProgress,
-    setadvanceSearchResult
-} = appSlice.actions;
+export const { setLoader, setProgress, setadvanceSearchResult } =
+  appSlice.actions;
 export default appSlice.reducer;

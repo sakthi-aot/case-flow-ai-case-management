@@ -12,21 +12,21 @@ import { _kc } from "../constants/tenantConstant";
  * @param onAuthenticatedCallback
  */
 
-const initKeycloak = (store:any, ...rest :any[]) => {
+const initKeycloak = (store: any, ...rest: any[]) => {
   const done = rest.length ? rest[0] : () => {};
-  const token = sessionStorage.getItem("authToken")
-  const reToken = sessionStorage.getItem("refreshToken")
+  const token = sessionStorage.getItem("authToken");
+  const reToken = sessionStorage.getItem("refreshToken");
   KeycloakData.init({
     onLoad: "check-sso",
     // promiseType: "native",
     silentCheckSsoRedirectUri:
-    window.location.origin + "/silent-check-sso.html",
+      window.location.origin + "/silent-check-sso.html",
     pkceMethod: "S256",
     checkLoginIframe: false,
-    token : token ?  token : "",
-    refreshToken :  reToken ?  reToken : "",
+    token: token ? token : "",
+    refreshToken: reToken ? reToken : "",
   }).then((authenticated) => {
-    console.log("authenticated",authenticated);
+    console.log("authenticated", authenticated);
     if (authenticated) {
       console.log(KeycloakData);
       if (
@@ -47,24 +47,30 @@ const initKeycloak = (store:any, ...rest :any[]) => {
         //     roles = roles.concat(roleData.id);
         //   }
         // }
-        const userInfo = KeycloakData.loadUserInfo(); 
-        // const userProfile = KeycloakData.loadUserProfile(); 
+        const userInfo = KeycloakData.loadUserInfo();
+        // const userProfile = KeycloakData.loadUserProfile();
 
         const email = KeycloakData?.tokenParsed?.email || "external";
         // authenticateFormio(email, roles);
         // onAuthenticatedCallback();
-        console.log("UserRoles",UserRoles)
-        console.log("KeycloakData",KeycloakData.token)
-        sessionStorage.setItem("authToken",KeycloakData["token"] ? KeycloakData["token"] : "")
-        sessionStorage.setItem("refreshToken",KeycloakData["refreshToken"] ? KeycloakData["refreshToken"] : "")
-        console.log("userInfo",userInfo)
-        console.log("email",email)
+        console.log("UserRoles", UserRoles);
+        console.log("KeycloakData", KeycloakData.token);
+        sessionStorage.setItem(
+          "authToken",
+          KeycloakData["token"] ? KeycloakData["token"] : ""
+        );
+        sessionStorage.setItem(
+          "refreshToken",
+          KeycloakData["refreshToken"] ? KeycloakData["refreshToken"] : ""
+        );
+        console.log("userInfo", userInfo);
+        console.log("email", email);
         done({
           roles: UserRoles,
           token: KeycloakData.token,
-          userInfo:userInfo,
+          userInfo: userInfo,
           email: email,
-        });      
+        });
         refreshToken(store);
       } else {
         doLogout();
@@ -76,16 +82,22 @@ const initKeycloak = (store:any, ...rest :any[]) => {
   });
 };
 
-let refreshInterval :any;
-const refreshToken = (store:any) => {  
+let refreshInterval: any;
+const refreshToken = (store: any) => {
   refreshInterval = setInterval(() => {
     KeycloakData &&
       KeycloakData.updateToken(5)
         .then((refreshed) => {
           if (refreshed) {
             store.dispatch(setAuthToken(KeycloakData.token));
-            sessionStorage.setItem("authToken",KeycloakData["token"] ? KeycloakData["token"] : "")
-            sessionStorage.setItem("refreshToken",KeycloakData["refreshToken"] ? KeycloakData["refreshToken"] : "")
+            sessionStorage.setItem(
+              "authToken",
+              KeycloakData["token"] ? KeycloakData["token"] : ""
+            );
+            sessionStorage.setItem(
+              "refreshToken",
+              KeycloakData["refreshToken"] ? KeycloakData["refreshToken"] : ""
+            );
           }
         })
         .catch((error) => {

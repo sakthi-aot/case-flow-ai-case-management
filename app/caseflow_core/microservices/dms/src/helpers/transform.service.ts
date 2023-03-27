@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 
 //_____________________Custom Imports_____________________//
 
@@ -8,10 +8,12 @@ export class TransformService {
   // summery : Transform S3 object to schema specific format
   // Created By : Don C Varghese
   transformS3 = (type, document, data) => {
+    try{
 
+    
     switch (type) {
       case 'CREATE':
-        try{
+        
           return {
             caseId: parseInt(data.caseId),
             documentref: document.key,
@@ -25,30 +27,37 @@ export class TransformService {
             type : data?.type,
             size : data?.size,
           };
-        }
-        catch(err){
-          console.log(err)
-        }
+       
         
 
       case 'UPDATE':
-        return {
-          documentref: document.key,
-          desc: data.desc,
-          addedbyuserid: data.addedbyuserid,
-          dmsprovider: 1,
-          latestversion: document.VersionId,
-          isdeleted: false,
-        };
+        
+          return {
+            documentref: document.key,
+            desc: data.desc,
+            addedbyuserid: data.addedbyuserid,
+            dmsprovider: 1,
+            latestversion: document.VersionId,
+            isdeleted: false,
+          };
+        
+   
     }
+  }
+  catch(error){
+    console.log(error)
+    throw new InternalServerErrorException();
+  }
   };
 
   // summery : Transform Alfresco object to schema specific format
   // Created By : 
   transformAlfresco = (type, document, data) => {
+    try{
     switch (type) {
       case 'CREATE':
         return {
+          caseId: data.caseId,
           name: data.name,
           documentref: document.entry.id,
           desc: data.desc,
@@ -58,8 +67,7 @@ export class TransformService {
           latestversion: document.entry.properties['cm:versionLabel'],
           isdeleted: false,
           type : data?.type,
-          caseId: data.caseId,
-
+          size : data?.size,
         };
 
       case 'UPDATE':
@@ -73,11 +81,17 @@ export class TransformService {
 
         };
     }
+  }
+  catch(error){
+    console.log(error)
+    throw new InternalServerErrorException();
+  }
   };
 
   // summery : Transform Sharepoint object to schema specific format
   // Created By : Gokul VG
   transformSharepoint = (type, document, data) => {
+    try{
     switch (type) {
       case 'CREATE':       
           return {
@@ -91,6 +105,7 @@ export class TransformService {
               latestversion: document.UIVersionLabel,
               isdeleted: false,
               type : data?.type,
+              size : data?.size,
           };
       
       case 'UPDATE':
@@ -103,13 +118,19 @@ export class TransformService {
           isdeleted: false,
         };
     }
+  }
+  
+  catch(error){
+    console.log(error)
+    throw new InternalServerErrorException();
+  }
   };
 
 
   // summery : Transform selector fro DMS object to schema specific format
   // Created By : Don C Varghese
   transform = (dms, type, document, data) => {
-    
+    try{
     switch (dms) {
       case '1':
         return this.transformS3(type, document, data);
@@ -122,5 +143,12 @@ export class TransformService {
 
      
     }
-  };
+  
+  
+}
+catch(error){
+  console.log(error);
+  throw error;
+}
+  }
 }

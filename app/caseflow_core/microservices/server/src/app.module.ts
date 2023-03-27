@@ -1,11 +1,14 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import {  ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
+import {
+  ApolloFederationDriver,
+  ApolloFederationDriverConfig,
+} from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 
-import { AuthGuard, KeycloakConnectModule} from 'nest-keycloak-connect';
-import { ConfigModule,ConfigService } from '@nestjs/config';
+import { AuthGuard, KeycloakConnectModule } from 'nest-keycloak-connect';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 //_____________________Custom Imports_____________________//
 import { DmsModule } from './dms/dms.module';
@@ -17,28 +20,21 @@ import { CaseStatusModule } from './case_status/case_status.module';
 import { CaseTypesModule } from './case_types/case_types.module';
 import { APP_GUARD } from '@nestjs/core';
 
-
-/** 
-*  Summary :Keyclock settings
-*  Created By : Akhila U S
-*/
-const keyCloakOptionsProvider =  {
+/**
+ *  Summary :Keyclock settings
+ *  Created By : Akhila U S
+ */
+const keyCloakOptionsProvider = {
   provide: 'keyCloakDataProvider',
   useFactory: (config: ConfigService) => {
     return {
-
-      // authServerUrl: "https://iam.aot-technologies.com/auth",
-      // realm: "forms-flow-mahagony",
-      // clientId: "case-flow-micro-service",
-      // secret: "4d16f2bf-0998-46e0-b1d9-6f8b096e69b7",
-
       authServerUrl: config.get('KEYCLOCK_AUTH_URL'),
       realm: config.get('KEYCLOCK_REALM'),
       clientId: config.get('KEYCLOCK_CLIENT_ID'),
       secret: config.get('KEYCLOCK_SECRET'),
-    }
+    };
   },
-  inject: [ ConfigService],
+  inject: [ConfigService],
 };
 /**
  * Summary : App Module Wrapping All Functionality For Case Micro Service
@@ -61,25 +57,19 @@ const keyCloakOptionsProvider =  {
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-      type: 'postgres',
-      host: config.get('POSTGRESQL_HOST') || 'caseflowdev.ccizdidwz3tj.ca-central-1.rds.amazonaws.com',
-      port: parseInt(config.get('POSTGRESQL_PORT')) || 5432,
-      database: config.get('POSTGRES_DATABASE') || 'caseflow_core',
-      username: config.get('POSTGRES_DB_USERNAME') || 'postgres',
-      password: config.get('POSTGRES_DB_PASSWORD') || '0DhoxLWL5HlS27WjLkUL',
-    
+        type: 'postgres',
+        host:
+          config.get('POSTGRESQL_HOST') ||
+          'caseflowdev.ccizdidwz3tj.ca-central-1.rds.amazonaws.com',
+        port: parseInt(config.get('POSTGRESQL_PORT')) || 5432,
+        database: config.get('POSTGRES_DATABASE') || 'caseflow_core',
+        username: config.get('POSTGRES_DB_USERNAME') || 'postgres',
+        password: config.get('POSTGRES_DB_PASSWORD') || '0DhoxLWL5HlS27WjLkUL',
 
-      // host: 'caseflowdev.ccizdidwz3tj.ca-central-1.rds.amazonaws.com',
-      // port: 5432,
-      // username: 'postgres',
-      // password: '0DhoxLWL5HlS27WjLkUL',
-      // database: 'caseflow_core',
-      
-      // synchronize: true,
-
-      entities: ['dist/**/*.entity{.ts,.js}'],
-      migrations: ['./src/migrations/*.ts'],
-    }), }),
+        entities: ['dist/**/*.entity{.ts,.js}'],
+        migrations: ['./src/migrations/*.ts'],
+      }),
+    }),
     CaseHistoryModule,
     CaseEventsModule,
     EventTypesModule,
@@ -91,13 +81,7 @@ const keyCloakOptionsProvider =  {
     {
       provide: APP_GUARD, //For keyclock Auth Token
       useClass: AuthGuard,
-     },
-
-    // {
-    //   provide: APP_GUARD, //For keyclock Role management
-    //   useClass: RoleGuard,
-    // },
+    },
   ],
-
 })
 export class AppModule {}

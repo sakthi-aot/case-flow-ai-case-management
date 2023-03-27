@@ -9,7 +9,6 @@ export class TransformService {
   // summery : Transform the case api body and create a case database entity
   // Created By : Don Basil Peter
   transformCreateCase = (data) => {
-    console.log();
     try {
       const createCaseInput: CreateCaseInput = {
         name: data.name,
@@ -30,15 +29,15 @@ export class TransformService {
         lobcaseid : data?.lobcaseid,
       };
       return createCaseInput;
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   };
 
   // summery : Transform the case api body and create a case database entity
   // Created By : Don Basil Peter
   transformUpdateCase = (data) => {
-    console.log();
     try {
       const createCaseInput: UpdateCaseInput = {
         id: data.id,
@@ -60,8 +59,9 @@ export class TransformService {
         lobcaseid : data?.lobcaseid,
       };
       return createCaseInput;
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   };
 }

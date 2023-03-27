@@ -1,17 +1,17 @@
-import { Field, Int, ArgsType } from '@nestjs/graphql'
-import { IsInt, IsString, Max, Min } from 'class-validator'
+import { Field, Int, ArgsType } from '@nestjs/graphql';
+import { IsInt, IsString, Max, Min } from 'class-validator';
 
 @ArgsType()
 export class FetchSearchArgs {
-  @Field(() => String)  
+  @Field(() => String)
   @IsString()
-  searchField 
+  searchField;
 
-  @Field(() => String)  
+  @Field(() => String)
   @IsString()
-  searchColumn 
+  searchColumn;
 
-  @Field(() => String)  
+  @Field(() => String)
   @IsString()
   fromDate 
 
@@ -23,18 +23,18 @@ export class FetchSearchArgs {
   @IsString()
   orderBy 
 
-  @Field(() => String)  
+  @Field(() => String)
   @IsString()
-  orderType 
+  orderType;
 
   @Field(() => Int)
   @IsInt()
   @Min(0)
-  skip = 0
+  skip = 0;
 
   @Field(() => Int)
   @IsInt()
   @Min(1)
   @Max(50)
-  take = 25
+  take = 25;
 }

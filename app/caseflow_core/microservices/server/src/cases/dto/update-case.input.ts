@@ -1,5 +1,12 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
-import { IsArray, IsBoolean, IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsBoolean,
+  IsDate,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+} from 'class-validator';
 /**
  * Summary :  DTO for updating Cases
  * Created By : Akhila U S
@@ -39,7 +46,7 @@ export class UpdateCaseInput {
   @Field({ nullable: true })
   completiondate: Date;
 
-  @Field({ nullable: true ,defaultValue: new Date()})
+  @Field({ nullable: true, defaultValue: new Date() })
   lastmodificationdate: Date;
 
   @Field({ nullable: true })

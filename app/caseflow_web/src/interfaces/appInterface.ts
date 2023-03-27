@@ -1,5 +1,4 @@
 export interface AppProps {
-    store:any,
-    history:any
-  }
-
+  store: any;
+  history: any;
+}

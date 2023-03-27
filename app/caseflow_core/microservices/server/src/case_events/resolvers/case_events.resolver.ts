@@ -4,7 +4,6 @@ import { CaseEvents } from '../entities/case_event.entity';
 import { CreateCaseEventInput } from '../dto/create-case_event.input';
 import { UpdateCaseEventInput } from '../dto/update-case_event.input';
 
-
 /**
  *  Resolvers For Cases
  */
@@ -14,23 +13,22 @@ export class CaseEventsResolver {
 
   //_____________________Query_____________________//
 
-
   /**
    * Summary :   Query For Fetching case events
    * Created By : Akhila U S
-   * @returns 
+   * @returns
    */
   @Query(() => [CaseEvents], { name: 'getAllCaseEvents' })
   findAll() {
     return this.caseEventsService.findAll();
   }
 
-/**
- * Summary :   Query For Fetching case events  by passing id
- * Created By : Akhila U S
- * @param args 
- * @returns 
- */
+  /**
+   * Summary :   Query For Fetching case events  by passing id
+   * Created By : Akhila U S
+   * @param args
+   * @returns
+   */
   @Query(() => CaseEvents, { name: 'caseEvent' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.caseEventsService.findOne(id);
@@ -38,43 +36,50 @@ export class CaseEventsResolver {
 
   //_____________________Mutation_____________________//
 
-/**
- * Summary : Mutation for Creating Case events
- * Created By : Akhila U S 
- * @param createCaseEventInput 
- * @returns 
- */
+  /**
+   * Summary : Mutation for Creating Case events
+   * Created By : Akhila U S
+   * @param createCaseEventInput
+   * @returns
+   */
   @Mutation(() => CaseEvents)
-  createCaseEvent(@Args('createCaseEventInput') createCaseEventInput: CreateCaseEventInput) {
+  createCaseEvent(
+    @Args('createCaseEventInput') createCaseEventInput: CreateCaseEventInput,
+  ) {
     return this.caseEventsService.create(createCaseEventInput);
   }
 
   /**
-  * Summary : Mutation for update Case events
-   * Created By : Akhila U S 
-   * @param updateCaseEventInput 
-   * @returns 
+   * Summary : Mutation for update Case events
+   * Created By : Akhila U S
+   * @param updateCaseEventInput
+   * @returns
    */
   @Mutation(() => CaseEvents)
-  updateCaseEvent(@Args('updateCaseEventInput') updateCaseEventInput: UpdateCaseEventInput) {
-    return this.caseEventsService.update(updateCaseEventInput.id, updateCaseEventInput);
+  updateCaseEvent(
+    @Args('updateCaseEventInput') updateCaseEventInput: UpdateCaseEventInput,
+  ) {
+    return this.caseEventsService.update(
+      updateCaseEventInput.id,
+      updateCaseEventInput,
+    );
   }
 
   /**
-  * Summary : Mutation for remove Case events
-   * Created By : Akhila U S 
-   * @param id 
-   * @returns 
+   * Summary : Mutation for remove Case events
+   * Created By : Akhila U S
+   * @param id
+   * @returns
    */
   @Mutation(() => CaseEvents)
   removeCaseEvent(@Args('id', { type: () => Int }) id: number) {
     return this.caseEventsService.remove(id);
   }
 
-    //_____________________Resolver Reference For GraphQL Federation_____________________//
+  //_____________________Resolver Reference For GraphQL Federation_____________________//
 
-//   @ResolveField(()=>EventTypes)
-//   eventtype(@Parent() caseevent:CaseEvents){
-//   this.caseEventsService.getEventType(caseevent.eventtypeId);
-// }
+  //   @ResolveField(()=>EventTypes)
+  //   eventtype(@Parent() caseevent:CaseEvents){
+  //   this.caseEventsService.getEventType(caseevent.eventtypeId);
+  // }
 }

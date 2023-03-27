@@ -1,6 +1,6 @@
-import { Field, ObjectType ,Directive,ID } from '@nestjs/graphql';
+import { Field, ObjectType, Directive, ID } from '@nestjs/graphql';
 import { CaseEvents } from 'src/case_events/entities/case_event.entity';
-import { Entity, PrimaryGeneratedColumn, Column,  OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 /**
  * Summary :  Entity Class For eventtype
@@ -22,9 +22,7 @@ export class EventTypes {
   @Field()
   code: number;
 
-
-
   @OneToMany(() => CaseEvents, (caseevent) => caseevent.eventtype)
   @Field(() => [CaseEvents], { nullable: true })
-  caseevent: CaseEvents[]
+  caseevent: CaseEvents[];
 }

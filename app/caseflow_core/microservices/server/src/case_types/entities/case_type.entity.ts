@@ -18,15 +18,13 @@ export class CaseTypes {
   @Field()
   displayname: string;
 
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  caseextrafields: number | null;
 
   @Column({ nullable: true })
   @Field({ nullable: true })
-  caseextrafields: number |null;
-
-
-  @Column({ nullable: true })
-  @Field({ nullable: true })
-  lobfields: number |null;
+  lobfields: number | null;
 
   @Column({ nullable: true })
   @Field()
@@ -38,14 +36,13 @@ export class CaseTypes {
 
   @Column({ nullable: true })
   @Field({ nullable: true })
-  formid : string |null;
+  formid: string | null;
 
   @OneToMany(() => CaseStatuses, (casestatuses) => casestatuses.casestype)
   @Field(() => [CaseStatuses], { nullable: true })
-  casestatus: CaseStatuses[]
+  casestatus: CaseStatuses[];
 
   @OneToMany(() => Cases, (cases) => cases.typeid)
   @Field(() => [Cases], { nullable: true })
-  cases: Cases[]
-
+  cases: Cases[];
 }

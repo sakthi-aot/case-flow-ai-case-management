@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import  {  AxiosResponse } from 'axios';
 import { HttpService } from '@nestjs/axios/dist';
 import { firstValueFrom } from 'rxjs';
+import { BadRequestException, InternalServerErrorException } from '@nestjs/common/exceptions';
 
 
 //Created By:Gokul VG
@@ -14,12 +15,12 @@ export class SharepointServices{
 
    async uploadDocument(file,fileName):Promise<any>{  
 
-            const spURL = this.configService.get('SHAREPOINT_UPLOAD_URL').replace('${FileName}',fileName)
-           
-            try {  
+       
+       try {  
+                const spURL = this.configService.get('SHAREPOINT_UPLOAD_URL').replace('${FileName}',fileName);
                 const accessToken =await this.getAccessToken(); 
                 const FormDigestValue= await this.getFormDigestValue()  
-                const responseUpload = await firstValueFrom(this.httpService.post(spURL,file,{
+                const response = await firstValueFrom(this.httpService.post(spURL,file,{
                     maxBodyLength:Infinity,
                     maxContentLength:Infinity,                    
                     headers:{
@@ -28,37 +29,39 @@ export class SharepointServices{
                     }
                 }))
                 
-              return responseUpload.data    
-            } catch (e) {
-              return e;
+              return response.data;    
+            } catch (error) {
+                console.log(error)
+                throw error;
             }         
     }    
 
 
     async getDocument (fileName:any):Promise<any>{
-        const spURL = this.configService.get('SHAREPOINT_GET_DOCUMENT_URL').replace('${FileName}',fileName)
         try {    
+            const spURL = this.configService.get('SHAREPOINT_GET_DOCUMENT_URL').replace('${FileName}',fileName);
             const accessToken =await this.getAccessToken();           
-            const responseUpload = await firstValueFrom(this.httpService.get(spURL,{
+            const response = await firstValueFrom(this.httpService.get(spURL,{
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,                   
                 },
                 responseType : 'arraybuffer'
             }))          
            
-          return responseUpload.data;
-        } catch (e) {
-          return e;
+          return response.data;
+        } catch (error) {
+            console.log(error);
+          throw error;
 
         }       
     }
 
     async deleteDocument (fileName:any):Promise<any>{
-            const spURL = this.configService.get('SHAREPOINT_DELETE_DOCUMENT_URL').replace('${FileName}',fileName)          
+            const spURL = this.configService.get('SHAREPOINT_DELETE_DOCUMENT_URL').replace('${FileName}',fileName);          
             try {   
                 const accessToken = await this.getAccessToken();             
 
-                const responseUpload = await firstValueFrom(this.httpService.delete(spURL,{ 
+                const response = await firstValueFrom(this.httpService.delete(spURL,{ 
                     headers:{
                         "Authorization":`Bearer ${accessToken}`,                       
                         "X-HTTP-Method":"DELETE",
@@ -67,10 +70,10 @@ export class SharepointServices{
 
                     }
                 }))                            
-              return responseUpload    
-            } catch (e) {
-              return e;
-
+              return response;   
+            } catch (error) {
+                console.log(error);
+                throw error;
             }
     }
 
@@ -91,8 +94,9 @@ export class SharepointServices{
         )   )
         return  getToken.data.access_token;
 
-       }catch(err){    
-        return err
+       }catch(error){    
+        console.log(error);
+                throw error;
        }
     }
 
@@ -106,11 +110,15 @@ export class SharepointServices{
                     "Authorization":`Bearer ${access_token}`
                 }
             }))
-            return formDigestValue.data.FormDigestValue
+            if(formDigestValue && formDigestValue.data &&  formDigestValue.data.FormDigestValue)
+           { return formDigestValue.data.FormDigestValue;}
+           else {throw new InternalServerErrorException();}
+           
             
 
-        }catch(err){
-            return err
+        }catch(error){
+            console.log(error);
+                throw error;
         }
     }
 

@@ -1,16 +1,16 @@
 @import "../../../styles.scss";
 .case-details {
-    display: grid;
-    grid-template-columns:  auto auto auto;
-    text-align: left;
-    margin-top: 1rem;
-    grid-row-gap: 2rem;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  text-align: left;
+  margin-top: 1rem;
+  grid-row-gap: 2rem;
 }
 
-.case-tasks{
-    text-align: left;
-    margin-block: 1rem;
-    display:flex;
-    flex-direction: column;
-    row-gap: 1.5rem;
+.case-tasks {
+  text-align: left;
+  margin-block: 1rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.5rem;
 }

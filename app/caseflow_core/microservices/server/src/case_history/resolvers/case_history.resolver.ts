@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int} from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { CaseHistoryService } from '../services/case_history.service';
 import { CaseHistory } from '../entities/case_history.entity';
 import { CreateCaseHistoryInput } from '../dto/create-case_history.input';
@@ -13,24 +13,23 @@ export class CaseHistoryResolver {
 
   //_____________________Query_____________________//
 
-/**
- * Summary :   Query For Fetching all case history
- * Created By : Akhila U S
- * @param args 
- * @returns 
- */
+  /**
+   * Summary :   Query For Fetching all case history
+   * Created By : Akhila U S
+   * @param args
+   * @returns
+   */
   @Query(() => [CaseHistory], { name: 'getAllCaseHistory' })
   async findAll() {
-    return await this.caseHistoryService.findAll();   
-   
+    return await this.caseHistoryService.findAll();
   }
 
-/**
- * Summary :   Query For Fetching casehistory by passing id
- * Created By : Akhila U S
- * @param args 
- * @returns 
- */
+  /**
+   * Summary :   Query For Fetching casehistory by passing id
+   * Created By : Akhila U S
+   * @param args
+   * @returns
+   */
 
   @Query(() => CaseHistory, { name: 'caseHistory' })
   findOne(@Args('id', { type: () => Int }) id: number) {
@@ -39,33 +38,42 @@ export class CaseHistoryResolver {
 
   //_____________________Mutation_____________________//
 
- /**
-  * Summary : Mutation for Creating Casehistory
-  * Created By : Akhila U S 
-  * @param createCaseHistoryInput 
-  * @returns 
-  */
+  /**
+   * Summary : Mutation for Creating Casehistory
+   * Created By : Akhila U S
+   * @param createCaseHistoryInput
+   * @returns
+   */
   @Mutation(() => CaseHistory)
-  createCaseHistory(@Args('createCaseHistoryInput') createCaseHistoryInput: CreateCaseHistoryInput) {
+  createCaseHistory(
+    @Args('createCaseHistoryInput')
+    createCaseHistoryInput: CreateCaseHistoryInput,
+  ) {
     return this.caseHistoryService.create(createCaseHistoryInput);
   }
 
-/**
- * Summary : Mutation for updating Casehistory
- * Created By : Akhila U S 
- * @param updateCaseHistoryInput 
- * @returns 
- */
+  /**
+   * Summary : Mutation for updating Casehistory
+   * Created By : Akhila U S
+   * @param updateCaseHistoryInput
+   * @returns
+   */
 
   @Mutation(() => CaseHistory)
-  updateCaseHistory(@Args('updateCaseHistoryInput') updateCaseHistoryInput: UpdateCaseHistoryInput) {
-    return this.caseHistoryService.update(updateCaseHistoryInput.id, updateCaseHistoryInput);
+  updateCaseHistory(
+    @Args('updateCaseHistoryInput')
+    updateCaseHistoryInput: UpdateCaseHistoryInput,
+  ) {
+    return this.caseHistoryService.update(
+      updateCaseHistoryInput.id,
+      updateCaseHistoryInput,
+    );
   }
 
   /**
    * Mutation for remove Cases
-   * @param id 
-   * @returns 
+   * @param id
+   * @returns
    */
   @Mutation(() => CaseHistory)
   removeCaseHistory(@Args('id', { type: () => Int }) id: number) {
@@ -74,9 +82,8 @@ export class CaseHistoryResolver {
 
   //_____________________Resolver Reference For GraphQL Federation_____________________//
 
-// @ResolveField(()=>CaseEvents)
-// event(@Parent() casehistory:CaseHistory){
-//   this.caseHistoryService.getCaseEvents(casehistory.eventId);
-// }
-
+  // @ResolveField(()=>CaseEvents)
+  // event(@Parent() casehistory:CaseHistory){
+  //   this.caseHistoryService.getCaseEvents(casehistory.eventId);
+  // }
 }

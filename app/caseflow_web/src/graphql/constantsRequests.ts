@@ -12,7 +12,6 @@ export const FETCH_CASE_STATUSES = gql`
   }
 `;
 
-
 export const FETCH_CASE_TYPES = gql`
   query {
     getCaseTypes {
