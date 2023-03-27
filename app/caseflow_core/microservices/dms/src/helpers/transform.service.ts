@@ -57,6 +57,7 @@ export class TransformService {
     switch (type) {
       case 'CREATE':
         return {
+          caseId: data.caseId,
           name: data.name,
           documentref: document.entry.id,
           desc: data.desc,
@@ -66,8 +67,7 @@ export class TransformService {
           latestversion: document.entry.properties['cm:versionLabel'],
           isdeleted: false,
           type : data?.type,
-          caseId: data.caseId,
-
+          size : data?.size,
         };
 
       case 'UPDATE':
@@ -105,6 +105,7 @@ export class TransformService {
               latestversion: document.UIVersionLabel,
               isdeleted: false,
               type : data?.type,
+              size : data?.size,
           };
       
       case 'UPDATE':

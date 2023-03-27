@@ -7,10 +7,6 @@ import { IsBoolean, IsDate, IsNotEmpty, IsNumber } from 'class-validator';
  */
 @InputType()
 export class CreateCaseflowLobInput {
-  @Field(() => Int, { nullable: true })
-  @IsNumber()
-  @IsNotEmpty()
-  caseId?: number;
 
   @Field(() => Int, { nullable: true })
   @IsNumber()

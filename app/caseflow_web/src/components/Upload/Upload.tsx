@@ -155,6 +155,9 @@ const Upload = (props) => {
           props.onSuccess();
           setSubmitted(false);
           refreshDocumentList();
+        } else if(response.data.status == 409) {
+          setProgressBarColor("error");
+          toast.error("File name already exists");
         } else {
           setProgressBarColor("error");
           toast.error("Error");
