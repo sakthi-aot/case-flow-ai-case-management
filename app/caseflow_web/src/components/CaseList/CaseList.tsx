@@ -12,7 +12,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
 import { Pagination } from "@mui/material";
 import { State } from "../../interfaces/stateInterface";
-import { PAGINATION_TAKE } from "../../apiManager/endpoints/config";
+import { GENERIC_NAME, PAGINATION_TAKE } from "../../apiManager/endpoints/config";
 import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
 
 // let  sortingkeysOfAllRecentCases:SortValue[] =[]
@@ -34,7 +34,7 @@ const CaseList = React.memo(
     );
     const [dataForBreadCrumbs, setDataForBreadCrumbs] = useState([
       { text: "Home", link: "/private" },
-      { text: "Cases", link: "/private/cases" },
+      { text: GENERIC_NAME, link: "/private/cases" },
     ]);
 
     // useEffect(()=>{
@@ -125,7 +125,7 @@ const CaseList = React.memo(
                     className="recent-case-card-style"
                     sx={{ cursor: "pointer" }}
                   >
-                    Case ID
+                {GENERIC_NAME}
                   </Typography>
                 }
               />
@@ -204,7 +204,7 @@ const CaseList = React.memo(
                   <ListItemText>
                     <Typography variant="body1" align="center">
                       {" "}
-                      No Recent Cases Found!{" "}
+                      No Recent {" "+GENERIC_NAME+ " "} Found!{" "}
                     </Typography>
                   </ListItemText>
                 </Grid>

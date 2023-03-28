@@ -41,6 +41,7 @@ import { fetchCaseTypess } from "../../services/constantsService";
 import { setCaseTypes } from "../../reducers/constantsReducer";
 import { useState } from "react";
 import CustomizedDialog from "../Dialog/Dialog";
+import { GENERIC_NAME } from "../../apiManager/endpoints/config";
 
 const drawerWidth = 240;
 
@@ -155,7 +156,7 @@ export default function MiniDrawer() {
       path: "/private/",
     },
     { key: 2, text: "Tasks", path: FORMSFLOW_APPLICATION_URL + "/tasks" },
-    { key: 3, text: "Cases", path: "/private/cases" },
+    { key: 3, text: GENERIC_NAME, path: "/private/cases" },
     { key: 4, text: "Documents", path: "/private/documents" },
     { key: 5, text: "LOB", path: "/private/lob" },
   ];
@@ -293,7 +294,7 @@ export default function MiniDrawer() {
               }}
             >
               <AddCircleIcon />
-              Start New Case
+              Start New {GENERIC_NAME}
             </Button>
           )}
 
@@ -385,7 +386,7 @@ export default function MiniDrawer() {
         </Box>
       </Box>
       <CustomizedDialog
-        title="Start New Case"
+        title={"Start New Case" + GENERIC_NAME}
         isOpen={isOpenPopup}
         setIsOpen={setOpenPopup}
         handleClose={handleClosePopup}
@@ -394,7 +395,7 @@ export default function MiniDrawer() {
         <div className="workflow">
           <FormControl sx={{ m: 1, minWidth: 90 }} size="small">
             <InputLabel id="demo-simple-select-label">
-              Select Case Type
+              Select {GENERIC_NAME} Type
             </InputLabel>
             <Select
               labelId="demo-simple-select-label"

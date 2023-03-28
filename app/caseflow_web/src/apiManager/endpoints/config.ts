@@ -39,3 +39,7 @@ process.env.REACT_APP_CASEFLOW_DMS_API_URL;
 export const FORMSFLOW_FORM_URL :string=
 (window._env_ && window._env_.REACT_APP_FORMSFLOW_FROM_URL) ||
 process.env.REACT_APP_FORMSFLOW_FROM_URL;
+
+export const GENERIC_NAME :string=
+(window._env_ && window._env_.REACT_APP_GENERIC_NAME) ||
+process.env.REACT_APP_GENERIC_NAME;

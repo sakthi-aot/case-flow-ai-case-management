@@ -38,6 +38,7 @@ import { State } from "../../interfaces/stateInterface";
 import { Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { resetSelectedCase } from "../../reducers/newCaseReducer";
+import { GENERIC_NAME } from "../../apiManager/endpoints/config";
 
 const CaseDocuments = () => {
   // const [filteredDocumentDetails, setFilteredDocumentDetails] = useState([]);
@@ -106,7 +107,7 @@ const CaseDocuments = () => {
       return {
         title: element.id + " - " + element.name,
         content: element.desc,
-        subtitle: "CaseDocuments",
+        subtitle: GENERIC_NAME+ "Documents",
         link: "",
         imgIcon: require("../../assets/DocumentsIcon.png"),
       };
@@ -242,7 +243,7 @@ const CaseDocuments = () => {
                                 })
                               }
                             >
-                              Case ID
+                              {GENERIC_NAME}
                             </TableCell>
                             <TableCell align="left">Date Created</TableCell>
                             <TableCell align="left">Last Updated</TableCell>
@@ -351,7 +352,7 @@ const CaseDocuments = () => {
                     </div>
                   ) : (
                     <Typography variant="body1" className="no-case-doc-found">
-                      No Case Documents Found !
+                      No {GENERIC_NAME} Documents Found !
                     </Typography>
                   )}
                 </TableContainer>
