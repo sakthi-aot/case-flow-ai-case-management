@@ -75,9 +75,9 @@ In the following document, we’ll describe about the different project dependen
 
 - ### dms 
     You can install it through locally or docker
-    Make sure your current working directory is cd {Your Directory}/caseflow-ai/caseflow-core/dms     
+    Make sure your current working directory is cd {Your Directory}/caseflow-ai/caseflow-core/microservices/dms     
     
-    Make sure you have changed the below setting in app.module.ts inorder to enbale the playground in localhost:7002 , where you can test queries amd mutations 
+    Make sure you have changed the below setting in app.module.ts inorder to enbale the playground in localhost:7002 , where you can test queries and mutations 
     
    ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/staging/development/.images/caseflow-dms-setting.png)
    
@@ -90,7 +90,7 @@ In the following document, we’ll describe about the different project dependen
     #### To stop the dms server
     - Run `docker-compose stop` to stop.    
 
-     The application should be up and available for use in http://localhost:7002/
+     The application should be up in http://localhost:7002  and available for use in http://localhost:7002/graphql
         
     ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/staging/development/.images/case-flow-dms-playground.png)
         
@@ -100,7 +100,7 @@ In the following document, we’ll describe about the different project dependen
 - ### server      
 
    You can install it through locally or docker
-   Make sure your current working directory is cd {Your Directory}/caseflow-ai/caseflow-core/server     
+   Make sure your current working directory is cd {Your Directory}/caseflow-ai/caseflow-core/microservices/server     
     
    #### Make sure you have changed the below setting in app.module.ts inorder to enbale the playground in localhost:7001 , where you can test queries amd mutations
     
@@ -119,9 +119,36 @@ In the following document, we’ll describe about the different project dependen
     - Run `docker-compose stop` to stop.    
 
 
-     The application should be up and available for use in http://localhost:7001/
+     The application should be up in http://localhost:7001 and available for use in http://localhost:7001/graphql
         
      ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/staging/development/.images/caseflow-core-7001-graphql.png)
+     
+     
+- ### Line Of Business(LOB)      
+
+   You can install it through locally or docker
+   Make sure your current working directory is cd {Your Directory}/caseflow-ai/caseflow-core/microservices/lob     
+    
+   #### Make sure you have changed the below setting in app.module.ts inorder to enbale the playground in localhost:8000 , where you can test queries amd mutations
+    
+        
+   ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/feature/update-read-me-latest/.images/lob-config-app.module.jpg)
+   
+   
+   NOTE: Revert the changes before pushing the code to Production
+   
+  #### To start the server in local
+   - Run `docker-compose up -d` to start
+    
+    
+   ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/feature/update-read-me-latest/.images/lob-docker-compose-up.jpg)
+    #### To stop the  server
+    - Run `docker-compose stop` to stop.    
+
+
+     The application should be up in http://localhost:8000 and available for use in http://localhost:8000/graphql
+        
+     ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/feature/update-read-me-latest/.images/lob-playground.jpg)     
         
         
 - ### gateway        
@@ -130,6 +157,11 @@ In the following document, we’ll describe about the different project dependen
     Make sure your current working directory is cd {Your Directory}/caseflow-ai/caseflow-core/gateway     
     
     #### Make sure you have changed the below setting in app.module.ts inorder to enbale the playground in localhost:7000 , where you can test queries amd mutations
+    
+    Make sure you are pointing Case and Document to localhosted servers on line 33 and 34 on below configuration
+    
+    Case must point to http://localhost:7001/graphql
+    Document must point to http://localhost:7002/graphql
     
         
     ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/staging/development/.images/caseflow-gateway-setting.png)
@@ -171,9 +203,12 @@ Make sure your current working directory is `cd {Your Directory}/caseflow-ai/cas
     #### Make sure you have changed the below setting in .env inorder to connect the web application with the locally hosted server
     
     
-        #caseflow web Api End point
-        REACT_APP_CASEFLOW_API_URL=http://localhost:7001
+        #caseflow web Api End point        
         REACT_APP_CASEFLOW_GRAPHQL_API_URL=http://localhost:7000
+        REACT_APP_CASEFLOW_API_URL=http://localhost:7001
+        REACT_APP_CASEFLOW_DMS_API_URL=http://localhost:7002
+        REACT_APP_CASEFLOW_LOB_GRAPHQL_API_URL=http://localhost:8000
+       
     
         
        
