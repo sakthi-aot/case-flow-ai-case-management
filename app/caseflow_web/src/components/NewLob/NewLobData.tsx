@@ -30,7 +30,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 let defaultValues = {};
 
 const schema = Yup.object().shape({
-  policyNumber: Yup.number().positive().required(),
+  policyNumber: Yup.string()
+    .max(10, "Policy number must not exceed 10 characters")
+    .matches(/^[0-9]*$/, "Policy number must contain only numbers")
+    .required("Policy number is required"),
   policyEffectiveDate: Yup.date().required(),
   policyExpireDate: Yup.date().min(Yup.ref("policyEffectiveDate")).required(),
   sumAssured: Yup.number().positive().required(),
