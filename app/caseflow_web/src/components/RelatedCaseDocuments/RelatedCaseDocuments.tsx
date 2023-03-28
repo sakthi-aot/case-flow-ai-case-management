@@ -14,7 +14,7 @@ import {
 } from "../../services/DocumentManagementService";
 import { MenuItem, Select, Typography } from "@mui/material";
 import { Pagination } from "@mui/material";
-import { PAGINATION_TAKE } from "../../apiManager/endpoints/config";
+import { GENERIC_NAME, PAGINATION_TAKE } from "../../apiManager/endpoints/config";
 import {
   setSelectedCaseDocuments,
   setTotalDocCount,
@@ -375,7 +375,7 @@ export default function RelatedCaseDocuments({ id, docDetail }) {
           </Table>
         ) : (
           <Typography variant="body1" className="no-case-doc-found">
-            No Case Documents Found !
+            No {" " + GENERIC_NAME + " "} Documents Found !
           </Typography>
         )}
         {totalPageNo > 1 && (

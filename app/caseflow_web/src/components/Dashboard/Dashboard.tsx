@@ -5,9 +5,10 @@ import CaseList from "../CaseList/CaseList";
 import MyTask from "../MyTask/MyTask";
 import { fetchRecentCaseList } from "../../services/CaseService";
 import { Typography } from "@mui/material";
+import { GENERIC_NAME } from "../../apiManager/endpoints/config";
 
 const caseListProps = {
-  title: "Recent Cases",
+  title: "Recent " + GENERIC_NAME,
   count: 5,
   isShowSort: false,
   pagination: false,

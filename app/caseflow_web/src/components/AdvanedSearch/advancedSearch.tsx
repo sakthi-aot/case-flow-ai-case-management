@@ -27,6 +27,7 @@ import { textAlign } from "@mui/system";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { GENERIC_NAME } from "../../apiManager/endpoints/config";
 
 export default function AdvancedSearch() {
   const [searchField, setSearchField] = useState("");
@@ -63,7 +64,7 @@ export default function AdvancedSearch() {
             result.push({
               title: element.id + " - " + element.name,
               content: element.desc,
-              subtitle: "Cases",
+              subtitle: GENERIC_NAME,
               link: "/private/cases/" + element.id + "/details",
               imgIcon: require("../../assets/CasesIcon.png"),
             });
@@ -194,7 +195,7 @@ export default function AdvancedSearch() {
                     }}
                   />
                 }
-                label="Cases"
+                label={GENERIC_NAME}
               />
               <FormControlLabel
                 control={

@@ -69,6 +69,7 @@ import { Form as FormIOForm, saveSubmission, Formio } from "react-formio";
 import { FORMSFLOW_APPLICATION_URL } from "../../apiManager/endpoints";
 import { publishMessage } from "../../services/NatsServices";
 import { v4 as uuidv4 } from "uuid";
+import { GENERIC_NAME } from "../../apiManager/endpoints/config";
 
 Formio.setProjectUrl("https://app2.aot-technologies.com/formio");
 Formio.setBaseUrl("https://app2.aot-technologies.com/formio");
@@ -290,13 +291,13 @@ const CaseDetails = () => {
         let SUBJECT;
         switch (newStatusDetails.name) {
           case "Open":
-            SUBJECT = "CaseOpen";
+            SUBJECT = GENERIC_NAME+ "Open";
             break;
           case "Pending":
-            SUBJECT = "CasePend";
+            SUBJECT = GENERIC_NAME +"Pend";
             break;
           case "Completed":
-            SUBJECT = "CaseComp";
+            SUBJECT = GENERIC_NAME +"Comp";
             break;
           default:
             SUBJECT = "";
@@ -320,9 +321,9 @@ const CaseDetails = () => {
   useEffect(() => {
     setDataForBreadCrumbs([
       { text: "Home", link: "/private" },
-      { text: "Cases", link: "/private/cases" },
+      { text: GENERIC_NAME, link: "/private/cases" },
       {
-        text: "Case ID : " + selectedCase.id,
+        text: GENERIC_NAME + " : " + selectedCase.id,
         link: "/private/cases/" + selectedCase.id + "details",
       },
     ]);
@@ -501,7 +502,7 @@ const CaseDetails = () => {
 
           <span className="case-detail-header">
             <div className="case-id-status">
-              <p className="case-id">Case ID : {selectedCase.id}</p>
+              <p className="case-id">{GENERIC_NAME} ID : {selectedCase.id}</p>
               <Typography className="case-status">
                 {selectedCase?.casestatus?.displayname}
               </Typography>
@@ -539,7 +540,7 @@ const CaseDetails = () => {
               sx={{ marginBottom: 0 }}
             >
               <Typography variant="body1" className="caseDocuments-headtag">
-                Case Documents
+                Case {GENERIC_NAME}
               </Typography>
             </AccordionSummary>
             <AccordionDetails sx={{ paddingLeft: 0 }}>

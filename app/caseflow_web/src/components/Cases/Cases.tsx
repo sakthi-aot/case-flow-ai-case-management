@@ -10,8 +10,9 @@ import {
   setsearchCaseResult,
 } from "../../reducers/newCaseReducer";
 import { Typography } from "@mui/material";
+import { GENERIC_NAME } from "../../apiManager/endpoints/config";
 const caseListProps = {
-  title: "Cases",
+  title: GENERIC_NAME,
   count: 5,
   isShowSort: false,
   pagination: true,
@@ -70,7 +71,7 @@ const Cases = () =>
         return {
           title: element.id + " - " + element.name,
           content: element.desc,
-          subtitle: "Cases",
+          subtitle: GENERIC_NAME,
           link: "/private/cases/" + element.id + "/details",
           imgIcon: require("../../assets/CasesIcon.png"),
         };
