@@ -158,6 +158,11 @@ In the following document, we’ll describe about the different project dependen
     
     #### Make sure you have changed the below setting in app.module.ts inorder to enbale the playground in localhost:7000 , where you can test queries amd mutations
     
+    Make sure you are pointing Case and Document to localhosted servers on line 33 and 34 on below configuration
+    
+    Case must point to http://localhost:7001/graphql
+    Document must point to http://localhost:7002/graphql
+    
         
     ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/staging/development/.images/caseflow-gateway-setting.png)
     
