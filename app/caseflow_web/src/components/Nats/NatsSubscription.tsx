@@ -81,7 +81,7 @@ const NatsSubscribition = () => {
           variant="h6"
           className="nats-heading"
         >
-          Nats subscription Center
+          Message Subscription Center
         </Typography>
 
         <Box sx={{ marginBottom: "1rem" }}>

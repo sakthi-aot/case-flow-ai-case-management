@@ -203,7 +203,7 @@ const LOBCustomContent = () => {
                 <Grid item xs={12}>
                   <ListItemText
                     primary={
-                      <Typography variant="body1"> No LOB Found! </Typography>
+                      <Typography variant="body1" sx={{paddingLeft:"25vw"}}> No LOB Found! </Typography>
                     }
                   />
                 </Grid>
