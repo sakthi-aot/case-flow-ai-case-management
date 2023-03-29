@@ -13,27 +13,28 @@ const handleAuth = ({ req }) => {
         userAuthToken: req.headers.authorization,
       };
     }
-  } catch (err) {
-  }
+  } catch (err) {}
 };
 @Module({
-  imports: [GraphQLModule.forRoot<ApolloGatewayDriverConfig>({
-    driver: ApolloGatewayDriver,
-    server:{
-      cors:true,
-      context: handleAuth,
-    },
-    
-    gateway: {
-      buildService: ({ url }) => new RequestHandler({ url }),
-      supergraphSdl: new IntrospectAndCompose({
-        subgraphs: [
-        { name: 'Case', url: process.env.CASE_SUBGRAPH_URL },
-        { name: 'Document', url: process.env.DOCUMENT_SUBGRAPH_URL }
-        ],
-      }),
-    },
-  }),],
+  imports: [
+    GraphQLModule.forRoot<ApolloGatewayDriverConfig>({
+      driver: ApolloGatewayDriver,
+      server: {
+        cors: true,
+        context: handleAuth,
+      },
+
+      gateway: {
+        buildService: ({ url }) => new RequestHandler({ url }),
+        supergraphSdl: new IntrospectAndCompose({
+          subgraphs: [
+            { name: 'Case', url: process.env.CASE_SUBGRAPH_URL },
+            { name: 'Document', url: process.env.DOCUMENT_SUBGRAPH_URL },
+          ],
+        }),
+      },
+    }),
+  ],
   controllers: [],
   providers: [],
 })

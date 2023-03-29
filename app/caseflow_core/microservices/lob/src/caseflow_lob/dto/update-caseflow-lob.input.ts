@@ -1,10 +1,6 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
 import { IsBoolean, IsDate, IsNotEmpty, IsNumber } from 'class-validator';
 
-/**
- * Summary :  Update input DTO for Caseflow Lob
- * Created By : Don Basil Peter
- */
 @InputType()
 export class UpdateCaseflowLobInput {
   @Field((type) => Int)

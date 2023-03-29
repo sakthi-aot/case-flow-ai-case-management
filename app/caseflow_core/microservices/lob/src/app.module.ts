@@ -1,31 +1,31 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
+import {
+  ApolloFederationDriver,
+  ApolloFederationDriverConfig,
+} from '@nestjs/apollo';
 import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CaseflowLobModule } from './caseflow_lob/caseflow_lob.module';
-import { ConfigModule,ConfigService } from '@nestjs/config';
-import {  KeycloakConnectModule } from 'nest-keycloak-connect';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { KeycloakConnectModule } from 'nest-keycloak-connect';
 
-const keyCloakOptionsProvider =  {
+//Custom - imports //
+
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { CaseflowLobModule } from './caseflow_lob/caseflow_lob.module';
+
+const keyCloakOptionsProvider = {
   provide: 'keyCloakDataProvider',
   useFactory: (config: ConfigService) => {
     return {
-
-      // authServerUrl: "https://caseflow-idm.aot-technologies.com:8443/auth",
-      // realm: "caseflow",
-      // clientId: "case-flow-nest",
-      // secret: "Qhvu0sBg15UsiplYL5msFVqjzyOVaxRr"
-
       authServerUrl: config.get('KEYCLOCK_AUTH_URL'),
       realm: config.get('KEYCLOCK_REALM'),
       clientId: config.get('KEYCLOCK_CLIENT_ID'),
       secret: config.get('KEYCLOCK_SECRET'),
-    }
+    };
   },
-  inject: [ ConfigService],
+  inject: [ConfigService],
 };
 
 @Module({
@@ -43,30 +43,20 @@ const keyCloakOptionsProvider =  {
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-      type: 'postgres',
+        type: 'postgres',
 
-
-      host: config.get('POSTGRESQL_HOST') || 'caseflowdev.ccizdidwz3tj.ca-central-1.rds.amazonaws.com',
-      port: parseInt(config.get('POSTGRESQL_PORT')) || 5432,
-      database: config.get('POSTGRES_DATABASE') || 'caseflow_lob',
-      username: config.get('POSTGRES_DB_USERNAME') || 'postgres',
-      password: config.get('POSTGRES_DB_PASSWORD') || '0DhoxLWL5HlS27WjLkUL',
-      // host: 'caseflowdev.ccizdidwz3tj.ca-central-1.rds.amazonaws.com',
-      // port: 5432,
-      // username: 'postgres',
-      // password: '0DhoxLWL5HlS27WjLkUL',
-      // database: 'caseflow_lob',
-      entities: ['dist/**/*.entity{.ts,.js}'],
-      migrations: ['./src/migrations/*.ts'],
-    }), }),
+        host: config.get('POSTGRESQL_HOST'),
+        port: parseInt(config.get('POSTGRESQL_PORT')),
+        database: config.get('POSTGRES_DATABASE'),
+        username: config.get('POSTGRES_DB_USERNAME'),
+        password: config.get('POSTGRES_DB_PASSWORD'),
+        entities: ['dist/**/*.entity{.ts,.js}'],
+        migrations: ['./src/migrations/*.ts'],
+      }),
+    }),
     CaseflowLobModule,
   ],
   controllers: [AppController],
-  providers: [AppService, 
-  //    {
-  //   provide: APP_GUARD,
-  //   useClass: AuthGuard,
-  //  },
-  ],
+  providers: [AppService],
 })
 export class AppModule {}
