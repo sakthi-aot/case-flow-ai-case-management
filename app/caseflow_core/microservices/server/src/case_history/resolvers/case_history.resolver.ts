@@ -1,4 +1,7 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+
+//_____________________Custom Imports_____________________//
+
 import { CaseHistoryService } from '../services/case_history.service';
 import { CaseHistory } from '../entities/case_history.entity';
 import { CreateCaseHistoryInput } from '../dto/create-case_history.input';
@@ -79,11 +82,4 @@ export class CaseHistoryResolver {
   removeCaseHistory(@Args('id', { type: () => Int }) id: number) {
     return this.caseHistoryService.remove(id);
   }
-
-  //_____________________Resolver Reference For GraphQL Federation_____________________//
-
-  // @ResolveField(()=>CaseEvents)
-  // event(@Parent() casehistory:CaseHistory){
-  //   this.caseHistoryService.getCaseEvents(casehistory.eventId);
-  // }
 }

@@ -1,7 +1,4 @@
 import { Field, ObjectType, Int, Directive, ID } from '@nestjs/graphql';
-import { CaseHistory } from 'src/case_history/entities/case_history.entity';
-import { CaseStatuses } from 'src/case_status/entities/case_status.entity';
-import { CaseTypes } from 'src/case_types/entities/case_type.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -11,6 +8,12 @@ import {
   OneToMany,
   JoinColumn,
 } from 'typeorm';
+
+//_____________________Custom Imports_____________________//
+
+import { CaseHistory } from '../../case_history/entities/case_history.entity';
+import { CaseStatuses } from '../../case_status/entities/case_status.entity';
+import { CaseTypes } from '../../case_types/entities/case_type.entity';
 
 /**
  * Summary :  Entity Class For External Cases

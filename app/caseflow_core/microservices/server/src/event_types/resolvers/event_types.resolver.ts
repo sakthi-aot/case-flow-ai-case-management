@@ -1,4 +1,7 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+
+//_____________________Custom Imports_____________________//
+
 import { EventTypesService } from '../services/event_types.service';
 import { EventTypes } from '../entities/event_type.entity';
 import { CreateEventTypeInput } from '../dto/create-event_type.input';

@@ -1,7 +1,10 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+
+//_____________________Custom Imports_____________________//
+
 import { Cases } from 'src/cases/entities/cases.entity';
 import { CaseStatuses } from 'src/case_status/entities/case_status.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @ObjectType()
 @Entity()

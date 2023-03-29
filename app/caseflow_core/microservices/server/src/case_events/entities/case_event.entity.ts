@@ -1,6 +1,9 @@
 import { Field, ObjectType, Directive, ID } from '@nestjs/graphql';
-import { CaseHistory } from 'src/case_history/entities/case_history.entity';
-import { EventTypes } from 'src/event_types/entities/event_type.entity';
+
+//_____________________Custom Imports_____________________//
+
+import { CaseHistory } from '../../case_history/entities/case_history.entity';
+import { EventTypes } from '../../event_types/entities/event_type.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,

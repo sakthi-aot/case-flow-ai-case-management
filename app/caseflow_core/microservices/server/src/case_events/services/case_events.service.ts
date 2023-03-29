@@ -4,9 +4,12 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EventTypes } from 'src/event_types/entities/event_type.entity';
-import { EventTypesService } from 'src/event_types/services/event_types.service';
 import { Repository } from 'typeorm';
+
+//_____________________Custom Imports_____________________//
+
+import { EventTypes } from '../../event_types/entities/event_type.entity';
+import { EventTypesService } from '../../event_types/services/event_types.service';
 import { CreateCaseEventInput } from '../dto/create-case_event.input';
 import { UpdateCaseEventInput } from '../dto/update-case_event.input';
 import { CaseEvents } from '../entities/case_event.entity';
