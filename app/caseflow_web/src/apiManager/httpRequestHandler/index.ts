@@ -10,7 +10,7 @@ export const httpGETRequest = (
   data,
   token,
   isBearer = true,
-  headers
+  headers?
 ) => {
   return axionInstanceWithIntercepter.get(url, {
     params: data,
@@ -24,7 +24,7 @@ export const httpGETRequest = (
   });
 };
 
-export const httpPOSTRequest = (url, data, token,  isBearer = true,isUpload= false,headers) => {
+export const httpPOSTRequest = (url, data, token,  isBearer = true,isUpload= false,headers?) => {
   return axionInstanceWithIntercepter.post(url, data, {
     headers: headers ? headers : {
       Authorization: isBearer
