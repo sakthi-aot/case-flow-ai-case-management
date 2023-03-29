@@ -1,33 +1,32 @@
-import { Field, Int, ArgsType } from '@nestjs/graphql'
-import { IsInt, IsNotEmpty, IsString, Max, Min } from 'class-validator'
+import { Field, Int, ArgsType } from '@nestjs/graphql';
+import { IsInt, IsNotEmpty, IsString, Max, Min } from 'class-validator';
 
 @ArgsType()
 export class FetchSearchArgs {
-  @Field(() => String)  
+  @Field(() => String)
   @IsString()
-  searchField 
+  searchField;
 
-  @Field(() => String)  
+  @Field(() => String)
   @IsString()
-  searchColumn 
+  searchColumn;
 
-  @Field(() => String)  
+  @Field(() => String)
   @IsString()
-  fromDate 
+  fromDate;
 
-  @Field(() => String)  
+  @Field(() => String)
   @IsString()
-  toDate 
-
+  toDate;
 
   @Field(() => Int)
   @IsInt()
   @Min(0)
-  skip = 0
+  skip = 0;
 
   @Field(() => Int)
   @IsInt()
   @Min(1)
   @Max(50)
-  take = 25
+  take = 25;
 }
