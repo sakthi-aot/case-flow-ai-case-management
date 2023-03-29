@@ -35,7 +35,7 @@ export class DmsController {
     @Response() res: ExpressResponse,
   ): Promise<any> {
     try {
-      const url = 'http://35.182.42.147:7002/documents/uploadDocument';
+      const url = process.env.DMS_UPLOAD_URL;
       var FormData = require('form-data');
       const formData = new FormData();
       const headersRequest = {
