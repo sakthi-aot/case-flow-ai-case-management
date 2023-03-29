@@ -1,4 +1,4 @@
-import * as Joi from "joi";
+import * as Joi from 'joi';
 
 export const createDocumentSchema = Joi.object({
   file: Joi.string().allow(''),
@@ -22,12 +22,11 @@ export const updateDocumentSchema = Joi.object({
   size: Joi.number().required(),
 });
 
-
 export const deleteDocumentSchema = Joi.object({
   id: Joi.number().required(),
 });
 
 export const downloadDocumentSchema = Joi.object({
   id: Joi.number().required(),
-  authorization:Joi.string(),
+  authorization: Joi.string(),
 });
