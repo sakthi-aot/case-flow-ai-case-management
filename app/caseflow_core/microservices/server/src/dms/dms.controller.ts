@@ -33,7 +33,7 @@ export class DmsController {
     @UploadedFile() file: Express.Multer.File, @Body() body,@Headers() headers,@Response() res: ExpressResponse
   ): Promise<any> {
     try{
-    const url = process.env.DMS_UPLOAD_UTL
+    const url = process.env.DMS_UPLOAD_URL
     var FormData = require("form-data");
     const formData = new FormData();
     const headersRequest = {
