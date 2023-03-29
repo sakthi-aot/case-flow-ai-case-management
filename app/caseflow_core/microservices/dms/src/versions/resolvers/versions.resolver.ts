@@ -17,21 +17,4 @@ export class VersionsResolver {
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.versionsService.findOne(id);
   }
-
-
-    //_____________________Mutation_____________________//
-  // @Mutation(() => Versions)
-  // createVersion(@Args('createVersionInput') createVersionInput: CreateVersionInput) {
-  //   return this.versionsService.create(createVersionInput);
-  // }
-
-  // @Mutation(() => Versions)
-  // updateVersion(@Args('updateVersionInput') updateVersionInput: UpdateVersionInput) {
-  //   return this.versionsService.update(updateVersionInput.id, updateVersionInput);
-  // }
-
-  @Mutation(() => Versions)
-  removeVersion(@Args('id', { type: () => Int }) id: number) {
-    return this.versionsService.remove(id);
-  }
 }

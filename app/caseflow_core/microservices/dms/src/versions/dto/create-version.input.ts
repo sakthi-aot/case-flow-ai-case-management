@@ -1,10 +1,5 @@
-
 import { Field, InputType, Int } from '@nestjs/graphql';
 
-/**
- * Summary :  Create input DTO for Versions
- * Created By : Akhila U S
- */
 @InputType()
 export class CreateVersionInput {
   @Field((type) => Int, { nullable: true })
@@ -21,6 +16,4 @@ export class CreateVersionInput {
 
   @Field()
   documentid: string;
-
-
 }
