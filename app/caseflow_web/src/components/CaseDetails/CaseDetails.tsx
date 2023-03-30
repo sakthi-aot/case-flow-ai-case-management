@@ -510,7 +510,7 @@ const CaseDetails = () => {
               sx={{ marginBottom: 0 }}
             >
               <Typography variant="body1" className="caseDocuments-headtag">
-                Case {GENERIC_NAME}
+                 {GENERIC_NAME} Documents
               </Typography>
             </AccordionSummary>
             <AccordionDetails sx={{ paddingLeft: 0 }}>
