@@ -82,10 +82,9 @@ const CaseDetails = () => {
   const userName = useSelector(
     (state: State) => state.auth.userDetails.userName
   );
-  const [setDataForBreadCrumbs] = useState([
+  const [dataForBreadCrumbs, setDataForBreadCrumbs] = useState([
     { text: "Home", link: "/private" },
   ]);
-
   const caseDetail = {
     status: "OPEN",
     date: "2022-11-01",
@@ -511,7 +510,7 @@ const CaseDetails = () => {
               sx={{ marginBottom: 0 }}
             >
               <Typography variant="body1" className="caseDocuments-headtag">
-                Case {GENERIC_NAME}
+                 {GENERIC_NAME} Documents
               </Typography>
             </AccordionSummary>
             <AccordionDetails sx={{ paddingLeft: 0 }}>
