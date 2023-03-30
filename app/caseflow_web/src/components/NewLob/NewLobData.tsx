@@ -11,7 +11,6 @@ import { useNavigate } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import "./NewLobData.scss";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker/DesktopDatePicker";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import {
