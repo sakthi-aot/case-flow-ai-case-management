@@ -448,8 +448,8 @@ const NewCase = () => {
                   className="case-heading"
                 >
                   {isEdit
-                    ? "Update " + { GENERIC_NAME }
-                    : "New " + { GENERIC_NAME }}
+                    ? "Update " + GENERIC_NAME 
+                    : "New " + GENERIC_NAME }
                 </Typography>
               </Grid>
 
