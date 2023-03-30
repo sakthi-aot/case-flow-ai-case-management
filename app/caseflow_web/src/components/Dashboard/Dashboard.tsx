@@ -28,15 +28,7 @@ const Dashboard = () => {
   useEffect(() => {
     recentCaseList();
   }, []);
-  // useEffect(() => {
-  // getRecentCases({}, (err, res) => {
-  //   // const {token } = res;
-  //   // dispatch(setAuthToken(token));
-  //   // dispatch(setAuthenticated(true));
-  //   // });
-  // });
-  // });
-  const [filteredCaseDetails, setFilteredCaseDetails] = useState([]);
+
   const [searchField, setSearchField] = useState("");
   const [searchColumn, setSearchColumn] = useState("name");
   const [dropDownArray, setdropDownArray] = useState(["Name", "Description"]);

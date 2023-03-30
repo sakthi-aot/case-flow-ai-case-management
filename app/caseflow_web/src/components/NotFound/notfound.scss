@@ -27,17 +27,14 @@
   }
 
   .landingImage {
-    /* width: 70vh; */
     height: 60vh;
     margin: 1rem 0rem 3em 0rem;
-    /* box-shadow: rgba(0, 0, 0, 0.20) 0px 5px 40px; */
   }
 
   .buttons {
     margin: auto;
     padding: 1rem 0rem 3rem 0rem;
     display: grid;
-    /* grid-template-columns: 1fr 1fr; */
     width: 50%;
     color: $primary-theme-black-color;
   }

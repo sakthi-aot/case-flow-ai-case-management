@@ -188,36 +188,7 @@ const NewLobData = () => {
                 />
               </Grid>
 
-              {/* <Grid item xs={3}>
-          <Typography sx={{ padding: "1rem 1rem 0rem 0rem" }} variant="body2" className="case-name-tag">
-           Case ID
-          </Typography>
-          </Grid>
-          <Grid item xs={3}>
-            <Controller
-            name="caseId"
-            control={control}
-            rules={{required:true}}
-            render={({ field: { onChange, value ,ref}  }) => (
-            <TextField
-              id="standard-basic"
-              label="Case ID"
-              variant="standard"             
-              rows={1}
-              sx={{
 
-                width: "100%",            
-              }} 
-              value={value} 
-              onChange={onChange}
-              placeholder="Case ID"
-              inputRef={ref}
-              error={!!errors.caseId}
-              
-            />
-          )}
-        />          
-      </Grid> */}
             </Grid>
 
             <Grid container spacing={3} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
@@ -337,10 +308,8 @@ const NewLobData = () => {
                       rows={1}
                       variant="standard"
                       sx={{
-                        // "& .MuiInputLabel-root": { color: "#404040" },
                         width: "100%",
                       }}
-                      // InputProps={{ disableUnderline: true }}
                       placeholder="Sum Assured"
                       value={value}
                       onChange={onChange}
@@ -362,7 +331,6 @@ const NewLobData = () => {
               <Button
                 style={{
                   alignItems: "center",
-                  // margin: "auto",
                   height: "2.4375rem",
                   width: "20%",
                   backgroundColor: "primary.main",

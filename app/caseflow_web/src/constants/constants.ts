@@ -1,30 +1,25 @@
 export const BASE_ROUTE = "/";
 
-interface ENV{
-  REACT_APP_KEYCLOAK_WEB_CLIENTID :string,
-  REACT_APP_KEYCLOAK_URL_REALM :string,
-  REACT_APP_KEYCLOAK_URL :string, 
-  REACT_APP_CLIENT_ROLE :string,
-  REACT_APP_ADMINISTRATOR: string,
-  REACT_APP_CLIENT :string
-  REACT_APP_CASEFLOW_GRAPHQL_API_URL : string
-  CASEFLOW_DMS : string;
-  REACT_APP_CASEFLOW_API_URL : string;
-  PAGINATION_TAKE:number;
-
-
-
+interface ENV {
+  REACT_APP_KEYCLOAK_WEB_CLIENTID: string;
+  REACT_APP_KEYCLOAK_URL_REALM: string;
+  REACT_APP_KEYCLOAK_URL: string;
+  REACT_APP_CLIENT_ROLE: string;
+  REACT_APP_ADMINISTRATOR: string;
+  REACT_APP_CLIENT: string;
+  REACT_APP_CASEFLOW_GRAPHQL_API_URL: string;
+  CASEFLOW_DMS: string;
+  REACT_APP_CASEFLOW_API_URL: string;
+  PAGINATION_TAKE: number;
 }
 
 declare global {
-    interface Window {
-      _env_:ENV;
-    }
+  interface Window {
+    _env_: ENV;
+  }
 }
 
-
-
-//keycloak  
+//keycloak
 export const KEYCLOAK_CLIENT =
   (window._env_ && window._env_.REACT_APP_KEYCLOAK_WEB_CLIENTID) ||
   process.env.REACT_APP_KEYCLOAK_WEB_CLIENTID ||
@@ -55,7 +50,6 @@ const CASEFLOW_CLIENT =
   (window._env_ && window._env_.REACT_APP_CLIENT) ||
   process.env.REACT_APP_CLIENT;
 
-
 export const ROLES = [
   {
     id: CASEFLOW_ADMINISTRATOR,
@@ -67,25 +61,33 @@ export const ROLES = [
   },
 ];
 
-export  const CASEFLOW_DMS =  (window._env_ && window._env_.REACT_APP_CASEFLOW_DMS) ||
-process.env.REACT_APP_CASEFLOW_DMS ||
-"1";
-export  const PAGINATION_TAKE =  (window._env_ && window._env_.REACT_APP_PAGINATION_TAKE) ||
-process.env.REACT_APP_PAGINATION_TAKE || "" ;
+export const CASEFLOW_DMS =
+  (window._env_ && window._env_.REACT_APP_CASEFLOW_DMS) ||
+  process.env.REACT_APP_CASEFLOW_DMS ||
+  "1";
+export const PAGINATION_TAKE =
+  (window._env_ && window._env_.REACT_APP_PAGINATION_TAKE) ||
+  process.env.REACT_APP_PAGINATION_TAKE ||
+  "";
 
-export  const CASEFLOW_API_URL =  (window._env_ && window._env_.REACT_APP_CASEFLOW_API_URL) ||
-process.env.REACT_APP_CASEFLOW_API_URL ||
-"";
-export  const CASEFLOW_GRAPHQL_API_URL =  (window._env_ && window._env_.REACT_APP_CASEFLOW_GRAPHQL_API_URL) ||
-process.env.REACT_APP_CASEFLOW_GRAPHQL_API_URL ||
-"";
-export  const REACT_APP_CASEFLOW_LOB_GRAPHQL_API_URL =  (window._env_ && window._env_.REACT_APP_CASEFLOW_LOB_GRAPHQL_API_URL) ||
-process.env.REACT_APP_CASEFLOW_LOB_GRAPHQL_API_URL ||
-"";
+export const CASEFLOW_API_URL =
+  (window._env_ && window._env_.REACT_APP_CASEFLOW_API_URL) ||
+  process.env.REACT_APP_CASEFLOW_API_URL ||
+  "";
+export const CASEFLOW_GRAPHQL_API_URL =
+  (window._env_ && window._env_.REACT_APP_CASEFLOW_GRAPHQL_API_URL) ||
+  process.env.REACT_APP_CASEFLOW_GRAPHQL_API_URL ||
+  "";
+export const REACT_APP_CASEFLOW_LOB_GRAPHQL_API_URL =
+  (window._env_ && window._env_.REACT_APP_CASEFLOW_LOB_GRAPHQL_API_URL) ||
+  process.env.REACT_APP_CASEFLOW_LOB_GRAPHQL_API_URL ||
+  "";
 
-export  const REACT_APP_FORMSFLOW_URL =  (window._env_ && window._env_.REACT_APP_FORMSFLOW_URL) ||
-process.env.REACT_APP_FORMSFLOW_URL ||
-"";
-export  const REACT_APP_FORMSFLOW_APP_URL =  (window._env_ && window._env_.REACT_APP_FORMSFLOW_APP_URL) ||
-process.env.REACT_APP_FORMSFLOW_APP_URL ||
-"";
+export const REACT_APP_FORMSFLOW_URL =
+  (window._env_ && window._env_.REACT_APP_FORMSFLOW_URL) ||
+  process.env.REACT_APP_FORMSFLOW_URL ||
+  "";
+export const REACT_APP_FORMSFLOW_APP_URL =
+  (window._env_ && window._env_.REACT_APP_FORMSFLOW_APP_URL) ||
+  process.env.REACT_APP_FORMSFLOW_APP_URL ||
+  "";

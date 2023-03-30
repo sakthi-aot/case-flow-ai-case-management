@@ -18,7 +18,6 @@ const App = React.memo(({ store }: AppProps) => {
     palette: {
       primary: {
         main: "#404040",
-        // main: "#ff5349",
       },
       secondary: {
         main: "#171616",
@@ -55,7 +54,6 @@ const App = React.memo(({ store }: AppProps) => {
           <ThemeProvider theme={theme}>
             <Typography>
               <React.Fragment>
-                {/* <React.StrictMode> */}
                 <Routes>
                   <Route index path="/" element={<BaseRouting />} />
                   <Route
@@ -65,7 +63,6 @@ const App = React.memo(({ store }: AppProps) => {
                   />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
-                {/* </React.StrictMode> */}
               </React.Fragment>
             </Typography>
           </ThemeProvider>

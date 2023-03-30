@@ -14,7 +14,10 @@ import {
 } from "../../services/DocumentManagementService";
 import { MenuItem, Select, Typography } from "@mui/material";
 import { Pagination } from "@mui/material";
-import { GENERIC_NAME, PAGINATION_TAKE } from "../../apiManager/endpoints/config";
+import {
+  GENERIC_NAME,
+  PAGINATION_TAKE,
+} from "../../apiManager/endpoints/config";
 import {
   setSelectedCaseDocuments,
   setTotalDocCount,
@@ -32,18 +35,7 @@ import {
 import { publishMessage } from "../../services/NatsServices";
 import { v4 as uuidv4 } from "uuid";
 
-// function createData(
-//   name: string,
-//   size: number,
-//   creationDate: Date,
-//   lastUpdated: Date,
-//   version: number,
-// ) {
-//   return { name, size, creationDate, lastUpdated, version };
-// }
-
 export default function RelatedCaseDocuments({ id, docDetail }) {
-  // const [docDetail, setdocDetail] = useState([]);
   const [totalPageNo, setTotalPageNo] = useState(0);
   const [pageNo, setPageNo] = useState(1);
   const [isDeleteConfirmationUpOpen, setDeleteConfirmation] = useState(false);
@@ -96,7 +88,7 @@ export default function RelatedCaseDocuments({ id, docDetail }) {
 
     link.href = downloadUrl;
     const file_name: string = name;
-    link.setAttribute("download", file_name); //any other extension
+    link.setAttribute("download", file_name);
 
     document.body.appendChild(link);
 
@@ -131,10 +123,6 @@ export default function RelatedCaseDocuments({ id, docDetail }) {
     dispatch(setCaseHistory(output));
     dispatch(setFilteredCaseHistory(output));
   };
-
-  // useEffect(() => {
-  //   fetchCaseDocumentDetails();
-  // }, [id]);
 
   const onChnagehandler = (row, action) => {
     switch (action) {
@@ -273,8 +261,6 @@ export default function RelatedCaseDocuments({ id, docDetail }) {
             </TableHead>
             <TableBody>
               {docDetail.map((row: any, index) => (
-                // console.log(row)
-                // console.log(row.size)
                 <TableRow key={row.id}>
                   <TableCell
                     sx={{
@@ -345,12 +331,6 @@ export default function RelatedCaseDocuments({ id, docDetail }) {
                     }}
                     align="left"
                   >
-                    {/* <select className="caseDocumentAction-center" onChange={(e)=>{downloadDocument(row.id,e.target.value)}}>                
-                <option selected  >...</option>
-                <option >Delete</option>
-                <option >Update</option>
-                <option >Merge</option>
-                <option value = "download" >download</option> */}
                     <Select
                       id="document-actions"
                       className="document-actions"
@@ -366,8 +346,6 @@ export default function RelatedCaseDocuments({ id, docDetail }) {
                         </MenuItem>
                       ))}
                     </Select>
-
-                    {/* </select> */}
                   </TableCell>
                 </TableRow>
               ))}

@@ -1,8 +1,4 @@
-import {
-  httpGETRequest,
-  httpPOSTRequest,
-} from "../apiManager/httpRequestHandler";
-import { API } from "../apiManager/endpoints";
+import { httpPOSTRequest } from "../apiManager/httpRequestHandler";
 import { LOBURL } from "../apiManager/endpoints";
 import {
   CREATE_NEW_CASEFLOW_LOB,
@@ -10,9 +6,7 @@ import {
   FETCH_DATA,
   UPDATE_NEW_CASEFLOW_LOB,
 } from "../graphql/lobRequests";
-import { Case } from "../dto/cases";
 import { print } from "graphql";
-import lobConfig from "../config/lob_data.json";
 import { PAGINATION_TAKE } from "../apiManager/endpoints/config";
 import moment from "moment";
 

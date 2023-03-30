@@ -11,10 +11,8 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import Search from "../Search/Search";
 import "./advancedSearch.scss";
 import SearchIcon from "@mui/icons-material/Search";
-import SearchFilters from "../SearchFilters/SearchFilters";
 import { searchCases } from "../../services/CaseService";
 import { searchCaseDocument } from "../../services/DocumentManagementService";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,7 +21,6 @@ import { setadvanceSearchResult } from "../../reducers/applicationReducer";
 import { getLobData } from "../../services/LOBService";
 import moment from "moment";
 import { useNavigate } from "react-router";
-import { textAlign } from "@mui/system";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";

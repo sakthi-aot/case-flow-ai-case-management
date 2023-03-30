@@ -1,5 +1,3 @@
-export const functionName = () =>(dispatch:any) =>{
-
-    dispatch({});
-
-}
+export const functionName = () => (dispatch: any) => {
+  dispatch({});
+};

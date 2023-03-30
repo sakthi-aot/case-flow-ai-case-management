@@ -101,7 +101,7 @@ const NewCase = () => {
         "/private/cases/" + response.success.data.updateCase.id + "/details"
       );
     } else {
-     await addCases(values).then((data) => {
+      await addCases(values).then((data) => {
         try {
           response = data;
           const SUBJECT = "CaseCreate";
@@ -188,14 +188,6 @@ const NewCase = () => {
     }
   };
   const submitForm = (data) => {
-    //  dispatch(
-    //   saveSubmission(
-    //     "submission",
-    //     data,
-    //     selectedFormDetails._id,
-    //     callBack
-    //   )
-    // );
     submitNewForm(selectedFormDetails._id, data).then((res) => {
       let submissionData = {
         formId: res.form,
@@ -245,11 +237,6 @@ const NewCase = () => {
     setOpenPopup(false);
   };
 
-  //set values when document input fiels changes
-  // const handleDocumentInputChange = (e) => {
-  //   const target = e.target;
-  //   setValues({ ...values, [name]: value });
-  // };
   return (
     <>
       <div
@@ -306,7 +293,7 @@ const NewCase = () => {
                   variant="body2"
                   className="case-desc-tag"
                 >
-                  {GENERIC_NAME+" "} Description :
+                  {GENERIC_NAME + " "} Description :
                 </Typography>
               </Grid>
               <Grid item xs={8}>
@@ -393,7 +380,6 @@ const NewCase = () => {
                   control={control}
                   render={({ field: { onChange, value } }) => (
                     <FormControl sx={{ m: 1, minWidth: 90 }} size="small">
-                      {/* <InputLabel id="demo-simple-select-label">{label}</InputLabel> */}
                       <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
@@ -461,7 +447,9 @@ const NewCase = () => {
                   variant="h6"
                   className="case-heading"
                 >
-                  {isEdit ? "Update " + {GENERIC_NAME} : "New "+ {GENERIC_NAME}}
+                  {isEdit
+                    ? "Update " + { GENERIC_NAME }
+                    : "New " + { GENERIC_NAME }}
                 </Typography>
               </Grid>
 

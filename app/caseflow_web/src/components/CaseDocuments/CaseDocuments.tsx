@@ -1,7 +1,6 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-// import CaseDocumentCard from "../CaseDocumentCard";
 import { useEffect, useState } from "react";
 import Search from "../Search/Search";
 import Grid from "@mui/material/Grid";
@@ -41,8 +40,6 @@ import { resetSelectedCase } from "../../reducers/newCaseReducer";
 import { GENERIC_NAME } from "../../apiManager/endpoints/config";
 
 const CaseDocuments = () => {
-  // const [filteredDocumentDetails, setFilteredDocumentDetails] = useState([]);
-  // const [documentDetailsForEdit, setDocumentDetailsForEdit] = useState(null);
   const [searchField, setSearchField] = useState("");
   const [searchColumn, setSearchColumn] = useState("Name");
   const [selectedPage, setSelectedPage] = useState(1);
@@ -107,7 +104,7 @@ const CaseDocuments = () => {
       return {
         title: element.id + " - " + element.name,
         content: element.desc,
-        subtitle: GENERIC_NAME+ "Documents",
+        subtitle: GENERIC_NAME + "Documents",
         link: "",
         imgIcon: require("../../assets/DocumentsIcon.png"),
       };
@@ -131,21 +128,7 @@ const CaseDocuments = () => {
     searchDocumentDetails();
   }, [searchField]);
 
-  async function fetchDocumentDetailsList() {
-    // let output = await getAllDocuments();
-    // output = output.map((element) => {
-    //   return {
-    //     ...element,
-    //     creationdate: element.creationdate.split("T")[0],
-    //     modificationdate: element.modificationdate.split("T")[0],
-    //   };
-    // });
-    // dispatch(setDocumentList(output));
-  }
-
-  //  const  fetchDocumentDetails=(data:any)=>{
-  // setDocumentDetailsForEdit(data)
-  //   }
+  async function fetchDocumentDetailsList() {}
 
   const previewDocument = async (id, type) => {
     let response = await getDocument(id);
@@ -186,7 +169,6 @@ const CaseDocuments = () => {
         <div className="background">
           <div className="file-card">
             <div>
-              {/* <Upload selectedDMS = "dms1" documentDetailsForEdit={documentDetailsForEdit}  /> */}
               <div className="case-document-list">
                 <Grid container spacing={1}>
                   <Grid item xs={6}>
@@ -198,13 +180,7 @@ const CaseDocuments = () => {
                       Recent Documents
                     </Typography>
                   </Grid>
-                  <Grid item xs={6}>
-                    {/* <Search
-            setSearchField={setSearchField}
-            dropDownArray={dropDownArray}
-            setSearchColumn={setSearchColumn}
-          ></Search> */}
-                  </Grid>
+                  <Grid item xs={6}></Grid>
                 </Grid>
                 <TableContainer>
                   {filteredDocumentDetails &&
@@ -248,8 +224,6 @@ const CaseDocuments = () => {
                             <TableCell align="left">Date Created</TableCell>
                             <TableCell align="left">Last Updated</TableCell>
                             <TableCell align="left">Version #</TableCell>
-                            {/* <TableCell align="left">Last Modified Date </TableCell>
-              <TableCell align="left">Download </TableCell> */}
                           </TableRow>
                         </TableHead>
 
@@ -274,13 +248,6 @@ const CaseDocuments = () => {
                                   >
                                     {" "}
                                     <div className="name-field">
-                                      {/* <img
-                                        className="pdf-file-img"
-                                        src={`${getFileIcon(
-                                          documentDetail.name
-                                        )}`}
-                                        alt="pdf"
-                                      /> */}
                                       <div className="case-document-name">
                                         <a
                                           onClick={() => {
@@ -325,25 +292,6 @@ const CaseDocuments = () => {
                                       ? documentDetail.versions[0].versions
                                       : ""}
                                   </TableCell>
-                                  {/* <TableCell align="left">
-                                {documentDetail.modificationdate}
-                              </TableCell> */}
-                                  {/* <TableCell
-                    align="left"
-                    className="action-icon"
-                    onClick={fetchCMISfile(
-                      documentDetail.id,
-                      documentDetail.dms_provider,false
-                    )}
-                  >
-                    {<DownloadIcon />}
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    onClick={()=>{fetchDocumentDetails(documentDetail)}}
-                  >
-                    <span className="action-icon"> {<EditIcon />}</span>
-                  </TableCell> */}
                                 </TableRow>
                               )
                             )}
@@ -371,7 +319,6 @@ const CaseDocuments = () => {
           </div>
         </div>
       </div>
-      {/* <div className="my-task"><MyTask></MyTask></div> */}
     </section>
   );
 };

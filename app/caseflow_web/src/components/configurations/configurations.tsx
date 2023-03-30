@@ -4,20 +4,16 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
-  Container,
   Divider,
-  FormControl,
   Grid,
   IconButton,
   ListItem,
   ListItemText,
-  MenuItem,
-  Select,
   TextField,
   Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { fetchCaseTypess } from "../../services/constantsService";
 import { setCaseTypes } from "../../reducers/constantsReducer";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,13 +24,9 @@ import DoneIcon from "@mui/icons-material/Done";
 import { updateCaseType } from "../../services/CaseService";
 import { toast, ToastContainer } from "react-toastify";
 
-const caseTypes = [
-  { id: 1, displayname: "deafult" },
-  { id: 2, displayname: "public" },
-];
+
 
 const Configurations = () => {
-  const { handleSubmit, control, register } = useForm();
   const dispatch = useDispatch();
 
   const getCaseTypes = async () => {
