@@ -5,14 +5,11 @@ import {
   InputAdornment,
   Box,
   Divider,
-  Select,
-  MenuItem,
   Typography,
   Card,
   CardContent,
   Grid,
 } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import SearchIcon from "@mui/icons-material/Search";
 import { SearchProps } from "../../interfaces/componentInterface";
 import "./search.scss";
@@ -59,53 +56,6 @@ const Search = ({
                   <SearchIcon />
                 </InputAdornment>
               }
-              //       endAdornment={
-              //         <div>
-              //           <Box
-              //             sx={{
-              //               display: "flex",
-              //               alignItems: "center",
-              //               width: "fit-content",
-              //               bgcolor: "background.paper",
-              //               color: "text.secondary",
-              //               "& hr": {
-              //                 mx: 0.5,
-              //               },
-              //             }}
-              //           >
-              //             <Divider orientation="vertical" variant="middle" flexItem />
-              //             <FormControl variant="standard" sx={{ m: 1, minWidth: 70 }}>
-              //               <Select
-              //                 labelId="demo-simple-select-standard-label"
-              //                 id="demo-simple-select-standard"
-              //                 label="Age"
-              //                 disableUnderline
-              //                 defaultValue={dropDownArray[0]}
-              //                 IconComponent={KeyboardArrowDownIcon}
-              //                 onChange={(e) => {
-              //                   setSearchColumn(e.target.value);
-              //                 }}
-              //               >
-
-              //                 {dropDownArray ? (
-              //                   dropDownArray.map((dropDownValue) => (
-              //                     <MenuItem key={dropDownValue} value={dropDownValue}>
-              // <Typography variant="body2">
-
-              //                       {dropDownValue}
-              //     </Typography>
-
-              //                     </MenuItem>
-              //                   ))
-              //                 ) : (
-              //                   <MenuItem value="All">All</MenuItem>
-              //                 )}
-
-              //               </Select>
-              //             </FormControl>
-              //           </Box>
-              //         </div>
-              //       }
             />
           </FormControl>
         </div>

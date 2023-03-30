@@ -12,12 +12,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
-import CasesOutlinedIcon from "@mui/icons-material/CasesOutlined";
-import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
-import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
+
 import {
   Button,
   FormControl,
@@ -69,29 +65,9 @@ const closedMixin = (theme: any) => ({
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  // justifyContent: "flex-cen",
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
-
-// const AppBar = styled(MuiAppBar, {
-//   shouldForwardProp: (prop) => prop !== "open",
-// })(({ theme, open }) => ({
-//   zIndex: theme.zIndex.drawer + 1,
-//   transition: theme.transitions.create(["width", "margin"], {
-//     easing: theme.transitions.easing.sharp,
-//     duration: theme.transitions.duration.leavingScreen,
-//   }),
-//   ...(open && {
-//     marginLeft: drawerWidth,
-//     width: `calc(100% - ${drawerWidth}px)`,
-//     transition: theme.transitions.create(["width", "margin"], {
-//       easing: theme.transitions.easing.sharp,
-//       duration: theme.transitions.duration.enteringScreen,
-//     }),
-//   }),
-// }));
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -123,7 +99,7 @@ const Drawer = styled(MuiDrawer, {
 );
 
 export default function MiniDrawer() {
-// { children }
+  // { children }
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(true);
 
@@ -212,9 +188,6 @@ export default function MiniDrawer() {
   const getCaseTypes = async () => {
     const caseTypes = await fetchCaseTypess();
     dispatch(setCaseTypes(caseTypes));
-    // if(caseTypes && caseTypes.length){
-    //   dispatch(setSelectedCaseType(caseTypes[0].formid))
-    // }
   };
 
   const handleClosePopup = () => {
@@ -301,15 +274,6 @@ export default function MiniDrawer() {
           <List>
             <Typography variant="body2">
               {routes.map((route, index) => (
-                // <Link
-                //   to={route.path}
-                //   key={index}
-                //   style={{
-                //     color: "black",
-                //     textDecoration: "none",
-
-                //   }}
-                // >
                 <ListItem
                   key={index}
                   selected={route.path === selectedPathName}
@@ -343,7 +307,6 @@ export default function MiniDrawer() {
                     />
                   </ListItemButton>
                 </ListItem>
-                // </Link>
               ))}
             </Typography>
           </List>
@@ -381,9 +344,7 @@ export default function MiniDrawer() {
             />
           )}
         </div>
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          {/* {children} */}
-        </Box>
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }}></Box>
       </Box>
       <CustomizedDialog
         title={"Start New Case" + GENERIC_NAME}

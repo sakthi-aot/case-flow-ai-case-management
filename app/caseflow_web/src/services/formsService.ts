@@ -53,19 +53,20 @@ export const getFormDetails = async (form) => {
     });
   return output;
 };
-  export const getFormDetailsById = async (formId) => {
-    const url =   `${FORMSFLOW_APPLICATION_URL}/formio/form/${formId}`;
-    const formIoToken = await getFormIORoleIds()
-    const headers = {"x-jwt-token" : formIoToken};
-    const  output =  await httpGETRequest(url,{},formIoToken,false,headers)
-      .then((res) => {return res.data})
-      .catch((error) => {
-        console.log({"error" : error})
-        return {}
-      });
-      return output
-
-  };
+export const getFormDetailsById = async (formId) => {
+  const url = `${FORMSFLOW_APPLICATION_URL}/formio/form/${formId}`;
+  const formIoToken = await getFormIORoleIds();
+  const headers = { "x-jwt-token": formIoToken };
+  const output = await httpGETRequest(url, {}, formIoToken, false, headers)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.log({ error: error });
+      return {};
+    });
+  return output;
+};
 export const submitNewForm = async (id, body) => {
   console.log(parseInt(id));
   const formIoToken = await getFormIORoleIds();
@@ -161,7 +162,6 @@ export const addWorkflowCaseHistory = async (caseId: string) => {
 };
 
 export const getFormIORoleIds = () => {
-  // eslint-disable-next-line
   const url = FORMSFLOW_FORM_URL + "/formio/roles";
 
   return httpGETRequest(url, {}, UserService.getToken(), true)

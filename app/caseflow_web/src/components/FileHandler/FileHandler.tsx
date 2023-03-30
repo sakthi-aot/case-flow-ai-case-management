@@ -56,21 +56,6 @@ const FileHandler = () => {
               </Typography>
             </AccordionDetails>
           </Accordion>
-          {/* <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
-            className="acordions"
-          >
-            <Typography variant="h5">Download File</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              <Download  selectedDMS = {DMS} />
-            </Typography>
-          </AccordionDetails>
-        </Accordion> */}
         </div>
         <div className="case-document-list">
           <CaseDocuments />

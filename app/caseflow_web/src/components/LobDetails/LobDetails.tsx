@@ -9,7 +9,6 @@ import moment from "moment";
 import { getLobDetails } from "../../services/LOBService";
 import { useDispatch } from "react-redux";
 import { setSelectedLob } from "../../reducers/lobReducer";
-import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
 import { Typography } from "@mui/material";
 
 const LobDetail = () => {
@@ -59,8 +58,6 @@ const LobDetail = () => {
         </div>
       </div>
       <section className="lob-detail-container">
-        {/* <BreadCrumbs dataForBreadCrumbs={dataForBreadCrumbs}/> */}
-
         <PolicyHeader
           policy={lobData.policyNumber}
           lobId={lobData.id}
@@ -70,7 +67,9 @@ const LobDetail = () => {
       <div className="lob-detail-first-row">
         <div className="lob-detail-name">
           <Typography variant="subtitle1">Created Date</Typography>
-          <Typography>{moment(lobData.createdDate).format("MMMM Do, YYYY")}</Typography>
+          <Typography>
+            {moment(lobData.createdDate).format("MMMM Do, YYYY")}
+          </Typography>
         </div>
         <div className="lob-detail-date">
           <Typography variant="subtitle1">Sum Assured</Typography>
@@ -79,11 +78,15 @@ const LobDetail = () => {
 
         <div className="lob-detail-name">
           <Typography variant="subtitle1">Policy Effective Date</Typography>
-          <Typography>{moment(lobData.policyEffectiveDate).format("MMMM Do, YYYY")}</Typography>
+          <Typography>
+            {moment(lobData.policyEffectiveDate).format("MMMM Do, YYYY")}
+          </Typography>
         </div>
         <div className="lob-detail-date">
           <Typography variant="subtitle1">policy Expiry Date</Typography>
-          <Typography>{moment(lobData.policyExpiryDate).format("MMMM Do, YYYY")}</Typography>
+          <Typography>
+            {moment(lobData.policyExpiryDate).format("MMMM Do, YYYY")}
+          </Typography>
         </div>
       </div>
     </>

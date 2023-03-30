@@ -8,8 +8,7 @@ import {
   setUserDetails,
 } from "../reducers/authReducer";
 import Loading from "../containers/Loading";
-// import Upload from "./Upload";
-// import Download from "./Download";
+
 import Home from "./Home/Home";
 import CaseDocuments from "./CaseDocuments/CaseDocuments";
 
@@ -35,13 +34,11 @@ const PrivateRoute = React.memo(({ store }: any) => {
   useEffect(() => {
     if (store) {
     }
-    // UserService.setKeycloakJson(null, (clientId) => {
     UserService.initKeycloak(store, (res: any) => {
       const { token, userInfo } = res || {};
       userInfo.then((res: any) => res && dispatch(setUserDetails(res)));
       dispatch(setAuthToken(token));
       dispatch(setAuthenticated(true));
-      // });
     });
   }, [store, dispatch]);
 

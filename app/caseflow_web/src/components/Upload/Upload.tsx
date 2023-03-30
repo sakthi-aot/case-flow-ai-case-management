@@ -21,7 +21,6 @@ import { store } from "../../interfaces/stateInterface";
 import { CASEFLOW_DMS } from "../../constants/constants";
 
 const Upload = (props) => {
-  //inital fields values for the documents
   const initialFieldValues = {
     documentID: 0,
     dms: 1,
@@ -77,7 +76,6 @@ const Upload = (props) => {
     setExpanded(isExpanded ? panel : false);
   };
 
-  //set values when document input fiels changes
   const handleDocumentInputChange = (e) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
@@ -86,30 +84,12 @@ const Upload = (props) => {
   useEffect(() => {
     if (recordForEdit != null) {
       setExpanded(true);
-      setValues(editFieldValues); //set the edit value to focument inputs
+      setValues(editFieldValues);
     } else {
       refreshDocumentList();
     }
   }, [recordForEdit]);
 
-  const dispatch = useDispatch();
-  // useEffect(() => {
-  //   fetchDocumentDetails();
-  // }, []);
-
-  // async function fetchDocumentDetails() {
-  //   let output = await getAllDocuments();
-  //   output = output.map((element) => {
-  //     return {
-  //       ...element,
-  //       creationdate: element.creationdate.split("T")[0],
-  //       modificationdate: element.modificationdate.split("T")[0],
-  //     };
-  //   });
-  //   dispatch(setDocumentList(output));
-  // }
-
-  // set and show  the uploaded file details
   const showPreview = (e) => {
     if (e.target.files && e.target.files[0]) {
       let file = e.target.files[0];
@@ -134,10 +114,8 @@ const Upload = (props) => {
     }
   };
 
-  //upload file action
   const onSubmitHandler = async () => {
     if (values.documentID == 0) {
-      // check with docid exist or not id documentID=0 insert opertaion work
       setSubmitted(true);
 
       let bodyFormData = new FormData();
@@ -155,7 +133,7 @@ const Upload = (props) => {
           props.onSuccess();
           setSubmitted(false);
           refreshDocumentList();
-        } else if(response.data.status == 409) {
+        } else if (response.data.status == 409) {
           setProgressBarColor("error");
           toast.error("File name already exists");
         } else {
@@ -164,7 +142,6 @@ const Upload = (props) => {
         }
       });
     } else {
-      // for update
       setSubmitted(true);
       updateCMISdocument(
         values.documentID,
@@ -180,7 +157,6 @@ const Upload = (props) => {
   };
   const onPreviewErrorhandler = (e) => {};
 
-  //set the matadata fields
   const handleMetaDataChangeInput = (id, event) => {
     const newInputFields = inputFields.map((i) => {
       if (id === i.id) {
@@ -207,14 +183,12 @@ const Upload = (props) => {
       </Box>
     );
   };
-  //metadata add operation
   const handleAddFields = () => {
     setInputFields([
       ...inputFields,
       { id: uuidv4(), MetadataField: "", MetadataValue: "" },
     ]);
   };
-  //metadata remove operation
   const handleRemoveFields = (id) => {
     const values = [...inputFields];
     values.splice(
@@ -223,7 +197,6 @@ const Upload = (props) => {
     );
     setInputFields(values);
   };
-  // refresh document
   const refreshDocumentList = () => {
     setValues(initialFieldValues);
   };
@@ -324,53 +297,6 @@ const Upload = (props) => {
                 placeholder="My text document description..."
               />
             </div>
-
-            {/* <div>
-               <label>Metadata</label>
-                <form>
-                  {inputFields.map((inputField) => (
-                    <div key={inputField.id}>
-                      <TextField
-                        id="outlined-multiline-static"
-                        name="MetadataField"
-                        label="Metadata Field"
-                        variant="standard"
-                        sx={{
-                          "& .MuiInputLabel-root": { color: "#404040" },
-                          borderBottom: "1px solid #404040",
-                        }}
-                        value={inputField.MetadataField}
-                        onChange={(event) =>
-                          handleMetaDataChangeInput(inputField.id, event)
-                        }
-                      />
-                      <TextField
-                        name="MetadataValue"
-                        label="Metadata Value"
-                        variant="standard"
-                        sx={{
-                          "& .MuiInputLabel-root": { color: "#404040" },
-                          borderBottom: "1px solid #404040",
-                        }}
-                        value={inputField.MetadataValue}
-                        onChange={(event) =>
-                          handleMetaDataChangeInput(inputField.id, event)
-                        }
-                      />
-                      <IconButton
-                        disabled={inputFields.length === 1}
-                        onClick={() => handleRemoveFields(inputField.id)}
-                      >
-                        <RemoveIcon />
-                      </IconButton>
-                      <IconButton onClick={handleAddFields}>
-                        <AddIcon />
-                      </IconButton>
-                    </div>
-                  ))}
-                </form>
-              
-            </div> */}
           </div>
         )}
         <div className="upload-button">

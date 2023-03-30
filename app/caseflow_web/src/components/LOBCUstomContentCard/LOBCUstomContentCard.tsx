@@ -11,11 +11,7 @@ import { useNavigate } from "react-router-dom";
 import "./LOBCUstomContentCard.scss";
 import moment from "moment";
 
-interface LOBCUstomContentCardProps {
-  caseCategory: any;
-  district: any;
-  link: any;
-}
+
 
 const LOBCUstomContentCard = ({ lobData }) => {
   const dispatch = useDispatch();

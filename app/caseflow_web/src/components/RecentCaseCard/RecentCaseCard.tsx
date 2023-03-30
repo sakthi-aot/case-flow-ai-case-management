@@ -8,9 +8,7 @@ import { List, Typography } from "@mui/material";
 import "./recentCaseCard.scss";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux/es/exports";
-import { setSelectedCase } from "../../reducers/newCaseReducer";
 import "../../styles.scss";
-import { DirectiveLocation } from "graphql";
 
 const RecentCaseCard = (props) => {
   console.log(props.case);
@@ -19,11 +17,6 @@ const RecentCaseCard = (props) => {
   const navigate = useNavigate();
 
   const viewCaseDetails = async (CaseDetails) => {
-    // dispatch(setSelectedCase({
-    //   ...CaseDetails,
-    //   isEdit:false,
-
-    // }))
     navigate("/private/cases/" + CaseDetails.id + "/details");
   };
 

@@ -19,7 +19,9 @@ const PolicyHeader = (props) => {
   return (
     <div className="lob-detail-header">
       <div className="lob-id-status">
-        <Typography variant="subtitle1" className="lob-id">Policy No: {props.policy}</Typography>
+        <Typography variant="subtitle1" className="lob-id">
+          Policy No: {props.policy}
+        </Typography>
         <Typography
           sx={{ backgroundColor: "primary.main" }}
           className="lob-status"

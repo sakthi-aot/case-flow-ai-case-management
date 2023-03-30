@@ -1,7 +1,5 @@
-import { store } from "./../interfaces/stateInterface";
 import {
   httpGETRequest,
-  httpPUTRequest,
   httpPOSTRequest,
   httpSearchRequest,
 } from "../apiManager/httpRequestHandler";
@@ -10,7 +8,6 @@ import { GRAPHQL } from "../apiManager/endpoints";
 import {
   FETCH_CASES,
   ADD_CASE,
-  DELETE_CASE,
   UPDATE_CASE,
   FETCH_DOCUMENT_OF_CASES,
   FETCH_CASE_DETAILS,
@@ -22,7 +19,6 @@ import {
 } from "../graphql/caseRequests";
 import { Case } from "../dto/cases";
 import { print } from "graphql";
-// import { PAGINATION_TAK}";
 import { PAGINATION_TAKE } from "../apiManager/endpoints/config";
 import { v4 as uuidv4 } from "uuid";
 import { publishMessage } from "./NatsServices";
