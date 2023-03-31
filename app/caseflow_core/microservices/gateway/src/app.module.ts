@@ -21,9 +21,7 @@ const handleAuth = ({ req }) => {
       driver: ApolloGatewayDriver,
       server: {
         cors: true,
-        context: handleAuth,
-        playground:true,
-        introspection:true,
+        context: handleAuth,       
       },
 
       gateway: {
