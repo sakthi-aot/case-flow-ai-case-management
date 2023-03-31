@@ -218,6 +218,21 @@ const NewCase = () => {
         .then((tasks) => {
           let task = tasks[0];
           if (task["id"]) {
+            try {
+              const SUBJECT = "CaseCreate";
+              const MESSAGE = {
+                eventId: String(uuidv4()),
+                eventRef: String(task.caseInstanceId),
+                eventOrigin: String("Caseflow"),
+                eventCategory: String("Caseflow"),
+                eventType: String(SUBJECT),
+                eventDateTime: String(new Date()),
+                eventPublisher: String(userName),
+              };
+              publishMessage(SUBJECT, MESSAGE);
+            } catch (error) {
+              console.log(error);
+            }
             toast.success("New workflow started successfully");
             navigate("/private/cases/" + task.caseInstanceId + "/details");
           } else {
