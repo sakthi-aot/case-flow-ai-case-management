@@ -10,8 +10,7 @@ import { print } from "graphql";
 import { PAGINATION_TAKE } from "../apiManager/endpoints/config";
 import moment from "moment";
 
-export const getLobDetails = async (id) => {
-  console.log(parseInt(id));
+export const getLobDetails = async (id) => { 
   const url = LOBURL;
   const output = await httpPOSTRequest(
     url,

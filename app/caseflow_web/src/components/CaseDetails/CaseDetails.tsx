@@ -116,9 +116,6 @@ const CaseDetails = () => {
     }
     return action;
   });
-
-  console.log(optionsForAction);
-
   async function fetchCaseDetails() {
     var matches = location.pathname.match(/(\d+)/);
     if (matches && matches[0]) {

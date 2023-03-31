@@ -8,7 +8,6 @@ import { Typography } from "@mui/material";
 
 const PolicyHeader = (props) => {
   const dispatch = useDispatch();
-  console.log(props);
 
   const navigate = useNavigate();
   const editCaseDetails = (id) => {
