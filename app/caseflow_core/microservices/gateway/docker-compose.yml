@@ -3,11 +3,12 @@ version: "3.7"
 services:
   case-flow-core:
     container_name: case-flow-gateway-service
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        - NODE_ENV=${NODE_ENV:-production}
+    build: .
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+      - CASE_SUBGRAPH_URL=${CASE_SUBGRAPH_URL}
+      - DOCUMENT_SUBGRAPH_URL=${DOCUMENT_SUBGRAPH_URL}
+
 
 
         

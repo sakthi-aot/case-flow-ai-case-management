@@ -1,6 +1,4 @@
 import { Field, ObjectType, ID } from '@nestjs/graphql';
-import { Cases } from 'src/cases/entities/cases.entity';
-import { CaseEvents } from 'src/case_events/entities/case_event.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -9,6 +7,11 @@ import {
   JoinColumn,
   CreateDateColumn,
 } from 'typeorm';
+
+//_____________________Custom Imports_____________________//
+
+import { Cases } from '../../cases/entities/cases.entity';
+import { CaseEvents } from '../../case_events/entities/case_event.entity';
 
 /**
  * Summary :  Entity Class For Casehistory

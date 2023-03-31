@@ -14,7 +14,6 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CustomizedDialog from "../Dialog/Dialog";
 import Upload from "../Upload/Upload";
-import EditIcon from "@mui/icons-material/Edit";
 import {
   resetSelectedCase,
   setCaseTasks,
@@ -39,7 +38,6 @@ import { fetchCaseStatuses } from "../../services/constantsService";
 import { setCaseStatuses } from "../../reducers/constantsReducer";
 import { State } from "../../interfaces/stateInterface";
 import PopUpDialogBox from "../PopUpDialogBox/PopUpDialogBox";
-import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
 import {
   addWorkflowCaseHistory,
   getTaksByCaseId,
@@ -69,6 +67,7 @@ import { Form as FormIOForm, saveSubmission, Formio } from "react-formio";
 import { FORMSFLOW_APPLICATION_URL } from "../../apiManager/endpoints";
 import { publishMessage } from "../../services/NatsServices";
 import { v4 as uuidv4 } from "uuid";
+import { GENERIC_NAME } from "../../apiManager/endpoints/config";
 
 Formio.setProjectUrl("https://app2.aot-technologies.com/formio");
 Formio.setBaseUrl("https://app2.aot-technologies.com/formio");
@@ -86,7 +85,6 @@ const CaseDetails = () => {
   const [dataForBreadCrumbs, setDataForBreadCrumbs] = useState([
     { text: "Home", link: "/private" },
   ]);
-
   const caseDetail = {
     status: "OPEN",
     date: "2022-11-01",
@@ -126,7 +124,6 @@ const CaseDetails = () => {
     if (matches && matches[0]) {
       let output = await getCaseDetails(matches[0]);
       dispatch(setSelectedCase({ ...output, isEdit: false }));
-      // setselectedCaseDetails(output)
       await fetchCaseHistory(matches[0]);
     }
   }
@@ -144,7 +141,6 @@ const CaseDetails = () => {
     dispatch(setFilteredCaseHistory(output));
   }
 
-  // const [selectedCase, setselectedCaseDetails]:any = useState({});
   const [isOpenPopup, setOpenPopup] = useState(false);
   const [isOpenConfirmationPopup, setOpenConfirmationPopup] = useState(false);
   const [confirmationText, setConfirmationText] = useState("");
@@ -178,7 +174,6 @@ const CaseDetails = () => {
   const onSuccess = async () => {
     setOpenPopup(false);
     setSelected(0);
-    // fetchCaseDocumentDetails()
     try {
       const SUBJECT = "DocAdded";
       const MESSAGE = {
@@ -290,13 +285,13 @@ const CaseDetails = () => {
         let SUBJECT;
         switch (newStatusDetails.name) {
           case "Open":
-            SUBJECT = "CaseOpen";
+            SUBJECT = GENERIC_NAME + "Open";
             break;
           case "Pending":
-            SUBJECT = "CasePend";
+            SUBJECT = GENERIC_NAME + "Pend";
             break;
           case "Completed":
-            SUBJECT = "CaseComp";
+            SUBJECT = GENERIC_NAME + "Comp";
             break;
           default:
             SUBJECT = "";
@@ -320,9 +315,9 @@ const CaseDetails = () => {
   useEffect(() => {
     setDataForBreadCrumbs([
       { text: "Home", link: "/private" },
-      { text: "Cases", link: "/private/cases" },
+      { text: GENERIC_NAME, link: "/private/cases" },
       {
-        text: "Case ID : " + selectedCase.id,
+        text: GENERIC_NAME + " : " + selectedCase.id,
         link: "/private/cases/" + selectedCase.id + "details",
       },
     ]);
@@ -356,24 +351,6 @@ const CaseDetails = () => {
       const workflow = await startNewWorkflow(selectedForm, wordFlowDetails);
 
       if (workflow.id) {
-        // try {
-        //   const SUBJECT = 'workFlowStart'
-        //   console.log(SUBJECT)
-        //   const MESSAGE = {
-        //     eventId : String(uuidv4()),
-        //     eventRef : String(selectedCase.id),
-        //     eventOrigin : String('Caseflow'),
-        //     eventCategory : String('Caseflow'),
-        //     eventType : String(SUBJECT),
-        //     eventDateTime : String(new Date()),
-        //     eventPublisher : String(userName),
-        //   }
-        //   console.log(MESSAGE)
-        //   publishMessage(SUBJECT,MESSAGE)
-        //   console.log("here");
-        // } catch (error) {
-        //   console.log(error)
-        // }
         toast.success("New workflow started successfully");
         setSelected(0);
         setOpenWorkflowPopup(false);
@@ -412,14 +389,7 @@ const CaseDetails = () => {
     } catch (error) {
       console.log(error);
     }
-    //  dispatch(
-    //   saveSubmission(
-    //     "submission",
-    //     data,
-    //     selectedFormDetails._id,
-    //     callBack
-    //   )
-    // );
+
     submitNewForm(selectedForm, data).then((res) => {
       let submissionData = {
         formId: res.form,
@@ -445,25 +415,26 @@ const CaseDetails = () => {
           }
         })
         .then(async (data) => {
-        if(data && data.applicationStatus == "Completed"){
-		      toast.success("New workflow started successfully");
-		      setOpenWorkflowPopup(false);
-		      setOpenFormIOPopup(false);
-		      fetchRealtedTasks();
-		      setSelected(0);
-		      await addWorkflowCaseHistory(selectedCase.id)
-		      await fetchCaseHistory(selectedCase.id)
-		    }
-		    else{
-		      return getTaksByProcessInstanceId(data.processInstanceId)
-		    }
+          if (data && data.applicationStatus == "Completed") {
+            toast.success("New workflow started successfully");
+            setOpenWorkflowPopup(false);
+            setOpenFormIOPopup(false);
+            fetchRealtedTasks();
+            setSelected(0);
+            await addWorkflowCaseHistory(selectedCase.id);
+            await fetchCaseHistory(selectedCase.id);
+          } else {
+            return getTaksByProcessInstanceId(data.processInstanceId);
+          }
         })
         .then((tasks) => {
-		   if(tasks){
-		    let task = tasks[0];
-		    if(task){
-		    task.caseInstanceId = selectedCase.id;
-		    return updateTaksById(task.id,task)}}
+          if (tasks) {
+            let task = tasks[0];
+            if (task) {
+              task.caseInstanceId = selectedCase.id;
+              return updateTaksById(task.id, task);
+            }
+          }
         })
         .then(async (updatedTask) => {
           if (updatedTask && updatedTask["status"] == 204) {
@@ -497,11 +468,11 @@ const CaseDetails = () => {
         </div>
 
         <section className="case-detail-container">
-          {/* <BreadCrumbs dataForBreadCrumbs={dataForBreadCrumbs}/> */}
-
           <span className="case-detail-header">
             <div className="case-id-status">
-              <p className="case-id">Case ID : {selectedCase.id}</p>
+              <p className="case-id">
+                {GENERIC_NAME} ID : {selectedCase.id}
+              </p>
               <Typography className="case-status">
                 {selectedCase?.casestatus?.displayname}
               </Typography>
@@ -539,7 +510,7 @@ const CaseDetails = () => {
               sx={{ marginBottom: 0 }}
             >
               <Typography variant="body1" className="caseDocuments-headtag">
-                Case Documents
+                 {GENERIC_NAME} Documents
               </Typography>
             </AccordionSummary>
             <AccordionDetails sx={{ paddingLeft: 0 }}>

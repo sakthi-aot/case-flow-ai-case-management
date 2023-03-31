@@ -1,13 +1,12 @@
-
-
-import { Field, ObjectType, Int ,ID } from '@nestjs/graphql';
+import { Field, ObjectType, Int, ID } from '@nestjs/graphql';
 import { CaseDocuments } from 'src/documents/entities/documents.entity';
-import { Entity, PrimaryGeneratedColumn, Column,  ManyToOne,  JoinColumn } from 'typeorm';
-
-/**
- * Summary :  Entity Class For versions
- * Created By : Akhila U S
- */
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -36,14 +35,8 @@ export class Versions {
   @Field()
   documentid: string;
 
-
   @ManyToOne(() => CaseDocuments, (documents) => documents.versions)
   @Field(() => CaseDocuments, { nullable: true })
-  @JoinColumn({name: 'docid'})
+  @JoinColumn({ name: 'docid' })
   documents: CaseDocuments;
-
 }
-
-
-
-

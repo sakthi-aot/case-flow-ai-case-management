@@ -1,17 +1,10 @@
-
-
 import { Field, InputType, Int } from '@nestjs/graphql';
 
-/**
- * Summary :  update input DTO for Versions
- * Created By : Akhila U S
- */
 @InputType()
 export class UpdateVersionInput {
-
   @Field((type) => Int)
   id: number;
-  
+
   @Field((type) => Int, { nullable: true })
   docId: number;
 
@@ -26,6 +19,4 @@ export class UpdateVersionInput {
 
   @Field()
   documentid: string;
-
-
 }

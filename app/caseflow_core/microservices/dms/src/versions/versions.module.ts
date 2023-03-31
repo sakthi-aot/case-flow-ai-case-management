@@ -7,6 +7,6 @@ import { Versions } from './entities/version.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Versions])],
   providers: [VersionsResolver, VersionsService],
-  exports:[VersionsService]
+  exports: [VersionsService],
 })
 export class VersionsModule {}

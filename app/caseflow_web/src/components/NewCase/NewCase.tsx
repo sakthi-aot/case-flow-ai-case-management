@@ -44,6 +44,7 @@ import { getTaksByProcessInstanceId } from "../../services/workflowService";
 import { FORMSFLOW_APPLICATION_URL } from "../../apiManager/endpoints";
 import { Form as FormIOForm, saveSubmission, Formio } from "react-formio";
 import CustomizedDialog from "../Dialog/Dialog";
+import { GENERIC_NAME } from "../../apiManager/endpoints/config";
 const NewCase = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -100,7 +101,7 @@ const NewCase = () => {
         "/private/cases/" + response.success.data.updateCase.id + "/details"
       );
     } else {
-     await addCases(values).then((data) => {
+      await addCases(values).then((data) => {
         try {
           response = data;
           const SUBJECT = "CaseCreate";
@@ -187,14 +188,6 @@ const NewCase = () => {
     }
   };
   const submitForm = (data) => {
-    //  dispatch(
-    //   saveSubmission(
-    //     "submission",
-    //     data,
-    //     selectedFormDetails._id,
-    //     callBack
-    //   )
-    // );
     submitNewForm(selectedFormDetails._id, data).then((res) => {
       let submissionData = {
         formId: res.form,
@@ -244,11 +237,6 @@ const NewCase = () => {
     setOpenPopup(false);
   };
 
-  //set values when document input fiels changes
-  // const handleDocumentInputChange = (e) => {
-  //   const target = e.target;
-  //   setValues({ ...values, [name]: value });
-  // };
   return (
     <>
       <div
@@ -262,7 +250,7 @@ const NewCase = () => {
               variant="h6"
               className="case-heading"
             >
-              {isEdit ? "Update Case" : "New Case"}
+              {isEdit ? "Update " + GENERIC_NAME : "New " + GENERIC_NAME}
             </Typography>
             <Divider sx={{ borderBottomWidth: 3, width: "75vw" }} />
             <Grid container spacing={3} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
@@ -272,7 +260,7 @@ const NewCase = () => {
                   variant="body2"
                   className="case-name-tag"
                 >
-                  Case Name :
+                  {GENERIC_NAME + " "}Name :
                 </Typography>
               </Grid>
               <Grid item xs={8}>
@@ -282,7 +270,7 @@ const NewCase = () => {
                   render={({ field: { onChange, value } }) => (
                     <TextField
                       id="standard-basic"
-                      label="Case Name"
+                      label={GENERIC_NAME + " Name"}
                       variant="standard"
                       rows={1}
                       sx={{
@@ -292,7 +280,7 @@ const NewCase = () => {
                       onChange={(e) => {
                         setValues({ ...values, name: e.target.value });
                       }}
-                      placeholder="Case Name"
+                      placeholder={GENERIC_NAME + " Name"}
                     />
                   )}
                 />
@@ -305,7 +293,7 @@ const NewCase = () => {
                   variant="body2"
                   className="case-desc-tag"
                 >
-                  Case Description :
+                  {GENERIC_NAME + " "} Description :
                 </Typography>
               </Grid>
               <Grid item xs={8}>
@@ -325,7 +313,7 @@ const NewCase = () => {
                         width: "100%",
                       }}
                       InputProps={{ disableUnderline: true }}
-                      placeholder="Enter the details of the Case"
+                      placeholder={"Enter the details of the " + GENERIC_NAME}
                       value={values.desc}
                       onChange={(e) => {
                         setValues({ ...values, desc: e.target.value });
@@ -392,7 +380,6 @@ const NewCase = () => {
                   control={control}
                   render={({ field: { onChange, value } }) => (
                     <FormControl sx={{ m: 1, minWidth: 90 }} size="small">
-                      {/* <InputLabel id="demo-simple-select-label">{label}</InputLabel> */}
                       <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
@@ -460,7 +447,9 @@ const NewCase = () => {
                   variant="h6"
                   className="case-heading"
                 >
-                  {isEdit ? "Update Case" : "New Case"}
+                  {isEdit
+                    ? "Update " + GENERIC_NAME 
+                    : "New " + GENERIC_NAME }
                 </Typography>
               </Grid>
 
@@ -483,7 +472,7 @@ const NewCase = () => {
         )}
       </div>
       <CustomizedDialog
-        title="Start New Case"
+        title={"Start New " + GENERIC_NAME}
         isOpen={isOpenPopup}
         setIsOpen={setOpenPopup}
         handleClose={handleClosePopup}

@@ -1,4 +1,4 @@
-import { Injectable,NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { S3 } from 'aws-sdk';
 import { v4 as uuid } from 'uuid';
@@ -14,28 +14,26 @@ export class AmazonS3Service {
 
   async getDocument(documentId: string): Promise<any> {
     try {
-      let data = await this.s3.getObject(
-        { Bucket: this.bucket, Key: documentId }
-      ).promise();
-      return data.Body ? (data.Body) : new NotFoundException("No item Found")
+      let data = await this.s3
+        .getObject({ Bucket: this.bucket, Key: documentId })
+        .promise();
+      return data.Body ? data.Body : new NotFoundException('No item Found');
     } catch (error) {
       console.log(error);
-      return new NotFoundException("No item Found")
+      return new NotFoundException('No item Found');
     }
   }
 
-  // summery : Upload File to S3
-  // Created By : Don C Varghese
   async uploadDocument(data: any, fileName: string): Promise<any> {
     try {
-    let base64data = new Buffer(data.buffer, 'binary');
-    return await this.s3
-      .upload({
-        Bucket: this.bucket,
-        Body: base64data,
-        Key: `${uuid()}-${fileName}`,
-      })
-      .promise();
+      let base64data = new Buffer(data.buffer, 'binary');
+      return await this.s3
+        .upload({
+          Bucket: this.bucket,
+          Body: base64data,
+          Key: `${uuid()}-${fileName}`,
+        })
+        .promise();
     } catch (error) {
       console.log(error);
       throw error;
@@ -44,14 +42,13 @@ export class AmazonS3Service {
 
   async deleteDocument(documentId: string): Promise<any> {
     try {
-      let data = await this.s3.deleteObject(
-        { Bucket: this.bucket, Key: documentId },
-        (error) => {
+      let data = await this.s3
+        .deleteObject({ Bucket: this.bucket, Key: documentId }, (error) => {
           if (error != null) {
             console.log('Failed to delete an object: ' + error);
           }
-        },
-      ).promise();
+        })
+        .promise();
       return data;
     } catch (error) {
       console.log(error);

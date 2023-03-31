@@ -19,7 +19,6 @@ import Search from "../Search/Search";
 import "./LOBCustomContent.scss";
 import { Link } from "react-router-dom";
 import { setEditLob } from "../../reducers/lobReducer";
-import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
 import moment from "moment";
 
 const LOBCustomContent = () => {
@@ -56,7 +55,6 @@ const LOBCustomContent = () => {
     dispatch(setLobList(output.CaseflowLob));
     dispatch(setLobTotalCount(output.totalCount));
 
-    //  let fields= Object.keys( output.CaseflowLob[0])
     setDropDownArray(["policyNumber"]);
   };
 
@@ -108,8 +106,6 @@ const LOBCustomContent = () => {
         className="lobData-container"
         style={{ padding: "2rem 4rem 0rem 4rem" }}
       >
-        {/* <BreadCrumbs dataForBreadCrumbs={dataForBreadCrumbs}/> */}
-
         <div className="lobData-header">
           <Typography
             sx={{ padding: "1rem 1rem 1rem 0rem" }}
@@ -203,7 +199,10 @@ const LOBCustomContent = () => {
                 <Grid item xs={12}>
                   <ListItemText
                     primary={
-                      <Typography variant="body1"> No LOB Found! </Typography>
+                      <Typography variant="body1" sx={{ paddingLeft: "25vw" }}>
+                        {" "}
+                        No LOB Found!{" "}
+                      </Typography>
                     }
                   />
                 </Grid>

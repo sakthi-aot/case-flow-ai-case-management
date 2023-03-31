@@ -5,6 +5,7 @@ import {
   Resolver,
   ResolveReference,
 } from '@nestjs/graphql';
+import { HttpException } from '@nestjs/common/exceptions';
 
 //_____________________Custom Imports_____________________//
 
@@ -14,7 +15,6 @@ import { CasesService } from '../services/cases.service';
 import { CreateCaseInput } from '../dto/create-case.input';
 import { FetchArgs, FetchCaseDocumentArgs } from '../dto/fetch.input';
 import { UpdateCaseInput } from '../dto/update-case.input';
-import { HttpException } from '@nestjs/common/exceptions';
 import { FetchSearchArgs } from '../dto/fetch-search.input';
 
 /**

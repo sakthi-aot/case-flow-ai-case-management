@@ -4,7 +4,6 @@ import MiniDrawer from "../NavigationDrawer/NavigationDrawer";
 import Loader from "../Loader/Loader";
 import "./home.scss";
 const Home = () =>
-  // { children }
   {
     return (
       <div className="grid-container">

@@ -4,12 +4,12 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Cases } from 'src/cases/entities/cases.entity';
-import { CasesModule } from 'src/cases/cases.module';
-import { CasesService } from 'src/cases/services/cases.service';
-import { CaseEventsService } from 'src/case_events/services/case_events.service';
-import { CaseEvents } from 'src/case_events/entities/case_event.entity';
 import { Repository } from 'typeorm';
+
+//_____________________Custom Imports_____________________//
+
+import { CaseEventsService } from '../../case_events/services/case_events.service';
+import { CaseEvents } from '../../case_events/entities/case_event.entity';
 import { CreateCaseHistoryInput } from '../dto/create-case_history.input';
 import { UpdateCaseHistoryInput } from '../dto/update-case_history.input';
 import { CaseHistory } from '../entities/case_history.entity';

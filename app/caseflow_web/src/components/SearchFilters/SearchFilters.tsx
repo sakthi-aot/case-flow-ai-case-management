@@ -3,18 +3,18 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import React, { useState } from "react";
+import React from "react";
+import { GENERIC_NAME } from "../../apiManager/endpoints/config";
 import "./SearchFilters.scss";
 
 const SearchFilters = () => {
-  // const [Value, setValue] = useState("");
-  // const handleChange = (e) => {
-  //     setValue(e.target.value);
-  // }
-
   const filters = [
     { key: 1, text: "Tasks", values: ["Tasks 1", "Tasks 2", "Tasks 3"] },
-    { key: 2, text: "Cases", values: ["Cases 1", "Cases 2", "Cases 3"] },
+    {
+      key: 2,
+      text: GENERIC_NAME,
+      values: [GENERIC_NAME + " 1", GENERIC_NAME + " 2", GENERIC_NAME + " 3"],
+    },
     {
       key: 3,
       text: "Documents",
@@ -118,7 +118,6 @@ const SearchFilters = () => {
               id="demo-simple-select"
               value=""
               label="Tasks"
-              //onChange={handleChange}
             >
               {item.values.map((values) => {
                 return <MenuItem value="Task 1">{values}</MenuItem>;

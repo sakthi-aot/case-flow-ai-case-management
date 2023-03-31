@@ -1,16 +1,14 @@
-import {  Field, Int, ObjectType } from "@nestjs/graphql";
-import {  CaseDocuments } from "./documents.entity";
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 
-/**
- * Summary :  Entity Class For case document response
- * Created By : Akhila U S
- */
+//_____________________Custom Imports_____________________//
+
+import { CaseDocuments } from './documents.entity';
 
 @ObjectType()
 export class caseDocumentResponse {
-  @Field(type => [CaseDocuments])
-  CaseDocuments: CaseDocuments[]
+  @Field((type) => [CaseDocuments])
+  CaseDocuments: CaseDocuments[];
 
-  @Field(type => Int)
-  totalCount: number
+  @Field((type) => Int)
+  totalCount: number;
 }

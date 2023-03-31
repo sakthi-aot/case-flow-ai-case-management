@@ -1,4 +1,7 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+
+//_____________________Custom Imports_____________________//
+
 import { CaseEventsService } from '../services/case_events.service';
 import { CaseEvents } from '../entities/case_event.entity';
 import { CreateCaseEventInput } from '../dto/create-case_event.input';
@@ -76,10 +79,4 @@ export class CaseEventsResolver {
     return this.caseEventsService.remove(id);
   }
 
-  //_____________________Resolver Reference For GraphQL Federation_____________________//
-
-  //   @ResolveField(()=>EventTypes)
-  //   eventtype(@Parent() caseevent:CaseEvents){
-  //   this.caseEventsService.getEventType(caseevent.eventtypeId);
-  // }
 }

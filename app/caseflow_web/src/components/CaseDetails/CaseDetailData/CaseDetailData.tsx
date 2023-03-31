@@ -1,7 +1,10 @@
 import { Link, Typography } from "@mui/material";
 import React from "react";
 import "./CaseDetailData.scss";
-import { FORMSFLOW_APP_URL } from "../../../apiManager/endpoints/config";
+import {
+  FORMSFLOW_APP_URL,
+  GENERIC_NAME,
+} from "../../../apiManager/endpoints/config";
 import moment from "moment";
 interface CaseDetailDataProps {
   name: String;
@@ -26,7 +29,7 @@ const CaseDetailData = ({
     <>
       <div className="case-details">
         <div className="case-detail-name">
-          <Typography variant="subtitle1">Case name</Typography>
+          <Typography variant="subtitle1">{GENERIC_NAME} name</Typography>
           <Typography variant="body2">{name}</Typography>
         </div>
         <div className="case-detail-date">
@@ -41,11 +44,13 @@ const CaseDetailData = ({
           <Typography variant="body2">{owner}</Typography>
         </div>
         <div>
-          <Typography variant="subtitle1">Case Description</Typography>
+          <Typography variant="subtitle1">
+            {GENERIC_NAME} Description
+          </Typography>
           <Typography variant="body2">{caseDescription}</Typography>
         </div>
         <div>
-          <Typography variant="subtitle1">Case Type</Typography>
+          <Typography variant="subtitle1">{GENERIC_NAME} Type</Typography>
           <Typography variant="body2">{caseType?.displayname}</Typography>
         </div>
         <div>

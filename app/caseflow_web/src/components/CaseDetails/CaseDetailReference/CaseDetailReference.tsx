@@ -1,20 +1,12 @@
 import React, { useEffect } from "react";
 import "./CaseDetailReference.scss";
 import lobConfig from "../../../config/lob_data.json";
-import { getLobDetails } from "../../../services/LOBService";
-import {
-  resetSelectedCase,
-  setAdditionalCaseDetails,
-  setSelectedCaseLOBDetails,
-} from "../../../reducers/newCaseReducer";
+import { setAdditionalCaseDetails } from "../../../reducers/newCaseReducer";
 import { useSelector } from "react-redux";
 import { State } from "../../../interfaces/stateInterface";
 import { useDispatch } from "react-redux";
 import moment from "moment";
-import {
-  getCaseAdditionalDetails,
-  getCaseDetails,
-} from "../../../services/CaseService";
+import { getCaseAdditionalDetails } from "../../../services/CaseService";
 
 const getDisplayData = (key) => {
   let object = lobConfig.caseDetails.filter(

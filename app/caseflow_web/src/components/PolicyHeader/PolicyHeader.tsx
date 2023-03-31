@@ -19,7 +19,9 @@ const PolicyHeader = (props) => {
   return (
     <div className="lob-detail-header">
       <div className="lob-id-status">
-        <p className="lob-id">Policy No: {props.policy}</p>
+        <Typography variant="subtitle1" className="lob-id">
+          Policy No: {props.policy}
+        </Typography>
         <Typography
           sx={{ backgroundColor: "primary.main" }}
           className="lob-status"
@@ -33,7 +35,6 @@ const PolicyHeader = (props) => {
           }}
         >
           <span className="action-icon">
-            {" "}
             {<EditIcon sx={{ color: "primary.main" }} />}
           </span>
         </div>

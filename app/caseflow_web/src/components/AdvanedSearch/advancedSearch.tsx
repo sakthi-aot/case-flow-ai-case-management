@@ -11,10 +11,8 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import Search from "../Search/Search";
 import "./advancedSearch.scss";
 import SearchIcon from "@mui/icons-material/Search";
-import SearchFilters from "../SearchFilters/SearchFilters";
 import { searchCases } from "../../services/CaseService";
 import { searchCaseDocument } from "../../services/DocumentManagementService";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,10 +21,10 @@ import { setadvanceSearchResult } from "../../reducers/applicationReducer";
 import { getLobData } from "../../services/LOBService";
 import moment from "moment";
 import { useNavigate } from "react-router";
-import { textAlign } from "@mui/system";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { GENERIC_NAME } from "../../apiManager/endpoints/config";
 
 export default function AdvancedSearch() {
   const [searchField, setSearchField] = useState("");
@@ -63,7 +61,7 @@ export default function AdvancedSearch() {
             result.push({
               title: element.id + " - " + element.name,
               content: element.desc,
-              subtitle: "Cases",
+              subtitle: GENERIC_NAME,
               link: "/private/cases/" + element.id + "/details",
               imgIcon: require("../../assets/CasesIcon.png"),
             });
@@ -194,7 +192,7 @@ export default function AdvancedSearch() {
                     }}
                   />
                 }
-                label="Cases"
+                label={GENERIC_NAME}
               />
               <FormControlLabel
                 control={

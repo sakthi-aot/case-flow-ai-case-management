@@ -4,7 +4,6 @@ import React, { useEffect } from "react";
 import LaunchIcon from "@mui/icons-material/Launch";
 import "./LobCustom.scss";
 import Link from "@mui/material/Link";
-import { color } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../../../interfaces/stateInterface";
 import { getLobDetails } from "../../../services/LOBService";
@@ -19,7 +18,6 @@ const LobCustom = () => {
   useEffect(() => {
     if (selectedCase.lobcaseid > 0) {
       getCaseLobDetails(selectedCase.lobcaseid);
-      // lobData = selectedCase.lobDetails;
     }
   }, [selectedCase.lobcaseid]);
   const getCaseLobDetails = async (id) => {

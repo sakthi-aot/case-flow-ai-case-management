@@ -12,21 +12,13 @@ import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
 import { Pagination } from "@mui/material";
 import { State } from "../../interfaces/stateInterface";
-import { PAGINATION_TAKE } from "../../apiManager/endpoints/config";
-import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
-
-// let  sortingkeysOfAllRecentCases:SortValue[] =[]
-// for( let field in allRecentCases[0]){
-//   // sortingkeysOfAllRecentCases = [...sortingkeysOfAllRecentCases,{value:field,sortOrder:true}]
-//   sortingkeysOfAllRecentCases.push({value:field,sortOrder:true})
-// }
+import {
+  GENERIC_NAME,
+  PAGINATION_TAKE,
+} from "../../apiManager/endpoints/config";
 
 const CaseList = React.memo(
   ({ config, allRecentCases, setSortSetting, sortSetting }: any) => {
-    // const [sortValue,setSortValue] = useState({value:"",sortOrder:null})
-    // const [recentCases,setRecentCases] = useState([...allRecentCases])
-    // const [sortSelectValue,setSortSelectValues] = useState(sortingkeysOfAllRecentCases)
-    // const [pageNo,setPageNo]= useState(1);
     const dispatch = useDispatch();
     const [totalPCount, setTotalPCount] = useState(0);
     const totalCount = useSelector(
@@ -34,47 +26,17 @@ const CaseList = React.memo(
     );
     const [dataForBreadCrumbs, setDataForBreadCrumbs] = useState([
       { text: "Home", link: "/private" },
-      { text: "Cases", link: "/private/cases" },
+      { text: GENERIC_NAME, link: "/private/cases" },
     ]);
 
-    // useEffect(()=>{
-    //  const updatedSortedData = SortCasesByField(sortValue,recentCases)
-    //  setRecentCases(updatedSortedData)
-    // },[sortValue])
-
-    // const onSortingValueChangeHandler = (e:any) =>{
-    //   let tempSelectedValue = e.target.value;
-
-    //   const updatedSortValueState =sortSelectValue.map(sortValue =>{
-    //     if(sortValue.value === tempSelectedValue){
-    //       let sortedDummyvalue = {value:tempSelectedValue,sortOrder:!sortValue.sortOrder}
-    //       tempSelectedValue = sortedDummyvalue
-    //        return sortedDummyvalue
-    //       }else return sortValue
-
-    //   })
-    //   setSortSelectValues(updatedSortValueState)
-    //   setSortValue(tempSelectedValue)
-    // }
-
-    // to fetch the case list and set the state of cases
     useEffect(() => {
       dispatch(setPageSelected(1));
       fetchCaseDetails();
     }, [totalCount]);
 
     async function fetchCaseDetails() {
-      // let output = allRecentCases;
       const totalPage = Math.ceil(totalCount / Number(PAGINATION_TAKE));
       setTotalPCount(totalPage);
-      // output = output.map((element) => {
-      //   return {
-      //     id :element.id,
-      //     name:element.name,
-      //     description:element.desc,
-      //     status:'open'    //need to change in future
-      //   };
-      // });
     }
 
     const caseListpagination = (e, p) => {
@@ -83,27 +45,10 @@ const CaseList = React.memo(
 
     return (
       <div style={{ padding: "2rem 4rem 0rem 4rem" }}>
-        {/* <BreadCrumbs dataForBreadCrumbs={dataForBreadCrumbs}/> */}
-
         <span className="recent-case-header">
           <Typography variant="h6" className="recent-case-header-font ">
             {config.title}
           </Typography>
-          {/* { config.isShowSort ? <FormControl sx={{ m: 1, minWidth: 120, }}>
-        <InputLabel id="demo-simple-select-label">Sorting</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Sorting"
-            value={sortValue.value}
-            onChange={onSortingValueChangeHandler}
-          >
-            {sortSelectValue.map((sortField,index) =>{
-              return <MenuItem value={sortField.value} key={index} >{sortField.value} </MenuItem>
-            })}
-           
-         </Select>
-        </FormControl> : "" } */}
         </span>
 
         <List>
@@ -125,7 +70,7 @@ const CaseList = React.memo(
                     className="recent-case-card-style"
                     sx={{ cursor: "pointer" }}
                   >
-                    Case ID
+                    {GENERIC_NAME}
                   </Typography>
                 }
               />
@@ -204,7 +149,7 @@ const CaseList = React.memo(
                   <ListItemText>
                     <Typography variant="body1" align="center">
                       {" "}
-                      No Recent Cases Found!{" "}
+                      No Recent {" " + GENERIC_NAME + " "} Found!{" "}
                     </Typography>
                   </ListItemText>
                 </Grid>

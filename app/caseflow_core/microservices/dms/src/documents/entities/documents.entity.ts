@@ -1,12 +1,9 @@
-
-import { Field, ObjectType, Int,Directive,ID } from '@nestjs/graphql';
+import { Field, ObjectType, Directive, ID } from '@nestjs/graphql';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+
+//_____________________Custom Imports_____________________//
 import { Cases } from './cases.entity';
-import { Versions }  from 'src/versions/entities/version.entity';
-/**
- * Summary :  Entity Class For documents
- * Created By : Akhila U S
- */
+import { Versions } from 'src/versions/entities/version.entity';
 
 @Entity()
 @ObjectType()
@@ -63,13 +60,7 @@ export class CaseDocuments {
   @Field(() => Cases)
   cases: Cases;
 
-  
   @OneToMany(() => Versions, (versions) => versions.documents)
   @Field(() => [Versions], { nullable: true })
-  versions: Versions[]
+  versions: Versions[];
 }
-
-
-
-
-

@@ -11,8 +11,12 @@ import { CasesResolver } from './resolvers/cases.resolver';
 import { VersionsModule } from 'src/versions/versions.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CaseDocuments]), HelpersModule,VersionsModule],
-  providers: [DocumentsService, DocumentsResolver,CasesResolver],
+  imports: [
+    TypeOrmModule.forFeature([CaseDocuments]),
+    HelpersModule,
+    VersionsModule,
+  ],
+  providers: [DocumentsService, DocumentsResolver, CasesResolver],
   controllers: [DocumentsController],
 })
 export class DocumentsModule {}

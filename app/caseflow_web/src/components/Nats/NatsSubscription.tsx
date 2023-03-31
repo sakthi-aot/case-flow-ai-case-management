@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Search from "../Search/Search";
 import { connect } from "nats.ws";
 import "./NatsSubscription.scss";
+import { GENERIC_NAME } from "../../apiManager/endpoints/config";
 
 export interface natsPayload {
   eventId: string;
@@ -80,54 +81,61 @@ const NatsSubscribition = () => {
           variant="h6"
           className="nats-heading"
         >
-          Nats subscription Center
+          Message Subscription Center
         </Typography>
 
         <Box sx={{ marginBottom: "1rem" }}>
           <FormControlLabel
             control={
               <Checkbox
-                value="CaseCreate "
+                value={GENERIC_NAME+  "Create "}  
                 onChange={onNatsSubjectChangeHandler}
               />
             }
-            label="CaseCreate "
+            label={GENERIC_NAME+  "Create "}  
+
           />
           <FormControlLabel
             control={
               <Checkbox
-                value="CaseUpdate "
+              value={GENERIC_NAME+  "Update "} 
                 onChange={onNatsSubjectChangeHandler}
               />
             }
-            label="CaseUpdate "
+            label={GENERIC_NAME+  "Update "} 
+
           />
           <FormControlLabel
             control={
               <Checkbox
-                value="CaseOpen"
+              value={GENERIC_NAME+  "Open "} 
+
                 onChange={onNatsSubjectChangeHandler}
               />
             }
-            label="CaseOpen"
+            label={GENERIC_NAME+  "Open "} 
+
           />
           <FormControlLabel
             control={
               <Checkbox
-                value="CasePend"
+              value={GENERIC_NAME+  "Pend "} 
+
                 onChange={onNatsSubjectChangeHandler}
               />
             }
-            label="CasePend"
+            label={GENERIC_NAME+  "Pend "} 
           />
           <FormControlLabel
             control={
               <Checkbox
-                value="CaseComp"
+              value={GENERIC_NAME+  "Comp "} 
+
                 onChange={onNatsSubjectChangeHandler}
               />
             }
-            label="CaseComp"
+            label={GENERIC_NAME+  "Comp "} 
+
           />
           <FormControlLabel
             control={

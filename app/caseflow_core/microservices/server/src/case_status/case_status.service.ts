@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CaseStatuses } from './entities/case_status.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
+//_____________________Custom Imports_____________________//
+
+import { CaseStatuses } from './entities/case_status.entity';
 @Injectable()
 export class CaseStatusService {
   constructor(

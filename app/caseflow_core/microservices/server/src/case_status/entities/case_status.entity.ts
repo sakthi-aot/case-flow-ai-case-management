@@ -1,6 +1,4 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Cases } from 'src/cases/entities/cases.entity';
-import { CaseTypes } from 'src/case_types/entities/case_type.entity';
 import {
   Column,
   OneToMany,
@@ -9,6 +7,11 @@ import {
   JoinColumn,
   Entity,
 } from 'typeorm';
+
+//_____________________Custom Imports_____________________//
+
+import { Cases } from '../../cases/entities/cases.entity';
+import { CaseTypes } from '../../case_types/entities/case_type.entity';
 
 @ObjectType()
 @Entity()

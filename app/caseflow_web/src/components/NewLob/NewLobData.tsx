@@ -11,7 +11,6 @@ import { useNavigate } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import "./NewLobData.scss";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker/DesktopDatePicker";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import {
@@ -30,7 +29,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 let defaultValues = {};
 
 const schema = Yup.object().shape({
-  policyNumber: Yup.number().positive().required(),
+  policyNumber: Yup.string()
+    .max(10, "Policy number must not exceed 10 characters")
+    .matches(/^[0-9]*$/, "Policy number must contain only numbers")
+    .required("Policy number is required"),
   policyEffectiveDate: Yup.date().required(),
   policyExpireDate: Yup.date().min(Yup.ref("policyEffectiveDate")).required(),
   sumAssured: Yup.number().positive().required(),
@@ -185,36 +187,7 @@ const NewLobData = () => {
                 />
               </Grid>
 
-              {/* <Grid item xs={3}>
-          <Typography sx={{ padding: "1rem 1rem 0rem 0rem" }} variant="body2" className="case-name-tag">
-           Case ID
-          </Typography>
-          </Grid>
-          <Grid item xs={3}>
-            <Controller
-            name="caseId"
-            control={control}
-            rules={{required:true}}
-            render={({ field: { onChange, value ,ref}  }) => (
-            <TextField
-              id="standard-basic"
-              label="Case ID"
-              variant="standard"             
-              rows={1}
-              sx={{
 
-                width: "100%",            
-              }} 
-              value={value} 
-              onChange={onChange}
-              placeholder="Case ID"
-              inputRef={ref}
-              error={!!errors.caseId}
-              
-            />
-          )}
-        />          
-      </Grid> */}
             </Grid>
 
             <Grid container spacing={3} sx={{ padding: "2rem 1rem 2rem 1rem" }}>
@@ -334,10 +307,8 @@ const NewLobData = () => {
                       rows={1}
                       variant="standard"
                       sx={{
-                        // "& .MuiInputLabel-root": { color: "#404040" },
                         width: "100%",
                       }}
-                      // InputProps={{ disableUnderline: true }}
                       placeholder="Sum Assured"
                       value={value}
                       onChange={onChange}
@@ -359,7 +330,6 @@ const NewLobData = () => {
               <Button
                 style={{
                   alignItems: "center",
-                  // margin: "auto",
                   height: "2.4375rem",
                   width: "20%",
                   backgroundColor: "primary.main",

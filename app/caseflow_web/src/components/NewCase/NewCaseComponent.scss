@@ -13,3 +13,8 @@
     width: 10rem;
   }
 }
+.field-required:after {
+  content:" *";
+  color: red;
+}
+

@@ -58,22 +58,19 @@ const EditDocuments = (props) => {
       };
     });
     dispatch(setDocumentList(output));
-    // setDocumentDetails(output);
-    // setFilteredDocumentDetails(output);
   }
 
   function handleUpload(event) {
     const uploadedDoc = event.target.files[0];
-    //setting URL for FileViewer
     setfileTypeUploaded(uploadedDoc.type.split("/")[1]);
     const objectURl = URL.createObjectURL(uploadedDoc);
 
     setPreviewURL(objectURl);
-    setFile(uploadedDoc); //set file into state
-    setFileName(uploadedDoc.name); //set the filename after importing new file
+    setFile(uploadedDoc);
+    setFileName(uploadedDoc.name);
   }
   function fileNameChange(event) {
-    setFileName(event.target.value); //set the filename from text box if name is alterded
+    setFileName(event.target.value);
   }
 
   const onSubmitHandler = async () => {
@@ -202,22 +199,8 @@ const EditDocuments = (props) => {
             </div>
 
             <div className="upload-right">
-              {/* <div className="display-upload-result"> */}
-              {/* <Typography style = {{
-            padding :"1rem 0rem 1rem 1rem"
-
-          }}variant="h5" >Result : </Typography> */}
-
-              {/* <div style = {{
-                      padding :"1rem 0rem 1rem 1rem",
-                      width:"100%",
-                      height: "100%"
-
-
-                    }}><pre>{JSON.stringify(response, null, 2) }</pre> </div> */}
               {previewURL && filetypeUploaded !== "plain" && (
                 <div className="display-upload-result">
-                  {/* <p className="preview-heading">Preview</p> */}
                   <FileViewer
                     key={Math.random()}
                     fileType={filetypeUploaded}

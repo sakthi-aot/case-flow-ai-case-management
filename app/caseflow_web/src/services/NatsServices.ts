@@ -1,4 +1,4 @@
-import { connect, NatsConnection, Msg } from "nats.ws";
+import { connect } from "nats.ws";
 const NATS_URL = "wss://caseflow-natserver.aot-technologies.com";
 
 export const publishMessage = async (SUBJECT, MESSAGE) => {
@@ -9,8 +9,7 @@ export const publishMessage = async (SUBJECT, MESSAGE) => {
     console.log("Connected to NATS server");
     console.log(SUBJECT);
     nc.publish(SUBJECT, message);
-    // nc.flush();
-    // nc.close();
+
     console.log(nc);
     console.log("Message published successfully");
   } catch (error) {
