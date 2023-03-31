@@ -22,6 +22,8 @@ const handleAuth = ({ req }) => {
       server: {
         cors: true,
         context: handleAuth,
+        playground:true,
+        introspection:true,
       },
 
       gateway: {

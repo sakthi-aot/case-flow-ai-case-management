@@ -3,22 +3,19 @@ version: "3.7"
 services:
   case-flow-lob:
     container_name: case-flow-lob
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        - NODE_ENV=${NODE_ENV:-production}
-        - KEYCLOCK_CLIENT_ID=${KEYCLOCK_CLIENT_ID:-case-flow-nest}
-        - KEYCLOCK_REALM=${KEYCLOCK_REALM:-caseflow}
-        - KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET:-Qhvu0sBg15UsiplYL5msFVqjzyOVaxRr}
-        - KEYCLOCK_AUTH_URL=${KEYCLOCK_AUTH_URL:-https://caseflow-idm.aot-technologies.com:8443/auth}
-        - KEYCLOCK_SECRET=${KEYCLOCK_SECRET:-Qhvu0sBg15UsiplYL5msFVqjzyOVaxRr}
+    build: .
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+      - KEYCLOCK_CLIENT_ID=${KEYCLOCK_CLIENT_ID}
+      - KEYCLOCK_REALM=${KEYCLOCK_REALM}
+      - KEYCLOCK_AUTH_URL=${KEYCLOCK_AUTH_URL}
+      - KEYCLOCK_SECRET=${KEYCLOCK_SECRET}
 
-        - POSTGRESQL_HOST=${POSTGRESQL_HOST:-caseflowdev.ccizdidwz3tj.ca-central-1.rds.amazonaws.com}
-        - POSTGRESQL_PORT=${POSTGRESQL_PORT:-5432}
-        - POSTGRES_DATABASE=${POSTGRES_DATABASE:-caseflow_core}
-        - POSTGRES_DB_USERNAME=${POSTGRES_DB_USERNAME:-postgres}
-        - POSTGRES_DB_PASSWORD=${POSTGRES_DB_PASSWORD:-0DhoxLWL5HlS27WjLkUL}
+      - POSTGRESQL_HOST=${POSTGRESQL_HOST}
+      - POSTGRESQL_PORT=${POSTGRESQL_PORT}
+      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
+      - POSTGRES_DB_USERNAME=${POSTGRES_DB_USERNAME}
+      - POSTGRES_DB_PASSWORD=${POSTGRES_DB_PASSWORD}
 
         
 
