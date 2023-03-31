@@ -29,7 +29,6 @@ const Search = ({
     dropDownArray.unshift("All");
   }
   const navigate = useNavigate();
-  console.log(dropDownValues);
 
   return (
     <>
