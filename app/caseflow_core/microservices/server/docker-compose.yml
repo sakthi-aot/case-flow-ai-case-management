@@ -3,20 +3,18 @@ version: "3.7"
 services:
   case-flow-core:
     container_name: case-flow-core
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
+    build: .
+    environment:
         - NODE_ENV=${NODE_ENV:-production}
-        - KEYCLOCK_CLIENT_ID=${KEYCLOCK_CLIENT_ID:-case-flow-nest}
-        - KEYCLOCK_REALM=${KEYCLOCK_REALM:-caseflow}
+        - KEYCLOCK_CLIENT_ID=${KEYCLOCK_CLIENT_ID}
+        - KEYCLOCK_REALM=${KEYCLOCK_REALM}
         - KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}
-        - KEYCLOCK_AUTH_URL=${KEYCLOCK_AUTH_URL:-https://caseflow-idm.aot-technologies.com:8443/auth}
+        - KEYCLOCK_AUTH_URL=${KEYCLOCK_AUTH_URL}
         - KEYCLOCK_SECRET=${KEYCLOCK_SECRET}
 
         - POSTGRESQL_HOST=${POSTGRESQL_HOST}
         - POSTGRESQL_PORT=${POSTGRESQL_PORT}
-        - POSTGRES_DATABASE=${POSTGRES_DATABASE:-caseflow_core}
+        - POSTGRES_DATABASE=${POSTGRES_DATABASE}
         - POSTGRES_DB_USERNAME=${POSTGRES_DB_USERNAME}
         - POSTGRES_DB_PASSWORD=${POSTGRES_DB_PASSWORD}
 
