@@ -129,6 +129,7 @@ export class DocumentsController {
   @Delete('/delete')
   async DeleteDocument(
     @Query(new JoiValidationPipe(deleteDocumentSchema)) param,
+    @Headers() auth,
   ) {
     try {
       let field = await this.documentService.findOne(parseInt(param.id));
@@ -137,7 +138,8 @@ export class DocumentsController {
         parseInt(param.id),
       );
       let dms = await documentDetails.dmsprovider;
-      return this.fileService.deleteFile(field, dms).then(() => {
+      
+      return this.fileService.deleteFile(field, dms, auth.authorization).then(() => {
         return this.documentService.update(param.id, field);
       });
     } catch (error) {

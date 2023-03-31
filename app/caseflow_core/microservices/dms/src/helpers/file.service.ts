@@ -69,7 +69,7 @@ export class FileService {
         return await this.spService.deleteDocument(document.name);
       }
       case 3: {
-        return await this.alfrescoService.deleteDocument(document.name, token);
+        return await this.alfrescoService.deleteDocument(document.documentref, token);
       }
     }
   }
