@@ -101,7 +101,7 @@ export class AlfrescoService {
         this.configService.get('ALFRESCO_REPO_URL') +
         '/1/nodes/' +
         documentId +
-        '/content?attachment=true';
+        '?permanent=false';
       let response = await firstValueFrom(
         this.httpService.delete(url, {
           headers: headersRequest,
