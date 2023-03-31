@@ -32,6 +32,10 @@ In the following document, we’ll describe about the different project dependen
     #### To stop the keycloak server
     - Run `docker-compose stop` to stop.
     The application should be up and available for use in http://localhost:8085/
+    
+    ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/feature/update-read-me-latest/.images/keycloak-administartion-console.png)
+    
+    - goto Administration console, where you can find the login page 
 
     #### Login Credentials :
 
@@ -43,7 +47,14 @@ In the following document, we’ll describe about the different project dependen
 
     #### Create user in the keycloak admin 
     
+    - In the preselected Caseflow realm (if not, please select Caseflow as realm at the top left), goto to users on left listed options.
+    - You can add as much info for creating the user, also you can create with a minimum info such as a username to create a user
+    
     ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/staging/development/.images/adduser.png)
+    
+    - After entering the user informataion click on save and create password  on credential tab for the user
+    
+     ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/feature/update-read-me-latest/.images/keycloak-user-credentail-page.png)
  
     
 
@@ -57,6 +68,12 @@ In the following document, we’ll describe about the different project dependen
     - Run `docker-compose stop` to stop.    
 
         The application should be up and available for use in http://localhost:8080/
+        
+       ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/feature/update-read-me-latest/.images/alfresco-local-host-main-page.png)
+       
+       - Selecte Alfresco repository and then select Alfresco share which will lead to Alfresco Content Service login page
+       
+        ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/feature/update-read-me-latest/.images/alfresco-share-option-page.png)
     
         #### Login Credentials : 
             Username : admin
