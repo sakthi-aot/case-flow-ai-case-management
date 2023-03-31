@@ -14,50 +14,8 @@ In the following document, we’ll describe about the different project dependen
 - Clone this github repo: https://github.com/AOT-Technologies/case-flow-ai
 - Git repo contains 2 folders 
 
-    ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/staging/development/.images/Web%20and%20Core%20Folder%20Structure.jpg)
-        
+    ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/staging/development/.images/Web%20and%20Core%20Folder%20Structure.jpg)      
     
-
-## Individual Service Deployment
-- ### identity_ management_systems(Keycloak)
-    - Make sure you have a Docker machine up and running.. 
-    - Make sure your current working directory is cd {Your Directory}/case-flow-ai/caseflow_core/identity_ management_systems/keycloak
-    #### To start Keycloak server     
-    - Run  `docker-compose up -d to start.`
-    
-     ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/staging/development/.images/keyclock.png)
-    
-    NOTE: Use --build command with the start command to reflect any future changes eg : `docker-compose up --build -d`
-
-    #### To stop the keycloak server
-    - Run `docker-compose stop` to stop.
-    The application should be up and available for use in http://localhost:8085/
-    
-    ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/feature/update-read-me-latest/.images/keycloak-administartion-console.png)
-    
-    - goto Administration console, where you can find the login page 
-
-    #### Login Credentials :
-
-    Username : admin 
-
-    Password : changeme
-
-    ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/staging/development/.images/kclogin.png)
-
-    #### Create user in the keycloak admin 
-    
-    - In the preselected Caseflow realm (if not, please select Caseflow as realm at the top left), goto to users on left listed options.
-    - You can add as much info for creating the user, also you can create with a minimum info such as a username to create a user
-    
-    ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/staging/development/.images/adduser.png)
-    
-    - After entering the user informataion click on save and create password  on credential tab for the user
-    
-     ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/feature/update-read-me-latest/.images/keycloak-user-credentail-page.png)
- 
-    
-
 - ### document_management_systems(Alfresco)
     Make sure your current working directory is cd {Your Directory}/caseflow-ai/caseflow-core/document_management_systems/alfresco
     
@@ -94,6 +52,11 @@ In the following document, we’ll describe about the different project dependen
     You can install it through locally or docker
     Make sure your current working directory is cd {Your Directory}/caseflow-ai/caseflow-core/microservices/dms     
     
+    NOTE: To run locally delete the current .env file and rename sample.env to .env and replace {your-host} to your host. eg:localhost
+    
+    NOTE: Revert the changes before pushing the code to Production  
+    
+    
     Make sure you have changed the below setting in app.module.ts inorder to enbale the playground in localhost:7002 , where you can test queries and mutations 
     
    ![App Screenshot](https://github.com/AOT-Technologies/case-flow-ai/blob/staging/development/.images/caseflow-dms-setting.png)
@@ -118,6 +81,10 @@ In the following document, we’ll describe about the different project dependen
 
    You can install it through locally or docker
    Make sure your current working directory is cd {Your Directory}/caseflow-ai/caseflow-core/microservices/server     
+   
+   NOTE: To run locally delete the current .env file and rename sample.env to .env and replace {your-host} to your host. eg:localhost
+   
+   NOTE: Revert the changes before pushing the code to Production  
     
    #### Make sure you have changed the below setting in app.module.ts inorder to enbale the playground in localhost:7001 , where you can test queries amd mutations
     
@@ -145,6 +112,10 @@ In the following document, we’ll describe about the different project dependen
 
    You can install it through locally or docker
    Make sure your current working directory is cd {Your Directory}/caseflow-ai/caseflow-core/microservices/lob     
+   
+   NOTE: To run locally delete the current .env file and rename sample.env to .env and replace {your-host} to your host. eg:localhost
+   
+   NOTE: Revert the changes before pushing the code to Production  
     
    #### Make sure you have changed the below setting in app.module.ts inorder to enbale the playground in localhost:8000 , where you can test queries amd mutations
     
@@ -172,6 +143,10 @@ In the following document, we’ll describe about the different project dependen
 
     You can install it through locally or docker
     Make sure your current working directory is cd {Your Directory}/caseflow-ai/caseflow-core/gateway     
+    
+    NOTE: To run locally delete the current .env file and rename sample.env to .env and replace {your-host} to your host. eg:localhost
+    
+    NOTE: Revert the changes before pushing the code to Production  
     
     #### Make sure you have changed the below setting in app.module.ts inorder to enbale the playground in localhost:7000 , where you can test queries amd mutations
     
@@ -215,22 +190,9 @@ Make sure your current working directory is `cd {Your Directory}/caseflow-ai/cas
 
 #### Run the following command in terminal
 
-- Modify the environment variable in .env
-
-    #### Make sure you have changed the below setting in .env inorder to connect the web application with the locally hosted server
-    
-    
-        #caseflow web Api End point        
-        REACT_APP_CASEFLOW_GRAPHQL_API_URL=http://localhost:7000
-        REACT_APP_CASEFLOW_API_URL=http://localhost:7001
-        REACT_APP_CASEFLOW_DMS_API_URL=http://localhost:7002
-        REACT_APP_CASEFLOW_LOB_GRAPHQL_API_URL=http://localhost:8000
+NOTE: To run locally delete the current .env file and rename sample.env to .env and replace {your-host} to your host. eg:localhost     
        
-    
-        
-       
-   
-   NOTE: Revert the changes before pushing the code to Production     
+NOTE: Revert the changes before pushing the code to Production     
         
 - Run `docker-compose up -d` to start
 
