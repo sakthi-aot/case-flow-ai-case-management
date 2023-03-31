@@ -189,7 +189,7 @@ const LOBCustomContent = () => {
             </Grid>
           </ListItem>
           <Divider sx={{ border: 1, color: "#606060" }} />
-          {lobListData && lobListData.length !== 0 ? (
+          {lobListData && lobListData[0].id ?  (
             lobListData.map((lobData, index) => (
               <LOBCUstomContentCard key={index} lobData={lobData} />
             ))
@@ -199,9 +199,8 @@ const LOBCustomContent = () => {
                 <Grid item xs={12}>
                   <ListItemText
                     primary={
-                      <Typography variant="body1" sx={{ paddingLeft: "25vw" }}>
-                        {" "}
-                        No LOB Found!{" "}
+                      <Typography variant="body1" sx={{ paddingInline: "30vw" , whiteSpace:"nowrap" }}>
+                        No LOB Found!
                       </Typography>
                     }
                   />
