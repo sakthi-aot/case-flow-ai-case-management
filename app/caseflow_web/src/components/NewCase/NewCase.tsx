@@ -252,6 +252,14 @@ const NewCase = () => {
     setOpenPopup(false);
   };
 
+      setOpenPopup(true)
+    }
+    else{
+      setOpenPopup(false)
+
+    }
+  }, [selectedFormDetails]);
+
   return (
     <>
       <div
