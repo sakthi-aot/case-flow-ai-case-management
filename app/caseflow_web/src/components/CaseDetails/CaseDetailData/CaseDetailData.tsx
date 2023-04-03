@@ -3,6 +3,7 @@ import React from "react";
 import "./CaseDetailData.scss";
 import {
   FORMSFLOW_APP_URL,
+  FORMSFLOW_WEB_URL,
   GENERIC_NAME,
 } from "../../../apiManager/endpoints/config";
 import moment from "moment";
@@ -66,7 +67,7 @@ const CaseDetailData = ({
         </Typography>
         {tasks && tasks.length ? (
           tasks.map((task: any, index: any) => (
-            <Link target="_blank" href={FORMSFLOW_APP_URL + `/task/${task.id}`}>
+            <Link target="_blank" href={FORMSFLOW_WEB_URL + `/task/${task.id}`}>
               {" "}
               <Typography variant="body2" key={index}>
                 {task.name}
