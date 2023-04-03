@@ -54,6 +54,9 @@ export class CasesService {
     try {
       return this.caseRepository.find({
         take: 10,
+        where: {
+          isdeleted:false
+        },
         order: {
           id: 'DESC',
         },
@@ -92,6 +95,7 @@ export class CasesService {
       const value = await this.caseRepository.findOne({
         where: {
           id: id,
+          isdeleted:false
         },
         
         relations: [
@@ -143,16 +147,15 @@ export class CasesService {
  */
   async remove(id: number) {
     try {
-    let caseData = this.caseRepository.findOne({
+    let caseData = await this.caseRepository.findOne({
       where: {
         id: id,
       },
     });
     if (caseData) {
-      let ret = await this.caseRepository.delete(id);
-      if (ret.affected === 1) {
-        return caseData;
-      }
+      return await this.caseRepository.update(id,{...caseData,isdeleted:true})
+      .then(data=>{return {status: "success"}})
+      .catch(err=> err)
     }
     throw new NotFoundException(`Record cannot find by id ${id}`);
   } catch (err) {
@@ -175,7 +178,11 @@ export class CasesService {
       switch(searchColumn){ 
         case 'Description': {
           const [Cases,totalCount] =await this.caseRepository.createQueryBuilder("table")
-          .where("LOWER(table.desc) LIKE :title", { title: `%${ searchField.toLowerCase() }%` }).orderBy({[orderBy]: orderType}).take(take).skip(skip)
+          .where("LOWER(table.desc) LIKE :title", { title: `%${ searchField.toLowerCase() }%` })
+          .andWhere('table.isdeleted = :status', {status:false})
+          .orderBy({[orderBy]: orderType})
+          .take(take)
+          .skip(skip)
           .leftJoinAndSelect('cases.statusid', 'status')
           .getManyAndCount()
           return  {Cases,totalCount};
@@ -183,9 +190,9 @@ export class CasesService {
         default :
          const [Cases,totalCount] = await  (this.caseRepository.createQueryBuilder("table")
         .where("LOWER(table.name) LIKE :title", { title: `%${ searchField.toLowerCase() }%` }) 
+        .andWhere('table.isdeleted = :status', {status:false})
         .andWhere('table.creationdate >= :start_at', { start_at: fromDate})
         .andWhere('table.creationdate <= :end_at', { end_at: toDate})
-      
         .orderBy({[orderBy]: orderType}).take(take).skip(skip)
         .leftJoinAndSelect('table.casestatus', 'status')
         .leftJoinAndSelect('table.casestype', 'type')
