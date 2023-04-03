@@ -43,13 +43,14 @@ const Configurations = () => {
       id: number;
       isEdit: boolean;
       textValue: string;
+      searchTerm:string
     }[]
   >([]);
 
   useEffect(() => {
     if (isEdit.length === 0) {
       const isEditArray = caseTypes.map((element) => {
-        return { id: element.id, isEdit: false, textValue: "" };
+        return { id: element.id, isEdit: false, textValue: "",searchTerm:"" };
       });
       setIsEdit(isEditArray);
     }
@@ -86,7 +87,8 @@ const Configurations = () => {
   const onSubmit = (id: number) => {
     const caseType = caseTypes.filter((x) => x.id === id)[0];
     const formId = isEdit.filter((x) => x.id === id)[0].textValue;
-    updateCaseType({ ...caseType, formid: formId })
+    const searchTerm = isEdit.filter((x) => x.id === id)[0].searchTerm;
+    updateCaseType({ ...caseType, formid: formId,searchterm: searchTerm })
       .then((data) => {
         if (data && data?.success) {
           toast.success("Updated CaseType Successfully");
@@ -106,6 +108,10 @@ const Configurations = () => {
     var foundIndex = isEdit.findIndex((x) => x.id === id);
     isEdit[foundIndex].textValue = textValue;
   };
+  const onSearchTermChange = (searchTerm: string, id: number) => {
+    var foundIndex = isEdit.findIndex((x) => x.id === id);
+    isEdit[foundIndex].searchTerm = searchTerm;
+  };
 
   return (
     <Box sx={{ mx: 20, mt: 20 }}>
@@ -120,7 +126,7 @@ const Configurations = () => {
         <AccordionDetails>
           <ListItem sx={{ paddingInline: 0, paddingBlock: 2 }}>
             <Grid container spacing={1}>
-              <Grid item xs={3}>
+              <Grid item xs={2}>
                 <ListItemText
                   primary={
                     <Typography
@@ -162,6 +168,18 @@ const Configurations = () => {
                     <Typography
                       variant="subtitle1"
                       className="recent-case-card-style"
+                    >
+                      Search Term
+                    </Typography>
+                  }
+                />
+              </Grid>
+              <Grid item xs={1}>
+                <ListItemText
+                  primary={
+                    <Typography
+                      variant="subtitle1"
+                      className="recent-case-card-style"
                     ></Typography>
                   }
                 />
@@ -174,7 +192,7 @@ const Configurations = () => {
             <>
               <ListItem key={index} sx={{ paddingInline: 0, paddingBlock: 2 }}>
                 <Grid container spacing={1}>
-                  <Grid item xs={3}>
+                  <Grid item xs={2}>
                     <ListItemText
                       primary={
                         <Typography
@@ -219,7 +237,28 @@ const Configurations = () => {
                       }
                     />
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={3  }>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          variant="body2"
+                          className="recent-case-card-style"
+                        >
+                          <TextField
+                            sx={{ width: "10rem" }}
+                            id="standard-basic"
+                            variant="standard"
+                            disabled={!getEdit(option.id)}
+                            defaultValue={option.searchterm}
+                            onChange={(e) =>
+                              onSearchTermChange(e.target.value, option.id)
+                            }
+                          />
+                        </Typography>
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={1}>
                     <ListItemText
                       primary={
                         <Typography

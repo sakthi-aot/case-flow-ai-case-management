@@ -41,6 +41,10 @@ export class CaseTypes {
   @Field({ nullable: true })
   formid: string | null;
 
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  searchterm: string | null;
+
   @OneToMany(() => CaseStatuses, (casestatuses) => casestatuses.casestype)
   @Field(() => [CaseStatuses], { nullable: true })
   casestatus: CaseStatuses[];

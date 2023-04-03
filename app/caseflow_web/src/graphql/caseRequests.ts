@@ -215,7 +215,8 @@ export const UPDATE_CASE_TYPE = gql`
   mutation updateCaseType($updateCaseTypeInput: UpdateCaseTypeInput!) {
     updateCaseType(updateCaseTypeInput: $updateCaseTypeInput) {
       id
-      formid
+      formid,
+      searchterm
     }
   }
 `;
