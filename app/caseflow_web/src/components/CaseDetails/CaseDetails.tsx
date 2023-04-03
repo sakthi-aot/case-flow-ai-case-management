@@ -5,7 +5,7 @@ import CaseDetailReference from "./CaseDetailReference/CaseDetailReference";
 import "./CaseDetails.scss";
 import Search from "../Search/Search";
 import CaseHistory from "../CaseHistory/caseHistory";
-import { getCaseDetails, updateCases } from "../../services/CaseService";
+import { deleteCase, getCaseDetails, updateCases } from "../../services/CaseService";
 import { useLocation } from "react-router-dom";
 import RelatedCaseDocuments from "../RelatedCaseDocuments/RelatedCaseDocuments";
 import Accordion from "@mui/material/Accordion";
@@ -14,6 +14,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CustomizedDialog from "../Dialog/Dialog";
 import Upload from "../Upload/Upload";
+
 import {
   resetSelectedCase,
   setCaseTasks,
@@ -104,6 +105,33 @@ const CaseDetails = () => {
     { id: 7, code: 7, text: "Upload Document" },
     { id: 8, code: 8, text: "Delete" },
   ];
+  const [isDeleteConfirmationUpOpen, setDeleteConfirmation] = useState(false);
+
+  const onCloseDeletePopup = (id) => {
+    setDeleteConfirmation(false);
+  };
+
+  const onConfirmDeleteCase = (id) => {
+
+    deleteCase(parseInt(selectedCase.id.toString())).then((data=>{
+    if(data.success){
+    toast.success(data?.success);
+    setTimeout(()=>navigate("/private/cases/"), 2000);
+      
+    }
+    else{
+    toast.success(data?.error);
+
+    }
+
+      setDeleteConfirmation(false);
+    }))
+    .catch(err=>{
+
+    })
+  };
+
+  
 
   optionsForAction.map((action) => {
     if (selectedCase?.casestatus?.displayname == "Pending") {
@@ -216,6 +244,9 @@ const CaseDetails = () => {
       }
       case optionsForAction[0].text: {
         return editCaseDetails(selectedCase);
+      }
+       case optionsForAction[8].text: {
+        return setDeleteConfirmation(true)
       }
     }
   };
@@ -595,6 +626,16 @@ const CaseDetails = () => {
         btn1={"Cancel"}
         btn2={"Confirm"}
         type="confirm"
+      />
+
+<PopUpDialogBox
+        isOpen={isDeleteConfirmationUpOpen}
+        onClose={onCloseDeletePopup}
+        dialogContentText={" Are you sure you want to delete Case?"}
+        onConfirm={onConfirmDeleteCase}
+        btn1={"Cancel"}
+        btn2={"Delete"}
+        type="delete"
       />
     </>
   );

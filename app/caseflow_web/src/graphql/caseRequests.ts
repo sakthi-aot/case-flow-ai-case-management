@@ -82,9 +82,9 @@ export const ADD_CASE = gql`
 `;
 
 export const DELETE_CASE = gql`
-  mutation removeCase($caseId: Int!) {
-    removeCase(id: $caseId) {
-      id
+  mutation removeCase($removeCaseArgs: RemoveCaseArgs!) {
+    removeCase(removeCaseArgs: $removeCaseArgs) {
+      desc
     }
   }
 `;
@@ -220,3 +220,5 @@ export const UPDATE_CASE_TYPE = gql`
     }
   }
 `;
+
+

@@ -16,6 +16,7 @@ import {
   FETCH_CASEHISTORY,
   FETCH_ADDITIONAL_CASE_DETAILS,
   UPDATE_CASE_TYPE,
+  DELETE_CASE,
 } from "../graphql/caseRequests";
 import { Case } from "../dto/cases";
 import { print } from "graphql";
@@ -324,6 +325,36 @@ export const updateCaseType = async (CaseType: CaseTypes) => {
     .catch((error) => {
       if (error?.response?.data) {
         return { error: error };
+      } else {
+        return { error: "something went wrong" };
+      }
+    });
+};
+export const deleteCase = async (id:number) => {
+  const url = GRAPHQL;
+  return httpPOSTRequest(
+    url,
+    {
+      query: print(DELETE_CASE),
+      variables: {
+        removeCaseArgs: {
+          id:id
+        },
+      },
+    },
+    null,
+    true,
+    false,
+    null
+  )
+    .then((res) => {
+      if (res.data)
+      return { success: "succesfully deleted the Case" };
+      else return {error: "failed to delete the Case"}
+    })
+    .catch((error) => {
+      if (error.err) {
+        return { error: error.err };
       } else {
         return { error: "something went wrong" };
       }

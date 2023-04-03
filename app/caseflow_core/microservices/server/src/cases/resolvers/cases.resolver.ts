@@ -14,7 +14,7 @@ import { casesResponse } from '../entities/cases_response.entity';
 import { CasesService } from '../services/cases.service';
 import { CreateCaseInput } from '../dto/create-case.input';
 import { FetchArgs, FetchCaseDocumentArgs } from '../dto/fetch.input';
-import { UpdateCaseInput } from '../dto/update-case.input';
+import { RemoveCaseArgs, UpdateCaseInput } from '../dto/update-case.input';
 import { FetchSearchArgs } from '../dto/fetch-search.input';
 
 /**
@@ -34,7 +34,7 @@ export class CasesResolver {
    */
   @Query((returns) => Cases, { name: 'getCase' })
   async getCase(@Args() args: FetchCaseDocumentArgs): Promise<Cases> {
-    const res = await this.casesService.findOne(args.id);
+    const res = await this.casesService.findOne(args.id)
     return res;
   }
 
@@ -115,8 +115,8 @@ export class CasesResolver {
    * @returns
    */
   @Mutation(() => Cases)
-  removeCase(@Args('id') id: number) {
-    return this.casesService.remove(id);
+  removeCase(@Args('removeCaseArgs') removeCaseArgs: RemoveCaseArgs) {
+    return this.casesService.remove(removeCaseArgs.id);
   }
 
   //_____________________Resolver Reference For GraphQL Federation_____________________//

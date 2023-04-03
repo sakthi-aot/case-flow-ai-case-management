@@ -1,5 +1,6 @@
-import { Field, InputType, Int } from '@nestjs/graphql';
+import { ArgsType, Field, InputType, Int } from '@nestjs/graphql';
 import {
+  IsInt,
   IsNotEmpty,
   IsNumber,
   IsString,
@@ -66,4 +67,13 @@ export class UpdateCaseInput {
 
   @Field({ nullable: true })
   lobcaseid: number;
+}
+
+@InputType()
+export class RemoveCaseArgs {
+  @Field(() => Int)
+  @IsInt()
+  id;
+
+  
 }
