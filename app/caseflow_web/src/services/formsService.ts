@@ -13,8 +13,7 @@ import { ADD_WORKFLOW_CASE_HISTORY } from "../graphql/caseRequests";
 import { FORMSFLOW_FORM_URL } from "../apiManager/endpoints/config";
 import UserService from "./UserService";
 
-export const getFormsList = async (caseType) => {
-  console.log(parseInt(caseType));
+export const getFormsList = async () => {
   const url = `${FORM_URL}/form`;
   const output = await httpGETRequest(url, {}, null)
     .then((res) => {
@@ -40,7 +39,7 @@ export const getFormsListByName = async (name) => {
 };
 
 export const getFormDetails = async (form) => {
-  const url = `${FORMSFLOW_APPLICATION_URL}/formio/${form}`;
+  const url = `${FORMSFLOW_APPLICATION_URL}/${form}`;
   const formIoToken = await getFormIORoleIds();
   const headers = { "x-jwt-token": formIoToken };
   const output = await httpGETRequest(url, {}, formIoToken, false, headers)
@@ -54,7 +53,7 @@ export const getFormDetails = async (form) => {
   return output;
 };
 export const getFormDetailsById = async (formId) => {
-  const url = `${FORMSFLOW_APPLICATION_URL}/formio/form/${formId}`;
+  const url = `${FORMSFLOW_APPLICATION_URL}/form/${formId}`;
   const formIoToken = await getFormIORoleIds();
   const headers = { "x-jwt-token": formIoToken };
   const output = await httpGETRequest(url, {}, formIoToken, false, headers)
@@ -71,7 +70,7 @@ export const submitNewForm = async (id, body) => {
   console.log(parseInt(id));
   const formIoToken = await getFormIORoleIds();
   const token = { "x-jwt-token": formIoToken };
-  const url = `${FORMSFLOW_APPLICATION_URL}/formio/form/${id}/submission`;
+  const url = `${FORMSFLOW_APPLICATION_URL}/form/${id}/submission`;
   const output = await httpPOSTRequest(url, body, null, true, false, token)
     .then((res) => {
       return res.data;

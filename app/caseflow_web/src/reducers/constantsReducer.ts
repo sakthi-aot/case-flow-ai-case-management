@@ -12,7 +12,7 @@ const constantsSlice = createSlice({
       state.caseTypes = action.payload;
     },
     setCaseStatuses: (state, action) => {
-      state.caseTypes = action.payload;
+      state.caseStatuses = action.payload;
     },
   },
 });

@@ -60,6 +60,7 @@ import {
   createDraft,
   getFormDetailsById,
   getFormsList,
+  getFormsListByName,
   submitNewForm,
   submitNewFormDraft,
 } from "../../services/formsService";
@@ -76,7 +77,8 @@ const CaseDetails = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const statuses = useSelector((state: State) => state.constants.caseTypes);
+  const statuses = useSelector((state: State) => state.constants.caseStatuses);
+  const caseTypes = useSelector((state: State) => state.constants.caseTypes);
   const tasks = useSelector((state: State) => state.cases.selectedCase.tasks);
   const selectedCase = useSelector((state: State) => state.cases.selectedCase);
   const userName = useSelector(
@@ -221,7 +223,9 @@ const CaseDetails = () => {
   };
 
   const getForms = async () => {
-    const formsList = await getFormsList(1);
+
+    let type= caseTypes.find(type=> type.id == selectedCase.typeid)
+    const formsList = await getFormsListByName(type?.searchterm);
     setFormsList(formsList);
     setOpenWorkflowPopup(true);
   };
@@ -393,7 +397,7 @@ const CaseDetails = () => {
         submissionId: res._id,
         formUrl:
           FORMSFLOW_APPLICATION_URL +
-          "/formio/form/" +
+          "/form/" +
           res.form +
           "/submission/" +
           res._id,
