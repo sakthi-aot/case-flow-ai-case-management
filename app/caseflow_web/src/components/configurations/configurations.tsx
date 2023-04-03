@@ -50,7 +50,7 @@ const Configurations = () => {
   useEffect(() => {
     if (isEdit.length === 0) {
       const isEditArray = caseTypes.map((element) => {
-        return { id: element.id, isEdit: false, textValue: "",searchTerm:"" };
+        return { id: element.id, isEdit: false, textValue: element.formid,searchTerm:element.searchterm };
       });
       setIsEdit(isEditArray);
     }
