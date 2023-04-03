@@ -194,7 +194,7 @@ const NewCase = () => {
         submissionId: res._id,
         formUrl:
           FORMSFLOW_APPLICATION_URL +
-          "/formio/form/" +
+          "/form/" +
           res.form +
           "/submission/" +
           res._id,
@@ -217,7 +217,7 @@ const NewCase = () => {
         })
         .then((tasks) => {
           let task = tasks[0];
-          if (task["id"]) {
+          if (task &&task["id"]) {
             try {
               const SUBJECT = "CaseCreate";
               const MESSAGE = {

@@ -19,7 +19,8 @@ export const FETCH_CASE_TYPES = gql`
       name
       displayname
       code
-      formid
+      formid,
+      searchterm
     }
   }
 `;

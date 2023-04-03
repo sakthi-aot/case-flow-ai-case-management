@@ -189,7 +189,11 @@ export default function MiniDrawer() {
     const caseTypes = await fetchCaseTypess();
     dispatch(setCaseTypes(caseTypes));
   };
-
+ 
+  React.useEffect(() => {
+    getCaseTypes();
+  }, []);
+  
   const handleClosePopup = () => {
     setOpenPopup(false);
   };
@@ -262,7 +266,7 @@ export default function MiniDrawer() {
               }}
               sx={{ backgroundColor: "primary.main" }}
               onClick={() => {
-                getCaseTypes();
+                
                 setOpenPopup(true);
               }}
             >
