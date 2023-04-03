@@ -347,7 +347,7 @@ export default function MiniDrawer() {
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}></Box>
       </Box>
       <CustomizedDialog
-        title={"Start New Case" + GENERIC_NAME}
+        title={"Start New " + GENERIC_NAME}
         isOpen={isOpenPopup}
         setIsOpen={setOpenPopup}
         handleClose={handleClosePopup}
@@ -376,9 +376,8 @@ export default function MiniDrawer() {
           <div className="case-type-buttons">
             <FormControl>
               <Button
-                variant="contained"
+                variant="outlined"
                 sx={{
-                  backgroundColor: "secondary.main",
                   borderColor: "primary.secondary",
                 }}
                 onClick={handleClosePopup}

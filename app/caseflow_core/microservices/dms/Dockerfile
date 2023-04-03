@@ -14,7 +14,6 @@ RUN npm ci --only=prod
 # Deployment container
 FROM node:lts-alpine
 WORKDIR /app
-# Set node to production
 ENV NODE_ENV production
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist

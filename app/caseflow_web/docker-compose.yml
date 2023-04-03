@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: dev_Dockerfile
       args:
-        - NODE_ENV=${NODE_ENV:-production}
+        - NODE_ENV=${NODE_ENV:-development}
         - REACT_APP_KEYCLOAK_CLIENT=${REACT_APP_KEYCLOAK_WEB_CLIENTID:-case-flow-web}
         - REACT_APP_KEYCLOAK_URL_REALM=${REACT_APP_KEYCLOAK_URL_REALM:-caseflow}
         - REACT_APP_KEYCLOAK_URL=${REACT_APP_KEYCLOAK_URL}
