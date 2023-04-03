@@ -309,6 +309,7 @@ export const updateCaseType = async (CaseType: CaseTypes) => {
           formid: CaseType.formid,
           displayname: CaseType.displayname,
           code: CaseType.code,
+          searchterm :CaseType.searchterm
         },
       },
     },

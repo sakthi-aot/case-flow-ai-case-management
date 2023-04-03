@@ -35,4 +35,8 @@ export class UpdateCaseTypeInput extends PartialType(CreateCaseTypeInput) {
   @Field({ nullable: true })
   @IsString()
   formid: string | null;
+
+  @Field({ nullable: true })
+  @IsString()
+  searchterm: string | null;
 }

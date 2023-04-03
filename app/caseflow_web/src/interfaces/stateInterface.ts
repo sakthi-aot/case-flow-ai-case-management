@@ -102,6 +102,7 @@ export interface CaseTypes {
   displayname: string;
   code: number;
   formid: string;
+  searchterm:string
 }
 export interface Lob {
   lobList: LobList[];
