@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PublishNatDto } from './dto/publish-nat.dto';
 import { WebSocketServer } from '@nestjs/websockets';
-// const NATS_URL = "wss://caseflow-natserver.aot-technologies.com";
-const NATS_URL = 'nats://localhost:4222';
+const NATS_URL = "wss://caseflow-natserver.aot-technologies.com";
+// const NATS_URL = 'nats://localhost:4222';
 import { Server } from 'ws';
 import { connect } from 'nats';
 
