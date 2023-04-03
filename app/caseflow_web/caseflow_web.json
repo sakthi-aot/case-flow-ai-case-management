@@ -15,21 +15,58 @@
         "linuxParameters": null,
         "cpu": 0,
         "environment": [{
-                "name": "REACT_APP_CASEFLOW_API_URL",
-                "value": "https://caseflow-api.aot-technologies.com"
-            },
-            {
-                "name": "REACT_APP_KEYCLOAK_URL",
-                "value": "https://caseflow-idm.aot-technologies.com:8443"
+                "name": "REACT_APP_KEYCLOAK_WEB_CLIENTID",
+                "value": "case-flow-web"
             },
             {
                 "name": "REACT_APP_KEYCLOAK_URL_REALM",
-                "value": "caseflow"
+                "value": "forms-flow-mahagony"
             },
             {
-                "name": "REACT_APP_KEYCLOAK_WEB_CLIENTID",
-                "value": "case-flow-web"
+                "name": "REACT_APP_KEYCLOAK_URL",
+                "value": "https://iam.aot-technologies.com/"
+            },
+            {
+                "name": "REACT_APP_CASEFLOW_API_URL",
+                "value": "https://caseflow-core.aot-technologies.com"
+            },
+            {
+                "name": "REACT_APP_CASEFLOW_GRAPHQL_API_URL",
+                "value": "https://caseflow-gateway.aot-technologies.com"
+            },
+            {
+                "name": "REACT_APP_CASEFLOW_DMS",
+                "value": "3"
+            },
+            {
+                "name": "REACT_APP_CASEFLOW_LOB_GRAPHQL_API_URL",
+                "value": "https://caseflow-lob.aot-technologies.com"
+            },
+            {
+                "name": "REACT_APP_PAGINATION_TAKE",
+                "value": "10"
+            },
+            {
+                "name": "REACT_APP_FORMSFLOW_URL",
+                "value": "https://bpm2.aot-technologies.com"
+            },
+            {
+                "name": "REACT_APP_FORMSFLOW_APP_URL",
+                "value": "https://app2.aot-technologies.com"
+            },
+            {
+                "name": "REACT_APP_CASEFLOW_DMS_API_URL",
+                "value": "https://caseflow-dms.aot-technologies.com"
+            },
+            {
+                "name": "REACT_APP_FORMSFLOW_FROM_URL",
+                "value": "https://formsflowapi2.aot-technologies.com"
+            },
+            {
+                "name": "REACT_APP_GENERIC_NAME",
+                "value": "Case"
             }
+           
         ],
         "resourceRequirements": null,
         "ulimits": null,
