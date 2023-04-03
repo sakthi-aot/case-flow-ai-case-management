@@ -5,6 +5,7 @@ import FilterMuiComponent from "../FilterMuiComponent/FilterMuiComponent";
 import {
   setoptionsForFilter,
   setFilteredCaseHistory,
+  setCaseHistory,
 } from "../../reducers/caseHistoryReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../../interfaces/stateInterface";
@@ -64,6 +65,13 @@ const CaseHistory = () => {
   useEffect(() => {
     Filteroptions();
   }, [selectedCaseHistory]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(setCaseHistory([]));
+      dispatch(setFilteredCaseHistory([]));
+    };
+  }, []);
 
   return (
     <div className="case-history-container">

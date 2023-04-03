@@ -252,6 +252,16 @@ const NewCase = () => {
     setOpenPopup(false);
   };
 
+  useEffect(() => {
+    if(!selectedFormDetails){
+      setOpenPopup(true)
+    }
+    else{
+      setOpenPopup(false)
+
+    }
+  }, [selectedFormDetails]);
+
   return (
     <>
       <div
