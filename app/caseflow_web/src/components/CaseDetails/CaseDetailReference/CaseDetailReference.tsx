@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./CaseDetailReference.scss";
-import lobConfig from "../../../config/lob_data.json";
+import lobConfig from "../../../config/config_data.json";
 import { setAdditionalCaseDetails } from "../../../reducers/newCaseReducer";
 import { useSelector } from "react-redux";
 import { State } from "../../../interfaces/stateInterface";

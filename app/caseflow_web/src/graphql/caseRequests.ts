@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import lobConfig from "../config/lob_data.json";
+import lobConfig from "../config/config_data.json";
 
 export const FETCH_CASES = gql`
   query case($Skip: Int, $Take: Int) {
