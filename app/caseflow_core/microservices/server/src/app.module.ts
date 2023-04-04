@@ -18,6 +18,7 @@ import { CaseEventsModule } from './case_events/case_events.module';
 import { EventTypesModule } from './event_types/event_types.module';
 import { CaseStatusModule } from './case_status/case_status.module';
 import { CaseTypesModule } from './case_types/case_types.module';
+import { NatsModule } from './nats/nats.module';
 
 /**
  *  Summary :Keyclock settings
@@ -71,6 +72,7 @@ const keyCloakOptionsProvider = {
     EventTypesModule,
     CaseStatusModule,
     CaseTypesModule,
+    NatsModule
   ],
   controllers: [],
   providers: [
