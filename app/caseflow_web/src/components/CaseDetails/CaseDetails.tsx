@@ -161,6 +161,7 @@ const CaseDetails = () => {
         id: index,
         date: moment(element.datetime).format("yyyy-MM-DD HH:mm"),
         caseHistoryType: element.event.eventtype.text,
+        caseHistoryWorkflowType: element.event.workflowtype,
       };
     });
 
@@ -453,7 +454,8 @@ const CaseDetails = () => {
             setOpenFormIOPopup(false);
             fetchRealtedTasks();
             setSelected(0);
-            await addWorkflowCaseHistory(selectedCase.id);
+
+            await addWorkflowCaseHistory(selectedCase.id,selectedFormDetails.title);
             await fetchCaseHistory(selectedCase.id);
           } else {
             return getTaksByProcessInstanceId(data.processInstanceId);
@@ -475,7 +477,8 @@ const CaseDetails = () => {
             setOpenWorkflowPopup(false);
             setOpenFormIOPopup(false);
             fetchRealtedTasks();
-            await addWorkflowCaseHistory(selectedCase.id);
+
+            await addWorkflowCaseHistory(selectedCase.id,selectedFormDetails.title);
             await fetchCaseHistory(selectedCase.id);
           } else {
             toast.success("Failed to  start the workflow. Please try again!");
