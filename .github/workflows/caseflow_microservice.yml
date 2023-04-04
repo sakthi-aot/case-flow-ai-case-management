@@ -1,4 +1,4 @@
-name: Caseflow Microservices
+name: Caseflow DMS
 on:
   workflow_dispatch:
     inputs:
@@ -8,6 +8,7 @@ on:
         required: true
       reponame:
         required: true
+        default: caseflow_microservice
 jobs:
   build:
     name: Build Image
@@ -32,6 +33,6 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
-        context: ./app/caseflow_microservices/dms
+        context: ./app/caseflow_core/microservices/dms
         push: true
         tags: ${{ github.event.inputs.ecr }}/${{ github.event.inputs.reponame }}:${{ github.event.inputs.version }}

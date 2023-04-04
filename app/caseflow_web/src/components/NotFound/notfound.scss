@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
+@import "../../styles.scss";
+.notfound {
+  .content-section {
+    background-color: #f3f8ff;
+  }
+
+  .inner_text {
+    font-family: "Open Sans", sans-serif;
+    color: $primary-theme-black-color;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: 10fr 8fr;
+    padding-top: 10vh;
+  }
+
+  .grid-left {
+    padding: 0vh 4vw 0vh 10vw;
+    text-align: center;
+  }
+
+  .grid-right {
+    padding: 0vh 1vw 0vh 1vw;
+    text-align: center;
+  }
+
+  .landingImage {
+    height: 60vh;
+    margin: 1rem 0rem 3em 0rem;
+  }
+
+  .buttons {
+    margin: auto;
+    padding: 1rem 0rem 3rem 0rem;
+    display: grid;
+    width: 50%;
+    color: $primary-theme-black-color;
+  }
+
+  .title {
+    margin: auto;
+    padding: 1rem 0rem 1rem 0rem;
+    font-size: 25vh;
+  }
+
+  .sub-title {
+    margin: auto;
+    padding: 1rem 0rem 1rem 0rem;
+    font-size: 5vh;
+  }
+
+  .text {
+    padding: 1rem 0rem 1rem 0rem;
+    font-size: 1rem;
+  }
+
+  .bottom-blog {
+    width: 100vw;
+  }
+}

@@ -1,0 +1,22 @@
+.loader-container{
+    display: flex;
+    height: 80vh;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  $primary-theme-black-color: #404040; 
+  $secondary-theme-color:rgba(152, 67, 67, 0.514);
+  $primary-theme-black-color-hover: #171616; 
+
+  $delete-confirm-btn:rgba(152, 67, 67, 0.514);
+  
+
+  $primary-font:'Poppins', sans-serif;
+  $second-font:'Poppins', sans-serif;
+
+  $primary-font-color:'#606060';
+
+  body{
+    overflow-x: hidden;
+  }

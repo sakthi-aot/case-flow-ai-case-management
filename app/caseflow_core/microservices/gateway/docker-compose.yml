@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  case-flow-core:
+    container_name: case-flow-gateway-service
+    build: .
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+      - CASE_SUBGRAPH_URL=${CASE_SUBGRAPH_URL}
+      - DOCUMENT_SUBGRAPH_URL=${DOCUMENT_SUBGRAPH_URL}
+
+
+
+        
+
+       
+
+
+    ports:
+      - "7000:7000"
+    tty: true

@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+  case-flow-lob:
+    container_name: case-flow-lob
+    build: .
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+      - KEYCLOCK_CLIENT_ID=${KEYCLOCK_CLIENT_ID}
+      - KEYCLOCK_REALM=${KEYCLOCK_REALM}
+      - KEYCLOCK_AUTH_URL=${KEYCLOCK_AUTH_URL}
+      - KEYCLOCK_SECRET=${KEYCLOCK_SECRET}
+
+      - POSTGRESQL_HOST=${POSTGRESQL_HOST}
+      - POSTGRESQL_PORT=${POSTGRESQL_PORT}
+      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
+      - POSTGRES_DB_USERNAME=${POSTGRES_DB_USERNAME}
+      - POSTGRES_DB_PASSWORD=${POSTGRES_DB_PASSWORD}
+
+        
+
+       
+
+
+    ports:
+      - "8000:8000"
+    tty: true

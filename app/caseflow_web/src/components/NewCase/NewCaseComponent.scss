@@ -1,0 +1,20 @@
+@import "../../styles.scss";
+
+.css-1susj48,
+.css-kndhdk-MuiInputBase-root-MuiInput-root,
+.css-1beu9bf-MuiInputBase-root-MuiInput-root,
+.css-1v856yq {
+  padding: 4px 0px 0px !important;
+}
+.form-io {
+  margin-left: 15px;
+  width: 74vw;
+  .btn {
+    width: 10rem;
+  }
+}
+.field-required:after {
+  content:" *";
+  color: red;
+}
+

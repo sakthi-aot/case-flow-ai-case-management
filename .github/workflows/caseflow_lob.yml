@@ -8,6 +8,7 @@ on:
         required: true
       reponame:
         required: true
+        default: caseflow_lob
 jobs:
   build:
     name: Build Image
@@ -32,6 +33,6 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
-        context: ./app/caseflow_microservices/caseflow_lob
+        context: ./app/caseflow_core/microservices/lob
         push: true
         tags: ${{ github.event.inputs.ecr }}/${{ github.event.inputs.reponame }}:${{ github.event.inputs.version }}

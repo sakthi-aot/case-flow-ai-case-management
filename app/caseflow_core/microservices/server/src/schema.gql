@@ -1,0 +1,242 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @key(fields: String!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
+
+directive @extends on OBJECT | INTERFACE
+
+directive @external on OBJECT | FIELD_DEFINITION
+
+directive @requires(fields: String!) on FIELD_DEFINITION
+
+directive @provides(fields: String!) on FIELD_DEFINITION
+
+directive @shareable on FIELD_DEFINITION | OBJECT
+
+directive @link(url: String!, import: [link__Import]) on SCHEMA
+
+directive @tag(name: String!) repeatable on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+directive @override(from: String!) on FIELD_DEFINITION
+
+type EventTypes {
+  id: ID!
+  text: String
+  code: Float!
+  caseevent: [CaseEvents!]
+}
+
+type CaseEvents {
+  id: ID!
+  eventtypeId: Float
+  artifactId: Float!
+  casehistory: [CaseHistory!]
+  eventtype: EventTypes
+}
+
+type CaseHistory {
+  id: ID!
+  datetime: DateTime!
+  outcome: String!
+  userid: Float!
+  eventId: Float!
+  event: CaseEvents
+  case: Cases
+  caseId: Float
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type CaseTypes {
+  id: ID!
+  name: String
+  displayname: String!
+  caseextrafields: Float
+  lobfields: Float
+  code: Float!
+  displaylocations: Float!
+  formid: String
+  casestatus: [CaseStatuses!]
+  cases: [Cases!]
+}
+
+type CaseStatuses {
+  id: ID!
+  casetypeid: Float
+  name: String!
+  displayname: String!
+  code: String!
+  casestype: CaseTypes
+  cases: [Cases!]
+}
+
+type Cases {
+  id: ID!
+  lobid: Int!
+  name: String!
+  desc: String
+  statusid: Float!
+  typeid: Float!
+  linkedcases: [Int!]
+  creationdate: DateTime!
+  completiondate: DateTime
+  lastmodificationdate: DateTime
+  penduntildate: DateTime
+  archivedate: DateTime
+  startuserid: Float
+  currentownerid: Float!
+  lobcaseid: Float
+  involvedparties: [Int!]
+  isdeleted: Boolean!
+  casehistory: [CaseHistory!]
+  casestatus: CaseStatuses
+  casestype: CaseTypes
+}
+
+type casesResponse {
+  Cases: [Cases!]!
+  totalCount: Int!
+}
+
+type Query {
+  getCase(skip: Int = 0, take: Int = 25, id: Int!): Cases!
+  case(skip: Int = 0, take: Int = 25): casesResponse!
+  Searchcase(searchField: String!, searchColumn: String!, fromDate: String!, toDate: String!, orderBy: String!, orderType: String!, skip: Int = 0, take: Int = 25): casesResponse!
+  fetchRecentCase: [Cases!]!
+  getAllCaseHistory: [CaseHistory!]!
+  caseHistory(id: Int!): CaseHistory!
+  getAllCaseEvents: [CaseEvents!]!
+  caseEvent(id: Int!): CaseEvents!
+  eventTypes: [EventTypes!]!
+  eventType(id: Int!): EventTypes!
+  getCaseStatuses: [CaseStatuses!]!
+  getSingleCaseStatus(id: Int!): CaseStatuses!
+  getCaseTypes: [CaseTypes!]!
+  caseType(id: Int!): CaseTypes!
+}
+
+type Mutation {
+  createCase(createCaseInput: CreateCaseInput!): Cases!
+  updateCase(updateCaseInput: UpdateCaseInput!): Cases!
+  removeCase(id: Float!): Cases!
+  createCaseHistory(createCaseHistoryInput: CreateCaseHistoryInput!): CaseHistory!
+  updateCaseHistory(updateCaseHistoryInput: UpdateCaseHistoryInput!): CaseHistory!
+  removeCaseHistory(id: Int!): CaseHistory!
+  createCaseEvent(createCaseEventInput: CreateCaseEventInput!): CaseEvents!
+  updateCaseEvent(updateCaseEventInput: UpdateCaseEventInput!): CaseEvents!
+  removeCaseEvent(id: Int!): CaseEvents!
+  createEventType(createEventTypeInput: CreateEventTypeInput!): EventTypes!
+  updateEventType(updateEventTypeInput: UpdateEventTypeInput!): EventTypes!
+  removeEventType(id: Int!): EventTypes!
+  createCaseType(createCaseTypeInput: CreateCaseTypeInput!): CaseTypes!
+  updateCaseType(updateCaseTypeInput: UpdateCaseTypeInput!): CaseTypes!
+  removeCaseType(id: Int!): CaseTypes!
+}
+
+input CreateCaseInput {
+  lobid: Int
+  name: String!
+  desc: String
+  statusid: Int!
+  typeid: Float
+  linkedcases: [Int!]
+  creationdate: DateTime = "2023-03-27T13:19:38.166Z"
+  completiondate: DateTime
+  lastmodificationdate: DateTime
+  penduntildate: DateTime
+  archivedate: DateTime
+  startuserid: Int
+  currentownerid: Int
+  involvedparties: [Int!]
+  isdeleted: Boolean = false
+  lobcaseid: Float
+}
+
+input UpdateCaseInput {
+  id: Int!
+  lobid: Int
+  name: String!
+  desc: String
+  statusid: Int!
+  typeid: Float
+  linkedcases: [Int!]
+  creationdate: DateTime = "2023-03-27T13:19:38.155Z"
+  completiondate: DateTime
+  lastmodificationdate: DateTime = "2023-03-27T13:19:38.155Z"
+  penduntildate: DateTime
+  archivedate: DateTime
+  startuserid: Int
+  currentownerid: Int
+  involvedparties: [Int!]
+  isdeleted: Boolean = false
+  lobcaseid: Float
+}
+
+input CreateCaseHistoryInput {
+  datetime: DateTime = "2023-03-27T13:19:38.198Z"
+  outcome: String = "sucess"
+  userid: Float
+  caseId: [Int!]!
+  eventId: [Int!]!
+  doc_desc: String
+  doc_name: String
+}
+
+input UpdateCaseHistoryInput {
+  datetime: DateTime = "2023-03-27T13:19:38.198Z"
+  outcome: String = "sucess"
+  userid: Float
+  caseId: [Int!]
+  eventId: [Int!]
+  doc_desc: String
+  doc_name: String
+  id: Int!
+}
+
+input CreateCaseEventInput {
+  artifactId: Int!
+  eventtypeId: Int!
+}
+
+input UpdateCaseEventInput {
+  artifactId: Int
+  eventtypeId: Int
+  id: Int!
+}
+
+input CreateEventTypeInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateEventTypeInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateCaseTypeInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateCaseTypeInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+  name: String!
+  displayname: String!
+  caseextrafields: Float
+  lobfields: Float
+  code: Float!
+  displaylocations: Float
+  formid: String
+}
+
+scalar link__Import

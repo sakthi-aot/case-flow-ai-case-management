@@ -1,0 +1,11 @@
+{
+  "caseDetails": [
+    {
+      "displayName": "Last Updated On",
+      "databaseIdentifier": "lastmodificationdate",
+      "type": "Date"
+    }
+    
+  ]
+
+}
