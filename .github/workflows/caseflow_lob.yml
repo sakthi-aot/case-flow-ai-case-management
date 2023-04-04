@@ -8,6 +8,7 @@ on:
         required: true
       reponame:
         required: true
+        default: caseflow_lob
 jobs:
   build:
     name: Build Image

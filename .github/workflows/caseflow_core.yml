@@ -1,4 +1,4 @@
-name: Caseflow core
+name: Caseflow Core
 on:
   workflow_dispatch:
     inputs:
@@ -8,6 +8,7 @@ on:
         required: true
       reponame:
         required: true
+        default: caseflow_web
 jobs:
   build:
     name: Build Image

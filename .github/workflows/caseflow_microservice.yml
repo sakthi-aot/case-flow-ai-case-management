@@ -1,4 +1,4 @@
-name: Caseflow Microservices
+name: Caseflow DMS
 on:
   workflow_dispatch:
     inputs:
@@ -8,6 +8,7 @@ on:
         required: true
       reponame:
         required: true
+        default: caseflow_microservice
 jobs:
   build:
     name: Build Image
