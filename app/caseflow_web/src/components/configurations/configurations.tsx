@@ -41,20 +41,34 @@ const Configurations = () => {
   const [isEdit, setIsEdit] = useState<
     {
       id: number;
+      displayname:string
       isEdit: boolean;
-      textValue: string;
-      searchTerm:string
+      formid: string;
+      searchTerm:string;
+      defaultFormid: string;
+      defaultSearchTerm:string;
     }[]
   >([]);
 
   useEffect(() => {
-    if (isEdit.length === 0) {
-      const isEditArray = caseTypes.map((element) => {
-        return { id: element.id, isEdit: false, textValue: element.formid,searchTerm:element.searchterm };
-      });
-      setIsEdit(isEditArray);
+    if (isEdit.length ==0) {
+      setIsEdit(setEditArray());
     }
   }, [caseTypes]);
+
+  const setEditArray = () => {
+    return caseTypes.map((element) => {
+      return {
+        id: element.id,
+        isEdit: false,
+        formid: element.formid,
+        searchTerm: element.searchterm,
+        displayname: element.displayname,
+        defaultFormid: element.formid,
+        defaultSearchTerm: element.searchterm,
+      };
+    });
+  };
 
   const onEdit = (id) => {
     let newArr = [...isEdit];
@@ -64,12 +78,15 @@ const Configurations = () => {
     setIsEdit(newArr);
   };
   const onClose = (id) => {
-    getCaseTypes().then(() => {
+
       let newArr = [...isEdit];
+    console.log(newArr)
+
       var foundIndex = newArr.findIndex((x) => x.id == id);
       newArr[foundIndex].isEdit = false;
+      newArr[foundIndex].formid = newArr[foundIndex].defaultFormid ;
+      newArr[foundIndex].searchTerm = newArr[foundIndex].defaultSearchTerm ;
       setIsEdit(newArr);
-    });
   };
   const getEdit = (id) => {
     if (isEdit.length > 0) {
@@ -80,13 +97,13 @@ const Configurations = () => {
   const getTextValue = (id) => {
     if (isEdit.length > 0) {
       var foundIndex = isEdit.findIndex((x) => x.id == id);
-      return isEdit[foundIndex].textValue;
+      return isEdit[foundIndex].formid;
     } else return "";
   };
 
   const onSubmit = (id: number) => {
     const caseType = caseTypes.filter((x) => x.id === id)[0];
-    const formId = isEdit.filter((x) => x.id === id)[0].textValue;
+    const formId = isEdit.filter((x) => x.id === id)[0].formid;
     const searchTerm = isEdit.filter((x) => x.id === id)[0].searchTerm;
     updateCaseType({ ...caseType, formid: formId,searchterm: searchTerm })
       .then((data) => {
@@ -104,13 +121,17 @@ const Configurations = () => {
         toast.error("Error updating the Type");
       });
   };
-  const onChange = (textValue: string, id: number) => {
-    var foundIndex = isEdit.findIndex((x) => x.id === id);
-    isEdit[foundIndex].textValue = textValue;
+  const onFormIdChange = (formid: string, id: number) => {
+    let temp = [...isEdit]
+    let foundIndex = temp.findIndex((x) => x.id === id);
+    temp[foundIndex].formid = formid; 
+    setIsEdit(temp)
   };
   const onSearchTermChange = (searchTerm: string, id: number) => {
+    let temp = [...isEdit]
     var foundIndex = isEdit.findIndex((x) => x.id === id);
-    isEdit[foundIndex].searchTerm = searchTerm;
+    temp[foundIndex].searchTerm = searchTerm; 
+    setIsEdit(temp)
   };
 
   return (
@@ -188,7 +209,7 @@ const Configurations = () => {
           </ListItem>
           <Divider sx={{ border: 1, borderColor: "#606060" }} />
 
-          {caseTypes?.map((option, index) => (
+          {isEdit?.map((option, index) => (
             <>
               <ListItem key={index} sx={{ paddingInline: 0, paddingBlock: 2 }}>
                 <Grid container spacing={1}>
@@ -228,9 +249,9 @@ const Configurations = () => {
                             id="standard-basic"
                             variant="standard"
                             disabled={!getEdit(option.id)}
-                            defaultValue={option.formid}
+                            value = {option.formid}
                             onChange={(e) =>
-                              onChange(e.target.value, option.id)
+                              onFormIdChange(e.target.value, option.id)
                             }
                           />
                         </Typography>
@@ -249,7 +270,7 @@ const Configurations = () => {
                             id="standard-basic"
                             variant="standard"
                             disabled={!getEdit(option.id)}
-                            defaultValue={option.searchterm}
+                            value={option.searchTerm}
                             onChange={(e) =>
                               onSearchTermChange(e.target.value, option.id)
                             }
