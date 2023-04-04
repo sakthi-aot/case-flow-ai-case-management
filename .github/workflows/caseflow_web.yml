@@ -9,6 +9,7 @@ on:
       reponame:
         required: true
         default: caseflow_web
+jobs:
   build:
     name: Build Image
     runs-on: ubuntu-latest
