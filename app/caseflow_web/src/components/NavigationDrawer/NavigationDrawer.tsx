@@ -37,7 +37,7 @@ import { fetchCaseTypess } from "../../services/constantsService";
 import { setCaseTypes } from "../../reducers/constantsReducer";
 import { useState } from "react";
 import CustomizedDialog from "../Dialog/Dialog";
-import { GENERIC_NAME } from "../../apiManager/endpoints/config";
+import { FORMSFLOW_WEB_URL, GENERIC_NAME } from "../../apiManager/endpoints/config";
 
 const drawerWidth = 240;
 
@@ -119,7 +119,7 @@ export default function MiniDrawer() {
   }
   const routeToPath = (route) => {
     if (route.key === 2) {
-      openLinkInNewTab(FORMSFLOW_APPLICATION_URL + "/task");
+      openLinkInNewTab(FORMSFLOW_WEB_URL + "/task");
     } else {
       navigate(route.path);
     }
@@ -131,7 +131,7 @@ export default function MiniDrawer() {
       text: "Home",
       path: "/private/",
     },
-    { key: 2, text: "Tasks", path: FORMSFLOW_APPLICATION_URL + "/tasks" },
+    { key: 2, text: "Tasks", path: FORMSFLOW_WEB_URL + "/tasks" },
     { key: 3, text: GENERIC_NAME, path: "/private/cases" },
     { key: 4, text: "Documents", path: "/private/documents" },
     { key: 5, text: "LOB", path: "/private/lob" },

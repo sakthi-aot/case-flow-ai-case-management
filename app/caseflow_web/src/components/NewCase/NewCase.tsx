@@ -183,7 +183,8 @@ const NewCase = () => {
     if (selectedCaseType && !isEdit) {
       const formDetails = await getFormDetails(selectedCaseType);
       setSelectedFormDetails(formDetails);
-    } else if (!selectedCaseType && !caseList) {
+    }
+     else if (!selectedCaseType && !caseList) {
       setOpenPopup(true);
     }
   };
@@ -253,7 +254,7 @@ const NewCase = () => {
   };
 
   useEffect(() => {
-    if(!selectedFormDetails){
+    if(!selectedFormDetails && !caseList){
       setOpenPopup(true)
     }
     else{

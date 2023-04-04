@@ -91,3 +91,7 @@ export const REACT_APP_FORMSFLOW_APP_URL =
   (window._env_ && window._env_.REACT_APP_FORMSFLOW_APP_URL) ||
   process.env.REACT_APP_FORMSFLOW_APP_URL ||
   "";
+export const REACT_APP_FORMSFLOW_WEB_URL =
+  (window._env_ && window._env_.REACT_APP_FORMSFLOW_WEB_URL) ||
+  process.env.REACT_APP_FORMSFLOW_WEB_URL ||
+  "";
