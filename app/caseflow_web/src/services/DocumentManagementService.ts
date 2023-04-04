@@ -88,12 +88,12 @@ export const searchCaseDocument = async (
         take: Number(PAGINATION_TAKE),
         fromDate:
           fromDate && fromDate.$d
-            ? moment(fromDate.$d).format("YYYY-MM-DD")
+            ? moment(fromDate.$d).format('YYYY-MM-DD HH:mm:ss.SSSZ')
             : "",
         toDate:
           toDate && toDate.$d
-            ? moment(toDate.$d).format("YYYY-MM-DD")
-            : moment(),
+            ? moment(toDate.$d).add(1,'days').format('YYYY-MM-DD HH:mm:ss.SSSZ')
+            : moment().add(1,'days').format('YYYY-MM-DD HH:mm:ss.SSSZ'),
       },
     },
     null

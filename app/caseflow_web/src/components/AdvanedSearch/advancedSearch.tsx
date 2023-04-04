@@ -176,6 +176,12 @@ export default function AdvancedSearch() {
                     checked={allSearch}
                     onChange={() => {
                       setAllsearch(!allSearch);
+                      if(!allSearch){
+                        setCasesearch(false);
+                        setDocumentsearch(false);
+                        setLobsearch(false);
+                      }
+
                     }}
                     defaultChecked
                   />
@@ -268,7 +274,7 @@ export default function AdvancedSearch() {
             </Box>
           </FormControl>
           <Box sx={{ overflow: "auto", height: "55vh" }}>
-            {searchresults?.searchResult.map((eachValue) => (
+            {searchresults?.searchResult.length ? searchresults?.searchResult.map((eachValue) => (
               <Grid container key={eachValue.title}>
                 <Grid item xs={0.5} sx={{ pt: "5vh" }}>
                   <img
@@ -306,7 +312,11 @@ export default function AdvancedSearch() {
                   </div>
                 </Grid>
               </Grid>
-            ))}
+            )):
+            <Typography variant="body1" className="no-details-found">
+            No Result Found!
+          </Typography>
+          }
           </Box>
         </div>
 
