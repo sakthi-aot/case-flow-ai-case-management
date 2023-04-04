@@ -6,7 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import moment from "moment";
 import { Link } from "@mui/material";
-import { FORMSFLOW_APP_URL } from "../../apiManager/endpoints/config";
+import { FORMSFLOW_WEB_URL } from "../../apiManager/endpoints/config";
 
 const MyTaskCard = (props) => {
   console.log(props);
@@ -33,7 +33,7 @@ const MyTaskCard = (props) => {
                   {" "}
                   <Link
                     target="_blank"
-                    href={FORMSFLOW_APP_URL + `/task/${props.task.id}`}
+                    href={FORMSFLOW_WEB_URL + `/task/${props.task.id}`}
                   >
                     {" "}
                     {props.task.name}{" "}
