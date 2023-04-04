@@ -5,6 +5,7 @@ import "./SingleCaseDetail.scss";
 import Typography from "@mui/material/Typography";
 
 const SingleCaseDetail = ({ caseHistoryData, userInfo, progress }) => {
+  console.log(caseHistoryData,"caseHistoryType")
   let date = caseHistoryData.date.split(" ");
   const [expand, setExpand] = useState(false);
   const expandDetailhandler = () => {
@@ -46,7 +47,7 @@ const SingleCaseDetail = ({ caseHistoryData, userInfo, progress }) => {
         </h3>
         {expand && (
           <div>
-            <p>{caseHistoryData.caseHistoryType}</p>
+            <p>{caseHistoryData.caseHistoryWorkflowType ? caseHistoryData.caseHistoryWorkflowType : caseHistoryData.caseHistoryType}</p>
             <p>User - {userInfo.userName}</p>
           </div>
         )}

@@ -32,6 +32,10 @@ export class CaseEvents {
   @Field()
   artifactId: number;
 
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  workflowtype: string;
+
   @OneToMany(() => CaseHistory, (casehistory) => casehistory.event)
   @Field(() => [CaseHistory], { nullable: true })
   casehistory: CaseHistory[];

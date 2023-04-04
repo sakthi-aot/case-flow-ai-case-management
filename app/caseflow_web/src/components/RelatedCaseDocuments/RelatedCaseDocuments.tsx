@@ -118,6 +118,7 @@ export default function RelatedCaseDocuments({ id, docDetail }) {
         id: index,
         date: moment(element.datetime).format("YYYY-MM-DD H:MM"),
         caseHistoryType: element.event.eventtype.text,
+        caseHistoryWorkflowType: element.event.workflowtype,
       };
     });
     dispatch(setCaseHistory(output));
