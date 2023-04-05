@@ -14,6 +14,7 @@ import {
 import { CaseHistory } from '../../case_history/entities/case_history.entity';
 import { CaseStatuses } from '../../case_status/entities/case_status.entity';
 import { CaseTypes } from '../../case_types/entities/case_type.entity';
+import { CaseNotes } from 'src/case_notes/entities/case_note.entity';
 
 /**
  * Summary :  Entity Class For External Cases
@@ -109,4 +110,8 @@ export class Cases {
   @Field(() => CaseTypes, { nullable: true })
   @JoinColumn({ name: 'typeid' })
   casestype: CaseTypes;
+
+  @OneToMany(() => CaseNotes, (casenote) => casenote.case)
+  @Field(() => [CaseNotes], { nullable: true })
+  casenote: CaseNotes[];
 }
