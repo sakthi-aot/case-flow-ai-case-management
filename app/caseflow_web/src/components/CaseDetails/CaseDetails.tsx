@@ -19,6 +19,7 @@ import {
   resetSelectedCase,
   setCaseTasks,
   setSelectedCase,
+  setSelectedCaseNote,
 } from "../../reducers/newCaseReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -54,6 +55,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  TextField,
   Typography,
 } from "@mui/material";
 import LobCustom from "./LobCustom/LobCustom";
@@ -70,9 +72,10 @@ import { FORMSFLOW_APPLICATION_URL } from "../../apiManager/endpoints";
 import { publishMessage } from "../../services/NatsServices";
 import { v4 as uuidv4 } from "uuid";
 import { GENERIC_NAME } from "../../apiManager/endpoints/config";
+import { createNewNote, getCaseNotes } from "../../services/caseNotesService";
 
-Formio.setProjectUrl("https://app2.aot-technologies.com/formio");
-Formio.setBaseUrl("https://app2.aot-technologies.com/formio");
+// Formio.setProjectUrl("https://app2.aot-technologies.com/formio");
+// Formio.setBaseUrl("https://app2.aot-technologies.com/formio");
 
 const CaseDetails = () => {
   const location = useLocation();
@@ -97,17 +100,19 @@ const CaseDetails = () => {
     courtRef: "2022-11-01",
   };
   const optionsForAction = [
-    { id: 9, code: 9, text: "Edit" },
+    { id: 10, code: 10, text: "Edit" },
     { id: 1, code: "1", text: "Start Workflow" },
     { id: 2, code: 2, text: "Wake" },
     { id: 3, code: 3, text: "Pending" },
     { id: 4, code: 4, text: "Complete" },
     { id: 5, code: 5, text: "Merge" },
     { id: 6, code: 6, text: "Archive" },
-    { id: 7, code: 7, text: "Upload Document" },
-    { id: 8, code: 8, text: "Delete" },
+    { id: 7, code: 7, text: "Upload Document" }, 
+    { id: 8, code: 8, text: "Add Note" }, 
+    { id: 9, code: 9, text: "Delete" },
   ];
   const [isDeleteConfirmationUpOpen, setDeleteConfirmation] = useState(false);
+  const [isNoteOpen, setIsNoteOpen] = useState(false);
 
   const onCloseDeletePopup = (id) => {
     setDeleteConfirmation(false);
@@ -156,18 +161,25 @@ const CaseDetails = () => {
   }
   async function fetchCaseHistory(id) {
     const caseHistoryData = await getCaseHistory(id);
+    const caseNotes = await getCaseNotes(id);
     const output = caseHistoryData?.casehistory.map((element, index) => {
       return {
         id: index,
         date: moment(element.datetime).format("yyyy-MM-DD HH:mm"),
         caseHistoryType: element.event.eventtype.text,
         caseHistoryWorkflowType: element.event.workflowtype,
+        eventtypeId : element.event.eventtypeId,
+        artifactId :  element.event.artifactId
+
       };
     });
 
+    dispatch(setSelectedCaseNote(caseNotes))
     dispatch(setCaseHistory(output));
     dispatch(setFilteredCaseHistory(output));
   }
+
+  
 
   const [isOpenPopup, setOpenPopup] = useState(false);
   const [isOpenConfirmationPopup, setOpenConfirmationPopup] = useState(false);
@@ -182,9 +194,14 @@ const CaseDetails = () => {
   const [selectedForm, setselectedForm]: any = useState("");
   const [formsList, setFormsList]: any = useState([]);
   const [selectedFormDetails, setSelectedFormDetails]: any = useState();
+  const [note, setNote]: any = useState();
 
   const handleClose = (event, reason) => {
     setOpenPopup(false);
+    setSelected(0);
+  };
+  const handleNotesPopUpClose = (event, reason) => {
+    setIsNoteOpen(false);
     setSelected(0);
   };
 
@@ -248,8 +265,11 @@ const CaseDetails = () => {
       case optionsForAction[0].text: {
         return editCaseDetails(selectedCase);
       }
-       case optionsForAction[8].text: {
+       case optionsForAction[9].text: {
         return setDeleteConfirmation(true)
+      }
+       case optionsForAction[8].text: {
+        return setIsNoteOpen(true)
       }
     }
   };
@@ -481,11 +501,34 @@ const CaseDetails = () => {
             await addWorkflowCaseHistory(selectedCase.id,selectedFormDetails.title);
             await fetchCaseHistory(selectedCase.id);
           } else {
-            toast.success("Failed to  start the workflow. Please try again!");
+            toast.error("Failed to  start the workflow. Please try again!");
           }
         });
     });
   };
+  const submitNote = async () =>{
+    console.log(note);
+    if(note){
+     
+      let response = await createNewNote({ caseid : selectedCase.id,
+        userid : userName,
+        notetext : note,
+      });
+      if(response.id){
+        setSelected(0);
+        setIsNoteOpen(false);
+        toast.success("Note added succesfully!");
+        await fetchCaseHistory(selectedCase.id);
+      }
+      else{
+        toast.error("Failed to  add the note. Please try again!");
+      }
+    }
+    else{
+      toast.error("Please add some notes");
+    }
+ 
+  }
   return (
     <>
       <div className="details-container">
@@ -624,6 +667,38 @@ const CaseDetails = () => {
           />
         </div>
       </CustomizedDialog>
+      <CustomizedDialog
+        title="Add Note"
+        isOpen={isNoteOpen}
+        setIsOpen={setIsNoteOpen}
+        handleClose={handleNotesPopUpClose}
+        fullWidth
+      >
+        <div className="workflow">
+          <FormControl sx={{ m: 1, minWidth: 90 }} size="small">
+          <TextField
+          id="outlined-multiline-flexible"
+          label="Notes"
+          sx={{border: "0px"}}
+          multiline
+          rows={4}
+          onChange={(e)=> setNote(e.target.value)}
+        />
+          </FormControl>
+          <FormControl>
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "primary.main",
+                borderColor: "primary.main",
+              }}
+              onClick={submitNote}
+            >
+              Submit
+            </Button>
+          </FormControl>
+        </div>
+      </CustomizedDialog>
       <ToastContainer />
       <PopUpDialogBox
         isOpen={isOpenConfirmationPopup}
@@ -649,3 +724,5 @@ const CaseDetails = () => {
 };
 
 export default CaseDetails;
+
+
