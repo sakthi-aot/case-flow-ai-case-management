@@ -3,16 +3,25 @@ import KeyboardArrowUpRoundedIcon from "@mui/icons-material/KeyboardArrowUpRound
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 import "./SingleCaseDetail.scss";
 import Typography from "@mui/material/Typography";
+import { useSelector } from "react-redux";
+import { State } from "../../../interfaces/stateInterface";
 
 const SingleCaseDetail = ({ caseHistoryData, userInfo, progress }) => {
   console.log(caseHistoryData,"caseHistoryType")
   let date = caseHistoryData.date.split(" ");
   const [expand, setExpand] = useState(false);
+  const caseNotes = useSelector((state: State) => state.cases.selectedCase.notes);
   const expandDetailhandler = () => {
     setExpand((prevState) => {
       return !prevState;
     });
   };
+
+  const getNote = () => {
+    let note = caseNotes.find(note=>note.id == caseHistoryData.artifactId);
+
+    return (note && note["notetext"]) ? note["notetext"] : "";
+  }
   return (
     <div className="case-grid-container">
       <span className="case-grid-date">
@@ -47,7 +56,7 @@ const SingleCaseDetail = ({ caseHistoryData, userInfo, progress }) => {
         </h3>
         {expand && (
           <div>
-            <p>{caseHistoryData.caseHistoryWorkflowType ? caseHistoryData.caseHistoryWorkflowType : caseHistoryData.caseHistoryType}</p>
+            <p>{( caseNotes && caseNotes.length && caseHistoryData.eventtypeId == 4) ? getNote() : (caseHistoryData.caseHistoryWorkflowType ? caseHistoryData.caseHistoryWorkflowType : caseHistoryData.caseHistoryType)}</p>
             <p>User - {userInfo.userName}</p>
           </div>
         )}

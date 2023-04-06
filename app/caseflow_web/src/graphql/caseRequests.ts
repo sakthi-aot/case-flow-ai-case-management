@@ -187,6 +187,7 @@ export const FETCH_CASEHISTORY = gql`
         event {
           eventtypeId
           workflowtype
+          artifactId
           eventtype {
             code
             text

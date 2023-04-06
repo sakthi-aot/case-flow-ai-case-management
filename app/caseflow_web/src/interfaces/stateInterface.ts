@@ -50,6 +50,7 @@ export interface SelectedCase {
   lobcaseid: number;
   tasks: any[];
   additionalFields: any;
+  notes: any[];
 }
 
 export interface CaseList {

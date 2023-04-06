@@ -25,6 +25,11 @@ export class CaseNotesResolver {
     return this.caseNotesService.findOne(id);
   }
 
+  @Query(() => [CaseNotes], { name: 'caseNotesByCaseId' })
+  findByCaseId(@Args('id', { type: () => Int }) id: number) {
+    return this.caseNotesService.findByCaseId(id);
+  }
+
   @Mutation(() => CaseNotes)
   updateCaseNote(@Args('updateCaseNoteInput') updateCaseNoteInput: UpdateCaseNoteInput) {
     return this.caseNotesService.update(updateCaseNoteInput.id, updateCaseNoteInput);

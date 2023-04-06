@@ -11,6 +11,7 @@ const initialState = {
     totalDocCount: 0,
     tasks: [],
     additionalFields: {},
+    notes : [],
   },
   caseList: [
     {
@@ -67,6 +68,9 @@ const caseSlice = createSlice({
     setSelectedCaseType: (state, action) => {
       state.selectedCaseFormType = action.payload;
     },
+    setSelectedCaseNote: (state, action) => {
+      state.selectedCase.notes = action.payload;
+    },
   },
 });
 
@@ -83,5 +87,6 @@ export const {
   setAdditionalCaseDetails,
   setsearchCaseResult,
   setSelectedCaseType,
+  setSelectedCaseNote,
 } = caseSlice.actions;
 export default caseSlice.reducer;

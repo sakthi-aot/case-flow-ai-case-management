@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCaseNoteInput } from './dto/create-case_note.input';
 import { UpdateCaseNoteInput } from './dto/update-case_note.input';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -31,6 +31,23 @@ export class CaseNotesService {
 
   findOne(id: number) {
     return `This action returns a #${id} caseNote`;
+  }
+  async findByCaseId(id: number) {
+    try{
+
+    const value = await this.caseNoteRepository.find({
+      where: {
+        caseid: id,
+      },  
+    });
+    if (value) return value;
+    throw new NotFoundException(`Record cannot find by id ${id}`);
+    
+  }
+  catch (error) {
+    console.log(error);
+    throw error;
+  }
   }
 
   update(id: number, updateCaseNoteInput: UpdateCaseNoteInput) {
