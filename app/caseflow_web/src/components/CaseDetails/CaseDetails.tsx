@@ -100,7 +100,7 @@ const CaseDetails = () => {
     courtRef: "2022-11-01",
   };
   const optionsForAction = [
-    { id: 10, code: 10, text: "Edit" },
+    { id: 12, code: 12, text: "Edit" },
     { id: 1, code: "1", text: "Start Workflow" },
     { id: 2, code: 2, text: "Wake" },
     { id: 3, code: 3, text: "Pending" },
@@ -110,9 +110,13 @@ const CaseDetails = () => {
     { id: 7, code: 7, text: "Upload Document" }, 
     { id: 8, code: 8, text: "Add Note" }, 
     { id: 9, code: 9, text: "Delete" },
+    { id: 10, code: 10, text: "Add Communication" }, 
+    { id: 11, code: 11, text: "Close" }, 
   ];
   const [isDeleteConfirmationUpOpen, setDeleteConfirmation] = useState(false);
   const [isNoteOpen, setIsNoteOpen] = useState(false);
+  const [isCommunicationOpen, setIsCommunicationOpen] = useState(false);
+  const [isRecordOutputOpen, setIsRecordOutputOpen] = useState(false);
 
   const onCloseDeletePopup = (id) => {
     setDeleteConfirmation(false);
@@ -162,6 +166,7 @@ const CaseDetails = () => {
   async function fetchCaseHistory(id) {
     const caseHistoryData = await getCaseHistory(id);
     const caseNotes = await getCaseNotes(id);
+    console.log(caseNotes, 'caseNotes')
     const output = caseHistoryData?.casehistory.map((element, index) => {
       return {
         id: index,
@@ -195,6 +200,8 @@ const CaseDetails = () => {
   const [formsList, setFormsList]: any = useState([]);
   const [selectedFormDetails, setSelectedFormDetails]: any = useState();
   const [note, setNote]: any = useState();
+  const [communication, setCommunication]: any = useState();
+  const [recordOutput, setRecordOutput]: any = useState();
 
   const handleClose = (event, reason) => {
     setOpenPopup(false);
@@ -204,7 +211,14 @@ const CaseDetails = () => {
     setIsNoteOpen(false);
     setSelected(0);
   };
-
+  const handleCommunicationPopUpClose = (event, reason) => {
+    setIsCommunicationOpen(false);
+    setSelected(0);
+  };
+  const handleRecordOutputPopUpClose = (event, reason) => {
+    setIsRecordOutputOpen(false);
+    setSelected(0);
+  };
   const onChnagehandler = (event) => {
     setselectedForm(event.target.value);
   };
@@ -270,6 +284,12 @@ const CaseDetails = () => {
       }
        case optionsForAction[8].text: {
         return setIsNoteOpen(true)
+      }
+      case optionsForAction[10].text: {
+        return setIsCommunicationOpen(true)
+      }
+      case optionsForAction[11].text: {
+        return setIsRecordOutputOpen(true)
       }
     }
   };
@@ -529,6 +549,53 @@ const CaseDetails = () => {
     }
  
   }
+  const submitCommunication = async () =>{
+    console.log(communication);
+    if(communication){
+     
+      let response = await createNewNote({ caseid : selectedCase.id,
+        userid : userName,
+        notetext : "Communication - "+communication,
+      });
+      if(response.id){
+        setSelected(0);
+        setIsCommunicationOpen(false);
+        toast.success("Communication added succesfully!");
+        await fetchCaseHistory(selectedCase.id);
+      }
+      else{
+        toast.error("Failed to  add the communication. Please try again!");
+      }
+    }
+    else{
+      toast.error("Please add some communication");
+    }
+ 
+  }
+  const submitRecordedOutput = async () =>{
+    console.log(recordOutput);
+    if(recordOutput){
+     
+      let response = await createNewNote({ caseid : selectedCase.id,
+        userid : userName,
+        notetext : "Output of the Issue - "+recordOutput,
+      });
+      if(response.id){
+        setSelected(0);
+        setIsRecordOutputOpen(false);
+        toast.success("Output of the issue recorded succesfully!");
+        await fetchCaseHistory(selectedCase.id);
+        changeStatus(3);
+      }
+      else{
+        toast.error("Failed to record output of the issue. Please try again!");
+      }
+    }
+    else{
+      toast.error("Please add output of the issue");
+    }
+ 
+  }
   return (
     <>
       <div className="details-container">
@@ -695,6 +762,70 @@ const CaseDetails = () => {
               onClick={submitNote}
             >
               Submit
+            </Button>
+          </FormControl>
+        </div>
+      </CustomizedDialog>
+      <CustomizedDialog
+        title="Add Communication"
+        isOpen={isCommunicationOpen}
+        setIsOpen={setIsCommunicationOpen}
+        handleClose={handleCommunicationPopUpClose}
+        fullWidth
+      >
+        <div className="workflow">
+          <FormControl sx={{ m: 1, minWidth: 90 }} size="small">
+          <TextField
+          id="outlined-multiline-flexible"
+          label="Communication"
+          sx={{border: "0px"}}
+          multiline
+          rows={4}
+          onChange={(e)=> setCommunication(e.target.value)}
+        />
+          </FormControl>
+          <FormControl>
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "primary.main",
+                borderColor: "primary.main",
+              }}
+              onClick={submitCommunication}
+            >
+              Submit
+            </Button>
+          </FormControl>
+        </div>
+      </CustomizedDialog>
+      <CustomizedDialog
+        title="Record Output of the Issue"
+        isOpen={isRecordOutputOpen}
+        setIsOpen={setIsRecordOutputOpen}
+        handleClose={handleRecordOutputPopUpClose}
+        fullWidth
+      >
+        <div className="workflow">
+          <FormControl sx={{ m: 1, minWidth: 90 }} size="small">
+          <TextField
+          id="outlined-multiline-flexible"
+          label="Record output of the Issue"
+          sx={{border: "0px"}}
+          multiline
+          rows={4}
+          onChange={(e)=> setRecordOutput(e.target.value)}
+        />
+          </FormControl>
+          <FormControl>
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "primary.main",
+                borderColor: "primary.main",
+              }}
+              onClick={submitRecordedOutput}
+            >
+              Close
             </Button>
           </FormControl>
         </div>
