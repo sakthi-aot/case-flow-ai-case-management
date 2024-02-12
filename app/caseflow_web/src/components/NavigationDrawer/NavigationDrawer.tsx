@@ -214,7 +214,7 @@ export default function MiniDrawer() {
   };
   const selectForm = () => {
     dispatch(resetSelectedCase());
-    dispatch(setSelectedCaseType(selectedType));
+    dispatch(setSelectedCaseType("employeeRegistration"));
     setOpenPopup(false);
     navigate("cases/create");
   };
@@ -279,7 +279,7 @@ export default function MiniDrawer() {
               sx={{ backgroundColor: "primary.main" }}
               onClick={() => {
                 
-                setOpenPopup(true);
+                selectForm();
               }}
             >
               <AddCircleIcon />

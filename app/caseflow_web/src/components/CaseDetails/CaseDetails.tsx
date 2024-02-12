@@ -93,11 +93,12 @@ const CaseDetails = () => {
   ]);
   const caseDetail = {
     status: "OPEN",
-    date: "2022-11-01",
+    startDate: "2022-11-01",
     owner: "Chris Robinson",
     tasks: ["Send for approval 1", "Send for approval 2"],
     docketNum: "1234",
     courtRef: "2022-11-01",
+    dueDate: "2022-11-01",
   };
   const optionsForAction = [
     { id: 12, code: 12, text: "Edit" },
@@ -166,7 +167,6 @@ const CaseDetails = () => {
   async function fetchCaseHistory(id) {
     const caseHistoryData = await getCaseHistory(id);
     const caseNotes = await getCaseNotes(id);
-    console.log(caseNotes, 'caseNotes')
     const output = caseHistoryData?.casehistory.map((element, index) => {
       return {
         id: index,
@@ -633,13 +633,14 @@ const CaseDetails = () => {
           {selectedCase && selectedCase.id ? (
             <>
               <CaseDetailData
-                name={selectedCase.name}
-                date={caseDetail.date}
+                contactName={selectedCase.name}
+                startDate={caseDetail.startDate}
                 owner={caseDetail.owner}
                 caseDescription={selectedCase.desc}
                 tasks={tasks}
-                caseType={selectedCase.casestype}
-                lobCaseId={selectedCase.lobcaseid}
+                dueDate={caseDetail.dueDate}
+                additionalInfo={selectedCase.desc}
+                individual={selectedCase.name}
               />
               <CaseDetailReference caseId={selectedCase.id} />
             </>
