@@ -156,11 +156,6 @@ const handleCreatNewContact = ()=> {
                 <TextField
                     id="outlined-multiline-flexible"/>
             </div>
-            <div>
-                <Typography variant="subtitle1">SIN</Typography>
-                <TextField
-                    id="outlined-multiline-flexible"/>
-            </div>
         </div>
         
           </FormControl>
