@@ -167,18 +167,6 @@ const ContactList = React.memo(
                 }
               />
             </Grid>
-            <Grid item xs={1.5}>
-              <ListItemText
-                primary={
-                  <Typography
-                    variant="subtitle1"
-                    className="recent-contact-card-style"
-                  >
-                    SIN
-                  </Typography>
-                }
-              />
-            </Grid>
           </Grid>
 
           <Divider sx={{ border: 1, color: "#606060" }} />
