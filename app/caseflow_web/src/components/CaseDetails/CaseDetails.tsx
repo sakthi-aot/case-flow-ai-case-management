@@ -101,18 +101,18 @@ const CaseDetails = () => {
     dueDate: "2022-11-01",
   };
   const optionsForAction = [
-    { id: 12, code: 12, text: "Edit" },
+    { id: 11, code: 11, text: "Edit" },
     { id: 1, code: "1", text: "Start Workflow" },
     { id: 2, code: 2, text: "Wake" },
     { id: 3, code: 3, text: "Pending" },
-    { id: 4, code: 4, text: "Complete" },
-    { id: 5, code: 5, text: "Merge" },
-    { id: 6, code: 6, text: "Archive" },
-    { id: 7, code: 7, text: "Upload Document" }, 
-    { id: 8, code: 8, text: "Add Note" }, 
-    { id: 9, code: 9, text: "Delete" },
-    { id: 10, code: 10, text: "Add Communication" }, 
-    { id: 11, code: 11, text: "Close" }, 
+    // { id: 4, code: 4, text: "Complete" },
+    { id: 4, code: 4, text: "Merge" },
+    { id: 5, code: 5, text: "Archive" },
+    { id: 6, code: 6, text: "Upload Document" }, 
+    { id: 7, code: 7, text: "Add Note" }, 
+    { id: 8, code: 8, text: "Delete" },
+    { id: 9, code: 9, text: "Add Communication" }, 
+    { id: 10, code: 10, text: "Close" }, 
   ];
   const [isDeleteConfirmationUpOpen, setDeleteConfirmation] = useState(false);
   const [isNoteOpen, setIsNoteOpen] = useState(false);
@@ -270,25 +270,25 @@ const CaseDetails = () => {
       case optionsForAction[3].text: {
         return changeStatus(2); // Pending
       }
-      case optionsForAction[4].text: {
-        return changeStatus(3); // Complete
-      }
-      case optionsForAction[7].text: {
+      // case optionsForAction[4].text: {
+      //   return changeStatus(3); // Complete
+      // }
+      case optionsForAction[6].text: {
         return setOpenPopup(true);
       }
       case optionsForAction[0].text: {
         return editCaseDetails(selectedCase);
       }
-       case optionsForAction[9].text: {
+       case optionsForAction[8].text: {
         return setDeleteConfirmation(true)
       }
-       case optionsForAction[8].text: {
+       case optionsForAction[7].text: {
         return setIsNoteOpen(true)
       }
-      case optionsForAction[10].text: {
+      case optionsForAction[9].text: {
         return setIsCommunicationOpen(true)
       }
-      case optionsForAction[11].text: {
+      case optionsForAction[10].text: {
         return setIsRecordOutputOpen(true)
       }
     }
