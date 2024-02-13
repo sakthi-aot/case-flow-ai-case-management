@@ -55,7 +55,7 @@ const IndividualList = React.memo(
           <Grid container spacing={1} sx={{ paddingBottom: 1.5 }}>
             <Grid
               item
-              xs={2}
+              xs={1.5}
               onClick={() =>
                 setSortSetting({
                   orderBy: "firstName",
@@ -77,7 +77,7 @@ const IndividualList = React.memo(
             </Grid>
             <Grid
               item
-              xs={2}
+              xs={1.5}
               onClick={() =>
                 setSortSetting({
                   orderBy: "lastName",
@@ -99,7 +99,7 @@ const IndividualList = React.memo(
             </Grid>
             <Grid
               item
-              xs={2}
+              xs={1.5}
               onClick={() =>
                 setSortSetting({
                   orderBy: "phoneNumber",
@@ -119,7 +119,7 @@ const IndividualList = React.memo(
                 }
               />
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={1.5}>
               <ListItemText
                 primary={
                   <Typography
@@ -132,7 +132,7 @@ const IndividualList = React.memo(
                 }
               />
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={1.5}>
               <ListItemText
                 primary={
                   <Typography
@@ -147,7 +147,7 @@ const IndividualList = React.memo(
             </Grid>
             <Grid
               item
-              xs={2}
+              xs={1.5}
               onClick={() =>
                 setSortSetting({
                   orderBy: "dateOfBirth",
@@ -167,7 +167,7 @@ const IndividualList = React.memo(
                 }
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={2}>
               <ListItemText
                 primary={
                   <Typography
