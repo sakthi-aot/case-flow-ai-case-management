@@ -167,14 +167,14 @@ const IndividualList = React.memo(
                 }
               />
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={1.5}>
               <ListItemText
                 primary={
                   <Typography
                     variant="subtitle1"
                     className="recent-individual-card-style"
                   >
-                    Address
+                    SIN
                   </Typography>
                 }
               />

@@ -119,7 +119,14 @@ const handleCreatNewContact = ()=> {
           <FormControl sx={{ m: 1, minWidth: 90 }} size="small">
           <div className="lob-custom-content-case-detail">
              <div>
-                <Typography variant="subtitle1" >Name</Typography>
+                <Typography variant="subtitle1" >First Name</Typography>
+                <TextField
+                    id="outlined-multiline-flexible"
+                    sx={{marginRight: 1}}
+                    />
+            </div>
+            <div>
+                <Typography variant="subtitle1" >Last Name</Typography>
                 <TextField
                     id="outlined-multiline-flexible"
                     sx={{marginRight: 1}}
@@ -143,6 +150,16 @@ const handleCreatNewContact = ()=> {
                     id="outlined-multiline-flexible"
                     sx={{marginRight: 1}}
                     />
+            </div>
+            <div>
+                <Typography variant="subtitle1">Date Of Birth</Typography>
+                <TextField
+                    id="outlined-multiline-flexible"/>
+            </div>
+            <div>
+                <Typography variant="subtitle1">SIN</Typography>
+                <TextField
+                    id="outlined-multiline-flexible"/>
             </div>
         </div>
         
