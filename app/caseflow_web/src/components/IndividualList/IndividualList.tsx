@@ -97,6 +97,41 @@ const IndividualList = React.memo(
                 }
               />
             </Grid>
+            <Grid
+              item
+              xs={2}
+              onClick={() =>
+                setSortSetting({
+                  orderBy: "phoneNumber",
+                  orderType: !sortSetting.orderType,
+                })
+              }
+            >
+              <ListItemText
+                primary={
+                  <Typography
+                    variant="subtitle1"
+                    className="recent-contact-card-style"
+                    sx={{ cursor: "pointer" }}
+                  >
+                    Phone Number
+                  </Typography>
+                }
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <ListItemText
+                primary={
+                  <Typography
+                    variant="subtitle1"
+                    className="recent-contact-card-style"
+                    sx={{ cursor: "pointer" }}
+                  >
+                    Email ID
+                  </Typography>
+                }
+              />
+            </Grid>
             <Grid item xs={2}>
               <ListItemText
                 primary={
@@ -105,7 +140,29 @@ const IndividualList = React.memo(
                     className="recent-individual-card-style"
                     sx={{ cursor: "pointer" }}
                   >
-                    SIN
+                    Address
+                  </Typography>
+                }
+              />
+            </Grid>
+            <Grid
+              item
+              xs={2}
+              onClick={() =>
+                setSortSetting({
+                  orderBy: "dateOfBirth",
+                  orderType: !sortSetting.orderType,
+                })
+              }
+            >
+              <ListItemText
+                primary={
+                  <Typography
+                    variant="subtitle1"
+                    className="recent-contact-card-style"
+                    sx={{ cursor: "pointer" }}
+                  >
+                    Date Of Birth
                   </Typography>
                 }
               />

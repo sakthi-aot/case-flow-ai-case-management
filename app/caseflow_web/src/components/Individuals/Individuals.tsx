@@ -133,7 +133,12 @@ const handleCreatNewIndividual = ()=> {
                     />
             </div>
             <div>
-                <Typography variant="subtitle1">SIN</Typography>
+                <Typography variant="subtitle1">Phone Number</Typography>
+                <TextField
+                    id="outlined-multiline-flexible"/>
+            </div>
+            <div>
+                <Typography variant="subtitle1">email</Typography>
                 <TextField
                     id="outlined-multiline-flexible"/>
             </div>
@@ -143,6 +148,16 @@ const handleCreatNewIndividual = ()=> {
                     id="outlined-multiline-flexible"
                     sx={{marginRight: 1}}
                     />
+            </div>
+            <div>
+                <Typography variant="subtitle1">Date Of Birth</Typography>
+                <TextField
+                    id="outlined-multiline-flexible"/>
+            </div>
+            <div>
+                <Typography variant="subtitle1">SIN</Typography>
+                <TextField
+                    id="outlined-multiline-flexible"/>
             </div>
         </div>
         
