@@ -26,6 +26,7 @@ import AdvancedSearch from "./AdvanedSearch/advancedSearch";
 import Configurations from "./configurations/configurations";
 import NatsSubscription from "./Nats/NatsSubscription";
 import Contacts from "./Contacts/Contacts";
+import Individuals from "./Individuals/Individuals";
 
 const NotFound = lazy(() => import("./NotFound/NotFound"));
 
@@ -61,10 +62,10 @@ const PrivateRoute = React.memo(({ store }: any) => {
               <Route index element={<Contacts />} />
               {/* <Route path="create" element={<Contacts />} />  */}
             </Route>
-            {/* <Route path="individual">
-              <Route index element={<Individual />} />
-              <Route path="create" element={<NewIndividualComponent />} />
-            </Route> */}
+              <Route path="individual">
+                <Route index element={<Individuals />} />
+              {/*<Route path="create" element={<NewIndividualComponent />} /> */}
+            </Route> 
             <Route path="documents" element={<CaseDocuments />} />
             <Route path="documents/update/:id" element={<EditDocuments />} />
             <Route path="lob">
