@@ -45,30 +45,35 @@ const LobCustom = () => {
       <div className="lob-custom-content-case-detail">
         <div>
           <Typography variant="subtitle1">Name</Typography>
+          <Typography variant="subtitle1">Samuel James (Parent)</Typography>
           <Typography variant="body2" color="#606060">
             
           </Typography>
         </div>
         <div>
           <Typography variant="subtitle1">Phone No</Typography>
+          <Typography variant="subtitle1">+1613555015</Typography>
           <Typography variant="body2" color="#606060">
             
           </Typography>
         </div>
         <div>
           <Typography variant="subtitle1">City</Typography>
+          <Typography variant="subtitle1">Anytown</Typography>
           <Typography variant="body2" color="#606060">
             
           </Typography>
         </div>
         <div>
           <Typography variant="subtitle1">Region</Typography>
+          <Typography variant="subtitle1">BC</Typography>
           <Typography variant="body2" color="#606060">
             
           </Typography>
         </div>
         <div>
           <Typography variant="subtitle1">Email</Typography>
+          <Typography variant="subtitle1">james@test.com</Typography>
           <Typography variant="body2" color="#606060">
             
           </Typography>
@@ -107,30 +112,35 @@ const LobCustom = () => {
      <div className="lob-custom-content-case-detail">
      <div>
           <Typography variant="subtitle1">Name</Typography>
+          <Typography variant="subtitle1">Shruti James (child)</Typography>
           <Typography variant="body2" color="#606060">
             
           </Typography>
         </div>
         <div>
           <Typography variant="subtitle1">Phone No</Typography>
+          <Typography variant="subtitle1">+1613555015</Typography>
           <Typography variant="body2" color="#606060">
             
           </Typography>
         </div>
         <div>
           <Typography variant="subtitle1">City</Typography>
+          <Typography variant="subtitle1">Anytown</Typography>
           <Typography variant="body2" color="#606060">
             
           </Typography>
         </div>
         <div>
           <Typography variant="subtitle1">Region</Typography>
+          <Typography variant="subtitle1">BC</Typography>
           <Typography variant="body2" color="#606060">
             
           </Typography>
         </div>
         <div>
           <Typography variant="subtitle1">Email</Typography>
+          <Typography variant="subtitle1">james@test.com</Typography>
           <Typography variant="body2" color="#606060">
             
           </Typography>

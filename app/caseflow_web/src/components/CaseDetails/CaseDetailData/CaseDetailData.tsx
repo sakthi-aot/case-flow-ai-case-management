@@ -37,24 +37,24 @@ const CaseDetailData = ({
       <div className="case-details">
         <div className="case-detail-name">
           <Typography variant="subtitle1">Contact name</Typography>
-          <Typography variant="body2">{contactName}</Typography>
+          <Typography variant="body2">Samuel James</Typography>
         </div>
         <div className="case-detail-name">
           <Typography variant="subtitle1">Individual</Typography>
-          <Typography variant="body2">{individual}</Typography>
+          <Typography variant="body2">Shruti James</Typography>
         </div>
         <div className="case-detail-date">
           <Typography variant="subtitle1">Start Date</Typography>
 
           <Typography variant="body2">
-            {moment(startDate).format("YYYY-MM-DD")}
+          <Typography variant="body2">2024-02-14</Typography>
           </Typography>
         </div>
         <div>
           <Typography variant="subtitle1">
               {GENERIC_NAME} Description
             </Typography>
-          <Typography variant="body2">{caseDescription}</Typography>
+          <Typography variant="body2">Request for 50-50 Child custody</Typography>
         </div>
         <div className="case-detail-owner">
           <Typography variant="subtitle1">Owner</Typography>
@@ -62,24 +62,22 @@ const CaseDetailData = ({
         </div>
         <div className="case-detail-date">
         <Typography variant="subtitle1">Due Date</Typography>
+        <Typography variant="body2">2025-02-14</Typography>
 
-        <Typography variant="body2">
-          {moment(dueDate).format("YYYY-MM-DD")}
-        </Typography>
         </div>
         <div className="case-detail-city">
           <Typography variant="subtitle1">City</Typography>
-          <Typography variant="body2">{city}</Typography>
+          <Typography variant="body2">Victoria</Typography>
         </div>
         <div className="case-detail-province">
           <Typography variant="subtitle1">Province</Typography>
-          <Typography variant="body2">{province}</Typography>
+          <Typography variant="body2">BC</Typography>
         </div>
         <div>
           <Typography variant="subtitle1">
               Additional Information
             </Typography>
-          <Typography variant="body2">{additionalInfo}</Typography>
+          <Typography variant="body2">parent needs custody of the child</Typography>
         </div>
       </div>
 
