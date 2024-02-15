@@ -116,13 +116,13 @@ const handleCreatNewContact = ()=> {
         fullWidth
       >
         <div className="workflow">
-          <FormControl sx={{ m: 1, minWidth: 90 }} size="small">
+          <FormControl >
           <div className="lob-custom-content-case-detail">
              <div>
                 <Typography variant="subtitle1" >First Name</Typography>
                 <TextField
                     id="outlined-multiline-flexible"
-                    sx={{marginRight: 1}}
+                    sx={{ marginRight: 1, width:160}}
                     />
             </div>
             <div>
@@ -142,7 +142,8 @@ const handleCreatNewContact = ()=> {
             <div>
                 <Typography variant="subtitle1">Email</Typography>
                 <TextField
-                    id="outlined-multiline-flexible"/>
+                    id="outlined-multiline-flexible"
+                    sx={{marginRight: 1}}/>
             </div>
             <div>
                 <Typography variant="subtitle1">Address</Typography>
@@ -153,7 +154,17 @@ const handleCreatNewContact = ()=> {
             </div>
             <div>
                 <Typography variant="subtitle1">Date Of Birth</Typography>
+                <TextField type="date"
+                    id="outlined-multiline-flexible" sx={{marginRight: 1}}/>
+            </div>
+            <div>
+                <Typography variant="subtitle1">Individual Name</Typography>
                 <TextField
+                    id="outlined-multiline-flexible"sx={{marginRight: 1}}/>
+            </div>
+              <div>
+                <Typography variant="subtitle1">Individual Birthdate</Typography>
+                <TextField type="date"
                     id="outlined-multiline-flexible"/>
             </div>
         </div>
