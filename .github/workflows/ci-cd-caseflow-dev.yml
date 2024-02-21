@@ -11,7 +11,7 @@ on:
       - 'app/**'
       - 'app/caseflow_core/**'
       - 'app/caseflow_web/**'
-      - '.github/workflows/ci-cd-openshift-dev.yaml'
+      - '.github/workflows/ci-cd-openshift-dev.yml'
       
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
