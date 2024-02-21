@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - 'dev'
-      - 'caseflow-ci-cd' #test1
+      - 'caseflow-ci-cd' #sakthi
                              
     paths:
       - 'app/**'
